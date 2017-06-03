@@ -1,0 +1,89 @@
+﻿@model IEnumerable<HRMS.Web.ViewModels.SelectedRecruitingQuestionsFormModel>
+<div id="gridContent" style="padding-top: 10px;height:350px;overflow:scroll;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="JobRecruitingQuestionsGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.QuestionText)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.SequenceNumber)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.IsRequired)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.RecruitingQuestionsChecked)
+                        {
+                            <input type="checkbox" value="" data-val-1="@item.RecruitingQuestionId" class="btncheckrecruitingquestion" checked />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="" data-val-1="@item.RecruitingQuestionId" class="btncheckrecruitingquestion" />
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.QuestionText), "AddRecruitingQuestions", new { @RecruitingQuestionId = item.RecruitingQuestionId })
+                    </td>
+                    <td>
+                        @Html.Label(Convert.ToString(item.SequenceNumber))
+                    </td>
+                    <td>
+                        @Html.Label(item.IsActive == true ? "Active" : "InActive")
+                    </td>
+                    <td>
+                        @Html.Label(item.IsRequired == true ? "Required" : "Not Required")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div class="form-group">
+        <div class="col-sm-6 control-button">
+            <input type="submit" id="saverecruitingquestion" value="save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#saverecruitingquestion").click(function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var searchIDs = $("#JobRecruitingQuestionsGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        if (searchIDs.toString().length > 0) {
+            var formData = $('#newJobForm').serialize() + '&RecruitingQuestionIds=' + searchIDs.toString();
+            $.ajax({
+                url: baseurl + "Recruiting/_AddRecruitingQuestions",
+                type: "POST",
+                cache: "false",
+                data: formData,
+                success: function (data) {
+                    if (data == "True") {
+                        //window.location.href = window.location.href;
+                        $("#addJobPropertyModal").modal('hide');
+                    }
+                },
+                error: function (request, status, error) {
+                }
+            });
+        }
+        else { alert("Please select item(s) to select."); }
+    });
+</script>
+

@@ -1,0 +1,46 @@
+﻿@using HRSystem.Services.Models;
+@model MainEmployee
+
+@{
+    ViewBag.Title = "RecentHireNew";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">RecentHires </h2>
+    </div>
+    <div class="panel-body">
+            <table class="table table-striped table-bordered" id="Item" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Last Name
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Employee_List)
+                    {
+                        <tr>
+                            <td>
+                                @item.FirstName
+                            </td>
+                            <td>
+                                @item.LastName
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>      
+    </div>
+</div>
+
+
+
+

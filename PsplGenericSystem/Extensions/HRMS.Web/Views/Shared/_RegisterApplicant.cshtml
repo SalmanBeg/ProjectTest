@@ -1,0 +1,89 @@
+﻿@model HRMS.Web.ViewModels.RegisterApplicantFormModel
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "RegisterApplicant";
+
+}
+
+@using (Html.BeginForm("_RegisterApplicant", "JobPortal", FormMethod.Post, new { enctype = "multipart/form-data", id = "registerApplicant" }))
+{
+
+    @Html.ValidationSummary()
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobApplicant.FirstName, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(k => k.JobApplicant.FirstName, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobApplicant.LastName, new { @class = "col-sm-3 control-label " })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(k => k.JobApplicant.LastName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobApplicant.Email, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(k => k.JobApplicant.Email, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobApplicant.Phone, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(k => k.JobApplicant.Phone, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Describe yourself not more than 200 words", new { @class = "col-sm-3 control-label " })
+                        <div class="col-sm-9">
+                            @Html.TextAreaFor(k => k.JobApplicant.ApplicantDescription, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Resume", new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-9">
+                            <input type="file" name="resume" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" id="btnRegister" class="btn btn-success" value="Submit" />
+            @Html.HiddenFor(k => k.JobId)
+
+        </div>
+
+    </div>
+
+}
+<script type="text/javascript">
+
+    var url;
+    var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+    url = baseurl + "JobPortal/JobPortal/_RegisterApplicant";
+    // RegisterApplicantPartial(url);
+    var RegisterApplicantPartial = function (url) {
+
+        $.ajax({
+            url: url,
+            type: $("#registerApplicant").attr('method'),
+            data: $("#registerApplicant").serialize(),
+            cache: false,
+            success: function (data) {
+                if (data == "True") {
+                    window.location.href = window.location.href;
+                }
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            } // When Service call fails
+
+        });
+    };
+</script>

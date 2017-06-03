@@ -1,0 +1,89 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.JobPME>
+@using HRMS.Web.Helper;
+
+@{
+    ViewBag.Title = "SelectJobPME";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div>
+    @Html.ActionLink("Add", "AddJobPME", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteJobPME", null, new { @class = "btn btn-danger", @id = "btnDeletepme" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="JobPMEGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Frequency)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.PMEId" class="btncheckjobpme" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.Description), "AddJobPME", new { @JobPMEId = item.PMEId }, new { id = "PMEId" })
+                    </td>
+                    <td>
+                        @Html.Label(item.Category)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.FrequencyName))
+                        { 
+                        @Html.Label(Convert.ToString(item.FrequencyName))
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Job PME</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Job PME's</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $("#btnDeletepme").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#JobPMEGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "JobPME/DeleteJobPME",
+                    type: "POST",
+                    cache: "false",
+                    data: { jobpmeIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+</script>
+
+

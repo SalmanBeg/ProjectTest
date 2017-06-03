@@ -1,0 +1,75 @@
+﻿@model IEnumerable<HRMS.Web.ViewModels.UserLoginFormModel>
+@{
+    ViewBag.Title = "SelectAllSuperAdmins";
+    Layout = "~/Areas/AdminSetup/Views/Shared/_AdminMasterLayout.cshtml";}
+<div class="content">    
+    <div class="col-md-2">
+        </div>
+    <div class="col-md-10">
+        <div>
+            @Html.ActionLink("Add", "CreateSuperAdmin", null, new { @class = "btn btn-success" })
+        </div>
+        <div id="gridContent" style="padding-top: 10px;">
+            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="allemployeegrid">
+                <thead>
+                    <tr>
+                        <th data-toggle="true">
+                            @Html.DisplayNameFor(model => model.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserName)
+                        </th>
+                        <th data-hide="phone">
+                            @Html.DisplayName("Role")
+                        </th>
+                        <th>
+                            
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.FirstName)*@
+                                @Html.ActionLink(((string)item.FirstName), "UpdateSuperAdmin", new { @UserId = item.UserId }, new { id = "UserId" })
+                                @*@Html.ActionLink(((string)item.FirstName), "ViewEmployee", "Home", new { @selectedUserId = item.UserSignUpId }, new { id = "UserSignUpId" })*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td data-hide="phone">
+                                @Html.DisplayFor(modelItem => item.RoleName)
+                            </td>
+                           
+                            <td>
+                                <a href="@Url.Action("ChangePassword","Admin")"><i class="fa fa-lock"></i>Change Password</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagination pagination-centered hide-if-no-paging"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h3>Super Admin <small> Super Admin List</small></h3>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

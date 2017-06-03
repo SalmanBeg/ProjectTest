@@ -1,0 +1,96 @@
+﻿@using HRMS.Common.Enums
+
+@{
+    ViewBag.Title = "SelectOnBoardingStep";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>
+                    <span>Add</span>
+                </h3>
+                <p>
+                    New Employee
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="@Url.Action("AddNewEmployee", "Home", new {HireType = GeneralEnum.HireType.AddNewHire})" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>
+                    <span>On Board</span>
+                </h3>
+                <p>
+                    New Hire
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-ios7-browsers"></i>
+            </div>
+            <a href="@Url.Action("ConfigureEmployee", "Home", new { HireType = GeneralEnum.HireType.SelfHire })" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>
+                    <span>Recruit</span>
+                </h3>
+                <p>
+                    Employee
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-ios7-people"></i>
+            </div>
+            <a href="../Recruiting/RecruitingDashboard" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box  bg-blue">
+            <div class="inner">
+                <h3>
+                    <span>Import</span>
+                </h3>
+                <p>
+                     Employee
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-ios7-box-outline"></i>
+            </div>
+            <a href="../ImportEmployeecsvdata/ImportEmployeeData" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Administration<small>Select On Boarding step</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">On Boarding step</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+</script>

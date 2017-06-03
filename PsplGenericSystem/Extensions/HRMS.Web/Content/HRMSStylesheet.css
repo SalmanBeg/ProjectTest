@@ -1,0 +1,34 @@
+﻿.form-box {
+      width: 650px;
+}
+
+.register-bg {
+ 
+  background: #fff;
+  /*color: #444;*/
+}
+
+    
+#add_document_area {
+	font-size: 14px;
+	/*position: absolute;*/
+	padding: 15px;
+	background-color: White;
+	border: 1px solid #0290c5;
+	z-index: 100;
+	top: 169px;
+	left: 230px;
+	box-shadow: 2px 2px 3px #ccc;
+}
+
+#add_item {
+	line-height: 2px;
+	display: block;
+	font-size: 18px;
+	line-height: 20px;
+	padding: 9px;
+	background: #d4dcdf;
+	color: Black;
+	font-weight: bolder;
+	cursor: pointer;
+}

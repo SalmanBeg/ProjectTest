@@ -1,0 +1,50 @@
+﻿@model HRMS.Service.Models.EDM.Reviewee
+@using System.Web.Optimization;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "ReviewNotification";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("ReviewNotification", "Master", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewId, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.ReviewId, new { @class = "form-control" })
+                        @*@section Section1
+                       {
+                              <p>
+                                      @Html.DisplayFor(k => k.ReviewId)
+                              </p>
+                       }*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewName, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.ReviewName, new { @class = "form-control" })
+                        @section Section1
+                       {
+                            <p>
+                                @Html.DisplayFor(k => k.ReviewName)
+                            </p>
+                        }
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+     <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            
+            @Html.ActionLink("Cancel", "ReviewNotification", null, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+    
+}
+
+

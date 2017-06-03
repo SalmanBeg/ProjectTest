@@ -1,0 +1,52 @@
+﻿@model HRMS.Service.Models.EDM.LookUpDataEntity
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "UpdateLookUpPartialView";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <h3>Update @Model.TableName</h3>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-sm-4 required" })
+                <div class="col-sm-8">
+                    @Html.HiddenFor(model => model.CompanyId, new { @class = "control-label col-sm-4" })
+                    @Html.HiddenFor(model => model.Id, new { @class = "control-label col-sm-4" })
+                    @Html.HiddenFor(model => model.primaryId, new { @class = "control-label col-sm-4" })
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.Status, new { @class = "control-label col-sm-4" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                </div>
+            </div>@*
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    @Html.EnumDropDownListFor(model => model.Status, Model.statusList, new { @class = "form-control" })
+                </div>
+            </div>*@
+
+            <div class="col-sm-4"></div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 control-button">
+                    
+                    @Html.ActionLink("Cancel", "CreateLookUpData", new { @TableName = @Model.TableName }, new { @class = "btn btn-success" })
+                    <input type="submit" value="Update" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    <div class="col-sm-6"></div>
+</div>
+}

@@ -1,0 +1,124 @@
+﻿@model HRMS.Service.Models.EDM.EmployeeAsset
+@{
+    ViewBag.Title = "EditEmployeeAsset";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("EditEmployeeAsset", "EmployeeAsset", FormMethod.Post, new { id = "AssetForm", enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.EmployeeAssetId)
+                    @Html.LabelFor(m => m.Asset, "Asset", new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Asset, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Description, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Manufacturer, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Manufacturer, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Model, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Model, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SerialNumber, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.SerialNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AccountNumber, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AssetCost, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.AssetCost, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PurchasedDate, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.PurchasedDate, (Model.PurchasedDate == null ? "" : ((DateTime)Model.PurchasedDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtPurchasedDatedate" })
+                            <label for="dtPurchasedDatedate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.OutOn, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.OutOn, (Model.OutOn == null ? "" : ((DateTime)Model.OutOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtOutOndate" })
+                            <label for="dtOutOndate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DueBack, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.DueBack, (Model.DueBack == null ? "" : ((DateTime)Model.DueBack).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtDueBackdate" })
+                            <label for="dtDueBackdate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Returned, "Returned", new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Returned, (Model.Returned == null ? "" : ((DateTime)Model.Returned).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtReturneddate" })
+                            <label for="dtReturneddate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Comment, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Comment, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                
+                @Html.ActionLink("Cancel", "SelectAllEmployeeAsset", "EmployeeAsset", null, new { @class = "btn btn-success", @style = "margin-left:10px" })
+                <button type="submit" class="btn btn-success" id="btnSaveAsset">Update</button>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Employee Asset<small>Edit Employee Asset</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Employee Asset</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

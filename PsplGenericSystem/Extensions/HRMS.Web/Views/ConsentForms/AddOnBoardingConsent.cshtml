@@ -1,0 +1,191 @@
+﻿@model HRMS.Web.ViewModels.OnBoardingFormModel
+@{
+    ViewBag.Title = "AddOnBoarding";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div class="header">
+    <h3>OnBoarding</h3>
+</div>
+@using HRMS.Web.Helper;
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+   
+    <div class="form-horizontal">
+        <div>
+            <a href="#" id="acreateonboarding" class="btn btn-success">Create OnBoarding</a>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.OnBoarding.OnBoardingName, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(m => m.OnBoarding.OnBoardingName)
+            </div>
+        </div>
+        <div id="add_item" title="click to add a item">+ <span style="font-size: 13px;">Add a Item</span></div>
+        <div class="form-group">
+            <table class="footable table col-sm-9" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="gridContent">
+                <thead>
+                    <tr>
+                        <th data-sort-ignore="true">
+                            <input type="checkbox" />
+                        </th>
+                        <th data-toggle="true">
+                           <label>File Name</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in @Model.FilesDB)
+                    { 
+                        <tr>
+                            <td>
+                                <input type="checkbox" value="" id="@s.FilesDBId" onchange="cbChange(this)" data-val-1=""/>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => s.FileName, new { @class = "col-sm-3 control-label" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagination pagination-centered hide-if-no-paging"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!--Form for adding documents-->
+    <div id="add_document_area" style="display: none;">
+        <div id="add_document_instructions">
+            Only files of format (.pdf,.jpg,.gif,.png,.bmp) are allowed...
+        </div>
+        <div id="document_file_button_wrapper" style="width: 100%;">
+            Select files
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Addfile();
+        //add_newdoc click event area..
+        $('#add_item').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            OpenAddDocumentArea();
+            return false;
+        });
+        $('#acreateonboarding').click(function (e) {
+            //Click for submit timesheet
+            e.stopPropagation();
+            e.preventDefault();
+            CreateOnBoarding();
+        });
+    });//end of dcoument ready   
+
+    function cbChange(e) {
+        if (e.checked == true)
+            e.value = e.id;
+    }
+    var OpenAddDocumentArea = function () {
+        //hide other areas
+        if ($("#add_document_area").is(":visible")) {
+            $("#add_document_area").toggle();
+        }
+        else {
+            $("#add_document_area").show();
+
+        }
+    }
+
+    function Addfile() {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $("#document_file_button_wrapper").uploadFile({
+            url: baseurl + 'Files/AddFiles',
+            allowedTypes: "pdf,jpg,gif,png,bmp",
+            multiple: true,
+            autoSubmit: true,
+            maxFileSize: 5287590,
+            showAbort: false,
+            showDone: false,
+            onSelect: function (files) {
+                files[0].name;
+                files[0].size;
+                if (files[0].size > 5287590) { // 5mb
+                    alert("Cannot upload file greater than 5mb.");
+                    return false;
+                }
+                else
+                    return true; //to allow file submission.
+            },
+            onSuccess: function (files, data, xhr, pd) {
+                $("#add_document_area").hide();
+                // ShowFiles();
+                window.location.href = window.location.href;
+            },
+            onError: function (files, status, errMsg, pd) {
+                errMsg: "file size exceeded."
+            }
+        });
+    }
+
+    function ShowFiles() {
+        $.ajax({
+            url: baseurl + 'ConsentForms/SelectAllConsentFormsbyUserId',
+            type: 'get',
+            cache: false,
+            data: parms,
+            success: function (data) {
+                alert(data);
+                //if (data.strrecordid != "" && data.strrecordid != null) {
+                //    SubmitTransmittedDatafortimesheet(data.strrecordid);
+                //}
+            },
+            error: function () {
+                alert(Error);
+            }
+        });
+
+    }
+
+    function CreateOnBoarding() {
+        var _griddata = gridTojson();
+        if (_griddata.length > 0) {
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            $.ajax({
+                url: baseurl + "ConsentForms/AddOnBoarding",
+                type: 'post',
+                cache: false,
+                data: parms,
+                success: function (data) {
+                    if (data.strrecordid != "" && data.strrecordid != null) {
+                        //Load On Boarding Grid Page.
+                    }
+                },
+                error: function () {
+                    alert(Error);
+                }
+            });
+        }
+        else {
+            alert('please select Files for Creating OnBoardProfile.');
+        }
+    }
+
+    function gridTojson() {
+        var StringResult = "";
+        jQuery("#gridContent tbody tr").each(function () {
+            if (jQuery(this).find('input[type=checkbox]')[0].checked == true) {
+                StringResult += jQuery(this).find('input[type=checkbox]').attr('id') + ',';
+            }
+        });
+        if (StringResult.length > 0)
+            StringResult = StringResult.slice(0, -1);
+        return StringResult
+    }
+
+  
+</script>

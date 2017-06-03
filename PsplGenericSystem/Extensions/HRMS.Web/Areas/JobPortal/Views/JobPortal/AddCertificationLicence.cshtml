@@ -1,0 +1,75 @@
+﻿@model HRMS.Web.ViewModels.CertificationandLicenseFormModel
+@using System.Web.Optimization;
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "AddCertificationLicence";
+    Layout = "~/Areas/JobPortal/Views/Shared/_JobPortalMaster.cshtml";
+}
+
+<h3>Certification Licence</h3>
+@using (Html.BeginForm("AddCertificationLicence", "JobPortal", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.HiddenFor(k => k.CertificationandLicense.CertificationLicensesId)
+                    @Html.HiddenFor(k => k.CertificationandLicense.CompanyId)
+                    @Html.HiddenFor(k => k.CertificationandLicense.UserId)
+                    @Html.LabelFor(m => m.CertificationandLicense.Name, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.CertificationandLicense.Name, new { @class = "form-control" })
+                    </div>
+                </div>             
+                <div class="form-group">
+                    @Html.LabelFor(k => k.CertificationandLicense.IssueDate, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(k => k.CertificationandLicense.IssueDate, (Model.CertificationandLicense.IssueDate == null ? "" : ((DateTime)Model.CertificationandLicense.IssueDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtissuedate", @maxlength = 10 })
+                            <label for="txtissuedate" class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>                     
+                <div class="form-group">
+                    @Html.LabelFor(k => k.CertificationandLicense.RenewalDate, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(k => k.CertificationandLicense.RenewalDate, (Model.CertificationandLicense.RenewalDate == null ? "" : ((DateTime)Model.CertificationandLicense.RenewalDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtrenvaldate", @maxlength = 10 })
+                            <label for="txtrenvaldate" class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    @Html.LabelFor(k => k.CertificationandLicense.ExpirationDate, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.CertificationandLicense.ExpirationDate, (Model.CertificationandLicense.ExpirationDate == null ? "" : ((DateTime)Model.CertificationandLicense.ExpirationDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtexpirydate", @maxlength = 10 })
+                            <label for="txtexpirydate" class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>  
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            <button type="submit" class="btn btn-success">Save</button>
+            @Html.ActionLink("Cancel", "AddApplicationInfo", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+
+
+
+
+
+
+

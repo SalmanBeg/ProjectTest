@@ -1,0 +1,98 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.HolidayGroup>
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllHolidayGroupDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div style="padding-top: 10px;">
+    @Html.ActionLink("Add  ", "AddHolidayGroupDetail", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteHolidayGroupDetail", null, new { @class = "btn btn-danger", @id = "btnDelete" })
+    @Html.ActionLink("<< Back to Configuration", "TimeAttendanceConfiguration", "Home", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="HolidayGroupGridContent">
+        <thead>
+            <tr>
+                <th></th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.HolidayGroupName)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.HolidayDescription)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.Label("Build Policy")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.HolidayGroupId" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.HolidayGroupName), "EditHolidayGroupDetail", new { @HolidayGroupId = item.HolidayGroupId }, new { id = "HolidayGroupId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HolidayDescription)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Build Policy", "EditHolidayMasterDetail", new { @HolidayGroupId = item.HolidayGroupId, @HolidayGroupName = item.HolidayGroupName }, new { id = "HolidayGroupId" })
+                        @* <a href="#" id ="@item.HolidayGroupId" data-val-1="@item.HolidayGroupId" onclick="ShowHolidayMasterDetails(this)">Build Policy</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>HolidayGroup <small>HolidayGroup List </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">HolidayGroup</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        // for hiding Submit and Cancel Button
+        $("#btnsubmit").hide();
+        $("#btncancel").hide();
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnDelete").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#HolidayGroupGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+
+            $.ajax({
+                url: baseurl + "HolidayGroup/DeleteHolidayGroupDetail",
+                type: "POST",
+                cache: "false",
+                data: { HolidayGroupIds: searchIDs.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        window.location.href = window.location.href;
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        });
+

@@ -1,0 +1,417 @@
+﻿@model HRMS.Web.ViewModels.I9FormModel
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "I9WorkAuthorization";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("AddI9WorkAuthorization", "I9WorkAuthorization", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal" style="padding: 20px;">
+        <div class="form-group">
+            <fieldset>
+                <legend>I9 Form Details</legend>
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.WorkAuthorization.CitizenOfUS, new { @id = "CitizenOfUSValue" })
+                    @Html.HiddenFor(m => m.WorkAuthorization.WorkAuthorizationId, new { @id = "I9WorkAuthorizationId" })
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <strong>
+                            Form I-9 Employment Eligibility - This information is required by the U.S Government
+                            I attest under penalty of perjury, that I am(Select one of the following):
+                        </strong>
+                    </div>
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <div>@Html.RadioButton("optselect", 1, false, new { @class = "i9eligibility1" }) <strong>A Citizen or national of United States </strong></div>
+                    </div>
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <div>@Html.RadioButton("optselect", 2, false, new { @class = "i9eligibility2" }) <strong>A lawful permanent resident </strong></div>
+
+                    </div>
+                    <div id="divCitizen1">
+
+                        <div class="col-sm-12" style="padding-bottom: 15px;">
+                            <div class="col-sm-4">
+                                @Html.LabelFor(m => m.WorkAuthorization.AlienNumber, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.WorkAuthorization.AlienNumber, new { @class = "form-control" })
+                            </div>
+
+                            <div class="col-sm-4">
+                                @Html.LabelFor(m => m.WorkAuthorization.PermanentResidentExpire, new { @class = "control-label" })
+                                @*    @Html.TextBoxFor(m => m.WorkAuthorization.PermanentResidentExpire, (Model.WorkAuthorization.PermanentResidentExpire == null ? "" : ((DateTime)Model.WorkAuthorization.PermanentResidentExpire).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtPermanentResidentExpire" })*@
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.WorkAuthorization.PermanentResidentExpire, (Model.WorkAuthorization.PermanentResidentExpire == null ? "" : ((DateTime)Model.WorkAuthorization.PermanentResidentExpire).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtPermanentResidentExpire" })
+                                    <label for="dtPermanentResidentExpire" class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-4">
+                                @Html.LabelFor(m => m.WorkAuthorization.AlienCitizenof, new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.WorkAuthorization.AlienCitizenof, new SelectList(Model.AlienCitizenofList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveincountry" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div>@Html.RadioButton("optselect", 3, false, new { @class = "i9eligibility3" }) <strong>An Alien authorized to work until: </strong></div>
+                    </div>
+                    <div id="divCitizen2">
+
+                        <div class="col-sm-4" style="padding-bottom: 15px;">
+                            @Html.LabelFor(m => m.WorkAuthorization.AlienAuthorisedDate, new { @class = "control-label" })
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.WorkAuthorization.AlienAuthorisedDate, (Model.WorkAuthorization.AlienAuthorisedDate == null ? "" : ((DateTime)Model.WorkAuthorization.AlienAuthorisedDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtAlienAuthorisedDate" })
+                                <label for="dtAlienAuthorisedDate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4" style="padding-bottom: 15px;">
+
+                            <div class="col-sm-12">
+                                @Html.LabelFor(m => m.WorkAuthorization.AlienAuthorisedCitizenof, "Please select country", new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.WorkAuthorization.AlienAuthorisedCitizenof, new SelectList(Model.AlienAuthorisedCitizenofList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveincountry1" } })
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <strong>For aliens authorized to work, provide your Alien Registration Number/USCIS Number OR Form I-94 Admission Number:</strong>
+                    </div>
+
+                    <div class="col-sm-4">
+                        @Html.LabelFor(model => model.WorkAuthorization.AlienRegistrationNumber, "1. Alien Registration Number/USCIS Number:")
+                        @Html.TextBoxFor(m => m.WorkAuthorization.AlienRegistrationNumber, new { @id = "txtAlign", @class = "form-control col-sm-6" })
+                    </div>
+                    <div class="col-sm-offset-3 col-sm-9">OR  </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(model => model.WorkAuthorization.AdmissionNumber, "2. Form I-94 Admission Number:")
+                        @Html.TextBoxFor(m => m.WorkAuthorization.AdmissionNumber, new { @id = "txtAdmin", @class = "form-control" })
+                    </div>
+                    <div class="col-sm-12" style="padding-bottom: 15px; padding-top: 15px;">
+                        <strong>If you obtained your admission number from CBP in connection with your arrival in the United:</strong>
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(model => model.WorkAuthorization.PassportNumber, "Foreign Passport Number:")
+                        @Html.TextBoxFor(m => m.WorkAuthorization.PassportNumber, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(model => model.WorkAuthorization.CitizenOfUS, "Country of Issuance:")
+                        @Html.DropDownListFor(m => m.WorkAuthorization.Countryof, new SelectList(Model.CountryofList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpCountryofIssuence" } })
+                    </div>
+
+                    <div class="col-sm-12" style="padding: 15px 15px; font-weight: bold;">Some aliens may write "N/A" on the Foreign Passport Number and Country of Issuance fields. ( See instructions)</div>
+
+                    <div class="col-sm-12">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label for="ChangeReason" class="col-sm-4 control-label "></label>
+                                <div class="col-sm-8">
+                                    @Html.RadioButton("List", 1, true)  LIST A <span style="float: right;">OR </span>
+                                </div>
+                            </div>
+                            <div id="dvListA">
+                                <div class="form-group">
+                                    <label for="ChangeReason" class="col-sm-4 control-label ">Cert/Recert Date :</label>
+                                    <div class="input-group" style="padding-right: 15px; padding-left: 15px;">
+                                        @Html.TextBoxFor(m => m.WorkAuthorization.CertificationDate, (Model.WorkAuthorization.CertificationDate == null ? "" : ((DateTime)Model.WorkAuthorization.CertificationDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtRecertA" })
+                                        <label for="dtRecertA" class="input-group-addon btn">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ChangeReason" class="col-sm-4 control-label ">List Type :</label>
+                                    <div class="col-sm-8">
+                                        @Html.Label("LIST A", htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ChangeReason" class="col-sm-4 control-label ">Document Title:*</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(m => m.WorkAuthorizationDocumentation.DocumentTitleA, new SelectList(Model.I9AcceptableDocuments1List, "ID", "Name"), "--Select--", new { @class = "form-control", @id = "ddlDocumentTitle1" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ChangeReason" class="col-sm-4 control-label ">Issuing Authority :</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.DocumentIssuingAuthorityA, new { @class = "form-control " })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ChangeReason" class="col-sm-4 control-label ">Document Number:</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.DocumentNumberA, new { @class = "form-control " })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ChangeReason" class="col-sm-4 control-label ">Expiration Date (if any):</label>
+                                    <div class="input-group" style="padding-right: 15px; padding-left: 15px;">
+                                        @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.ExpirationDateA, (Model.WorkAuthorizationDocumentation.ExpirationDateA == null ? "" : ((DateTime)Model.WorkAuthorizationDocumentation.ExpirationDateA).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtExpirationDateA" })
+                                        <label for="dtExpirationDateA" class="input-group-addon btn">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="changeReason" class="col-sm-4 control-label">Attachment</label>
+                                    <div class="col-sm-8">
+                                       @* @Html.TextBoxFor(m => m.WorkAuthorization.File, new { id = "fileUploader", type = "file", @class = "form-control" })*@
+                                    </div>
+                                </div>
+                                <div class="form-group" style="padding: 0px;">
+                                    @Html.Label("Selected File", new { @class = "col-sm-3 control-label" })
+                                    <div id="selectedFiles" class="col-sm-9" style="padding-top:7px;"></div>
+                                </div>
+                            </div>
+                            @if (Model.WorkAuthorization.AttachmentName != null)
+                            {
+                                <div class="form-group">
+                                    @Html.Label("Current File", new { @class = "col-sm-3 control-label required" })
+                                    <div class="col-sm-9">
+
+                                        <div class="upload">
+                                            <div style="width: 500px;">
+                                                <table id="uloadedFilesTable" border="1">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>File Name</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr id="@Model.WorkAuthorization.AttachmentName">
+                                                            <td>"@Model.WorkAuthorization.AttachmentName"</td>
+                                                            <td style="text-align: center">
+                                                                <a class="viewc" href="@Url.Action("OpenFile", "I9WorkAuthorization", new { @WorkAuthorizationId = Model.WorkAuthorization.WorkAuthorizationId })">
+                                                                    Open
+                                                                </a> |
+                                                                <a id="aDeletefile" class="viewc" href="@Url.Action("DeleteFile", "I9WorkAuthorization", new { @WorkAuthorizationId = Model.WorkAuthorization.WorkAuthorizationId })">
+                                                                    Delete
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-sm-7">
+                            <div class="form-group" style="padding-bottom: 5px;">
+                                <div class="col-sm-6">
+                                    @Html.RadioButton("List", 2, false) LIST B   <span style="float: right;">and </span>
+                                </div>
+                                <div class="col-sm-6">
+                                    LIST C
+                                </div>
+                            </div>
+                            <div id="dvListBC">
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.WorkAuthorization.CertificationDate, (Model.WorkAuthorization.CertificationDate == null ? "" : ((DateTime)Model.WorkAuthorization.CertificationDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtRecertB" })
+                                            <label for="dtRecertB" class="input-group-addon btn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        @Html.Label("LIST B", htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @Html.Label("LIST C", htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        @Html.DropDownListFor(m => m.WorkAuthorizationDocumentation.DocumentTitleB, new SelectList(Model.I9AcceptableDocuments2List, "ID", "Name"), "--Select--", new { @class = "form-control", @id = "ddlDocumentTitle2" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @Html.DropDownListFor(m => m.WorkAuthorizationDocumentation.DocumentTitleC, new SelectList(Model.I9AcceptableDocuments3List, "ID", "Name"), "--Select--", new { @class = "form-control", @id = "ddlDocumentTitle3" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.DocumentIssuingAuthorityB, new { @class = "form-control " })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.DocumentIssuingAuthorityC, new { @class = "form-control " })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.DocumentNumberB, new { @class = "form-control " })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.DocumentNumberC, new { @class = "form-control " })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.ExpirationDateB, (Model.WorkAuthorizationDocumentation.ExpirationDateB == null ? "" : ((DateTime)Model.WorkAuthorizationDocumentation.ExpirationDateB).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtExpirationDateB" })
+                                            <label for="dtExpirationDateB" class="input-group-addon btn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.WorkAuthorizationDocumentation.ExpirationDateC, (Model.WorkAuthorizationDocumentation.ExpirationDateC == null ? "" : ((DateTime)Model.WorkAuthorizationDocumentation.ExpirationDateC).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtExpirationDateC" })
+                                            <label for="dtExpirationDateC" class="input-group-addon btn">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8" style="padding: 15px 15px; font-weight: bold;">Some aliens may write "N/A" on the Foreign Passport Number and Country of Issuance fields. (See instructions)</div>
+                    <div class="col-sm-12" style="padding: 15px 15px;">
+                       
+                        @Html.ActionLink("Cancel", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })
+                        <button type="submit" class="btn btn-success" onclick="ValidateControls()">Save</button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var resultingSiteview = "<h1>I9Form<small>I9Form Details</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">I9Form</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        var aa = $("#optselect").val();
+        var CitizenOfUSValue = $("#CitizenOfUSValue").val();
+        if (CitizenOfUSValue != null && CitizenOfUSValue != "0")
+        { aa = CitizenOfUSValue; }
+        showhidediv(aa);
+        $(".iCheck-helper").click(function () {
+            var value = $(this).parent().find("#optselect").val();
+            var type = $(this).parent().find("#List").attr("Id");
+            showhidediv(value, type);
+            return false;
+        });
+        function showhidediv(aa, type) {
+            if (type != "List") {
+                if (aa == "1") {
+                    $('#divCitizen1').hide();
+                    $('#divCitizen2').hide();
+                    $('.i9eligibility1').parent().addClass("checked")
+                }
+                else if (aa == "2") {
+                    $('#divCitizen1').show();
+                    $('#divCitizen2').hide();
+                    $('.i9eligibility2').parent().addClass("checked")
+                }
+                else if (aa == "3") {
+                    $('#divCitizen1').hide();
+                    $('#divCitizen2').show();
+                    $('.i9eligibility3').parent().addClass("checked")
+                }
+            }
+
+        }
+
+    });
+
+    $(document).on("click", "#aDeletefile", function () {
+
+        if (!confirm("Are you sure you want to delete attachment?"))
+            return false;
+    });
+
+    function ValidateControls() {
+       
+        var align = jQuery.trim($("#txtAlign").val());
+        var admin = jQuery.trim($("#txtAdmin").val());
+        if ((align.length != 0) && (admin.length != 0)) {
+            alert('Please Select (Alien Registration Number / USCIS Number)  OR  (Form I-94 Admission Number).');
+            return false;
+        }
+
+        var expiredate = jQuery.trim($("#dtPermanentResidentExpire").val());
+        var today = new Date();
+        if (Date.parse(today) >= Date.parse(expiredate)) {
+            alert('Expire date should not be less than today\'s date');
+            return false;
+        }
+
+        var Authorisedate = jQuery.trim($("#dtAlienAuthorisedDate").val());
+        var today = new Date();
+        if (Date.parse(today) >= Date.parse(Authorisedate)) {
+            alert('Authorisedate should not be less than today\'s date');
+            return false;
+        }
+
+        var RecertAdate = jQuery.trim($("#dtRecertA").val());
+        var today = new Date();
+        if (Date.parse(today) >= Date.parse(RecertAdate)) {
+            alert('List A Certificate date should not be less than today\'s date');
+            return false;
+        }
+    }
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+    $(function () {
+        $(":file").attr('title', '  ');
+        $("input[id^='fileUploader']").change(function (e) {
+            $("#selectedFiles").empty();
+            doReCreate(e);
+        });
+        selDiv = $("#selectedFiles");
+    });
+
+    function doReCreate(e) {
+        //alert('a');
+        upc = upc + 1;
+        handleFileSelect(e);
+        $("input[id^='fileToUpload']").hide();
+        $('<input>').attr({
+            type: 'file',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+        }).appendTo('#uploaders');
+    }
+
+    function handleFileSelect(e) {
+        selDiv = document.querySelector("#selectedFiles");
+        if (!e.target.files) return;
+        files = e.target.files;
+        for (var i = 0; i < files.length; i++) {
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name +
+            "<a onclick='removeAtt(this)'> Delete </a></div>";
+            storedFiles.push(f.name);
+        }
+    }
+
+    function removeAtt(t) {
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+        $("input[id^='fileUploader']")[0].file[0];
+    }
+</script>

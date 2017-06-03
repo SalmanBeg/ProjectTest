@@ -1,0 +1,198 @@
+﻿@model HRSystem.Web.Models.MenuItemViewModels
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<style type="text/css">
+
+    .aside-first {
+        float: left;
+        width: 146px;
+        line-height: 55px;
+        padding-top: 62px;
+    }
+    .aside-second {
+        float: right;
+        width: 160px;
+        line-height: 55px;
+        padding-top: 62px;
+    }
+    .center {
+        margin: 0 auto;
+        width: 360px;
+        line-height: 55px;
+    }
+    .header {
+        position: absolute;
+        line-height: 55px;
+        margin: 0 auto;
+    }
+    .footer {
+        margin: 0 auto;
+        line-height: 55px;
+        bottom: 20px;
+        position: absolute;
+    }
+    .box1 {
+        width: 142px;
+        height: 58px;
+        border: 1px solid #00213e;
+        box-sizing: border-box;
+        background-color: #004c8e;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 16px;
+    }
+    .box {
+        width: 142px;
+        height: 58px;
+        border: 1px solid #00213e;
+        box-sizing: border-box;
+        background-color: #004c8e;
+        display: inline-block;
+        float: left;
+        margin-right: 2px;
+        font-size: 16px;
+        color: #fff;
+    }
+    .box2 {
+        width: 142px;
+        height: 58px;
+        border: 1px solid #00213e;
+        box-sizing: border-box;
+        background-color: #004c8e;
+        display: inline-block;
+        float: left;
+        margin-right: 2px;
+        font-size: 16px;
+        color: #fff;
+    }
+    #divFrame {
+        width: 728px;
+        float: left;
+        margin-bottom: 60px;
+    }
+
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Dashboard</h2>
+    </div>
+    <div class="panel-body">
+      
+
+        @foreach (var item in ViewBag.widgetList)
+        {
+            if (item.Zone == "AsideFirst" && item.RenderTitle == true)
+            {
+                <aside id="aside-first" class="aside-first">
+                    <div class="zone zone-aside-first">
+                        <article class="widget-aside-first widget-menu-widget widget">
+                            <nav>
+                                <div class="menu menu-main-menu">
+                                    @foreach (var menuitem in ViewBag.menuList)
+                                    {
+                                    <a href="@menuitem.URL" target="dashFrame">
+                                        <div class="box1" align="center">
+                                            @menuitem.Name
+                                        </div>
+                                    </a>
+                                    }
+                                </div>
+                            </nav>
+                        </article>
+                    </div>
+                </aside>
+            }
+            if (item.Zone == "AsideSecond" && item.RenderTitle == true)
+            {
+                <aside id="aside-second" class="aside-second">
+                    <div class="zone zone-aside-second">
+                        <article class="widget-aside-second widget-menu-widget widget">
+                            <nav>
+                                <div class="menu menu-main-menu">
+                                    @foreach (var menuitem in ViewBag.menuList)
+                                    {
+                                    <a href="@menuitem.URL" target="dashFrame">
+                                        <div class="box1" align="center">
+                                            @menuitem.Name
+                                        </div>
+                                    </a>
+                                    }
+                                </div>
+                            </nav>
+                        </article>
+                    </div>
+                </aside>
+            }
+            if (item.Zone == "Header" && item.RenderTitle == true)
+            {
+                <aside id="header" class="header">
+                    <div class="zone zone-header">
+                        <article class="widget-header widget-menu-widget widget">
+                            <nav>
+                                <div class="menu menu-main-menu">
+                                    @foreach (var menuitem in ViewBag.menuList)
+                                    {
+                                    <a href="@menuitem.URL" target="dashFrame"><div class="box" align="center">@menuitem.Name</div></a>
+                                    }
+                                </div>
+                            </nav>
+                        </article>
+                    </div>
+                </aside>
+            }
+            if (item.Zone == "Footer" && item.RenderTitle == true)
+            {
+                <aside id="footer" class="footer">
+                    <div class="zone zone-footer">
+                        <article class="widget-footer widget-menu-widget widget">
+                            <nav>
+                                <div class="menu menu-main-menu">
+                                    @foreach (var menuitem in ViewBag.menuList)
+                                    {
+                                    <a href="@menuitem.URL" target="dashFrame"><div class="box2" align="center">@menuitem.Name</div></a>
+                                    }
+                                </div>
+                            </nav>
+                        </article>
+                    </div>
+                </aside>
+            }
+            if (item.Zone == "Content" && item.RenderTitle == true)
+            {
+                <aside id="center" class="center">
+                    <div class="zone zone-center">
+                        <article class="widget-center widget-menu-widget widget">
+                            <nav>
+                                <div class="menu menu-main-menu">
+                                    @foreach (var menuitem in ViewBag.menuList)
+                                    {
+                                    <a href="@menuitem.URL" target="dashFrame"><div class="box1" align="center">@menuitem.Name</div></a>
+                                    }
+                                </div>
+                            </nav>
+                        </article>
+                    </div>
+                </aside>
+            }
+        }
+
+        <div id="divFrame" style="padding-top: 63px;">
+            <iframe id="dashFrame" name="dashFrame" width="720" height="650" style="border:2px solid #00213e; border-radius:0;"></iframe>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#dashFrame").attr('src', "/Dashboard/Index1");
+    });
+</script>

@@ -1,0 +1,115 @@
+﻿@model HRMS.Web.ViewModels.TrainingTrackFormModel
+@{
+    ViewBag.Title = "AddTrainingTrack";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddTrainingTrack", "TrainingTrack", FormMethod.Post, new { id = "trainingTrackForm", enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.TrainingTrack.TrainingTrackName, new { @class = "control-label required" })
+                @Html.TextBoxFor(m => m.TrainingTrack.TrainingTrackName, new { @class = "form-control", @maxlength = "100" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.TrainingTrack.TrainingTrackDescription, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.TrainingTrack.TrainingTrackDescription, new { @class = "form-control" })
+            </div>
+            @Html.HiddenFor(m => m.TrainingTrack.TrainingTrackId, new { @id = "hfTrainingId" })
+            @Html.HiddenFor(m => m.TrainingTrack.classIds, new {@id="hfclassIds" })
+            <div id="gridContent" style="padding-top:10px; ">
+                <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="trainingClassGridContent">
+                    <thead>
+                        <tr>
+                            <th data-sort-ignore="true">
+                                <input type="checkbox" id="chksa" />
+                                @Html.DisplayName("Select All")
+                            </th>
+                            <th>
+                                @{var modelitem = Model.TrainingClassList.FirstOrDefault(); }
+                                @Html.DisplayNameFor(m => modelitem.TrainingClassName)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TrainingClassList)
+                        {
+                                  <tr>
+                                        <td> 
+                                            <input type="checkbox" value="" data-val-1="@item.TrainingClassId" class="btncheckClasses" onchange="cbChange(this)" />
+                                            @*@foreach (var modelItem in Model.TrainingTrackClassList)
+                                            {
+
+                                                if (modelItem.TrainingClassId == item.TrainingClassId)
+                                                {
+                                                    <input type="checkbox" value="" data-val-1="@item.TrainingClassId" class="btncheckClasses" onchange="cbChange(this)" checked />
+                                                }
+                                               else
+                                                {
+                                                    <input type="checkbox" value="" data-val-1="@item.TrainingClassId" class="btncheckClasses" onchange="cbChange(this)" />
+                                                }
+                                            }*@
+                                        </td>
+                                        <td>
+                                            @Html.DisplayName((item.TrainingClassName))
+                                        </td>
+                                    </tr>
+                            }
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8">
+                                <div class="pagination pagination-centered hide-if-no-paging"></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="form-group">
+                <div class="control-button">
+                    
+                    @Html.ActionLink("Back", "SelectAllTrainingTrack", "TrainingTrack", null, new { @class = "btn btn-success", @style = "margin-left:10px" })
+                    <button type="submit" class="btn btn-success" id="btnSaveTrainingTrack">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        getClassId();
+
+       
+        var resultingSiteview = "<h1>Training Track</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../TrainingTrack/SelectAllTrainingTrack"' + ">Select Training Tracks</a></li><li class=" + '"active"' + ">Training Tracks</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+       
+    });
+    $('.btncheckClasses').on('ifChanged', function (event) {
+        getClassId();
+    });
+
+    var getClassId = function () {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var searchIDs = $("#trainingClassGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        if (searchIDs.toString().length > 0) {
+            $('#hfclassIds').attr('value', searchIDs.toString());
+        }
+    }
+   
+
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#trainingClassGridContent input:checkbox').iCheck('check');
+    });
+
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#trainingClassGridContent input:checkbox').iCheck('uncheck');
+    });
+</script>

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.OnBoarding>
+@{
+    ViewBag.Title = "SelectOnBoardingPartialByCompanyId";
+}
+<div class="content">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="onBoardingGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.OnBoardingName)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.Active)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.OnBoardingId" data-val-2="@item.OnBoardingName" class="btncheckdependent" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OnBoardingName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Active)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div>
+        <input class="btn btn-success" type="submit" value="Select" id="btnSelectConsent" onclick="return test() " />
+    </div>
+
+</div>
+
+<script type="text/javascript">
+        $("#btnSelectConsent").click(function () {
+            var searchIDs = $("#onBoardingGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $("#onBoardingGridContent").show();
+
+            }
+
+            else {
+
+                alert("Please select atleast one item(s) .");              
+                $("#onBoardingGridContent").modal('show');
+                return false;
+            }
+
+        });
+
+</script>
+
+@*<script type="text/javascript">
+    $("#btnSelectConsent").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var searchIDs = $("#onBoardingGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        if (searchIDs.toString().length > 0) {
+            var formData = $('#ConfigureEmployeeform').serialize() + '&ConsentIds=' + searchIDs.toString();
+            //$.ajax({
+            //    url: baseurl + "JobDuties/_JobDuties",
+            //    type: "POST",
+            //    cache: "false",
+            //    data: formData,
+            //    success: function (data) {
+            //        if (data == "True") {
+            //            window.location.href = baseurl + "Recruiting/CreateNewJob";
+            //        }
+            //    },
+            //    error: function (request, status, error) {
+            //    }
+            //});
+            error: function (request, status, error) {
+            }
+        }
+        else { alert("Please select item(s) to select."); }
+    });
+</script>*@

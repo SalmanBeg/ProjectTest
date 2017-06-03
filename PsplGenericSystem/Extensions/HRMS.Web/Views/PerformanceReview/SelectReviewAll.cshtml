@@ -1,0 +1,115 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.PerformanceReview>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllPerformanceManagement";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add", "AddReview", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteReview" })
+    @Html.ActionLink("<< Back to DashbBoard", "PerformanceDashboard", "PerformanceReview", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="ReviewGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    @Html.CheckBox("Check")
+                </th>
+                <th data-hide="phone">
+                    Review Name
+                </th>
+                <th data-hide="phone,tablet">
+                    Status
+                </th>
+                <th data-hide="phone,tablet">
+                    Open Reviews
+                </th>
+                <th data-hide="phone,tablet">
+                    Closed Reviews
+                </th>
+                <th >
+                    Action
+                </th>
+                <th >
+                    
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.ReviewId" id="chkprm" class="btncheckdependent" onchange="cbChange(this)" />
+                      
+                    </td>
+                    <td>
+                        @Html.ActionLink((item.Name).ToString(), "EditReview", new { @ReviewId = item.ReviewId }, new { id = "lnkReviewId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpenReviews)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClosedReviews)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Add Reviewer", "ReviewReviewer", new { @ReviewId = item.ReviewId })
+                    </td>
+                    <td>
+                        @Html.ActionLink(" Review Now", "#", new { @ReviewId = item.ReviewId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+
+   $(document).ready(function () {
+        var resultingSiteview = "<h1>Review List</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Review</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#btnDeleteReview").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#ReviewGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "PerformanceReview/DeleteReview",
+                    type: "POST",
+                    cache: "false",
+                    data: { ReviewIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+
+    });
+
+    $('.iCheck-helper').click(function () {
+        alert("khadar");
+
+    });
+    
+</script>

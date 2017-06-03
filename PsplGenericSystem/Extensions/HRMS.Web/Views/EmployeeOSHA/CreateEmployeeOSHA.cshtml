@@ -1,0 +1,326 @@
+﻿@model HRMS.Web.ViewModels.OshaFormModel
+@using System.Web.Optimization;dtFiledOn
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "CreateEmployeeOSHA";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script src="~/Scripts/plugins/jquery.maskedinput.js"></script>
+@using (Html.BeginForm("CreateEmployeeOSHA", "EmployeeOSHA", FormMethod.Post))
+{
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <fieldset>
+                    <legend>Osha Case Details</legend>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.CaseNumber, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.HiddenFor(m => m.EmployeeOSHA.UserId)
+                            @Html.HiddenFor(m => m.EmployeeOSHA.CompanyId)
+                            @Html.HiddenFor(m => m.EmployeeOSHA.EmployeeOSHAId)
+                            @Html.TextBoxFor(m => m.EmployeeOSHA.CaseNumber, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.IncidentDateTime, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.EmployeeOSHA.IncidentDateTime, (Model.EmployeeOSHA.IncidentDateTime == null ? "" : ((DateTime)Model.EmployeeOSHA.IncidentDateTime).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtIncidentdate" })
+                                    <label for="dtIncidentdate" class="input-group-addon btn">
+                                         @*<span class="glyphicon glyphicon-calendar"></span>*@
+                        @*</label>*@
+                        @*</div>*@
+                        </div>
+                    <div class="form-group">
+                        <div class="col-sm-8" style="float: right">
+                            @Html.CheckBoxFor(m => m.IsNotReported, new { @class = "col-sm-3 form-control" })
+                            @Html.LabelFor(m => m.EmployeeOSHA.IsNotReported, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.IncidentDateTime, new { @class = "col-sm-4 control-label required"})
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.EmployeeOSHA.IncidentDateTime, (Model.EmployeeOSHA.IncidentDateTime == null ? "" : ((DateTime)Model.EmployeeOSHA.IncidentDateTime).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtincidentdate", @maxlength = 10 })
+                                    <label for="txtincidentdate" class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                @Html.LabelFor(m => m.EmployeeOSHA.IncidentDateTime, new { @class = "col-sm-4 control-label  " })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.EmployeeOSHA.IncidentDateTime, new { @class = "form-control", @maxlength = "50" ,@id="casecloseddate"})
+                </div>
+            </div>*@
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.MedicalCosts, new { @class = "col-sm-4 control-label"})
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.EmployeeOSHA.MedicalCosts, new { @class = "form-control", @maxlength = "50", @id = "txtNumeric" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.Advisor, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.EmployeeOSHA.Advisor, new { @class = "form-control", @maxlength = "50" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.CaseClosedOn, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.EmployeeOSHA.CaseClosedOn, (Model.EmployeeOSHA == null ? "" : (Model.EmployeeOSHA.CaseClosedOn == null ? "" : ((DateTime)Model.EmployeeOSHA.CaseClosedOn).ToString("MM/dd/yyyy"))), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtCaseClosedOn" })
+                                    @*@Html.TextBoxFor(m => m.EmployeeOSHA.CaseClosedOn, (Model.EmployeeOSHA.CaseClosedOn == null ? "" : ((DateTime)Model.EmployeeOSHA.CaseClosedOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtCaseClosedOn" })*@
+                                    <label for="dtCaseClosedOn" class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.CompletedBy, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.EmployeeOSHA.CompletedBy, new { @class = "form-control", @maxlength = "50" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.JobTitle, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.EmployeeOSHA.JobTitle, new { @class = "form-control", @maxlength = "50" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.WorkPhone, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.EmployeeOSHA.WorkPhone, new { @class = "form-control phonemask", @maxlength = "50" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.EmployeeOSHA.FiledOn, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.EmployeeOSHA.FiledOn, (Model.EmployeeOSHA == null ? "" : (Model.EmployeeOSHA.FiledOn == null ? "" : ((DateTime)Model.EmployeeOSHA.FiledOn).ToString("MM/dd/yyyy"))), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtFiledOn" })
+                                    @*   @Html.TextBoxFor(m => m.EmployeeOSHA.FiledOn, (Model.EmployeeOSHA.FiledOn == null ? "" : ((DateTime)Model.EmployeeOSHA.FiledOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtFiledOn" })*@
+                                    <label for="dtFiledOn" class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+</fieldset>
+                @*<div class="form-group">
+                        <fieldset>
+                            <legend>ClaimType</legend>
+                            @foreach (var a in Model.ClaimTypeList)
+                            {
+                                @Html.RadioButtonFor(b => b.EmployeeOSHA.ClaimType, a.ID) @a.Name
+                            }
+                        </fieldset>
+                    </div>*@
+                @*<div class="form-group">
+                        <fieldset>
+                            <legend>OutCome</legend>
+                            @foreach (var a in Model.OutComeList)
+                            {
+                                <span class="rdbtn">@Html.RadioButtonFor(b => b.OutCome, a.ID, new { @id = a.Name.Replace(" ", string.Empty) })@a.Name</span>
+                            }
+                            @Html.TextBoxFor(b => b.EmployeeOSHA.Job_Tran_Restrict_Days, new { @class = "unhide", @style = "display:none", @id = "txtJobResrictdays" })
+                            @Html.TextBoxFor(b => b.EmployeeOSHA.Days_Away_From_Work, new { @class = "unhide", @style = "display:none" })
+                        </fieldset>
+                    </div>*@
+                <fieldset>
+                    <legend>Hospital Physician</legend>
+                    <div class="form-group">
+                        <div class="col-sm-8" style="float: right">
+                            @Html.CheckBoxFor(m => m.IsEmployeeinEmergency, new { @class = "form-control" }) @Html.LabelFor(m => m.EmployeeOSHA.IsEmployeeinEmergency)
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-sm-8" style="float: right">
+                            @Html.CheckBoxFor(m => m.IsEmployeeInPatient, new { @class = "form-control" }) @Html.LabelFor(m => m.EmployeeOSHA.IsEmployeeInPatient)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.Physician, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeeOSHA.Physician, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.Street, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeeOSHA.Street, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.Facility, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeeOSHA.Facility, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.City, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeeOSHA.City, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.CountryId, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeeOSHA.CountryId, new SelectList(Model.CountryList, "CountryRegionId", "Name"), "--Select--", new { @class = "form-control", @id = "drpdwncountry" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.StateId, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeeOSHA.StateId, new SelectList(Model.StateList, "StateProvinceId", "Name"), "--Select--", new { @class = "form-control", @id = "drpdwnstate" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.Zip, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeeOSHA.Zip, new { @class = "form-control zipmask", @maxlength = "50" })
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset>
+                    <legend>Incident Details</legend>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.IncidentDetailsMisc1, new { @class = "col-sm-10" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(m => m.EmployeeOSHA.IncidentDetailsMisc1, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.IncidentDetailsMisc2, new { @class = "col-sm-10" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(m => m.EmployeeOSHA.IncidentDetailsMisc2, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.IncidentDetailsMisc3, new { @class = "col-sm-10" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(m => m.EmployeeOSHA.IncidentDetailsMisc3, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Injury/illness Details</legend>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.InjuryDetailsMisc1, new { @class = "col-sm-10" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(m => m.EmployeeOSHA.InjuryDetailsMisc1, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.InjuryDetailsMisc2, new { @class = "col-sm-10" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(m => m.EmployeeOSHA.InjuryDetailsMisc2, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeeOSHA.InjuryDetailsMisc3, new { @class = "col-sm-10" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(m => m.EmployeeOSHA.InjuryDetailsMisc3, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">            
+            @Html.ActionLink("Cancel", "SelectAllEmployeeOSHA", "EmployeeOSHA", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+
+}
+<style>
+    .unhide {
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    $("#drpdwncountry").change(function () {
+        var countryregionId = $(this).val();
+        if (countryregionId != null && countryregionId != "") {
+            var baseurl1 = "../Account/FillStatesByCountryId";
+            $.getJSON(baseurl1, { CountryRegionId: countryregionId }, function (countryData) {
+                var select = $('#drpdwnstate');
+                select.html('');
+                $.each(countryData, function (index, itemData) {
+                    select.append($('<option/>', {
+                        value: itemData.StateProvinceID,
+                        text: itemData.Name,
+                    }));
+                });
+            });
+        }
+    });
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>OSHA<small>Add OSHA Case</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">OSHA</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $(".control-label").click(function () {
+            //alert('You clicked radio!');
+            if ($('input:radio[name=OutCome]:checked').val() == "JobtransferorRestriction") {
+                alert($('input:radio[name=type]:checked').val());
+                //$('#select-table > .roomNumber').attr('enabled',false);
+            }
+        });
+    });
+    $(".iCheck-helper").click(function () {
+        alert('You clicked radio!');
+        var Selectedvalue = $(this).val();
+        //OR
+        //var Selectedvalue = this.value;
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#txtNumeric').keydown(function (e) {
+            if (e.shiftKey || e.ctrlKey || e.altKey) {
+                e.preventDefault();
+            } else {
+                var key = e.keyCode;
+                if (!((key == 8) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+                    e.preventDefault();
+                }
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#dtCaseClosedOn").mask("99/99/9999");
+        $("#dtFiledOn").mask("99/99/9999");
+
+    });
+</script>
+@*<script type="text/javascript">
+    $(document).ready(function(){
+        $("#txtincidentdate").datepicker(
+        {                   
+            changeMonth:true,
+            changeYear:true,
+            maxDate:'-1d',
+    });
+    });
+
+    </script>*@
+    @*<script type="text/javascript">
+        $('#txtincidentdate').click(function () {
+            debugger;
+        var d = new Date();
+        var curr_year = d.getFullYear();
+        $("#txtincidentdate").datepicker(
+          { yearRange: '1900:'+ curr_year, changeMonth:true, changeYear:true, maxDate: '-1d'});
+    });
+    </script>*@

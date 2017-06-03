@@ -1,0 +1,251 @@
+﻿@model HRMS.Web.ViewModels.EmployeeDirectDepositFormModel
+@using HRMS.Common.Helpers
+@using System.Web.Optimization;
+
+@{
+    ViewBag.Title = "Direct Deposit Details";
+
+}
+
+<script src="~/Scripts/jquery-1.11.2.min.js"></script>
+<script src="~/Scripts/plugins/numericInput.min.js"></script>
+<div>
+    <div class="form-group">
+        <h4>This Account Will be Used for:</h4>
+        <div class="col-sm-offset-4 col-sm-6">
+            @Html.RadioButton("AccountType", "Full Net Deposit", true, new { @id = "Listchk" }) Full Net Deposit
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+
+            <label>
+
+                @Html.RadioButton("AccountType", "Partial Deposit", false, new { @id = "Radiochk" }) Partial Deposit
+
+            </label>
+        </div>
+    </div>
+</div>
+<br />
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "adddirectdepositview" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6" id="FullNetDeposit">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDirectDeposit.AccountType, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.HiddenFor(m => m.EmployeeDirectDeposit.CompanyId)
+                        @Html.HiddenFor(k => k.EmployeeDirectDeposit.EmployeeDirectDepositId)
+                        @Html.HiddenFor(m => m.EmployeeDirectDeposit.UserId)
+                        @Html.DropDownListFor(m => m.EmployeeDirectDeposit.AccountType, new SelectList(Model.AccountTypeList, "Id", "Name"), "--Select--", new { @class = "form-control required",@id = "accounttypedropdown" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDirectDeposit.TransitorABANumber, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeDirectDeposit.TransitorABANumber, new { @class = "form-control required", @maxlength = "10", @id = "input1" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDirectDeposit.AccountNumber, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeDirectDeposit.AccountNumber, new { @class = "form-control required", @maxlength = "50", @id = "input2" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDirectDeposit.Amount, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeDirectDeposit.Amount, new { @class = "form-control required", @maxlength = "50", @id = "input3" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 control-button">
+
+                        <input type="submit" id="btnDirectDepositCancel" value="Cancel" class="btn btn-success" />
+                        <input type="submit" id="btnDirectDepositSave" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@using (Html.BeginForm())
+{
+    <div style="display:none" id="PartialDeposit" class="col-sm-9" style="padding:0px">
+        <table class="table" id="container">
+            <thead style="background: #52b9e9; ">
+                <tr>
+                    <th>
+                        Account Type
+                    </th>
+                    <th>
+                        Transit/ABA Number
+                    </th>
+                    <th>
+                        Account Number
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        <span id="btnAdd" style="text-decoration:underline;">Add</span>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>
+
+                        @Html.DropDownListFor(m => m.EmployeeDirectDeposit.AccountType, new SelectList(Model.AccountTypeList, "Id", "Name"), "--Select--", new { @class = "form-control showdrp", @id = "accounttypedropdown"})
+
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.EmployeeDirectDeposit.TransitorABANumber, new { @class = "form-control required", @maxlength = "50" })
+                        @*<input type='text' id='DepositAccountType' name='DepositAccountType' />*@
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.EmployeeDirectDeposit.AccountNumber, new { @class = "form-control required", @maxlength = "50" })
+                        @*<input type='text' id='DepositABANumber' name='DepositABANumber' />*@
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.EmployeeDirectDeposit.Amount, new { @class = "form-control required", @maxlength = "50" })
+                        @*<input type='text' id='DepositAmount' name='DepositAmount' />*@
+                    </td>
+                    <td>
+                        <a onclick="$(this).parent().parent().remove();">x</a>
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                
+                <input type="submit" id="btnPartialDirectDepositCancel" value="Cancel" class="btn btn-success" />
+                <input type="submit" id="btnPartialDirectDepositSave" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+
+    </div>
+
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Employee<small>Add Direct Deposit</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li>Employee</li><li class=" + '"active"' + ">Direct Deposit Details</li><li>Add Direct Deposit</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+
+        $('.iCheck-helper').click(function () {
+            $("#FullNetDeposit").hide();
+            $("#Listchk").attr("disabled", "true");
+            $("#PartialDeposit").show();
+
+        });
+    });
+    $("#btnAdd").click(function (e) {
+        var ind = $("#PartialDeposit tr:last").find("input.iHidden").val();
+        var itemIndex = parseInt(ind);
+        itemIndex++;
+        e.preventDefault();
+        var newItem = $("<tr>" +
+            "<td><select  class='form-control'  id='EmployeeDirectDeposit_AccountType " + itemIndex + "__AccountType' name='EmployeeDirectDeposit[" + itemIndex + "].AccountType'><option value=1>--Select--</option><option value=2>Checking</option><option value=3>HSA Card</option><option value=4>Pay Card</option><option value=5>Savings</option></select></td>" +
+            "<td><input type='text' class='form-control' id='EmployeeDirectDeposit_TransitorABANumber " + itemIndex + "__AccountType' name='EmployeeDirectDeposit[" + itemIndex + "].TransitorABANumber'/></td>" +
+            "<td><input type='text' class='form-control' id='Deposit_" + itemIndex + "__AccountType' name='Deposit[" + itemIndex + "].AccounNumber'/></td>" +
+            "<td><input type='text' class='form-control' id='Deposit_" + itemIndex + "__ListValue' name='Deposit[" + itemIndex + "].Amount'  onkeypress = 'return IsNumeric(event);'/></td>" +
+             "<td><a onclick='$(this).parent().parent().remove();'>x</a></td>" +
+            "</tr>");
+        $("#container").append(newItem);
+
+    });
+
+
+
+
+    $('#btnDirectDepositSave').click(function (e) {     
+        debugger;
+        e.preventDefault();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';   
+        //if ($("#adddirectdepositview").valid()) { //if you use validation
+            $.ajax({
+                url: baseurl + "EmployeeDirectDeposit/_AddDirectDepositView",
+                type: "POST",
+                data: $("#adddirectdepositview").serialize(),
+                success: function (data) {
+                    if (data == "True") {
+                        LoadDirectDepositGrid();
+                    }
+                }
+            });
+        //}
+    });
+
+    $('#btnDirectDepositCancel').click(function (e) {
+        e.preventDefault();
+        LoadDirectDepositGrid();
+    });
+
+
+
+
+
+
+</script>
+
+@*<script type="text/javascript">
+        $("#btnAdd").click(function (e) {
+
+            var ind = $("#PartialDeposit tr:last").find("input.iHidden").val();
+            var itemIndex = parseInt(ind);
+            itemIndex++;
+            e.preventDefault();
+            var newItem = $("<tr>" +
+                "<td><select  class='form-control'  id='EmployeeDirectDeposit_AccountType " + itemIndex + "__AccountType' name='EmployeeDirectDeposit[" + itemIndex + "].AccountType'><option value=1>--Select--</option><option value=2>Checking</option><option value=3>HSA Card</option><option value=4>Pay Card</option><option value=5>Savings</option></select></td>" +
+                "<td><input type='text' class='form-control' id='EmployeeDirectDeposit_TransitorABANumber " + itemIndex + "__AccountType' name='EmployeeDirectDeposit[" + itemIndex + "].TransitorABANumber'/></td>" +
+                "<td><input type='text' class='form-control' id='Deposit_" + itemIndex + "__AccountType' name='Deposit[" + itemIndex + "].AccounNumber'/></td>" +
+                "<td><input type='text' class='form-control' id='Deposit_" + itemIndex + "__ListValue' name='Deposit[" + itemIndex + "].Amount'  onkeypress = 'return IsNumeric(event);'/></td>" +
+                 "<td><a onclick='$(this).parent().parent().remove();'>x</a></td>" +
+                "</tr>");
+            // $("#divappend").append(newItem);
+
+            $("#container").append(newItem);
+
+
+        });
+
+
+
+
+    </script>*@
+<script type="text/javascript">
+    var specialKeys = new Array();
+    specialKeys.push(8); //Backspace
+    function IsNumeric(e) {
+        var keyCode = e.which ? e.which : e.keyCode
+        var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+        document.getElementById(e.currentTarget.id).style.borderColor = ret ? "transparent" : "Red";
+        return ret;
+    }
+
+
+
+    $(function () {
+
+        $("#input1").numericInput();
+        $("#input2").numericInput();
+        $("#input3").numericInput();
+    });
+</script>
+
+
+
+
+

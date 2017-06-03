@@ -1,0 +1,2046 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{52D5A8EB-306C-48B7-8D0D-358EE9957642}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMS.Service</RootNamespace>
+    <AssemblyName>HRMS.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\HRMS.Service.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFrameworkExtras.EF6">
+      <HintPath>..\packages\EntityFrameworkExtras.EF6.1.0.0\lib\net45\EntityFrameworkExtras.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aspects\ExceptionLoggerAttribute.cs" />
+    <Compile Include="Aspects\ExceptionLoggerCallHandler.cs" />
+    <Compile Include="Aspects\LoggerAttribute.cs" />
+    <Compile Include="Aspects\LoggerCallHandler.cs" />
+    <Compile Include="Interfaces\IActivityLogRepository.cs" />
+    <Compile Include="Interfaces\IAlertTemplateRepository.cs" />
+    <Compile Include="Interfaces\ICompanyAnnouncementRepository.cs" />
+    <Compile Include="Interfaces\ICompanyDocumentRepository.cs" />
+    <Compile Include="Interfaces\ICompanyLevelSecurityRepository.cs" />
+    <Compile Include="Interfaces\ICertificationandLicenseRepository.cs" />
+    <Compile Include="Interfaces\ICompanyLinkRepository.cs" />
+    <Compile Include="Interfaces\ICompanyRepository.cs" />
+    <Compile Include="Interfaces\ICompensationProfileRepository.cs" />
+    <Compile Include="Interfaces\ICompetencyRepository.cs" />
+    <Compile Include="Interfaces\IConsentFormRepository.cs" />
+    <Compile Include="Interfaces\IDependentRepository.cs" />
+    <Compile Include="Interfaces\IDirectDepositRepository.cs" />
+    <Compile Include="Interfaces\IDocumentAdvancedCriteriaRepository.cs" />
+    <Compile Include="Interfaces\IDocumentBasicCriteriaRepository.cs" />
+    <Compile Include="Interfaces\IEmergencyContanctRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeAssetRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeDocumentRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IEmployeeFolderRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeNoConfigurationRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeNotesRepository.cs" />
+    <Compile Include="Interfaces\IEmployeePhotoRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeSignRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeSnapshotRepository.cs" />
+    <Compile Include="Interfaces\IEmployeeW4FormRepository.cs" />
+    <Compile Include="Interfaces\IFilesDBRepository.cs" />
+    <Compile Include="Interfaces\IHireConfigurationSetupRepository.cs" />
+    <Compile Include="Interfaces\IHolidayGroupRepository.cs" />
+    <Compile Include="Interfaces\IHolidayMasterRepository.cs" />
+    <Compile Include="Interfaces\IHolidayRepository.cs" />
+    <Compile Include="Interfaces\II9WorkAuthorizationRepository.cs" />
+    <Compile Include="Interfaces\IImportEmployeecsvRepository.cs" />
+    <Compile Include="Interfaces\IInterviewRepository.cs" />
+    <Compile Include="Interfaces\IJobApplicantRepository.cs" />
+    <Compile Include="Interfaces\IJobDutiesRepository.cs" />
+    <Compile Include="Interfaces\IJobPMERepository.cs" />
+    <Compile Include="Interfaces\IJobProfileRepository.cs" />
+    <Compile Include="Interfaces\IJobQualificationRepository.cs" />
+    <Compile Include="Interfaces\ILookUpTableRepository.cs" />
+    <Compile Include="Interfaces\ILunchRepository.cs" />
+    <Compile Include="Interfaces\IMailerRepository.cs" />
+    <Compile Include="Interfaces\IMailingInfoRepository.cs" />
+    <Compile Include="Interfaces\IManageGoalRepository.cs" />
+    <Compile Include="Interfaces\IMasterRepository.cs" />
+    <Compile Include="Interfaces\IOfferLetterRepository.cs" />
+    <Compile Include="Interfaces\IOnBoardingRepository.cs" />
+    <Compile Include="Interfaces\IOSHARepository.cs" />
+    <Compile Include="Interfaces\IOTPayTypeRepository.cs" />
+    <Compile Include="Interfaces\IOTPolicyTypeRepository.cs" />
+    <Compile Include="Interfaces\IOverTimePolicyRepository.cs" />
+    <Compile Include="Interfaces\IPayPeriodRepository.cs" />
+    <Compile Include="Interfaces\IPayPeriodTypeRepository.cs" />
+    <Compile Include="Interfaces\IPayRepository.cs" />
+    <Compile Include="Interfaces\IPayTypeRepository.cs" />
+    <Compile Include="Interfaces\IPerformanceReviewsRepository.cs" />
+    <Compile Include="Interfaces\IRatingScaleRepository.cs" />
+    <Compile Include="Interfaces\IRecruitingAnswersRepository.cs" />
+    <Compile Include="Interfaces\IRecruitingQuestionsRepository.cs" />
+    <Compile Include="Interfaces\IReviewCriteriaRepository.cs" />
+    <Compile Include="Interfaces\IReviewFormRepository.cs" />
+    <Compile Include="Interfaces\IRoleRepository.cs" />
+    <Compile Include="Interfaces\IRoundingRepository.cs" />
+    <Compile Include="Interfaces\IRoundMinuteRepository.cs" />
+    <Compile Include="Interfaces\IRoundTypeRepository.cs" />
+    <Compile Include="Interfaces\IScheduleEmployeeRepository.cs" />
+    <Compile Include="Interfaces\IScheduleGroupRepository.cs" />
+    <Compile Include="Interfaces\IScreenVerbiageRepository.cs" />
+    <Compile Include="Interfaces\ITalentManagementRepository.cs" />
+    <Compile Include="Interfaces\ITaxRepository.cs" />
+    <Compile Include="Interfaces\ITimesheetPolicyRepository.cs" />
+    <Compile Include="Interfaces\ITimeTypeRepository.cs" />
+    <Compile Include="Interfaces\ITrainingClassResourcesRepository.cs" />
+    <Compile Include="Interfaces\ITrainingClassScheduleRepository.cs" />
+    <Compile Include="Interfaces\ITrainingClassRepository.cs" />
+    <Compile Include="Interfaces\ITrainingEmployeeRepository.cs" />
+    <Compile Include="Interfaces\ITrainingTrackRepository.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Interfaces\IRegisteredUsersRepository.cs" />
+    <Compile Include="Interfaces\IUtilityRepository.cs" />
+    <Compile Include="Interfaces\IW4FormRepository.cs" />
+    <Compile Include="Models\EDM\ActivityLog.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\AlertCriteriaSaveLog.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\AlertSendCriteria.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\AlertSendType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\AlertTemplate.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ApplicantAchievementsAndAssociations.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ApplicantEducation.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ApplicantEmploymentHistory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ApplicantInterview.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Attendance.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\AttendanceException.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CandidateHiringComments.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CandidateOfferLetter.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CertificationandLicense.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CertificationLicenseArea.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CertificationLicenseCertification.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CertificationLicenseJobAssignment.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CertificationLicenseSchool.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CertificationLicenseType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ChangeReason.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ClaimType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ClockData.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ClockDataAudit.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ClockDevice.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ClockDeviceAttendanceLog.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ClockDevicesAssigndEmployee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ClockLocation.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ClockProfile.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompanyAnnouncement.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompanyDocument.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompanyInfo.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompanyLevelSaveLog.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompanyLevelSecurity.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompanyLink.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompensationFrequency.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompensationProfile.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompensatoryEmployeeHistory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CompensatoryTimePlan.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Competency.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ConsentForms.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ContractStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\CountryRegion.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\DegreeLevel.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Department.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\DirectDepositAccountType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\DocumentAdvancedCriteria.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\DocumentBasicCriteria.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\DocumentCategory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\DocumentSendCriteria.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\DocumentSendType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EEOCode.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Employee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeAlert.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeAsset.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeDependent.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeDirectDeposit.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeDocument.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeEmergencyContact.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeFilterCriteria.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeFolder.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeGoal.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeGoalRemainder.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeLevelSecurity.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeNoConfiguration.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeNote.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeOSHA.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeePay.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeePhoto.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeSign.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeTax.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmployeeW4Form.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmploymentStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\EmploymentType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Endorsement.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Essential.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Ethnicity.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ExceptionLog.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ExpenseEmployee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ExpenseReport.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ExpenseType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\FederalBlock.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\FilesDB.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\FLSAStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\fn_Split_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Form.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\FormLevelSecurity.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Frequency.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Gender.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\GetReviewReviewerDetails_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\GLCode.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\GoalRecurrence.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Graduated.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HireApprovalSetup.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HireConfigurationSetup.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HireStepMaster.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Holiday.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HolidayGroup.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HolidayMaster.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HonoraryRecognition.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HRMS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRMS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HRMS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HRMS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HRMS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\HTABLES.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\I9AcceptableDocuments1.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\I9AcceptableDocuments2.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\I9AcceptableDocuments3.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\I9Form_SelectDocumentTileByCompanyID_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ImportEmployeedata.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ImportMap.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ImportProfile.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ImportTable.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\InfractionType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Interview.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobApplicant.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobApplied.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobCategory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobCostNumber.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobDuties.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobInterviewers.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobPME.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobProfile.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobQualification.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobQualificationType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\JobRecruiter.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\LaborLevel5.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Location.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Lunch.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\MailingInfo.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ManageSecurityCriteria.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\MaritalStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Module.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ModuleLevelSecurity.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\NTFGoal.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\OnBoarding.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Other.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\OTPayType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\OTPolicyType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\OutCome.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\OverTimePolicy.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\PayFrequency.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\PayGrade.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\PayPeriodHistory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\PayPeriodHour.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\PayPeriods.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\PayPeriodType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\PayStatus.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\PayType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Position.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Priority.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Project.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\RateMatrix.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\RecruitingAnswers.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\RecruitingQuestions.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\RegisteredUsers.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Relationship.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReportList.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Review.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewCriteria.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewCriteriaCategory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewCriteriaType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Reviewee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Reviewer.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewerEmployee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewMaster.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewResponseType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewReviewer.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewReviewerCriteria.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewReviewerOtherEmployee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewReviewerScoreDetails.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewSchedule.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewScore.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewScoreContent.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ReviewScoreDescription.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\RoleMaster.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Rounding.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\RoundMinute.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\RoundType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Rule.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\RulesErrorLog.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Salutation.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ScheduleArchiveEmployee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ScheduleEmployee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ScheduleGroup.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SchoolBlock.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SchoolDistrict.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ScreenVerbiage.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SecurityRole.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SelectRecruitingAnswers_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SendingAlertCondition.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SendingAlertDuration.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SendingAlertSchedule.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SendingAlertTiming.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SendingAlertVia.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\ShiftPremium.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\sp_helpdiagrams_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SSMedBlock.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\StateProvince.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\StockOptionType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Suffix.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\SUISDIBlock.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TalentManagement.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TaxBlock.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TerminationReason.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimeOffApproval.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimeOffEmployee.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimeOffEmployeeHistory.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimeOffMaster.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimeOffPlan.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimeOffService.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimeProfile.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Timesheet.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimesheetArchive.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimesheetArchiveShift.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimesheetAudit.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimesheetDetailsCustamization.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimesheetPolicy.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimesheetShift.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Timesheetsubmission.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimesheetType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TimeType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TrainingClass.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TrainingClassResource.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TrainingClassSchedule.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TrainingClassScheduleDate.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TrainingEmployeeView.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TrainingTrack.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\TrainingTrackClass.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\UnionType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\UserCompany.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\UserConsentDocument.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\UserRole.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ActivityLogSelectByCompanyId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_AlertSendCriteriaSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_AlertSendTypeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_AlertTemplateSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_AlertTemplateSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ApplicantAchievementsAndAssociationsSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ApplicantEducationSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ApplicantEmploymentHistorySelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ApplicantJobs_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_BudgetDetailSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_BudgetDetailSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_BudgetDetailUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CalculateReviewScore_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CertificationLicensesSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CertificationLicensesSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyAnnouncementSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyAnnouncementSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyDocumentSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyDocumentSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyInfoInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyInfoSelectAllByCompanyId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyInfoSelectAllByRoleId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyInfoSelectAllCompanies_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyInfoSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyInfoUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyLinkSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompanyLinkSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompensationPlanSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompensationPlanSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompetencySelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CompetencySelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ComplianceCodeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ComplianceCodeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ConsentFormsSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ConsentFormsSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ConsentFormsUpdateSignFileId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CountryRegionInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CountryRegionSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CountryRegionSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_CountryRegionUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentAdvancedCriteriaInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentAdvancedCriteriaSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentAdvancedCriteriaSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentAdvancedCriteriaUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentBasicCriteriaInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentBasicCriteriaSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentBasicCriteriaSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentBasicCriteriaUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentSendCriteriaInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentSendCriteriaSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentSendCriteriaSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentSendCriteriaUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentSendTypeInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentSendTypeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentSendTypeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_DocumentSendTypeUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeAlertSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeAssetSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeAssetSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDependentInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDependentSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDependentSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDependentUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDirectDepositInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDirectDepositSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDirectDepositSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDirectDepositUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDocumentInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDocumentSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDocumentSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeDocumentUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeEmergencyContactInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeEmergencyContactSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeEmergencyContactSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeFolderSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeFolderSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeFolderUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeInsertORUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeNotesSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeNotesSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeNotesUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeOSHASelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeOSHASelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeOSHAUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeePayInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeePaySelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeePayUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeePhotoInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeePhotoSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeePhotoUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeSignInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeSignReviewSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeSignSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeSignSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeSignUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeSnapshotSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeTaxInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeTaxSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmployeeTaxUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_Employeew4FormsSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_EmploymentDetailInsertORUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_FilesDBSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_FilesDBSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_FilesDBUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetAllReviewCriteriaById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetAllReviewCriteria_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetAllReviewDetails_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetAllReviewScoreContent_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetCompanyLevelSecurityCriteriaById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetCompetencyById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetDutiesCategoryByID_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetEmployeeFilterCriteria_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetEmployeePayPeriodDates_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetOtherSelectedEmployee_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewCriteriaById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewCriteriaQuestions_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewCriteriaTypes_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewFormDetailsForHR_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewFormDetails_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewReviewerDetails_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewReviewerScoreDetails_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewsById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewScoreById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewScoreContent_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetReviewScore_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetScoreContent_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetTrainingClassResourcesByClassId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetTrainingClassResources_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetTrainingClassScheduleDates_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetTrainingClassSchedulesByClassId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetTrainingClassSchedulesById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_GetTrainingClassSchedules_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HireApprovalSetupSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HireConfigurationSetupInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HireConfigurationSetupSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HireConfigurationSetupUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HireStepMasterSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HolidayGroupSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HolidayGroupSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HolidayMasterByHolidayGroupSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HolidayMasterSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HolidayMasterSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HolidaysSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_HolidaysSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments1Insert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments1SelectByCompanyID_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments1Select_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments1Update_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments2Insert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments2SelectByCompanyID_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments2Select_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments2Update_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments3Insert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments3SelectByCompanyID_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments3Select_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_I9AcceptableDocuments3Update_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_InterviewSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_InterviewSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobApplicantSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobApplicantSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobApplicantSelect_Result1.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobAppliedSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobDutiesInsertORUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobDutiesSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobDutiesSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobPMESelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobPMESelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobProfileGetPreview_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobProfileSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobProfileSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobQualificationSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobQualificationSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobRecruiterSelectByJobId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_JobRequisitionDetailSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ListCompanyMenu_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ListFormLevelSecurityForManaging_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ListFormLevelSecurity_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ListModuleLevelSecurityForManaging_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ListModuleLevelSecurity_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_LocationUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_LookUpDataSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_LookUpDataSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_LunchSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_LunchSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ManageSecurityCriteriaSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_NewUserConfigurationSetupSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OnBoardingSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OnBoardingSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OnBoardingUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OTPayTypeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OTPayTypeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OTPolicyTypeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OTPolicyTypeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OverTimePolicySelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_OverTimePolicySelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_PayPeriodsSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_PayPeriodsSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_PayPeriodTypeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_PayPeriodTypeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_PayTypeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_PayTypeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_PositionDetailSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_PositionDetailSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RecruitingAnswersInsertORUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RecruitingQuestionsInsertORUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RecruitingQuestionsSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RecruitingQuestionsSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RegisteredUsersInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RegisteredUsersSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RegisteredUsersUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ResetDatabase_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoleMasterSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoleMasterSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoleMasterUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoundingSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoundingSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoundMinutesSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoundMinutesSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoundTypeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_RoundTypeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduledTasksInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduledTasksSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduledTasksUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduleEmployeeInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduleEmployeeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduleEmployeeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduleEmployeeUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduleGroupInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduleGroupSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduleGroupSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScheduleGroupUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ScreenVerbiageSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SecurityRoleDetailSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SecurityRoleDetailSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectAllEmployeesByPayPeriodIdAndCompanyIdForSchedule_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectAllManagers_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectAllReviewCriteria_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectConsentFormsByOnBoardingId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectConsentFormsByUserId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeByCompanyId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeByDepartment_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeByDivision_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeByEmploymentStatus_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeByEmploymentType_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeByJob_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeByLocation_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeByPosition_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeeNoConfigurationbyCompanyId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeesByCompanyId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectEmployeesByRoleId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectNewHires_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectOnBoardingById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectQuestionType_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectRecruitingAnswers_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectSuperAdmins_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_SelectUsersByUsername_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ShowAllEmployeesPendingListByCompanyId_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_StateProvinceSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_StateProvinceSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TalentManagementSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TalentManagementSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TimesheetPoliciesSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TimeTypeInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TimeTypeSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TimeTypeSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TimeTypeUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TrainingClassSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TrainingClassSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TrainingEmployeeViewSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TrainingEmployeeViewSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TrainingTrackClassSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TrainingTrackClassSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TrainingTrackSelectById_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_TrainingTrackSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_UserRoleInsert_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_UserRoleUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_usp_CompensationPlanSelectAllSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_usp_CompensationPlanSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_UtilityTablesSelect_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ValidateApplicant_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_ValidateUser_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_WorkAuthorizationInsertORUpdate_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\usp_WorkAuthorizationSelectAll_Result.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\Variable.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WageType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WageUnit.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WCJobClassCode.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WCStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WCType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WithholdingStatu.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WorkAuthorization.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WorkAuthorizationDocumentation.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WorkAuthorizationDocumentationType.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WorkersCompCode.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EDM\WorkProfile.cs">
+      <DependentUpon>HRMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ExtendedModels\AccountabilityQuestionReview.cs" />
+    <Compile Include="Models\ExtendedModels\AlertTemplate.cs" />
+    <Compile Include="Models\ExtendedModels\ApplicantAchievementsAndAssociations.cs" />
+    <Compile Include="Models\ExtendedModels\ApplicantEducation.cs" />
+    <Compile Include="Models\ExtendedModels\ApplicantEmploymentHistory.cs" />
+    <Compile Include="Models\ExtendedModels\CertificationandLicense.cs" />
+    <Compile Include="Models\ExtendedModels\CompanyAnnouncement.cs" />
+    <Compile Include="Models\ExtendedModels\CompanyDocument.cs" />
+    <Compile Include="Models\ExtendedModels\CompanyInfo.cs" />
+    <Compile Include="Models\ExtendedModels\CompanyLevelSecurity.cs" />
+    <Compile Include="Models\ExtendedModels\CompanyLink.cs" />
+    <Compile Include="Models\ExtendedModels\CompensationProfile.cs" />
+    <Compile Include="Models\ExtendedModels\Competency.cs" />
+    <Compile Include="Models\ExtendedModels\ConsentForm.cs" />
+    <Compile Include="Models\ExtendedModels\CountryRegion.cs" />
+    <Compile Include="Models\ExtendedModels\DocumentAdvancedCriteria.cs" />
+    <Compile Include="Models\ExtendedModels\DocumentCategory.cs" />
+    <Compile Include="Models\ExtendedModels\DocumentBasicCriteria.cs" />
+    <Compile Include="Models\ExtendedModels\Employee.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeAsset.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeDependent.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeDirectDeposit.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeDocument.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeEmergencyContact.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeFolder.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeGoal.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeGoalRemainder.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeNoConfiguration.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeNote.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeOSHA.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeePay.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeePhoto.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeReviewScore.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeSign.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeSnapshot.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeTax.cs" />
+    <Compile Include="Models\ExtendedModels\EmployeeW4Form.cs" />
+    <Compile Include="Models\ExtendedModels\ExceptionLog.cs" />
+    <Compile Include="Models\ExtendedModels\FilesDB.cs" />
+    <Compile Include="Models\ExtendedModels\Form.cs" />
+    <Compile Include="Models\ExtendedModels\GoalRecurrence.cs" />
+    <Compile Include="Models\ExtendedModels\HireApprovalSetup.cs" />
+    <Compile Include="Models\ExtendedModels\HireConfigurationSetup.cs" />
+    <Compile Include="Models\ExtendedModels\HireStepMaster.cs" />
+    <Compile Include="Models\ExtendedModels\Holiday.cs" />
+    <Compile Include="Models\ExtendedModels\HolidayGroup.cs" />
+    <Compile Include="Models\ExtendedModels\HolidayMaster.cs" />
+    <Compile Include="Models\ExtendedModels\I9AcceptableDocuments.cs" />
+    <Compile Include="Models\ExtendedModels\I9Form.cs" />
+    <Compile Include="Models\ExtendedModels\NTFGoal.cs" />
+    <Compile Include="Models\ExtendedModels\RecruitingAnswers.cs" />
+    <Compile Include="Models\ExtendedModels\Interview.cs" />
+    <Compile Include="Models\ExtendedModels\WorkAuthorization.cs" />
+    <Compile Include="Models\ExtendedModels\ImportEmployee.cs" />
+    <Compile Include="Models\ExtendedModels\ImportEmployeedata.cs" />
+    <Compile Include="Models\ExtendedModels\JobApplicant.cs" />
+    <Compile Include="Models\ExtendedModels\JobCategory.cs" />
+    <Compile Include="Models\ExtendedModels\JobCompensationDetail.cs" />
+    <Compile Include="Models\ExtendedModels\JobComplianceCode.cs" />
+    <Compile Include="Models\ExtendedModels\JobDuties.cs" />
+    <Compile Include="Models\ExtendedModels\JobPME.cs" />
+    <Compile Include="Models\ExtendedModels\JobProfile.cs" />
+    <Compile Include="Models\ExtendedModels\JobProfileDetails.cs" />
+    <Compile Include="Models\ExtendedModels\JobQualification.cs" />
+    <Compile Include="Models\ExtendedModels\LookUpDataEntity.cs" />
+    <Compile Include="Models\ExtendedModels\Lunch.cs" />
+    <Compile Include="Models\ExtendedModels\Module.cs" />
+    <Compile Include="Models\ExtendedModels\ModuleSecurity.cs" />
+    <Compile Include="Models\ExtendedModels\OnBoarding.cs" />
+    <Compile Include="Models\ExtendedModels\OrganizationMenu.cs" />
+    <Compile Include="Models\ExtendedModels\OTPayType.cs" />
+    <Compile Include="Models\ExtendedModels\OTPolicyType.cs" />
+    <Compile Include="Models\ExtendedModels\OvertimePolicy.cs" />
+    <Compile Include="Models\ExtendedModels\PayPeriods.cs" />
+    <Compile Include="Models\ExtendedModels\PayPeriodType.cs" />
+    <Compile Include="Models\ExtendedModels\PayType.cs" />
+    <Compile Include="Models\ExtendedModels\PerformanceReview.cs" />
+    <Compile Include="Models\ExtendedModels\PositionDetails.cs" />
+    <Compile Include="Models\ExtendedModels\RecruitingQuestions.cs" />
+    <Compile Include="Models\ExtendedModels\RevieewCriteria.cs" />
+    <Compile Include="Models\ExtendedModels\Review.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewCriteria.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewCriteriaCategory.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewCriteriaFill.cs" />
+    <Compile Include="Models\ExtendedModels\Reviewee.cs" />
+    <Compile Include="Models\ExtendedModels\Reviewer.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewerEmployee.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewFormModel.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewMaster.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewResponseType.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewReviewerCriteria.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewReviewerOtherEmployee.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewSchedule.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewScore.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewScoreContent.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewScoreContentDescription.cs" />
+    <Compile Include="Models\ExtendedModels\ReviewScoreDescription.cs" />
+    <Compile Include="Models\ExtendedModels\RoleMaster.cs" />
+    <Compile Include="Models\ExtendedModels\Rounding.cs" />
+    <Compile Include="Models\ExtendedModels\RoundMinute.cs" />
+    <Compile Include="Models\ExtendedModels\RoundType.cs" />
+    <Compile Include="Models\ExtendedModels\ScheduledTasks.cs" />
+    <Compile Include="Models\ExtendedModels\ScheduleEmployee.cs" />
+    <Compile Include="Models\ExtendedModels\ScheduleGroup.cs" />
+    <Compile Include="Models\ExtendedModels\ScreenVerbiage.cs" />
+    <Compile Include="Models\ExtendedModels\StateProvince.cs" />
+    <Compile Include="Models\ExtendedModels\SubmittedNewHires.cs" />
+    <Compile Include="Models\ExtendedModels\TalentManagement.cs" />
+    <Compile Include="Models\ExtendedModels\TimeAttendanceLookupData.cs" />
+    <Compile Include="Models\ExtendedModels\TimesheetPolicy.cs" />
+    <Compile Include="Models\ExtendedModels\TimeType.cs" />
+    <Compile Include="Models\ExtendedModels\TrainingClass.cs" />
+    <Compile Include="Models\ExtendedModels\TrainingClassResource.cs" />
+    <Compile Include="Models\ExtendedModels\TrainingClassSchedule.cs" />
+    <Compile Include="Models\ExtendedModels\TrainingClassScheduleDate.cs" />
+    <Compile Include="Models\ExtendedModels\TrainingEmployeeView.cs" />
+    <Compile Include="Models\ExtendedModels\TrainingTrack.cs" />
+    <Compile Include="Models\ExtendedModels\UserFiles.cs" />
+    <Compile Include="Models\ExtendedModels\UserLoginModel.cs" />
+    <Compile Include="Models\ExtendedModels\UserSignUp.cs" />
+    <Compile Include="Models\ExtendedModels\WorkAuthorizationDocumentation.cs" />
+    <Compile Include="Models\ExtendedModels\WorkAuthorizationDocumentationType.cs" />
+    <Compile Include="Models\ExtensionProc\ExtendedStoredProcedures.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ActivityLogRepository.cs" />
+    <Compile Include="Repositories\AlertTemplateRepository.cs" />
+    <Compile Include="Repositories\CompanyAnnouncementRepository.cs" />
+    <Compile Include="Repositories\CompanyDocumentRepository.cs" />
+    <Compile Include="Repositories\CompanyLevelSecurityRepository.cs" />
+    <Compile Include="Repositories\CertificationandLicenseRepository.cs" />
+    <Compile Include="Repositories\CompanyLinkRepository.cs" />
+    <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\CompensationProfileRepository.cs" />
+    <Compile Include="Repositories\CompetencyRepository.cs" />
+    <Compile Include="Repositories\ConsentFormRepository.cs" />
+    <Compile Include="Repositories\DependentRepository.cs" />
+    <Compile Include="Repositories\DirectDepositRepository.cs" />
+    <Compile Include="Repositories\DocumentAdvancedCriteriaRepository.cs" />
+    <Compile Include="Repositories\DocumentBasicCriteriaRepository.cs" />
+    <Compile Include="Repositories\EmergencyContactRepository.cs" />
+    <Compile Include="Repositories\EmployeeAssetRepository.cs" />
+    <Compile Include="Repositories\EmployeeDocumentRepository.cs" />
+    <Compile Include="Repositories\EmployeeFolderRepository.cs" />
+    <Compile Include="Repositories\EmployeeNoConfigurationRepository.cs" />
+    <Compile Include="Repositories\EmployeeNotesRepository.cs" />
+    <Compile Include="Repositories\EmployeePhotoRepository.cs" />
+    <Compile Include="Repositories\EmployeeRepository.cs" />
+    <Compile Include="Repositories\EmployeeSignRepository.cs" />
+    <Compile Include="Repositories\EmployeeSnapshotRepository.cs" />
+    <Compile Include="Repositories\EmployeeW4FormRepository.cs" />
+    <Compile Include="Repositories\FilesDBRepository.cs" />
+    <Compile Include="Repositories\HireConfigurationSetupRepository.cs" />
+    <Compile Include="Repositories\HolidayGroupRepository.cs" />
+    <Compile Include="Repositories\HolidayMasterRepository.cs" />
+    <Compile Include="Repositories\HolidayRepository.cs" />
+    <Compile Include="Repositories\I9WorkAuthorizationRepository.cs" />
+    <Compile Include="Repositories\ImportEmployeecsvRepository.cs" />
+    <Compile Include="Repositories\InterviewRepository.cs" />
+    <Compile Include="Repositories\JobApplicantRepository.cs" />
+    <Compile Include="Repositories\JobDutiesRepository.cs" />
+    <Compile Include="Repositories\JobPMERepository.cs" />
+    <Compile Include="Repositories\JobProfileRepository.cs" />
+    <Compile Include="Repositories\JobQualificationRepository.cs" />
+    <Compile Include="Repositories\LookUpTableRepository.cs" />
+    <Compile Include="Repositories\LunchRepository.cs" />
+    <Compile Include="Repositories\MailerRepository.cs" />
+    <Compile Include="Repositories\MailingInfoRepository.cs" />
+    <Compile Include="Repositories\ManageGoalRepository.cs" />
+    <Compile Include="Repositories\MasterRepository.cs" />
+    <Compile Include="Repositories\OfferLetterRepository.cs" />
+    <Compile Include="Repositories\OnBoardingRepository.cs" />
+    <Compile Include="Repositories\OSHARepository.cs" />
+    <Compile Include="Repositories\OTPayTypeRepository.cs" />
+    <Compile Include="Repositories\OTPolicyTypeRepository.cs" />
+    <Compile Include="Repositories\OverTimePolicyRepository.cs" />
+    <Compile Include="Repositories\PayPeriodRepository.cs" />
+    <Compile Include="Repositories\PayPeriodTypeRepository.cs" />
+    <Compile Include="Repositories\PayRepository.cs" />
+    <Compile Include="Repositories\PayTypeRepository.cs" />
+    <Compile Include="Repositories\PerformanceReviewRepository.cs" />
+    <Compile Include="Repositories\RatingScaleRepository.cs" />
+    <Compile Include="Repositories\RecruitingAnswersRepository.cs" />
+    <Compile Include="Repositories\RecruitingQuestionsRepository.cs" />
+    <Compile Include="Repositories\ReviewCriteriaRepository.cs" />
+    <Compile Include="Repositories\ReviewFormRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\RoundingRepository.cs" />
+    <Compile Include="Repositories\RoundMinuteRepository.cs" />
+    <Compile Include="Repositories\RoundTypeRepository.cs" />
+    <Compile Include="Repositories\ScheduleEmployeeRepository.cs" />
+    <Compile Include="Repositories\ScheduleGroupRepository.cs" />
+    <Compile Include="Repositories\ScreenVerbiageRepository.cs" />
+    <Compile Include="Repositories\TalentManagementRepository.cs" />
+    <Compile Include="Repositories\TAMasterTableRepository.cs" />
+    <Compile Include="Repositories\TaxRepository.cs" />
+    <Compile Include="Repositories\TimeTypeRepository.cs" />
+    <Compile Include="Repositories\TrainingClassResourcesRepository.cs" />
+    <Compile Include="Repositories\TrainingClassScheduleRepository.cs" />
+    <Compile Include="Repositories\TrainingClassRepository.cs" />
+    <Compile Include="Repositories\TrainingEmployeeRepository.cs" />
+    <Compile Include="Repositories\TrainingTrackRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\RegisteredUsersRepository.cs" />
+    <Compile Include="Repositories\UtilityRepository.cs" />
+    <Compile Include="Repositories\W4FormRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Models\EDM\HRMS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HRMS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\EDM\HRMS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HRMS.edmx</DependentUpon>
+      <LastGenOutput>HRMS.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Models\EDM\HRMS.edmx.diagram">
+      <DependentUpon>HRMS.edmx</DependentUpon>
+    </None>
+    <None Include="Models\EDM\HRMS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HRMS.edmx</DependentUpon>
+      <LastGenOutput>HRMS.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\HRMS.Service.dll" />
+    <Content Include="bin\Debug\HRMS.Service.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\HRMS.Common\HRSystem.Common.Employee.csproj">
+      <Project>{dca43604-53f1-49e5-9234-30a245809b1e}</Project>
+      <Name>HRSystem.Common.Employee</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,174 @@
+﻿@model HRMS.Web.ViewModels.JobProfileFormModel
+@using HRMS.Common.Enums
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper
+@{
+    ViewBag.Title = "RecruitingDashboard";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>
+                    <span>0</span>
+                </h3>
+                <p>
+                   Create New Job
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-compose"></i>
+            </div>
+            <a href="~/Recruiting/CreateNewJob?Mode=Add" class="small-box-footer">Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">              
+                    <h3>
+                        @Html.DisplayFor(m=> m.DashboardCount.NewHireCount)
+                    </h3>                             
+                <p>
+                    My Job
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-document"></i>
+            </div>
+            <a href="~/Recruiting/MyJobs" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>0
+                </h3>
+                <p>
+                    My Candidates
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-ios7-people"></i>
+            </div>
+            <a href="~/Recruiting/Candidates" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>0
+                </h3>
+                <p>
+                    Resume Database
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-social-buffer"></i>
+            </div>
+
+            <a href="~/Recruiting/ResumeDatabase" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+       @*<div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-lime">
+            <div class="inner">
+                <h3>
+                    <span>0</span>
+                </h3>
+                <p>
+                   Manage Users
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-unlocked"></i>
+            </div>
+            <a href="~/Home/SelectOnBoardingStep" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-fuchsia">
+            <div class="inner">
+                <h3>0</h3>                   
+                <p>
+                    Manage Companies
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-briefcase"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+               More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-teal">
+            <div class="inner">
+                <h3>0
+                </h3>
+                <p>
+                    Get Job Widget
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-code"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3>0
+                </h3>
+                <p>
+                    My Account
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-folder"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->*@
+
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>Administration<small>Recruiting Dashboard</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li>On Boarding Step</li><li class=" + '"active"' + ">Recruiting Dashboard</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+        });
+
+    </script>

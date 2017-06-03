@@ -1,0 +1,58 @@
+﻿@model HRMS.Service.Models.EDM.CandidateOfferLetter
+@using HRMS.Common.Helpers
+
+@{
+    ViewBag.Title = "OfferLetter";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+
+<style type="text/css">
+    .horizontal {
+        display: inline;
+        font-size: medium;
+        padding-right: 40px;
+    }
+</style>
+
+@using (Html.BeginForm("OfferLetter", "OfferLetter", FormMethod.Post, new { id = "offerletterform" }))
+{
+    @Html.HiddenFor(m => m.CandidateId, new { @id = "hdnCandidateId" })
+    @Html.HiddenFor(m => m.JobProfileId, new { @id = "hdnJobProfileId" })
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.CandidateOfferLetterContent, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.CandidateOfferLetterContent, new { @id = "editor" })
+        </div>
+    </div>
+    <div class="col-md-10">
+        <br />
+        <div class="form-group">
+            @Html.CheckBoxFor(j => j.LetterMailtoRecruiter, new { @class = "col-sm-2 control-label" })
+            @Html.LabelFor(j => j.LetterMailtoRecruiter, new { @class = "control-label" })
+        </div>
+        <br />
+        <div>
+            <button type="submit" id="btnsubmitofferletter" class="btn btn-success">SEND OFFER LETTER</button>
+        </div>
+    </div>
+}
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor');
+
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea").wysihtml5();
+    });
+
+    $(document).ready(function () {
+        var resultingSiteview = "<h3></h3><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../Home/SelectOnBoardingStep"' + ">Administration</a></li><li><a href=" + '"../Recruiting/RecruitingDashboard"' + ">Recruiting</a></li><li><a href=" + '"../Recruiting/Candidates"' + ">My Candidates</a></li><li><a href=" + '"../Recruiting/CandidatePreview"' + ">Candidate Preview</a></li><li class=" + '"active"' + ">Offer Letter</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+

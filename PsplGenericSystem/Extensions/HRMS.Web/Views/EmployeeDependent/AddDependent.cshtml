@@ -1,0 +1,225 @@
+﻿@model HRMS.Web.ViewModels.EmployeeDependentFormModel
+@using System.Web.Optimization;
+@using HRMS.Common.Helpers
+@*@using HRMS.Common.Enums;*@
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "Dependent Details";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<br />
+<script src="~/Scripts/plugins/jquery.maskedinput.js"></script>
+@using (Html.BeginForm("AddDependent", "EmployeeDependent", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">         
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.Salutation, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(m => m.EmployeeDependent.Salutation, new SelectList(Model.SalutationList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "salutationdropdown", @data_val_1 = LocalizedStrings.ChangeReason })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.FirstName, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.FirstName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.MiddleName, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.MiddleName, new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.LastName, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.LastName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.Suffix, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(m => m.EmployeeDependent.Suffix, new SelectList(Model.SuffixList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "suffixdropdown", @data_val_1 = LocalizedStrings.Suffix })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.Alias, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.Alias, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.Street1, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.Street1, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.Street2, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.Street2, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.City, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.City, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.CountryId, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(m => m.EmployeeDependent.CountryId, new SelectList(Model.CountryList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "drpdwncountry" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.StateId, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(m => m.EmployeeDependent.StateId, new SelectList(Model.StateList, "StateProvinceId", "Name"), "--Select--", new { @class = "form-control", @id = "drpdwnstate" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.Zip, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.Zip, new { @class = "form-control zipmask" })
+                    </div>
+                </div>
+            </div>
+            @* --right block-- *@
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.HomeEmail, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.HomeEmail, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.HomePhone, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.HomePhone, new { @class = "form-control phonemask" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.CellPhone, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.CellPhone, new { @class = "form-control phonemask" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.SSN, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeDependent.SSN, new { @class = "form-control ssnmask" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.BirthDate, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.EmployeeDependent.BirthDate, (Model.EmployeeDependent.BirthDate == null ? "" : ((DateTime)Model.EmployeeDependent.BirthDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "txtbirthdate" })
+                            @*@Html.TextBoxFor(m => m.EmployeeDependent.BirthDate, (Model.EmployeeDependent.BirthDate == null ? "" : ((DateTime)Model.EmployeeDependent.BirthDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtbirthdate", @maxlength = 10 })*@
+                            <label for="txtbirthdate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                     </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.Gender, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.EmployeeDependent.Gender, new SelectList(Model.GenderList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "ID" }, { "id", "dpGender" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeDependent.RelationShip, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.EmployeeDependent.RelationShip, new SelectList(Model.RelationShipList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "relationshipdropdown", @data_val_1 = LocalizedStrings.Relationship })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        @Html.CheckBoxFor(u => u.EmployeeDependent.IsImputedIncome)
+                        <label>
+                            @Html.LabelFor(u => u.EmployeeDependent.IsImputedIncome, new { @class = "control-label" })
+                        </label>                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        @Html.CheckBoxFor(u => u.EmployeeDependent.IsDisabled)
+                        <label>
+                            @Html.LabelFor(u => u.EmployeeDependent.IsDisabled, new { @class = "control-label" })
+                        </label>                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        @Html.CheckBoxFor(u => u.EmployeeDependent.IsSmoker)
+                        <label>
+                            @Html.LabelFor(u => u.EmployeeDependent.IsSmoker, new { @class = "control-label" })
+                        </label>                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        @Html.CheckBoxFor(u => u.EmployeeDependent.IsStudent)
+                        <label>
+                            @Html.LabelFor(u => u.EmployeeDependent.IsStudent, new { @class = "control-label" })
+                        </label>                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">           
+            @Html.ActionLink("Cancel", "SelectAllEmployeeDependent", null, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Dependents<small>Add Dependent</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Dependent</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        //$('#txtbirthdate').datepicker({
+        //    format: 'mm-dd-yyyy',
+        //    endDate: '+0d',
+        //    autoclose: true
+        //});
+
+    });
+    $("#drpdwncountry").change(function () {
+        var countryregionId = $(this).val();
+        if (countryregionId != null && countryregionId != "") {
+            var baseurl1 = "../Account/FillStatesByCountryId";
+            $.getJSON(baseurl1, { CountryRegionId: countryregionId }, function (countryData) {
+                var select = $('#drpdwnstate');
+                select.html('');
+                $.each(countryData, function (index, itemData) {
+                    select.append($('<option/>', {
+                        value: itemData.StateProvinceID,
+                        text: itemData.Name,
+                    }));
+                });
+            });
+        }
+    });
+</script>
+@*<script type="text/javascript">
+    jQuery(function ($) {
+        $("#txtbirthdate").mask("99/99/9999");
+      
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(function () { $("#txtbirthdate").datepicker({ maxDate: '0' }); });
+    });
+
+            </script>*@

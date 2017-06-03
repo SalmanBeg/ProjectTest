@@ -1,0 +1,108 @@
+﻿@model HRMS.Web.ViewModels.TrainingTrackFormModel
+@{
+    ViewBag.Title = "SelectAllTrainingTrack";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<link href="~/Content/css/jquerytreegrid/jquery.treegrid.css" rel="stylesheet" />
+<script src="../Scripts/plugins/jquerytreegrid/jquery.treegrid.js"></script>
+<script src="../Scripts/plugins/jquerytreegrid/jquery.treegrid.bootstrap3.js"></script>
+
+<div>
+    @Html.ActionLink("Add", "AddTrainingTrack", null, new { @class = "btn  btn-success", @style = "margin-bottom:10px;" })
+    @Html.ActionLink("Delete", "", null, new { @class = "btn  btn-danger", @style = " margin-bottom:10px;", @id = "btnDeleteTrack" })
+    @*@{
+        var trainingClassGrid = new WebGrid(@Model, canPage: false, canSort: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    }*@
+
+</div>
+<div id="gridContent" style="padding-top:10px; ">
+    <table class="footable tree"  data-filter="#filter" data-page-size="100" data-page-previous-text="prev" data-page-next-text="next" id="trainingClassGridContent">
+        <thead>
+            <tr>
+               
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(m => m.TrainingTrack.TrainingTrackName)
+                </th>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.TrainingTrackList.Count; i++)
+            {
+                <tr class="treegrid-@i">
+                  
+                    <td>
+                        @Html.ActionLink(((string)Model.TrainingTrackList[i].TrainingTrackName), "AddTrainingTrack", new { @TrainingTrackId = Model.TrainingTrackList[i].TrainingTrackId })
+                    </td>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@Model.TrainingTrackList[i].TrainingTrackId" class="btncheckdependent" onchange="cbChange(this)" />
+                    </td>
+                </tr>
+                for (var j = 0; j < Model.TrainingTrackClassList.Count; j++)
+                {
+                    <tr class="treegrid-parent-@i">
+                        @if (Model.TrainingTrackList[i].TrainingTrackId == Model.TrainingTrackClassList[j].TrainingTrackId)
+                        {
+                            foreach (var item in Model.TrainingClassList)
+                            {
+                                if (item.TrainingClassId == Model.TrainingTrackClassList[j].TrainingClassId)
+                                {
+                                <td> @Html.DisplayFor(modelItem => item.TrainingClassName)</td>}
+                            } 
+                             <td></td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Training Tracks</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">TrainingTrack</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $(document).ready(function () {
+            $('.tree').treegrid(
+                {
+                    initialState:'collapse'
+                }
+                );
+        });
+
+        $("#btnDeleteTrack").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var trackIDList = $("#trainingClassGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (trackIDList.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "TrainingTrack/DeleteTrainingTrack",
+                    type: "POST",
+                    cache: "false",
+                    data: { trackIds: trackIDList.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+</script>

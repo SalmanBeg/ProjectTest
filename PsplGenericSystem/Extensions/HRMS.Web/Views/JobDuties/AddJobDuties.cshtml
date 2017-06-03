@@ -1,0 +1,79 @@
+﻿@model HRMS.Web.ViewModels.JobDutiesFormModel
+@using HRMS.Web.Helper
+@using HRMS.Common.Helpers
+@{
+    ViewBag.Title = "AddJobDuties";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("AddJobDuties", "JobDuties", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <fieldset>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobDuties.Description, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(k => k.JobDuties.Description, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobDuties.Category, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(k => k.JobDuties.Category, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobDuties.PercentageOfTime, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(k => k.JobDuties.PercentageOfTime, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobDuties.Priority, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(k => k.JobDuties.Priority, new SelectList(Model.PriorityList, "ID", "Name"), "--select--", new { @class = " drplookup form-control", @data_val_1 = LocalizedStrings.Priority })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobDuties.Frequency, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(k => k.JobDuties.Frequency, new SelectList(Model.FrequencyList, "ID", "Name"), "--select--", new { @class = " drplookup form-control", @data_val_1 = LocalizedStrings.Frequency })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobDuties.Essential, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(k => k.JobDuties.Essential, new SelectList(Model.EssentialList, "ID", "Name"), "--select--", new { @class = "drplookup form-control", @data_val_1 = LocalizedStrings.Essential })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobDuties.Other, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(k => k.JobDuties.Other, new SelectList(Model.OtherList, "ID", "Name"), "--select--", new { @class = "drplookup form-control", @data_val_1 = LocalizedStrings.Other })
+                        </div>
+                    </div>
+                    @Html.HiddenFor(k => k.JobDuties.JobDutyId)
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            
+            @Html.ActionLink("Cancel", "SelectAllJobDuties", "JobDuties", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })
+            <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Add Job Duty</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../JobDuties/SelectAllJobDuties"' + ">SelectJobDuties</a></li><li class=" + '"active"' + ">AddJobDuties</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+</script>

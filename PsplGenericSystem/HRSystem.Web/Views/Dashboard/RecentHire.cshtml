@@ -1,0 +1,32 @@
+﻿@using System.Data;
+@model DataTable
+
+@{
+    ViewBag.Title = "RecentHire";
+}
+<h2>RecentHires <span style="font-size: initial"> @Html.ActionLink("Back To Home Page", "Index")</span></h2>
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Model.Columns[1]
+            </th>
+            <th>
+                @Model.Columns[2]
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow rows in Model.Rows)
+        {
+            <tr>
+                <td>
+                    @rows[1]
+                </td>
+                <td>
+                    @rows[2]
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

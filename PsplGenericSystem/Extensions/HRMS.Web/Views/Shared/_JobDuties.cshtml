@@ -1,0 +1,90 @@
+﻿@model IList<HRMS.Web.ViewModels.SelectedDutiesFormModel>
+
+
+
+<div id="gridContent" style="padding-top: 10px;height:400px;overflow:scroll;">
+    <table class="footable table" data-filter="#filter" data-page-size="3" data-page-previous-text="prev" data-page-next-text="next" id="JobDutiesGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa" />
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    @Html.DisplayName("Description")
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayName("Category")
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayName("Priority")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @if (Model[i].DutiesChecked)
+                        {
+                            <input type="checkbox" value="" data-val-1=@Model[i].JobDutyId class="btncheckjobduty" checked />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="" data-val-1=@Model[i].JobDutyId class="btncheckjobduty" />
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)Model[i].Description), "_JobDuties", new { @JobDutyId = Model[i].JobDutyId }, new { id = "JobDutyID" })
+                    </td>
+                    <td>
+                        @Html.Label(Model[i].Category)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(@Model[i].Priority))
+                        {
+                            @Html.Label(Convert.ToString(@Model[i].Priority))
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div class="form-group">
+       
+        <div class="col-sm-6 control-button">
+            <input type="submit" id="savejobdutiesview" value="save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#savejobdutiesview").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var searchIDs = $("#JobDutiesGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        if (searchIDs.toString().length > 0) {
+            var formData = $('#newJobForm').serialize() + '&JobDutyIds=' + searchIDs.toString();
+            $.ajax({
+                url: baseurl + "JobDuties/_JobDuties",
+                type: "POST",
+                cache: "false",
+                data: formData,
+                success: function (data) {                  
+                    if (data == "True") {
+                        window.location.href = baseurl +"Recruiting/CreateNewJob";
+                    }
+                },
+                error: function (request, status, error) {
+                }
+            });
+        }
+        else { alert("Please select item(s) to select."); }
+    });
+</script>

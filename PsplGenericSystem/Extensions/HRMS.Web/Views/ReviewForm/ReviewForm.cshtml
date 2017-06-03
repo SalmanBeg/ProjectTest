@@ -1,0 +1,150 @@
+﻿@model HRMS.Web.ViewModels.ReviewFormFormModel
+@using System.Web.Optimization;
+@using HRMS.Web.Models;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "ReviewForm";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("ReviewForm", "ReviewForm", FormMethod.Post))
+{
+
+    <h4>Performance Review</h4>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.HiddenFor(k => k.ReviewerEmployee.ReviewerId)
+                    @Html.HiddenFor(k => k.ReviewerEmployee.ReviewerEmployeeId)
+                    @Html.HiddenFor(k => k.ReviewerEmployee.CompanyId)
+                    @Html.LabelFor(k => k.ReviewerEmployee.ReviewerEmployeeId, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-4 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(k => k.ReviewerEmployee.ReviewTitle)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewerEmployee.ManagerName, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-4 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(k => k.ReviewerEmployee.ManagerName)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewerEmployee.ReviewScore, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(k => k.ReviewerEmployee.ReviewScore, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewerEmployee.ReviewerScore, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(k => k.ReviewerEmployee.ReviewerScore, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                </div>
+
+                <h4>Questions</h4>
+                <div class="form-group">
+
+                   
+
+                    <table class="footable table">
+
+                        @foreach (var item in Model.lstReviewCriteria)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Question, new { @class = "col-sm-4 control-label " })
+                                </td>
+                                <td>
+
+                                   @Html.DropDownListFor(modelItem => modelItem.ReviewScoreContent.ItemValue, new SelectList(Model.ReviewScoreContentList, "ReviewScoreContentId", "ItemName"), new { @class = "form-control", @maxlength = "50" })
+                                    @*@if (item.ResponseTypeId == 1)
+                                    {
+                                        
+                                         @Html.TextBoxFor(modelItem => modelItem.ReviewResponseType, new { @class = "form-control", @maxlength = "50" })
+                                       
+                                    }
+                                    else if (item.ResponseTypeId == 2)
+                                    {
+                                         
+                                       @Html.TextBoxFor(modelItem => modelItem.ReviewResponseType.Description, new { @class = "form-control", @maxlength = "50" })
+                                    }
+                                    else
+                                    {
+                                       @Html.TextBoxFor(modelItem => modelItem.ReviewReviewerScoreDetails.Answers, new { @class = "form-control", @maxlength = "50" })
+                                    }
+                                    @Html.HiddenFor(modelItem => item.ResponseTypeId)*@
+                                </td>
+                            </tr>
+                        }
+
+
+                    </table>     
+
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewerEmployee.ReviewerComments, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(k => k.ReviewerEmployee.ReviewerComments, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-offset-6 control-button">
+                    <button type="submit" id="btnsubmit" class="btn btn-success">Submit</button>
+                    <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                </div>
+                <div style="padding-top:25px;">
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.ReviewerEmployee.HRComments, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(k => k.ReviewerEmployee.HRComments, new { @class = "form-control", @maxlength = "50", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-6 control-button">
+                        <button type="submit" id="btnsubmit" class="btn btn-success" disabled>Submit</button>
+                        <button type="submit" id="btnsubmit" class="btn btn-success" disabled>Reject</button>
+                        <button type="submit" id="btnsubmit" class="btn btn-success" disabled>Save</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewerEmployee.ReviewDate, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-4 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(k => k.ReviewerEmployee.ReviewDate)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewerEmployee.Status, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-4 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(k => k.ReviewerEmployee.Status)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewerEmployee.ReviewerName, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-4 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(k => k.ReviewerEmployee.ReviewerName)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Review Form<small>Review Form</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Review Form</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

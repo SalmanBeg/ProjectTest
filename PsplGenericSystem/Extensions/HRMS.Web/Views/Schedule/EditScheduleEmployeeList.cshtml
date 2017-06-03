@@ -1,0 +1,158 @@
+﻿@model IList<HRMS.BusinessLayer.ScheduleEmployeeInfo>
+@{
+    ViewBag.Title = "EditScheduleEmployeeList";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<head>
+        <title></title>
+         <script src="~/Scripts/jquery.datetimepicker.js"></script>
+         <link href="~/Content/css/jquery.datetimepicker.css" rel="stylesheet" />
+    </head>
+
+  @using (Html.BeginForm("EditScheduleEmployeeList", "Schedule", FormMethod.Post))
+  {
+
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter"  id="EditScheduleEmployeeGridContent">
+        <thead>
+            <tr>
+               @* <th data-toggle="true">
+                    @Html.DisplayNameFor(m => m[0].UserId)
+                </th>*@
+                <th></th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(m => m[0].ScheduleDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m[0].StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m[0].EndTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m[0].LunchMinutes)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(m => m[0].DepartmentId)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(m => m[0].JobId)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(m => m[0].ProjectId)
+                </th>
+                @*<th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(m => m[0].IsScheduleActive)
+                </th>*@
+                <th>&nbsp;
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                if(Model[i].IsScheduleActive)
+                {
+                <tr>
+                     <td>
+                        @Html.CheckBoxFor(m => m[i].IsScheduleActive, new {id = "chkIsScheduleActive"})
+                         @Html.HiddenFor(m=>m[i].UserId)
+                          @Html.HiddenFor(m=>m[i].ScheduleEmployeeId)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m[i].ScheduleDate, (Model[i].ScheduleDate == null ? "" : ((DateTime)Model[i].ScheduleDate).ToString("MM/dd/yyyy")),  new { @ReadOnly="ReadOnly", @style = "width: 100px;" })
+                        @Html.HiddenFor(m=>m[i].TempDepartmentId)
+                        @Html.HiddenFor(m=>m[i].TempJobId)
+                        @Html.HiddenFor(m=>m[i].TempProjectId)
+                    </td>
+                    <td>
+                         <div class="input-group">
+                                @Html.TextBoxFor(m => m[i].StartTime,(Model[i].StartTime == null ? "" : ((DateTime)Model[i].StartTime).ToString("HH:mm")), new { @style="width: 100px;" ,@class = "form-controltime", @maxlength = "20", @id = "StartTime" })
+                                <label for="dthiredate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                                @Html.TextBoxFor(m => m[i].EndTime,(Model[i].EndTime == null ? "" : ((DateTime)Model[i].EndTime).ToString("HH:mm")) ,new{ @style="width: 100px;", @class = "form-controltime", @maxlength = "20", @id = "EndTime" })
+                                <label for="dthiredate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m[i].LunchMinutes, new { @style = "width: 100px;" })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m =>m[i].DepartmentId, new SelectList(Model[i].DepartmentList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { {"style","width: 150px;"} , { "class", "form-control" }, { "data-val-1","Days"}, { "id", "dpDepartment" } })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m =>m[i].JobId, new SelectList(Model[i].JobList , "ID", "Name"), "--Select--", new Dictionary<string, Object> { {"style","width: 150px;"} , { "class", "form-control" }, { "data-val-1","Days"}, { "id", "dpJob" } })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m =>m[i].ProjectId, new SelectList(Model[i].ProjectList , "ID", "Name"), "--Select--", new Dictionary<string, Object> {{"style","width: 150px;"}, { "class", "form-control" } ,{ "data-val-1","Days"}, { "id", "dpProject" } })
+                    </td>
+                   
+                </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+      <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                @Html.ActionLink("Cancel", "SelectAllPayPeriodDetails", "Schedule", new { @class = "btn btn-success" })
+            </div>
+        </div>
+</div>
+      
+     
+  }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Schedule <small>Edit Schedule List </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Schedule</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+ <script>
+     $(document).ready(function () {
+         //$("#LunchTime").addClass("textstyle");
+         $('.form-controltime').datetimepicker({
+             //mask: '9999/19/39 29:59'
+             //format: 'm/d/Y H:i'
+             format: 'H:i'
+         });
+
+
+
+         $("#EditScheduleEmployeeGridContent tbody tr").each(function (i, row) {
+             debugger
+             var departmentId = $($($(row).find('td')[1]).find('input')[1]).val();
+             $(row).find("#dpDepartment").val(departmentId).attr("selected", "selected");
+
+             var jobId = $($($(row).find('td')[1]).find('input')[2]).val();
+             $(row).find("#dpJob").val(jobId).attr("selected", "selected");
+
+             var projectId = $($($(row).find('td')[1]).find('input')[3]).val();
+             $(row).find("#dpProject").val(projectId).attr("selected", "selected");
+
+         });
+
+
+
+
+     });
+    </script>

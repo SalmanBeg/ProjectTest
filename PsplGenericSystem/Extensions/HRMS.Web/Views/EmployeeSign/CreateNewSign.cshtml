@@ -1,0 +1,171 @@
+﻿@model HRMS.Service.Models.EDM.EmployeeSign
+<script src="~/Content/ESign/jquery.signaturepad.js"></script>
+<script src="~/Content/ESign/html2canvas.js"></script>
+<script src="~/Content/ESign/base64.js"></script>
+<script src="~/Content/ESign/canvas2image.js"></script>
+<script src="~/Content/ESign/jspdf.debug.js"></script>
+<link href="~/Content/ESign/assets/jquery.signaturepad.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "CreateNewSign";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("CreateNewSign", "EmployeeSign", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(m => m.Name, new {id="txtESignName", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <div class="sigPad">
+                            <label for="name">Type your name</label>
+                            <input type="text" name="name" id="name" class="name">
+                            <p class="typeItDesc width" id="EsignType">Review your signature</p>
+                            <p class="drawItDesc width" id="EsignDraw">Draw your signature</p>
+                            <ul class="sigNav width">
+                                <li class="typeIt"><a href="#type-it" class="current" id="lnkType">Type</a></li>
+                                <li class="drawIt"><a href="#draw-it" id="lnkSign">Sign</a></li>
+                                <li class="clearButton"><a href="#clear">Clear</a></li>
+                            </ul>
+                            <div class="sig sigWrapper width" style="height:85px;">
+                                <div class="typed" id="idtyped"></div>
+                                <canvas class="pad" id="drawingCanvas" width="185" height="65"></canvas>
+                                <input type="hidden" name="output" class="output">
+                            </div>
+                        </div>
+                        <div style="padding-top:10px; text-align:left">
+                           
+                            @Html.ActionLink("Cancel", "SelectAllEmployeeSign", "EmployeeSign", new { @class = "btn btn-success" })
+                            <a href="#" id="asignConsent" class="btn btn-success">Sign Here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="hidden" id="hfcanvas" />
+        <input type="hidden" id="hfsigdiv" />
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var resultingSiteview = "<h1>My Sign<small>Create New Sign</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">My Sign</li></ol>";
+
+        document.getElementById('drawingCanvas').className = '';
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $('.sigPad').signaturePad();
+        var EmptyCanvas = document.getElementById('drawingCanvas'),
+                           drawingContext = EmptyCanvas.getContext('2d');
+        $('#hfcanvas')[0].value = EmptyCanvas.toDataURL();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var isource = $("#imgviewer");
+        if (isource.length > 0) {
+            isource[0].src = baseurl + "OnBoardingProfile/Showfile?fileid=" + $(this).data("id") + "&FileMode=normal";//?fileid=" + fileid + "&FileMode=normal";
+        }
+        $('#asignConsent').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();lnkType
+            SaveEmployeeSign();
+        });
+      
+      
+        $("#lnkType").click(function (e) {
+
+            document.getElementById('drawingCanvas').className = '';
+        });
+        $('#lnkSign').click(function (e) {
+
+            document.getElementById('drawingCanvas').className = 'pad';
+
+        });
+
+    });
+
+ 
+  
+    function SaveEmployeeSign() {
+      
+        var esignName = $('#txtESignName').val();
+        var _signid = $(this).data("id");
+            var typeItval = $('#EsignType');
+            var drawItval = $('#EsignDraw');
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            if (drawItval[0].style.display == "block") {
+                var drawingCanvasDraw = document.getElementById('drawingCanvas'),
+                    drawingContext = drawingCanvasDraw.getContext('2d');
+                var dataUrlLocal;
+                dataUrlLocal = drawingCanvasDraw.toDataURL();
+                var myImageDraw = drawingCanvasDraw.toDataURL("image/png");
+                myImageDraw = myImageDraw.replace(/^data:image\/(png|jpg);base64,/, "")
+                //var canvasstring = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAABBCAYAAACKLts9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADiSURBVHhe7d3BDQIxDADBQAdpIf23dD1cBwcSeYBuK0AzH8sFrPz043obwI/nnsAXYUAQBgRhQBAGBGFAEAYEYUAQBgRhQBAGBGFAEAYEYUAQBgRhQBAGBGFAEAYEYUAQBgRhQBAGBGFAEAYEYUAQBgRhQBAGBGFAEAYEYUAQBoTbR6XjOMZ5nnuD/zfnHGutvX24GBD84IPgYkAQBgRhQBAGBGFAEAYEYUAQBgRhQBAGBGFAEAYEYUAQBgRhQBAGBGFAEAYEYUAQBgRhQBAGBGFAEAYEYUAQBgRhQBAG3IzxAkS8EnQcHipHAAAAAElFTkSuQmCC";
+                var canvasstring = $('#hfcanvas')[0].value;
+                if ($('#hfcanvas')[0].value == dataUrlLocal || canvasstring == dataUrlLocal) {
+                    alert('please sign the signature.');
+                    return false;
+                }
+                var parms = { esignName: esignName, eSignValue: myImageDraw };
+                $.ajax({
+                    url: baseurl + "EmployeeSign/SaveEmployeeSign",
+                    type: 'post',
+                    cache: false,
+                    data: parms,
+                    success: function (data) {
+                        if (data) {
+                            //create a new page with sign and document and save that doc after click some thing
+                            window.location.href = baseurl + "EmployeeSign/SelectAllEmployeeSign";
+                            //alert("ESign Stored");
+                        }
+                    },
+                    error: function () {
+                        alert(Error);
+                    }
+                });
+            }
+            else {
+                html2canvas($("#idtyped"), {
+                    onrendered: function (canvas) {
+                        canvas.id = "idcanvasSubmit";
+                        theCanvas = canvas;
+                        document.body.appendChild(canvas);
+                        var drawingCanvasType = document.getElementById('idcanvasSubmit');
+                        var drawingContext = drawingCanvasType.getContext('2d');
+                        var myImageType = drawingCanvasType.toDataURL("image/png");
+                        myImageType = myImageType.replace(/^data:image\/(png|jpg);base64,/, "");
+                        var DefaultDivImage = $('#hfsigdiv')[0].value;
+                        var typevalue = $('#name');
+                        if (typevalue[0].value == "" || myImageType == DefaultDivImage) {
+                            document.body.removeChild(canvas);
+                            alert('please type the signature.');
+                            return false;
+                        }
+                        var parms = { esignName: esignName, eSignValue: myImageType };
+                        $.ajax({
+                            url: baseurl + "EmployeeSign/SaveEmployeeSign",
+                            type: 'post',
+                            cache: false,
+                            data: parms,
+                            success: function (data) {
+                                if (data) {
+                                    window.location.href = baseurl + "EmployeeSign/SelectAllEmployeeSign";
+                                    //create a new page with sign and document and save that doc after click some thing
+                                    //alert("ESign Stored");
+                                }
+                            },
+                            error: function () {
+                                alert(Error);
+                            }
+                        });
+                    }
+                });
+            }
+    }
+</script>

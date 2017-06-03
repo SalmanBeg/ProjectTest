@@ -1,0 +1,183 @@
+﻿@model IEnumerable<HRMS.Web.ViewModels.UserLoginFormModel>
+@using HRMS.Common.Enums
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper
+@{
+    ViewBag.Title = "EmployeeDashboard";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@if (@GlobalsVariables.CurrentUserRoleName.Equals(GeneralEnum.RoleName.Administrator.ToString().ToLower()) || @GlobalsVariables.CurrentUserRoleName.Equals(GeneralEnum.RoleName.Superadministrator.ToString().ToLower()))
+{
+    <div class="content">
+    
+    @Html.ActionLink("Reset Database", "ResetDataBase", "Home",null, new { id = "alResetDatabase" ,@style="display:none"})
+
+        <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="allemployeegrid">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th data-hide="phone">
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th data-hide="phone,tablet">
+                        @Html.DisplayName("Role")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.ActionLink(((string)item.FirstName), "ViewEmployee", "Home", new { @selectedUserId = item.UserId }, new { id = "UserId" })
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+
+                </td>
+            </tr>
+            }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination pagination-centered hide-if-no-paging"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+}
+@foreach (var item in Model)
+{
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <!--can current userrole access Addnewhire -->
+        @if (GlobalsVariables.CurrentUserRoleName != (GeneralEnum.RoleName.Superadministrator.ToString()) && item.CompanyLevelSecurity != null)
+        {
+            if (item.CompanyLevelSecurity.CanHire == true)
+            {
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>
+                                <span>0</span>
+                            </h3>
+                            <p>
+                                Add New Hires
+                            </p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="~/Home/SelectOnBoardingStep" class="small-box-footer">
+                            Go <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else if (GlobalsVariables.CurrentUserRoleName.Equals(GeneralEnum.RoleName.Superadministrator.ToString().ToLower()))
+        {
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>
+                            <span>0</span>
+                        </h3>
+                        <p>
+                            Add New Hires
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="~/Home/SelectOnBoardingStep" class="small-box-footer">
+                        Go <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+        }
+        <!--can current userrole access Addnewhire -->
+        @if (GlobalsVariables.CurrentUserRoleName != (GeneralEnum.RoleName.Superadministrator.ToString()) && item.CompanyLevelSecurity != null)
+        {
+            if (item.CompanyLevelSecurity.CanViewHires == true)
+            {
+         <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                        <div class="inner">
+
+                            @if (item == Model.First())
+                            {
+                                <h3>
+                                    @Html.DisplayFor(modelItem => item.DashboardCount.NewHireCount)
+                                </h3>
+                            }
+
+                            <p>
+                                View New Hires
+                            </p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-android-friends"></i>
+                        </div>
+                        <a href="../Administration/SubmittedNewHires" class="small-box-footer">
+                            @*<a href="~/Home/SelectAllEmployeeDetail" class="small-box-footer">*@
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else if (GlobalsVariables.CurrentUserRoleName.Equals(GeneralEnum.RoleName.Superadministrator.ToString().ToLower()))
+        {
+         <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+
+                        @if (item == Model.First())
+                        {
+                            <h3>
+                                @Html.DisplayFor(modelItem => item.DashboardCount.NewHireCount)
+                            </h3>
+                        }
+
+                        <p>
+                            View New Hires
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-android-friends"></i>
+                    </div>
+                    <a href="../Administration/SubmittedNewHires" class="small-box-footer">
+                        @*<a href="~/Home/SelectAllEmployeeDetail" class="small-box-footer">*@
+                        Go <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+        }
+
+    </div> }
+<!-- /.row -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Dashboard<small>Employee Dashboard</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+</script>
+

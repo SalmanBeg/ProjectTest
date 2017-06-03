@@ -1,0 +1,99 @@
+﻿@model HRMS.Web.ViewModels.UploadFile
+@{
+    ViewBag.Title = "ImportEmployeeData";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#FileUpload1').change(function () {
+            $("#divValidation").hide();
+            var file = getNameFromPath($(this).val());
+            
+            if (file != null) {
+                var extension = file.substr((file.lastIndexOf('.') + 1));
+                switch (extension) {
+                    case 'csv':
+                    
+                        flag = true;
+                        break;
+                    default:
+                        flag = false;
+                }
+            }
+            if (flag == false) {
+                
+                alert("You can upload only .csv file");
+                $("#FileUpload1").val("");
+                return false;
+            }
+        });
+
+
+    });
+    function getNameFromPath(strFilepath) {
+        var objRE = new RegExp(/([^\/\\]+)$/);
+        var strName = objRE.exec(strFilepath);
+
+        if (strName == null) {
+            return null;
+        }
+        else {
+            return strName[0];
+        }
+    }
+    function Download()
+    {
+        var url = '@System.Configuration.ConfigurationManager.AppSettings["BaseUrl"]';
+        window.location.href = url + "//Content//Templates//EmployeeData.csv";
+    }
+
+</script>
+@*<h2>ImportEmployeeData</h2>*@
+<legend style="margin-bottom: 15px;">Import Employee Data</legend>
+@if(@ViewBag.Message==null)
+{
+    <div>
+        <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 15px;"><a id="lBtnDownloadTemplate" href="#" onclick="javascript:Download();return false;">Download template 'Employee.csv'</a></div>
+        @using (Html.BeginForm("ImportEmployeeData", "ImportEmployeecsvdata", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+    
+         {  
+              @Html.ValidationSummary(true)
+            <div class="col-sm-12" style="padding: 0px;">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        Select File :
+                    </label>
+                    <div class="col-sm-7">
+                        <div class="form-control">
+                            @Html.TextBoxFor(model => model.ImportFile, new { type = "file", accept = "application/vnd.ms-excel", id = "FileUpload1" })
+                            <div id="divValidation">
+                                @Html.ValidationMessageFor(model => model.ImportFile, "", new { @class = "errmsg" })
+                                @Html.ValidationMessageFor(model => model.File, "", new { @class = "errmsg" })
+                                @Html.ValidationMessageFor(model => model.Columns, "", new { @class = "errmsg" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        &nbsp;
+                    </label>
+                    <div class="col-sm-7">
+                         <span>@ViewBag.validationmsg </span>
+                        <input type="submit" id="Submit" name="Submit" class="btn btn-success col-sm-7 " value="Submit" style="margin-top:10px;"/>
+                    </div>
+                </div>
+            </div>        
+         }
+    </div>
+}
+else
+{
+    <div>
+        @Html.Raw(@ViewBag.Message)
+        <br />
+        <br />
+        @* @Html.ActionLink("Close", "EmployeeDashboard", "UserCompany", new { CompanyId = HelperClass.Encrypt(HappyFilesWeb.GlobalVariables.CurrentUserCompanyId), StatusId = HelperClass.Encrypt(HappyFilesWeb.GlobalVariables.CurrentUserStatusId), levelId = Session["currenttreeLevelId"], Mode = "Home" }, null)*@
+
+    </div>
+}

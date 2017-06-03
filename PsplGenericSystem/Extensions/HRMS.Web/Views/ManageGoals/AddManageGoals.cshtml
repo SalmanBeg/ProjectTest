@@ -1,0 +1,99 @@
+﻿@model HRMS.Web.ViewModels.EmployeeGoalFormModel
+@using System.Web.Optimization;
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "AddManageGoals";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<h4>AddManageGoals</h4>
+@using (Html.BeginForm("AddManageGoals", "ManageGoals", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(k => k.Employee.FirstName, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.Employee.FirstName, new { @class = "form-control" })
+                    </div>
+                    </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.EmployeeGoal.GoalDescription, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(k => k.EmployeeGoal.GoalDescription, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.EmployeeGoal.Indicator, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.EmployeeGoal.Indicator, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.EmployeeGoal.Value, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.EmployeeGoal.Value, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.EmployeeGoal.StartDate, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.EmployeeGoal.StartDate, (Model.EmployeeGoal.StartDate == null ? "" : ((DateTime)Model.EmployeeGoal.StartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "txtstartdate" })                          
+                            <label for="txtstartdate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>             
+                    @Html.LabelFor(k => k.EmployeeGoal.EndDate, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.EmployeeGoal.EndDate, (Model.EmployeeGoal.EndDate == null ? "" : ((DateTime)Model.EmployeeGoal.EndDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "txtenddate" })
+                            <label for="txtenddate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="bootstrap-timepicker">
+                        @Html.LabelFor(k => k.EmployeeGoal.Reminder, new { @class = "col-sm-3 control-label " })
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(k => k.EmployeeGoal.Reminder, new { @class = "form-control" })
+                        </div>
+                        @Html.LabelFor(k => k.EmployeeGoal.Time, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.EmployeeGoal.Time, (Model.EmployeeGoal.Time == null ? "" : (Model.EmployeeGoal.Time).ToString()), new { @class = "form-control timepicker", @maxlength = "10", @id = "dttime" })
+                                @*<input type="text" class="form-control timepicker" />*@
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                    @Html.LabelFor(k => k.EmployeeGoal.Exclude, new { @class = "col-sm-3 control-label " })
+                    </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.EmployeeGoal.Incentive, new { @class = "col-sm-3 control-label " })
+                        <div class="col-sm-9">
+                            @Html.TextAreaFor(k => k.EmployeeGoal.Incentive, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.EmployeeGoal.Prorate, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.RadioButton("Prorate", "Yes", false, new { @id = "Listyes" }) Yes
+                            @Html.RadioButton("Prorate", "No", false, new { @id = "Listno" }) No
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+                }
+

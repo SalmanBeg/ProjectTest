@@ -1,0 +1,230 @@
+﻿@model HRMS.Web.ViewModels.I9FormModel
+@using HRMS.Web.Helper;
+<script src="~/Scripts/jquery-ui-1.10.3.min.js"></script>
+<link href="~/Content/css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<!-- Time Picker-->
+<link href="~/Content/css/timepicker/bootstrap-timepicker.css" rel="stylesheet" />
+<!-- Date Picker -->
+@*<link href="../Content/css/datepicker/datepicker.css" rel="stylesheet" />*@
+<link href="~/Content/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+<!-- datepicker -->
+<script src="../Scripts/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+<!-- daterangepicker -->
+<script src="../Scripts/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<!--Time Picker-->
+<script src="../Scripts/plugins/timepicker/bootstrap-timepicker.js"></script>
+<script src="~/Scripts/jquery-ui-1.10.3.min.js"></script>
+<script src="~/Scripts/jquery.datetimepicker.js"></script>
+@using (Html.BeginForm("_I9WorkAuthorizationView", "I9WorkAuthorization", new { @rvalue = "testvalue" }, FormMethod.Post, new { id = "I9WorkAuthorizationformview" }))
+{
+    <div class="form-horizontal" style="padding: 20px;">
+        <div class="form-group">
+            <fieldset>
+                <legend>I9 Form Details</legend>
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.WorkAuthorization.WorkAuthorizationId)
+                    @Html.HiddenFor(m => m.WorkAuthorization.CompanyId)
+                    @Html.HiddenFor(m => m.WorkAuthorization.CitizenOfUS, new { @id = "hdCitizenOfUSValue" })
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <strong>
+                            Form I-9 Employment Eligibility - This information is required by the U.S Government
+                            I attest under penalty of perjury, that I am(Select one of the following):
+                        </strong>
+                    </div>
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <div>@Html.RadioButton("optselect", 1, true, new { @class = "i9eligibility" }) <strong>A Citizen or national of United States </strong></div>
+                    </div>
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <div>@Html.RadioButton("optselect", 2, false, new { @class = "i9eligibility" }) <strong>A lawful permanent resident </strong></div>
+                    </div>
+                    <div id="divCitizen1">
+
+                        <div class="col-sm-12" style="padding-bottom: 15px;">
+                            <div class="col-sm-4">
+                                @Html.LabelFor(m => m.WorkAuthorization.AlienNumber, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.WorkAuthorization.AlienNumber, new { @class = "form-control" })
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.LabelFor(m => m.WorkAuthorization.PermanentResidentExpire, new { @class = "control-label" })
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.WorkAuthorization.PermanentResidentExpire, (Model.WorkAuthorization.PermanentResidentExpire == null ? "" : ((DateTime)Model.WorkAuthorization.PermanentResidentExpire).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtPermanentExpire" })
+                                    <label for="dtPermanentExpire" class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.LabelFor(m => m.WorkAuthorization.AlienCitizenof, new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.WorkAuthorization.AlienCitizenof, new SelectList(Model.AlienCitizenofList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstateAlienCitizenof" } })
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div>@Html.RadioButton("optselect", 3, false, new { @class = "i9eligibility" }) <strong>An Alien authorized to work until: </strong></div>
+                    </div>
+                    <div id="divCitizen2">
+                        <div class="col-sm-4" style="padding-bottom: 15px;">
+                            @Html.LabelFor(m => m.WorkAuthorization.AlienAuthorisedDate, new { @class = "control-label" })
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.WorkAuthorization.AlienAuthorisedDate, (Model.WorkAuthorization.AlienAuthorisedDate == null ? "" : ((DateTime)Model.WorkAuthorization.AlienAuthorisedDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtAlienAuthorisedDate" })
+                                <label for="dtAlienAuthorisedDate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4" style="padding-bottom: 15px;">
+
+                            <div class="col-sm-12">
+                                @Html.LabelFor(m => m.WorkAuthorization.AlienAuthorisedCitizenof, "Citizen Of:", new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.WorkAuthorization.AlienAuthorisedCitizenof, new SelectList(Model.AlienAuthorisedCitizenofList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveincountry1" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="padding-bottom: 15px;">
+                        <strong>For aliens authorized to work, provide your Alien Registration Number/USCIS Number OR Form I-94 Admission Number:</strong>
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(model => model.WorkAuthorization.AlienRegistrationNumber, "1. Alien Registration Number/USCIS Number:")
+                        @Html.TextBoxFor(m => m.WorkAuthorization.AlienRegistrationNumber, new { @id = "txtAlign", @class = "form-control col-sm-6" })
+                    </div>
+                    <div class="col-sm-offset-3 col-sm-9">OR  </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(model => model.WorkAuthorization.AdmissionNumber, "2. Form I-94 Admission Number:")
+                        @Html.TextBoxFor(m => m.WorkAuthorization.AdmissionNumber, new { @id = "txtAdmin", @class = "form-control" })
+                    </div>
+                    <div class="col-sm-12" style="padding-bottom: 15px; padding-top: 15px;">
+                        <strong>If you obtained your admission number from CBP in connection with your arrival in the United :</strong>
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(model => model.WorkAuthorization.PassportNumber, "Foreign Passport Number:")
+                        @Html.TextBoxFor(m => m.WorkAuthorization.PassportNumber, new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.LabelFor(model => model.WorkAuthorization.CitizenOfUS, "Country of Issuance:")
+                        @Html.DropDownListFor(m => m.WorkAuthorization.Countryof, new SelectList(Model.CountryofList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpCountryofIssuence" } })
+                    </div>
+                    <div class="col-sm-12" style="padding: 15px 15px; font-weight: bold;">Some aliens may write "N/A" on the Foreign Passport Number and Country of Issuance fields. ( See instructions)</div>
+
+                    <div class="col-sm-12" style="padding: 15px 15px; font-weight: bold;">
+                        @Html.CheckBoxFor(m => m.WorkAuthorization.FederalLaw1, true)
+                        I am aware the Federal Law provides for imprisonment and/or fines for false statements or use of false documents in connection with the completion of this form.*
+                    </div>
+                    <div class="col-sm-12" style="padding: 15px 15px; font-weight: bold;">
+                        @Html.CheckBoxFor(m => m.WorkAuthorization.IsSSN1, true)
+                        Do not display my Social Security Number on my I-9 form.
+                    </div>
+                    <div class="col-sm-12" style="padding: 15px 15px; font-weight: bold;">
+                   
+                        @if(Model.WorkAuthorization.EmployeeSignId>0)
+                        { @Html.ActionLink("View or Un-Sign I9", "", null, new { @id = "btnSignI9" })    }
+                        else
+                        { @Html.ActionLink("View or Sign I9", "", null, new { @id = "btnSignI9" })   }    
+                                                                                              
+                    </div>
+                    <div class="col-sm-12" style="padding: 15px 15px;">
+                        <button type="submit" id="btnI9FormSave" class="btn btn-success " onclick="return AanOrCondi();" style="display:none;">Save</button>
+                        <input type="text" id="txtFlag" style="display:none;" />
+                        @* @Html.ActionLink("Cancel", "ViewEmployee", "Home", new { @selectedUserId = HRMS.Web.Helper.GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })*@
+                    </div>
+
+
+                </div>
+            </fieldset>
+        </div>
+    </div>
+}
+<div class="modal fade modal-fullscreen  " id="ViewI9FormDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 0;">
+    <div class="modal-dialog modal-lg" style="width: 96%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_I9WorkAuthorizationI9SignupView", Model)
+                @*@Html.Partial("~/Views/EmployeeW4form/AddEmployeeW4form.cshtml",Model.employeeW4form);*@
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#dtAlienAuthorisedDate").datepicker(); 
+        $("#dtPermanentExpire").datepicker();
+
+        var aa = $(".i9eligibility").val();
+        var CitizenOfUSValue = $("#hdCitizenOfUSValue").val();
+        if (CitizenOfUSValue != null && CitizenOfUSValue != "0")
+        { aa = CitizenOfUSValue; }
+        showhidediv(aa);
+        // AandCondi();
+        $(".i9eligibility").change(function () {
+            aa = $(this).val();
+            showhidediv(aa);
+            return false;
+        });
+
+        function showhidediv(aa) {
+            if (aa == "1") {
+                $('#divCitizen1').hide();
+                $('#divCitizen2').hide();
+                $(".i9eligibility").eq(0).prop("checked", true);
+            }
+            else if (aa == "2") {
+                $('#divCitizen1').show();
+                $('#divCitizen2').hide();
+                $(".i9eligibility").eq(1).prop("checked", true);
+            }
+            else {
+                $('#divCitizen1').hide();
+                $('#divCitizen2').show();
+                $(".i9eligibility").eq(2).prop("checked", true);
+            }
+        }
+
+        
+    });
+
+    function AanOrCondi() {
+    
+        var align = jQuery.trim($("#txtAlign").val());
+        var admin = jQuery.trim($("#txtAdmin").val());
+        if (!((align.length != 0) || (admin.length != 0))) {
+            alert('Please Select (Alien Registration Number / USCIS Number)  OR  (Form I-94 Admission Number).');
+            document.getElementById('txtFlag').value = false;
+            return false;
+        }
+        else {
+            document.getElementById('txtFlag').value = true;
+        }
+    }
+
+    $('#btnI9FormSave').click(function (e) {
+      
+        e.preventDefault();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        if ($("#I9WorkAuthorizationformview").valid()) { //if you use validation
+            $.ajax({
+                url: baseurl + "I9WorkAuthorization/_I9WorkAuthorizationView",
+                type: $("#I9WorkAuthorizationformview").attr('method'),
+                data: $("#I9WorkAuthorizationformview").serialize(),
+                success: function (data) {
+                    return data;
+                }
+            });
+        }
+        // else {
+        //    return $("#addtaxformview").valid();
+        //}
+    });
+
+    $("#btnSignI9").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ViewI9FormDialog').modal();
+    });
+
+
+</script>

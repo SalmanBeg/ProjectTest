@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.ExceptionLog>
+@{
+    ViewBag.Title = "SelectAllExceptionLog";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<h3>SelectAllExceptionLog</h3>
+<table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="dependentGridContent">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MachineName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+            {
+        <tr>
+            <td>
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MachineName)
+            </td>
+        </tr>
+}
+    </tbody>
+    </table>

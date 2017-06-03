@@ -1,0 +1,2003 @@
+﻿@using HRSystem.Services.Models
+@model MainEmployee
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>::Resource Navigations:: - @ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Priya International - BR">
+    <meta name="author" content="Priya International - BR">
+    <link href="~/HR.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="~/Content/Assets/css/font-awesome.css">
+    <link rel="stylesheet" href="~/Content/Assets/lib/weather-icons/css/weather-icons.css">
+    <link rel="stylesheet" href="~/Content/Assets/lib/ionicons/css/ionicons.css">
+    <link rel="stylesheet" href="~/Content/Assets/lib/jquery-toggles/toggles-full.css">
+    <link rel="stylesheet" href="~/Content/Assets/css/quirk.css">
+    <link rel="stylesheet" href="~/Content/Assets/css/Custom.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" media="all" type="text/css" href="~/Content/jquery-ui-timepicker-addon.css" />
+
+    <link href="~/Content/jquery.emojipicker.a.css" rel="stylesheet" />
+    <link href="~/Content/jquery.emojipicker.css" rel="stylesheet" />
+
+    <script src="~/Content/Assets/lib/modernizr/modernizr.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        /*Added CSS for Chat Text*/
+        .liSpan {
+            -ms-word-break: break-all;
+            word-break: break-all;
+            /* Non standard for webkit */
+            word-break: break-word;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            hyphens: auto;
+        }
+
+        .caret-up {
+            /* Safari */
+            -webkit-transform: rotate(-180deg);
+            /* Firefox */
+            -moz-transform: rotate(-180deg);
+            /* IE */
+            -ms-transform: rotate(-180deg);
+            /* Opera */
+            -o-transform: rotate(-180deg);
+            /* Internet Explorer */
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=6);
+        }
+
+        .drop-up {
+            left: -167px;
+            top: auto;
+            bottom: 100% !important;
+            padding-left: 4px;
+        }
+
+        .modal-backdrop {
+            z-index: -1;
+        }
+
+        .modal-header {
+            padding: 36px;
+        }
+
+        .form-control {
+            height: 36px;
+        }
+
+        .emojiPickerIcon {
+            position: fixed;
+            top: 565px;
+            right: 540px;
+            cursor: pointer;
+            border-left: 1px solid #bdc3d1;
+            border-top: 1px solid #bdc3d1;
+            border-bottom: 1px solid #bdc3d1;
+        }
+
+        .footerbox {
+            position: fixed;
+            height: 37px;
+            top: 555px;
+            left: 774px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+
+            .switch input {
+                display: none;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 16px;
+                width: 16px;
+                left: 2px;
+                bottom: 3px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+    </style>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#txtEmployee").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Dashboard/Index",
+                        type: "POST",
+                        dataType: "json",
+                        data: { Prefix: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.FirstName + " " + item.LastName, value: item.FirstName + " " + item.LastName };
+                            }))
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="headerpanel">
+            <div class="logopanel">
+                <h2 style="font-size:19px;margin-top:4px;"><a href="@Url.Action("index", "Dashboard" )">Resource Navigations</a></h2>
+            </div>
+            <div class="headerbar">
+                <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                <div class="searchpanel">
+                    <div class="input-group">
+                        <input type="text" id="txtEmployee" class="form-control" placeholder="find employee">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <ul class="headermenu">
+                        <li>
+                            <div id="noticePanel" class="btn-group">
+                                <button class="btn btn-notice alert-notice" data-toggle="dropdown">
+                                    <i class="fa fa-globe"></i>
+                                </button>
+                                <div id="noticeDropdown" class="dropdown-menu dm-notice pull-right">
+                                    <div role="tabpanel">
+                                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                                            <li class="active"><a data-target="#notification" data-toggle="tab">Notifications (2)</a></li>
+                                            <li><a data-target="#reminders" data-toggle="tab">Reminders (4)</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="notification">
+                                                <ul class="list-group notice-list">
+                                                    <li class="list-group-item unread">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <i class="fa fa-envelope"></i>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">New message from Weno Carasbong</a></h5>
+                                                                <small>June 20, 2015</small>
+                                                                <span>Soluta nobis est eligendi optio cumque...</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item unread">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <i class="fa fa-user"></i>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">Renov Leonga is now following you!</a></h5>
+                                                                <small>June 18, 2015</small>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <i class="fa fa-user"></i>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">Zaham Sindil is now following you!</a></h5>
+                                                                <small>June 17, 2015</small>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <i class="fa fa-thumbs-up"></i>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">Rey Reslaba likes your post!</a></h5>
+                                                                <small>June 16, 2015</small>
+                                                                <span>HTML5 For Beginners Chapter 1</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <i class="fa fa-comment"></i>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">Socrates commented on your post!</a></h5>
+                                                                <small>June 16, 2015</small>
+                                                                <span>Temporibus autem et aut officiis debitis...</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <a class="btn-more" href="javascript:void(0)">View More Notifications <i class="fa fa-long-arrow-right"></i></a>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="reminders">
+                                                <h1 id="todayDay" class="today-day">...</h1>
+                                                <h3 id="todayDate" class="today-date">...</h3>
+                                                <h5 class="today-weather"><i class="wi wi-hail"></i> Cloudy 77 Degree</h5>
+                                                <p>Thunderstorm in the area this afternoon through this evening</p>
+                                                <h4 class="panel-title">Upcoming Events</h4>
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <h4>20</h4>
+                                                                <p>Aug</p>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">HTML5/CSS3 Live! United States</a></h5>
+                                                                <small>San Francisco, CA</small>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <h4>05</h4>
+                                                                <p>Sep</p>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">Web Technology Summit</a></h5>
+                                                                <small>Sydney, Australia</small>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <h4>25</h4>
+                                                                <p>Sep</p>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">HTML5 Developer Conference 2015</a></h5>
+                                                                <small>Los Angeles CA United States</small>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-2">
+                                                                <h4>10</h4>
+                                                                <p>Oct</p>
+                                                            </div>
+                                                            <div class="col-xs-10">
+                                                                <h5><a href="javascript:void(0)">AngularJS Conference 2015</a></h5>
+                                                                <small>Silicon Valley CA, United States</small>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <a class="btn-more" href="javascript:void(0)">View More Events <i class="fa fa-long-arrow-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-logged" data-toggle="dropdown" style="width:100%">
+                                    @if (Model != null)
+                                    {
+                                        @Model.FirstName @Model.LastName
+                                    }
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="profile.html"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>
+                                    <li><a href="javascript:void(0)"><i class="glyphicon glyphicon-cog"></i> Account Settings</a></li>
+                                    <li><a href="javascript:void(0)"><i class="glyphicon glyphicon-question-sign"></i> Help</a></li>
+                                    <li><a href="@Url.Action("login","accounts")"><i class="glyphicon glyphicon-log-out"></i> Log Out</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <button id="quickMenuBtn" class="btn btn-chat alert-notice">
+                                <i class="fa fa-comments-o"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="leftpanel">
+            <div class="leftpanelinner">
+                <div class="media leftpanel-profile">
+                    <div class="media-left">
+                        @{
+                            if (Model != null)
+                            {
+                                if (Model.Image != null)
+                                {
+                                    string groupLogo = Convert.ToBase64String(Model.Image);
+                                    string imageSrc = string.Format("data:image/jpeg;base64,{0}", groupLogo);
+                                    <img src="@imageSrc" class="media-object img-circle" id="imgGroupLogo" />
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)">
+                                        <img src="~/Content/Assets/images/photos/loggeduser.png" alt="" class="media-object img-circle">
+                                    </a>
+                                }
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0)">
+                                    <img src="~/Content/Assets/images/photos/loggeduser.png" alt="" class="media-object img-circle">
+                                </a>
+                            }
+                        }
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            @if (Model != null)
+                            { @Model.FirstName @Model.LastName } <a data-toggle="collapse" data-target="javascript:void(0)loguserinfo" class="pull-right"><i class="fa fa-angle-down"></i></a>
+                        </h4>
+                        <span>
+                            @if (Model != null)
+                            { @Model.RoleName}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="leftpanel-userinfo collapse" id="loguserinfo">
+                    <h5 class="sidebar-title">Address</h5>
+                    <address>
+                        @if (Model != null)
+                        { @Model.Address}
+                    </address>
+                    <h5 class="sidebar-title">Contact</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <label class="pull-left">Email</label>
+                            <span class="pull-right">
+                                @if (Model != null)
+                                {@Model.Email}
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            <label class="pull-left">Home Phone</label>
+                            <span class="pull-right">
+                                @if (Model != null)
+                                {@Model.HomePhone}
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            <label class="pull-left">Cell Phone</label>
+                            <span class="pull-right">
+                                @if (Model != null)
+                                {@Model.CellPhone}
+                            </span>
+                        </li>
+                        <li class="list-group-item">
+                            <label class="pull-left">Social</label>
+                            <div class="social-icons pull-right">
+                                <a href="javascript:void(0)"><i class="fa fa-facebook-official"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-twitter"></i></a>
+                                <a href="javascript:void(0)"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <ul class="nav nav-tabs nav-justified nav-sidebar">
+                    <li class="tooltips active" data-toggle="tooltip" title="Main Menu"><a data-toggle="tab" data-target="#mainmenu"><i class="tooltips fa fa-ellipsis-h"></i></a></li>
+                    <li class="tooltips" data-toggle="tooltip" title="" data-original-title="Contacts"><a href="@Url.Action("chatsection", "ChatSectionView" )"><i class="fa fa-comments-o"></i></a></li>
+                    <li class="tooltips" data-toggle="tooltip" title="Log Out"><a href="@Url.Action("login","accounts")"><i class="fa fa-sign-out"></i></a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="mainmenu">
+                        <h5 class="sidebar-title">Main Menu</h5>
+                        <ul class="nav nav-pills nav-stacked nav-quirk">
+                            <li class="active"><a href="@Url.Action("index","dashboard")"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
+                            <li><a href="@Url.Action("index","dashboard")"><i class="fa fa-user"></i> <span>Employee</span></a></li>
+                            <li class="nav-parent">
+                                <a href="@Url.Action("index","dashboard")"><i class="fa fa-gears"></i> <span>Settings</span></a>
+                                <ul class="children">
+                                    <li><a href="@Url.Action("index","employeeportalview")">Navigation</a></li>
+                                    <li><a href="@Url.Action("widgets","employeeportalview")">Widgets</a></li>
+                                    <li><a href="@Url.Action("dashboard","employeeportalview")">Dashboard</a></li>
+                                    <li><a href="@Url.Action("blogs","employeeportalview")">Blogs</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="@Url.Action("index","dashboard")"><i class="fa fa-th-list"></i> <span>Reports</span></a></li>
+                            <li><a href="@Url.Action("index","dashboard")"><i class="fa fa-suitcase"></i> <span>Wall</span></a></li>
+                            <li><a href="@Url.Action("index","dashboard")"><i class="fa fa-home"></i> <span>ACA</span></a></li>
+                            <li class="nav-parent">
+                                <a href="javascript:void(0)"><i class="fa fa-home"></i> <span>Benefits</span></a>
+                                <ul class="children">
+                                    <li><a href="@Url.Action("index","dashboard")">Option 1</a></li>
+                                    <li><a href="@Url.Action("index","dashboard")">Option 2</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="@Url.Action("index","dashboard")"><i class="fa fa-money"></i> <span>Payroll</span></a></li>
+                            <li><a href="@Url.Action("index","dashboard")"><i class="fa fa-clipboard"></i> <span>Documents</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mainpanel">
+            <div class="contentpanel">
+                @RenderBody()
+            </div>
+        </div>
+    </section>
+
+    <script src="~/Content/Assets/lib/jquery/jquery.js"></script>
+    <script src="~/Content/Assets/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/Assets/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/Assets/lib/jquery-toggles/toggles.js"></script>
+    <script src="~/Content/Assets/js/nano-scroller.js"></script>
+    <script src="~/Content/Assets/js/quirk.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/jquery-ui-timepicker-addon.js"></script>
+
+    <script src="~/Scripts/jquery.emojipicker.js"></script>
+    <script src="~/Scripts/jquery.emojis.js"></script>
+
+    <input type="hidden" id="hdnEditName" value="" />
+    <input type="hidden" id="hdnEditEmail" value="" />
+    <input type="hidden" id="hdnShareUrl" value="" />
+    <input type="hidden" id="hdnDirectMessageId" value="" />
+    <input type="hidden" id="LoginUserId" value="" />
+    <input type="hidden" id="hdngroupName" value="" />
+    <input type="hidden" id="hdnTopic" value="" />
+    <input type="hidden" id="hdnNickName" value="" />
+
+    <div id="quickMenuDiv-overly" class="quickMenuDiv-overly" style="display:none;"></div>
+    <div id="quickMenuDiv" class="quickMenuDiv" style="z-index:999;">
+        <div class="quickMenuContentDiv">
+            <div class="quickMenuHeader">Chats</div>
+            <div class="QuickMenuBody">
+                <div class="pillar">
+                    <ul>
+                        <li><a href="javascript:void(0)" id="trayBtn" style="border-bottom:1px solid #ddd; background: #eeeeef;"><i class="fa fa-bars"></i></a></li>
+                        <li><a href="javascript:void(0)" title="My Profile" id="chatuserprofile"><i class="fa fa-user-circle-o"></i></a></li>
+                        <li><a href="javascript:void(0)" title="Chats" id="ChatsBtn"><i class="fa fa-comment-o"></i></a></li>
+                        <li><a href="javascript:void(0)" title="Contacts" id="chatContacts"><i class="fa fa-user"></i></a></li>
+                        <li><a href="javascript:void(0)" title="Archives"><i class="fa fa-folder"></i></a></li>
+                        <li><a href="javascript:void(0)" title="Settings" id="chatSettings" style="padding-top: 242px;"><i class="fa fa-cog"></i></a></li>
+                    </ul>
+                </div>
+                <div class="tray" id="tray" style="display:none;">
+                    <div class="tray-header" id="tray-header">
+                        <ul>
+                            <li class="tray-dropdown" style="float:right;">
+                                <a href="javascript:void(0)" class="tray-dropbtn"><i class="fa fa-comments-o"></i></a>
+                                <div class="tray-dropdown-content" style="margin-left:120px;">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#startGroup">Start Group</a>
+                                    <a href="javascript:void(0)">Start Direct Message</a>
+                                </div>
+                            </li>
+                            <li style="float:right;">
+                                <a href="javascript:void(0)">
+                                    <i class="fa fa-check-square-o"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tray-body" id="tray-body">
+                        <ul class="traybodyul" id="traybodyul"></ul>
+                    </div>
+                </div>
+                <div class="tray-content" id="tray-content">
+                    <div id="trayContentDiv" style="display:none;">
+                        <div id="trayContentHeaderDiv" class="tray-header">
+                            <ul>
+                                <li class="tray-dropdown" style="float:left;">
+                                    <div id="MoreInfoGroupDiv">
+                                        <a href="javascript:void(0)" class="tray-dropbtn" style="padding:6px 12px;">
+                                            <img src="~/Content/Assets/images/GroupIcon.png.png" style="height:25px;" />
+                                            <label id="GroupNameHeading"></label>
+                                            <i class="caret"></i>
+                                        </a>
+                                    </div>
+                                    <div class="tray-dropdown-content">
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#MembersGroup">
+                                            <i class="fa fa-user-plus"></i>
+                                            <label id="MembersCount"></label>
+                                        </a>
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#GroupGallery">
+                                            <i class="fa fa-picture-o"></i> Gallery
+                                        </a>
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#GroupCalendar">
+                                            <i class="fa fa-calendar"></i> Calendar
+                                        </a>
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#GroupPopular">
+                                            <i class="fa fa-heart"></i> Popular
+                                        </a>
+                                        <a href="#GroupSettings" data-toggle="modal" class="btn group-dialog">
+                                            <i class="fa fa-cog"></i> Settings
+                                        </a>
+                                    </div>
+                                </li>
+                                <li style="float:right;">
+                                    <a href="javascript:void(0)" id="chatClose">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="trayContentBodyDiv">
+                            <ul class="" id=""></ul>
+                        </div>
+                        <div class="footerbox">
+                            <div class="btn-group">
+                                <div id="trayContentFooterDiv" class="input-group">
+                                    <input type="text" id="insertGroupText" placeholder="Send Message" class="form-control" style="display:none;border-left:none; width: 532px;left:24px;" />
+                                    <input type="hidden" id="hdnGroupId" value="" />
+                                    <span class="input-group-btn">
+                                        <button id="btnEvent" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="bottom: 2px;border: none;right: 18px;min-height: 30px;">
+                                            <span class=" glyphicon glyphicon-plus"></span>
+                                        </button>
+                                        <ul class="dropdown-menu drop-up" role="menu">
+                                            <li><span class="glyphicon glyphicon-calendar"><a href="#" class="event" data-toggle="modal" data-target="#modalEvent">Create Event</a></span></li>
+                                            <li><span class="glyphicon glyphicon-search"><a href="#" class="media">Media Search</a></span></li>
+                                            <li><span class="glyphicon glyphicon-share"><a href="#" class="share">Share Photos and Documents</a></span></li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="modalEvent" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" style="text-align-last: center">New Event in this Group</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="control-label">Event Name</label>
+                                            <input type="text" class="form-control" id="eventNameInput" placeholder="Name of event" />
+                                        </div>
+                                        <div class="form-group">
+                                            <i class="glyphicon glyphicon-time"></i>
+                                            <label class="control-label">Starts</label>
+                                            <input type="text" class="form-control" id="startAtDateInput" readonly="readonly" />
+                                        </div>
+                                        <div class="form-group">
+                                            <i class="glyphicon glyphicon-time"></i>
+                                            <label class="control-label">Ends</label>
+                                            <input type="text" class="form-control" id="endAtDateInput" readonly="readonly" />
+                                        </div>
+                                        <div class="form-group">
+                                            <i class="glyphicon glyphicon-time"></i>
+                                            <label class="control-label">All Day</label>
+                                            <input type="checkbox" id="chkday" />
+                                        </div>
+                                        <p class="section-label">Optional</p>
+                                        <div class="form-group">
+                                            <i class="glyphicon glyphicon-map-marker"></i>
+                                            <label class="control-label">Location</label>
+                                            <input type="text" class="form-control" id="locationInput" placeholder="Location name/Address" />
+                                        </div>
+                                        <div class="form-group">
+                                            <i class="glyphicon glyphicon-picture"></i>
+                                            <label class="control-label">Photo</label>
+                                            <div class="input-group">
+                                                <input type="file" class="form-control" id="filephoto" onchange="img_pathUrl(this);" style="display:none;" />
+                                                <label for="filephoto" class="btn btn-default ">
+                                                    <span class="buttonText">Add Photo</span>
+                                                </label>
+                                                <img src="" id="img_url" alt="image" style="display:none;">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <i class="glyphicon glyphicon-info-sign"></i>
+                                            <label class="control-label">Description</label>
+                                            <input type="text" class="form-control" id="locationInput" placeholder="Add A Description" />
+                                        </div>
+                                        <p class="section-label">Reminders</p>
+                                        <div class="form-group">
+                                            <i class="glyphicon glyphicon-bell"></i>
+                                            <label class="control-label">Reminder 1</label>
+                                            <select id="drpReminder" name="drpReminder" class="form-control">
+                                                <option value="None">None</option>
+                                                <option value="At time of event">At time of event</option>
+                                                <option value="5 minutes before">5 minutes before</option>
+                                                <option value="15 minutes before">15 minutes before</option>
+                                                <option value="30 minutes before">30 minutes before</option>
+                                                <option value="1 hour before">1 hour before</option>
+                                                <option value="2 hours before">2 hours before</option>
+                                                <option value="1 day before">1 day before</option>
+                                                <option value="2 days before">2 days before</option>
+                                                <option value="1 week before">1 week before</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">
+                                            Create Event
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tray-content" id="myUserProfile" style="display:none;">
+                    <img src="" class="media-object img-circle" style="height:140px; width:140px;" id="myUserPic" />
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name</label>
+                                <div class="col-sm-7">
+                                    <input type="text" id="myName" disabled="disabled" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="button" class="btn btn-default" value="Edit" id="EditName" />
+                                    <input type="button" class="btn btn-default" value="Save" id="EditNameSave" style="display:none;" />
+                                    <input type="button" class="btn btn-default" value="Cancel" id="EditNameCancel" style="display: none;margin-left: 65px;margin-top: -35px;" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-7"><input type="text" id="myEmail" disabled="disabled" class="form-control" /></div>
+                                <div class="col-sm-2">
+                                    <input type="button" class="btn btn-default" value="Edit" id="EditEmail" />
+                                    <input type="button" class="btn btn-default" value="Save" id="EditEmailSave" style="display:none;" />
+                                    <input type="button" class="btn btn-default" value="Cancel" id="EditEmailCancel" style="display: none;margin-left: 65px;margin-top: -35px;" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Phone</label>
+                                <div class="col-sm-7"><input id="myPhone" type="text" disabled="disabled" class="form-control" /></div>
+                                <div class="col-sm-2">
+                                    <input type="button" class="btn btn-default" disabled="disabled" value="Edit" />
+                                </div>
+                            </div><hr />
+                            <div class="form-group" style="text-align:center;">
+                                <div><a href="#">Token Management</a></div>
+                                <div><a href="#">Delete GroupMe Account</a></div>
+                            </div><hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="tray" id="myContacts" style="display:none;">
+                    <div class="tray-header">
+                        <ul>
+                            <li style="float:left;">
+                                <a href="javascript:void(0)">
+                                    Contacts
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tray-body" id="trayBodyContacts">
+                        <ul class="traybodyul" id="myContactsul"></ul>
+                    </div>
+                </div>
+                <div class="tray" id="chatSetting" style="display:none;">
+                    <div class="tray-header">
+                        <ul>
+                            <li style="float:left;">
+                                <a href="javascript:void(0)">
+                                    Settings
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tray-body" id="trayBodySettings">
+                        <div style="font-weight:bold;font-size:medium;"> Notifications</div>
+                        Push Notifications are turned off because SMS delivery is turned on.<br />
+                        <div style="font-weight:bold;font-size:medium;">Message Delivery</div>
+                        SMS message delivery is on until 12.00 AM<br />
+                        Send Read Receipts for DMs<br />
+                        <label class="switch">
+                            <input type="checkbox">
+                            <div class="slider round"></div>
+                        </label><br />
+                        Only download media on Wi-Fi<br />
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <div class="slider round"></div>
+                        </label><br />
+                        <div style="font-weight:bold;font-size:medium;">Sync Contacts</div>
+                        Find friends who are already using GroupMe<br />
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <div class="slider round"></div>
+                        </label><br />
+                        <div style="font-weight:bold;font-size:medium;">Support</div>
+                        <div><a href="https://help.groupme.com/" target="_blank">Contact our support team</a></div>
+                        <div>
+                            <a href="https://help.groupme.com/hc/en-us" target="_blank">GroupMe FAQ</a>
+                        </div>
+                        <div>
+                            <a href="https://privacy.microsoft.com/en-us/privacystatement" target="_blank">Privacy Policy</a>
+                        </div>
+                        <div>
+                            <a href="https://www.groupme.com/terms" target="_blank">Terms of Service</a>
+                        </div>
+                        <div>
+                            <a href="http://www.microsoft.com/maps/assets/docs/terms.aspx" target="_blank">Third party notices</a>
+                        </div><br />
+                        <div>
+                            <a class="btn btn-danger" href="/">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tray-content" id="trayDMcontent" style="display:none;margin-left:321px;">
+                    <div id="trayDMContentDiv">
+                        <div id="trayDMContentHeaderDiv" class="tray-header">
+                            <ul>
+                                <li style="float:right;">
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="trayDMContentBodyDiv">
+                            <ul class="" id=""></ul>
+                        </div>
+                        <div id="trayDMContentFooterDiv">
+                            <input type="text" id="insertDirectMessageText" placeholder="Send Message" class="form-control" style="display:none;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal bounceIn animated" id="startGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; padding-right:0px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align:center;">New Group</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="img-wrap">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <input type="file" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="groupName" placeholder="Enter Group Name" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align:center;">
+                    <button type="button" class="btn btn-primary" id="btnCreateGroup">Create Group</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal bounceIn animated" id="MembersGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; padding-right:0px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabelMembers" style="text-align:center;"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="AddMembers">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal bounceIn animated" id="AddNewMembers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; padding-right:0px;padding-top:100px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" style="text-align:center;">Add members</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="margin-left:-50px;">
+                        <label class="col-sm-5 control-label">Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="AddNewName" placeholder="Enter Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:-50px;">
+                        <label class="col-sm-5 control-label">Phone</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="AddNewPhone" placeholder="Enter Phone" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:-50px;">
+                        <label class="col-sm-5 control-label">Email</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="AddNewEmail" placeholder="Enter Email Id" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align:center;">
+                    <button type="button" class="btn btn-primary" id="btnAddMembers">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal bounceIn animated" id="GroupSettings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; padding-right:0px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" style="text-align:center;" id="GroupSettingsTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="GroupSettingsImg" style="margin-left:185px;">
+                    </div>
+                    <div class="form-group" style="margin-left:120px;">
+                        <label class="col-sm-3 control-label" style="text-align:left;">Group name:</label>
+                        <div class="col-sm-4 control-label" style="text-align:left;">
+                            <label id="GroupSettingsName"></label>
+                            <input type="text" id="txtGroupSettingsName" style="display:none;" class="form-control" />
+                        </div>
+                        <div class="col-sm-4 control-label" style="text-align:left;">
+                            <input type="button" class="btn btn-default" value="Edit" id="GroupSettingsEditName" />
+                            <input type="button" class="btn btn-default" value="Save" id="EditgNameSave" style="display:none;" />
+                            <input type="button" class="btn btn-default" value="Cancel" id="EditgNameCancel" style="display: none;margin-left: 65px;margin-top: -35px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:120px;">
+                        <label class="col-sm-3 control-label" style="text-align:left;">Topic:</label>
+                        <div class="col-sm-4 control-label" style="text-align:left;">
+                            <label id="GroupSettingsTopic"></label>
+                            <input type="text" id="txtGroupSettingsTopic" style="display:none;" class="form-control" />
+                        </div>
+                        <div class="col-sm-4 control-label" style="text-align:left;">
+                            <input type="button" class="btn btn-default" value="Edit" id="GroupSettingsEditTopic" />
+                            <input type="button" class="btn btn-default" value="Save" id="EditTopicSave" style="display:none;" />
+                            <input type="button" class="btn btn-default" value="Cancel" id="EditTopicCancel" style="display: none;margin-left: 65px;margin-top: -35px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-left:120px;">
+                        <label class="col-sm-3 control-label" style="text-align:left;">Your nickname:</label>
+                        <div class="col-sm-4 control-label" style="text-align:left;">
+                            <label id="GroupSettingsNickName"></label>
+                            <input type="text" id="txtGroupSettingsNickName" style="display:none;" class="form-control" />
+                        </div>
+                        <div class="col-sm-4 control-label" style="text-align:left;">
+                            <input type="button" class="btn btn-default" value="Edit" id="GroupSettingsEditNickName" />
+                            <input type="button" class="btn btn-default" value="Save" id="EditNickNameSave" style="display:none;" />
+                            <input type="button" class="btn btn-default" value="Cancel" id="EditNickNameCancel" style="display: none;margin-left: 65px;margin-top: -35px;" />
+                        </div>
+                    </div><hr />
+                    <div class="form-group" style="margin-left:120px;">
+                        <label class="col-sm-3 control-label" style="text-align:left;">Office Mode</label>
+                        <div class="col-sm-5 control-label" style="text-align:right;">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </div><hr />
+                    <div class="form-group" style="margin-left:120px;">
+                        <label class="col-sm-3 control-label" style="text-align:left;">Mute</label>
+                        <div class="col-sm-5 control-label" style="text-align:right;">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </div><hr />
+                    <div class="form-group" style="margin-left:120px;">
+                        <label class="col-sm-3 control-label" style="text-align:left;">Make Group Shareable</label>
+                        <div class="col-sm-5 control-label" style="text-align:right;">
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </div><br />
+                    <div style="text-align:center;">
+                        <input type="button" class="btn btn-primary" value="Clear History" />
+                        <input type="button" class="btn btn-primary" value="Change Owner" />
+                        <input type="button" class="btn btn-primary" id="btnEndGroup" style="color:red;background-color:white;border-color:blue;" value="" />
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align:center;">
+                    @*<button type="button" class="btn btn-primary" id="btnAddMembers">Add</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal bounceIn animated" id="GroupPopular" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; padding-right:0px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" style="text-align:center;" id="GroupPopularTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="btn-group btn-group-justified categories">
+                        <span type="button" id="ListOfMessagesLikedForMe" class="btn btn-link btn-lg" role="button"></span>
+                        <span type="button" id="MyLikedMessages" class="btn btn-link btn-lg" role="button">My Likes</span>
+                    </div>
+                    <hr />
+                    <div id="divGroupPopular" style="height:400px;overflow-y:auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal bounceIn animated" id="GroupGallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; padding-right:0px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" style="text-align:center;" id="GroupGalleryTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="AddImagesInGroupGallery">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal bounceIn animated" id="GroupCalendar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; padding-right:0px;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" style="text-align:center;" id="GroupCalendarTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="AddEventsInGroupCalendar">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#MyLikedMessages").click(function () {
+                $("#MyLikedMessages").css("color", "black");
+                $("#ListOfMessagesLikedForMe").css("color", "#2574ab");
+                var groupId = $("#hdnGroupId").val();
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/MyLikedMessages?groupId=' + groupId,
+                    success:
+                        function (response) {
+                            $("#divGroupPopular").empty();
+                            var json = $.parseJSON(response);
+                            $("#divGroupPopular").empty();
+                            var json = $.parseJSON(response);
+                            for (i = 0; i < json.response.messages.length; i++) {
+                                var imgVal = json.response.messages[i].avatar_url;
+                                if (imgVal == null) {
+                                    imgVal = "../Content/Assets/images/UserIcon.png";
+                                }
+                                if (json.response.messages[i].text == null) {
+                                    $("#divGroupPopular").append(
+                                        '<img src="' + imgVal + '" style="width:30px; height:30px; margin-right:5px; border-radius:50%;" />' +
+                                        '<div class="col-md-12"> <div class="col-md-11"> <span><b>' + json.response.messages[i].name + '</b></span>' + '<br />' +
+                                               '<div>' + '<img src="' + json.response.messages[i].attachments[0].url + '" style="width:100%;" />' + '</div>' + '</div>' +
+                                        '<div class="col-md-1 text-right"><a href="javascript:void(0)" title="1" style="color:#f77070;" id=' + json.response.messages[i].id + '><i class="fa fa-heart"></i></a></div></div>' +
+                                        '<br /> <br />');
+                                }
+                                else {
+                                    $("#divGroupPopular").append(
+                                        '<img src="' + imgVal + '" style="width:30px; height:30px; margin-right:5px; border-radius:50%;" />' +
+                                        '<div class="col-md-12"> <div class="col-md-11"> <span><b>' + json.response.messages[i].name + '</b></span>' + '<br />' +
+                                               '<span class="liSpan">' + json.response.messages[i].text + '</span></div>' +
+                                        '<div class="col-md-1 text-right"><a href="javascript:void(0)" title="1" style="color:#f77070;" id=' + json.response.messages[i].id + '><i class="fa fa-heart"></i></a></div></div>' +
+                                        '<br /> <br />');
+                                }
+                            }
+                        }
+                });
+            });
+
+            $("#ListOfMessagesLikedForMe").click(function () {
+                $("#ListOfMessagesLikedForMe").css("color", "black");
+                $("#MyLikedMessages").css("color", "#2574ab");
+                var groupId = $("#hdnGroupId").val();
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/ListOfMessagesLikedForMe?groupId=' + groupId,
+                    success:
+                        function (response) {
+                            $("#divGroupPopular").empty();
+                            var json = $.parseJSON(response);
+                            for (i = 0; i < json.response.messages.length; i++) {
+                                var imgVal = json.response.messages[i].avatar_url;
+                                if (imgVal == null) {
+                                    imgVal = "../Content/Assets/images/UserIcon.png";
+                                }
+                                if (json.response.messages[i].text == null) {
+                                    $("#divGroupPopular").append(
+                                        '<img src="' + imgVal + '" style="width:30px; height:30px; margin-right:5px; border-radius:50%;" />' +
+                                        '<div class="col-md-12"> <div class="col-md-11"> <span><b>' + json.response.messages[i].name + '</b></span>' + '<br />' +
+                                               '<div>' + '<img src="' + json.response.messages[i].attachments[0].url + '" style="width:100%;" />' + '</div>' + '</div>' +
+                                        '<div class="col-md-1 text-right"><a href="javascript:void(0)" title="' + json.response.messages[i].favorited_by.length + '" style="color:#f77070;" id=' + json.response.messages[i].id + '><i class="fa fa-heart"></i></a></div></div>' +
+                                        '<br /> <br />');
+                                }
+                                else {
+                                    $("#divGroupPopular").append(
+                                        '<img src="' + imgVal + '" style="width:30px; height:30px; margin-right:5px; border-radius:50%;" />' +
+                                        '<div class="col-md-12"> <div class="col-md-11"> <span><b>' + json.response.messages[i].name + '</b></span>' + '<br />' +
+                                               '<span class="liSpan">' + json.response.messages[i].text + '</span></div>' +
+                                        '<div class="col-md-1 text-right"><a href="javascript:void(0)" title="' + json.response.messages[i].favorited_by.length + '" style="color:#f77070;" id=' + json.response.messages[i].id + '><i class="fa fa-heart"></i></a></div></div>' +
+                                        '<br /> <br />');
+                                }
+                            }
+                        }
+                });
+            });
+
+            $(document).on('click', '.HeartIcon', function () {
+                var groupId = $("#hdnGroupId").val();
+                var messageId = this.id;
+                var data = JSON.stringify({ groupId: groupId, messageId: messageId });
+                if ($("#" + messageId).css("color") === "rgb(247, 112, 112)") {
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: '/Dashboard/UnLikeAMessage?data=' + data,
+                        success:
+                            function (response) {
+                                $("#" + messageId).removeAttr('style');
+                                $("#" + messageId).removeAttr('title');
+                            }
+                    });
+                }
+                else {
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: '/Dashboard/LikeAMessage?data=' + data,
+                        success:
+                            function (response) {
+                                $("#" + messageId).css("color", "#f77070");
+                            }
+                    });
+                }
+            });
+
+            $("#btnAddMembers").click(function () {
+                var NickName = $("#AddNewName").val();
+                var Phone = $("#AddNewPhone").val();
+                var Email = $("#AddNewEmail").val();
+                var groupId = $("#hdnGroupId").val();
+                var ShareUrl = $("#hdnShareUrl").val();
+                var Message = "Please Enter the Following Fields:" + "\n";
+                var MessageText = "";
+                if (NickName === "") {
+                    MessageText += "Name" + "\n";
+                }
+                if (Phone === "") {
+                    MessageText += "Phone" + "\n";
+                }
+                if (Email === "") {
+                    MessageText += "Email" + "\n";
+                }
+                if (MessageText === "") {
+                    var data = JSON.stringify({ NickName: NickName, Phone: Phone, Email: Email, groupId: groupId, ShareUrl: ShareUrl });
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: '/Dashboard/AddMembersInGroup?data=' + data,
+                        success:
+                            function (response) {
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    url: '/Dashboard/LoadSpecificGroupInfo?groupId=' + groupId,
+                                    success:
+                                        function (response) {
+                                            $("#AddMembers").empty();
+                                            $('#trayContentDiv').css('display', 'block');
+                                            var json = $.parseJSON(response);
+                                            $("#hdnShareUrl").val(json.response.share_url);
+                                            $("#GroupNameHeading").text(json.response.name);
+                                            $("#GroupSettingsTitle").text("Settings for" + " " + "'" + json.response.name + "'");
+                                            $("#GroupSettingsName").text(json.response.name);
+                                            $("#GroupSettingsTopic").text(json.response.description);
+                                            $("#MembersCount").text(json.response.members.length + " " + "Members");
+                                            $("#myModalLabelMembers").text(json.response.members.length + " " + "Members of " + "'" + json.response.name + "'");
+                                            $("#GroupPopularTitle").text("Popular messages in " + "'" + json.response.name + "'");
+                                            $("#GroupGalleryTitle").text("Gallery in " + "'" + json.response.name + "'");
+                                            $("#GroupCalendarTitle").text("Events in " + "'" + json.response.name + "'");
+                                            $("#AddMembers").append('<div class="col-sm-3">' + '<div class="member">' + '<div class="img-circle avatar" style="color: #d4d4d4;font-size: 42px;background-color: #f2f2f2;">' + '<a href="javascript:void(0)" data-toggle="modal" data-target="#AddNewMembers">'
+                                                                + '<img src="' + "../Content/Assets/images/UserIcon-200x200.png" + '" style="width:100%;" />' + '</a>' + '</div>' + '<label>Add Members</label>'
+                                                                + '</div>' + '</div>');
+                                            $.each(json.response.members, function (i, value) {
+                                                var imgVal = value.image_url;
+                                                if (imgVal == null) {
+                                                    imgVal = "../Content/Assets/images/UserIcon-200x200.png";
+                                                }
+                                                if (value.user_id == json.response.creator_user_id) {
+                                                    $("#AddMembers").append('<div class="col-sm-3">' + '<div class="member">' + '<div class="img-circle avatar">'
+                                                                   + '<a href="javascript:void(0)"> <i class="fa fa-user-plus"> </i> </a>'
+                                                                   + '<a href="javascript:void(0)">'
+                                                                   + '<img src="' + imgVal + '" style="width:100%;" />' + '</a>' + '</div>' + '<label>' + value.nickname + '</label>'
+                                                                   + '</div>' + '</div>');
+                                                }
+                                                else {
+                                                    $("#AddMembers").append('<div class="col-sm-3">' + '<div class="member">' + '<div class="img-circle avatar">' + '<a href="javascript:void(0)">'
+                                                                    + '<img src="' + imgVal + '" style="width:100%;" />' + '</a>' + '</div>' + '<label>' + value.nickname + '</label>'
+                                                                    + '</div>' + '</div>');
+                                                }
+                                            });
+                                        }
+                                });
+                                $('#AddNewMembers').modal('hide');
+                                $('#MembersGroup').modal('hide');
+                            }
+                    });
+                }
+                else {
+                    alert(Message + MessageText);
+                }
+            });
+
+            $("#EditName").click(function () {
+                $("#hdnEditName").val($("#myName").val());
+                $("#myName").removeAttr("disabled");
+                $("#EditName").css("display", "none");
+                $("#EditNameSave").css("display", "block");
+                $("#EditNameCancel").css("display", "block");
+            });
+
+            $("#EditEmail").click(function () {
+                $("#hdnEditEmail").val($("#myEmail").val());
+                $("#myEmail").removeAttr("disabled");
+                $("#EditEmail").css("display", "none");
+                $("#EditEmailSave").css("display", "block");
+                $("#EditEmailCancel").css("display", "block");
+            });
+
+            $("#EditNameCancel").click(function () {
+                $("#myName").val($("#hdnEditName").val());
+                $("#myName").attr("disabled", "disabled");
+                $("#EditName").css("display", "block");
+                $("#EditNameSave").css("display", "none");
+                $("#EditNameCancel").css("display", "none");
+            });
+
+            $("#EditEmailCancel").click(function () {
+                $("#myEmail").val($("#hdnEditEmail").val());
+                $("#myEmail").attr("disabled", "disabled");
+                $("#EditEmail").css("display", "block");
+                $("#EditEmailSave").css("display", "none");
+                $("#EditEmailCancel").css("display", "none");
+            });
+
+            $("#EditNameSave").click(function () {
+                var name = $("#myName").val();
+                var email = $("#myEmail").val();
+                var data = JSON.stringify({ name: name, email: email });
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/UpdateUserName?data=' + data,
+                    success:
+                        function (response) {
+                            $("#myName").attr("disabled", "disabled");
+                            $("#EditName").css("display", "block");
+                            $("#EditNameSave").css("display", "none");
+                            $("#EditNameCancel").css("display", "none");
+                        }
+                });
+            });
+
+            $("#EditEmailSave").click(function () {
+                var email = $("#myEmail").val();
+                var name = $("#myName").val();
+                var data = JSON.stringify({ name: name, email: email });
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/UpdateUserEmail?data=' + data,
+                    success:
+                        function (response) {
+                            $("#myEmail").attr("disabled", "disabled");
+                            $("#EditEmail").css("display", "block");
+                            $("#EditEmailSave").css("display", "none");
+                            $("#EditEmailCancel").css("display", "none");
+                        }
+                });
+            });
+
+            $("#GroupSettingsEditName").click(function () {
+                $("#hdngroupName").val($("#GroupSettingsName").text());
+                $("#txtGroupSettingsName").css("display", "block");
+                $("#GroupSettingsName").css("display", "none");
+                $("#txtGroupSettingsName").val($("#GroupSettingsName").text());
+                $("#GroupSettingsEditName").css("display", "none");
+                $("#EditgNameSave").css("display", "block");
+                $("#EditgNameCancel").css("display", "block");
+            });
+
+            $("#EditgNameCancel").click(function () {
+                $("#GroupSettingsName").css("display", "block");
+                $("#GroupSettingsName").text($("#hdngroupName").val());
+                $("#txtGroupSettingsName").css("display", "none");
+                $("#GroupSettingsEditName").css("display", "block");
+                $("#EditgNameSave").css("display", "none");
+                $("#EditgNameCancel").css("display", "none");
+            });
+
+            $("#EditgNameSave").click(function () {
+                var name = $("#txtGroupSettingsName").val();
+                var groupId = $("#hdnGroupId").val();
+                var data = JSON.stringify({ name: name, groupId: groupId });
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/UpdateGroupName?data=' + data,
+                    success:
+                        function (response) {
+                            $("#GroupSettingsName").css("display", "block");
+                            $("#GroupSettingsName").text(name);
+                            $("#txtGroupSettingsName").css("display", "none");
+                            $("#GroupSettingsEditName").css("display", "block");
+                            $("#EditgNameSave").css("display", "none");
+                            $("#EditgNameCancel").css("display", "none");
+                        }
+                });
+            });
+
+            $("#GroupSettingsEditTopic").click(function () {
+                $("#hdnTopic").val($("#GroupSettingsTopic").text());
+                $("#txtGroupSettingsTopic").css("display", "block");
+                $("#GroupSettingsTopic").css("display", "none");
+                $("#txtGroupSettingsTopic").val($("#GroupSettingsTopic").text());
+                $("#GroupSettingsEditTopic").css("display", "none");
+                $("#EditTopicSave").css("display", "block");
+                $("#EditTopicCancel").css("display", "block");
+            });
+
+            $("#EditTopicCancel").click(function () {
+                $("#GroupSettingsTopic").css("display", "block");
+                $("#GroupSettingsTopic").text($("#hdnTopic").val());
+                $("#txtGroupSettingsTopic").css("display", "none");
+                $("#GroupSettingsEditTopic").css("display", "block");
+                $("#EditTopicSave").css("display", "none");
+                $("#EditTopicCancel").css("display", "none");
+            });
+
+            $("#EditTopicSave").click(function () {
+                var topic = $("#txtGroupSettingsTopic").val();
+                var name = $("#GroupSettingsName").text();
+                var groupId = $("#hdnGroupId").val();
+                var data = JSON.stringify({ topic: topic, groupId: groupId, name: name });
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/UpdateTopicName?data=' + data,
+                    success:
+                        function (response) {
+                            $("#GroupSettingsTopic").css("display", "block");
+                            $("#GroupSettingsTopic").text(topic);
+                            $("#txtGroupSettingsTopic").css("display", "none");
+                            $("#GroupSettingsEditTopic").css("display", "block");
+                            $("#EditTopicSave").css("display", "none");
+                            $("#EditTopicCancel").css("display", "none");
+                        }
+                });
+            });
+            $("#GroupSettingsEditNickName").click(function () {
+                $("#hdnNickName").val($("#GroupSettingsNickName").text());
+                $("#txtGroupSettingsNickName").css("display", "block");
+                $("#GroupSettingsNickName").css("display", "none");
+                $("#txtGroupSettingsNickName").val($("#GroupSettingsNickName").text());
+                $("#GroupSettingsEditNickName").css("display", "none");
+                $("#EditNickNameSave").css("display", "block");
+                $("#EditNickNameCancel").css("display", "block");
+            });
+
+            $("#EditNickNameCancel").click(function () {
+                $("#GroupSettingsNickName").css("display", "block");
+                $("#GroupSettingsNickName").text($("#hdnNickName").val());
+                $("#txtGroupSettingsNickName").css("display", "none");
+                $("#GroupSettingsEditNickName").css("display", "block");
+                $("#EditNickNameSave").css("display", "none");
+                $("#EditNickNameCancel").css("display", "none");
+            });
+
+            $("#EditNickNameSave").click(function () {
+                var name = $("#txtGroupSettingsNickName").val();
+                var groupId = $("#hdnGroupId").val();
+                var data = JSON.stringify({ name: name, groupId: groupId });
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/UpdateNickName?data=' + data,
+                    success:
+                        function (response) {
+                            $("#GroupSettingsNickName").css("display", "block");
+                            $("#GroupSettingsNickName").text(name);
+                            $("#txtGroupSettingsNickName").css("display", "none");
+                            $("#GroupSettingsEditNickName").css("display", "block");
+                            $("#EditNickNameSave").css("display", "none");
+                            $("#EditNickNameCancel").css("display", "none");
+                        }
+                });
+            });
+            $("#btnEndGroup").click(function () {
+                if ($("#btnEndGroup").val() == "End Group") {
+                    var groupId = $("#hdnGroupId").val();
+                    var data = JSON.stringify({ groupId: groupId });
+                    if (confirm("Are you sure?")) {
+                        $.ajax({
+                            type: 'GET',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            url: '/Dashboard/EndGroup?data=' + data,
+                            success:
+                                function (response) {
+                                    alert("group destroyed successfully!");
+                                    $(".modal-content").hide();
+                                    $("#chatClose").click();
+                                    $.ajax({
+                                        type: 'GET',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: '/Dashboard/GetAllGroups',
+                                        success:
+                                            function (response) {
+                                                $("#tray-body ul").empty();
+                                                $("#trayContentBodyDiv").empty();
+                                                var json = $.parseJSON(response);
+                                                $.each(json.response, function (i, value) {
+                                                    var imgVal = value.image_url;
+                                                    if (imgVal == null) {
+                                                        imgVal = "../Content/Assets/images/default_group_300.png";
+                                                    }
+                                                    $("#tray-body ul").append('<li id="' + value.group_id + '">' + '<a href="javascript:void(0)">' + '<img src="' + imgVal + '" style="width:50px; height:50px; margin-right:5px; border-radius:50%;" />' + '    ' + '<span>' + value.name + '</span></a>' + '</li>');
+                                                });
+                                                GetLogInUserId();
+                                            }
+                                    });
+                                }
+                        })
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    var Id = "";
+                    var id = "";
+                    if (confirm("Are you sure?")) {
+                        $.ajax({
+                            type: 'GET',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            url: '/Dashboard/GetDetailsInfoAboutUser',
+                            success:
+                                function (response) {
+                                    var json = $.parseJSON(response);
+                                    id = json.response.id;
+                                    var groupId = $("#hdnGroupId").val();
+                                    $.ajax({
+                                        type: 'GET',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: '/Dashboard/LoadSpecificGroupInfo?groupId=' + groupId,
+                                        success:
+                                            function (response) {
+                                                var json1 = $.parseJSON(response);
+                                                $.each(json1.response.members, function (i, value) {
+                                                    if (value.user_id == id) {
+                                                        Id = value.id;
+                                                    }
+                                                })
+                                                var memberid = Id;
+                                                var data = JSON.stringify({ groupId: groupId, memberid: memberid });
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    dataType: 'json',
+                                                    contentType: 'application/json',
+                                                    url: '/Dashboard/LeaveGroup?data=' + data,
+                                                    success:
+                                                        function (response) {
+                                                            alert("You left from group successfully!");
+                                                            $(".modal-content").hide();
+                                                            $("#chatClose").click();
+                                                            $.ajax({
+                                                                type: 'GET',
+                                                                dataType: 'json',
+                                                                contentType: 'application/json',
+                                                                url: '/Dashboard/GetAllGroups',
+                                                                success:
+                                                                    function (response) {
+                                                                        $("#tray-body ul").empty();
+                                                                        $("#trayContentBodyDiv").empty();
+                                                                        var json = $.parseJSON(response);
+                                                                        $.each(json.response, function (i, value) {
+                                                                            var imgVal = value.image_url;
+                                                                            if (imgVal == null) {
+                                                                                imgVal = "../Content/Assets/images/default_group_300.png";
+                                                                            }
+                                                                            $("#tray-body ul").append('<li id="' + value.group_id + '">' + '<a href="javascript:void(0)">' + '<img src="' + imgVal + '" style="width:50px; height:50px; margin-right:5px; border-radius:50%;" />' + '    ' + '<span>' + value.name + '</span></a>' + '</li>');
+                                                                        });
+                                                                        GetLogInUserId();
+                                                                    }
+                                                            });
+                                                        }
+                                                })
+                                            }
+                                    })
+                                }
+                        })
+                    }
+                }
+            });
+            $("#insertDirectMessageText").on('keypress', function (e) {
+                if (e.which === 13) {
+                    if ($("#insertDirectMessageText").val().length > 0) {
+                        var receipientId = $("#hdnDirectMessageId").val();
+                        var message = $("#insertDirectMessageText").val();
+                        var data = JSON.stringify({ receipientId: receipientId, message: message });
+                        $(this).attr("disabled", "disabled");
+                        $.ajax({
+                            type: 'GET',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            url: '/Dashboard/SendDirectMessageToUser?data=' + data,
+                            success:
+                                function (response) {
+                                    $("#insertDirectMessageText").removeAttr("disabled");
+                                }
+                        });
+                    }
+                }
+            });
+
+            $('#insertGroupText').on('keypress', function (e) {
+                if (e.which === 13) {
+                    if ($("#insertGroupText").val().length > 0) {
+                        var groupId = $("#hdnGroupId").val();
+                        var message = $('#insertGroupText').val();
+                        var data = JSON.stringify({ groupId: groupId, message: message });
+                        $(this).attr("disabled", "disabled");
+                        $.ajax({
+                            url: "/Dashboard/CreateNewMessageToGroup?Message=" + data,
+                            datatype: "application/json",
+                            type: "GET",
+                            success: function (data) {
+                                $("#insertGroupText").val('');
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    url: '/Dashboard/GetSpecificGroup?groupId=' + groupId,
+                                    success:
+                                        function (response) {
+                                            $("#trayContentBodyDiv").empty();
+                                            $("#AddImagesInGroupGallery").empty();
+                                            $("#AddEventsInGroupCalendar").empty();
+                                            var json = $.parseJSON(response);
+                                            for (i = json.response.messages.length - 1; i >= 0; i--) {
+                                                var imgVal = json.response.messages[i].avatar_url;
+                                                if (imgVal == null) {
+                                                    imgVal = "../Content/Assets/images/UserIcon.png";
+                                                }
+                                                if (json.response.messages[i].text == "") {
+                                                    $("#trayContentBodyDiv").append(
+                                                        '<img src="' + imgVal + '" style="width:30px; height:30px; margin-right:5px; border-radius:50%;" />' +
+                                                        '<div class="col-md-12"> <div class="col-md-11"> <span><b>' + json.response.messages[i].name + '</b></span>' + '<br />' +
+                                                               '<div>' + '<img src="' + json.response.messages[i].attachments[0].url + '" style="width:100%;" />' + '</div>' + '</div>' +
+                                                        '<div class="col-md-1 text-right"><a href="javascript:void(0)" class="HeartIcon" id=' + json.response.messages[i].id + '><i class="fa fa-heart"></i></a></div></div>' +
+                                                        '<br /> <br />');
+                                                }
+                                                else {
+                                                    $("#trayContentBodyDiv").append(
+                                                        '<img src="' + imgVal + '" style="width:30px; height:30px; margin-right:5px; border-radius:50%;" />' +
+                                                        '<div class="col-md-12"> <div class="col-md-11"> <span><b>' + json.response.messages[i].name + '</b></span>' + '<br />' +
+                                                               '<span class="liSpan">' + json.response.messages[i].text + '</span></div>' +
+                                                        '<div class="col-md-1 text-right"><a href="javascript:void(0)" class="HeartIcon" id=' + json.response.messages[i].id + '><i class="fa fa-heart"></i></a></div></div>' +
+                                                        '<br /> <br />');
+                                                }
+                                                if (json.response.messages[i].favorited_by.length > 0) {
+                                                    if (json.response.messages[i].favorited_by[0] == $("#LoginUserId").val()) {
+                                                        $("#" + json.response.messages[i].id).css("color", "#f77070");
+                                                        $("#" + json.response.messages[i].id).attr('title', json.response.messages[i].favorited_by.length);
+                                                    }
+                                                    else {
+                                                        $("#" + json.response.messages[i].id).attr('title', json.response.messages[i].favorited_by.length);
+                                                    }
+                                                }
+                                                if (json.response.messages[i].attachments.length > 0) {
+                                                    if (json.response.messages[i].attachments[0].url != undefined) {
+                                                        $("#AddImagesInGroupGallery").append('<div style="height:100%;width:500%;">'
+                                                                                            + '<img src="' + json.response.messages[i].attachments[0].url + '" style="width:8%;" />' + '</div>');
+                                                    }
+                                                }
+                                                if (json.response.messages[i].event != undefined) {
+                                                    if (json.response.messages[i].event.data.event != undefined) {
+                                                        if (json.response.messages[i].event.data.url != undefined) {
+                                                            $("#AddEventsInGroupCalendar").append('<div style="height:100%;width:500%;">'
+                                                                                                    + '<span><h3>' + json.response.messages[i].event.data.event.name + '</h3></span>'
+                                                                                                    + '<span><h4>' + "Created By " + json.response.messages[i].event.data.user.nickname + '</h4></span>'
+                                                                                                    + '<h4><a target="_blank" style="text-decoration: underline;" href="' + json.response.messages[i].event.data.url + '">View Event</a></h4>' + '</div>');
+                                                        }
+                                                    }
+                                                }
+                                            };
+                                        }
+                                });
+                                $("#insertGroupText").removeAttr("disabled");
+                            },
+                            error: function (e) {
+                            }
+                        });
+                    }
+                }
+            });
+
+            $("#quickMenuBtn").click(function () {
+                $("#quickMenuDiv-overly").toggle();
+                $("#quickMenuDiv").toggle('slide', { direction: 'right' }, 200);
+            });
+
+            $("#ChatsBtn").click(function () {
+                $("#tray").toggle();
+                $("#myUserProfile").css("display", "none");
+                $("#myContacts").css("display", "none");
+                if ($("#tray").is(":hidden")) {
+                    $("#insertGroupText").css("display", "none");
+                    $("#trayContentDiv").css("display", "none");
+                }
+                else {
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: '/Dashboard/GetAllGroups',
+                        success:
+                            function (response) {
+                                $("#tray-body ul").empty();
+                                $("#trayContentBodyDiv").empty();
+                                var json = $.parseJSON(response);
+                                $.each(json.response, function (i, value) {
+                                    var imgVal = value.image_url;
+                                    if (imgVal == null) {
+                                        imgVal = "../Content/Assets/images/default_group_300.png";
+                                    }
+                                    $("#tray-body ul").append('<li id="' + value.group_id + '">' + '<a href="javascript:void(0)">' + '<img src="' + imgVal + '" style="width:50px; height:50px; margin-right:5px; border-radius:50%;" />' + '    ' + '<span>' + value.name + '</span></a>' + '</li>');
+                                });
+                                GetLogInUserId();
+                            }
+                    });
+                }
+                $("#tray-content").toggleClass("tray-content-active");
+            });
+
+            function GetLogInUserId() {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/GetDetailsInfoAboutUser',
+                    success:
+                        function (response) {
+                            var json = $.parseJSON(response);
+                            $("#GroupSettingsNickName").text(json.response.name);
+                            $("#ListOfMessagesLikedForMe").text(json.response.name);
+                            $("#LoginUserId").val(json.response.id);
+                        }
+                });
+            }
+
+            $("#trayBtn").click(function () {
+                $("#tray").toggle();
+                $("#myUserProfile").css("display", "none");
+                $("#myContacts").css("display", "none");
+                if ($("#tray").is(":hidden")) {
+                    $("#insertGroupText").css("display", "none");
+                    $("#trayContentDiv").css("display", "none");
+                }
+                else {
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: '/Dashboard/GetAllGroups',
+                        success:
+                            function (response) {
+                                $("#tray-body ul").empty();
+                                $("#trayContentBodyDiv").empty();
+                                var json = $.parseJSON(response);
+                                $.each(json.response, function (i, value) {
+                                    var imgVal = value.image_url;
+                                    if (imgVal == null) {
+                                        imgVal = "../Content/Assets/images/default_group_300.png";
+                                    }
+                                    $("#tray-body ul").append('<li id="' + value.group_id + '">' + '<a href="javascript:void(0)">' + '<img src="' + imgVal + '" style="width:50px; height:50px; margin-right:5px; border-radius:50%;" />' + '    ' + '<span>' + value.name + '</span></a>' + '</li>');
+                                });
+                                GetLogInUserId();
+                            }
+                    });
+                }
+                $("#tray-content").toggleClass("tray-content-active");
+            });
+
+            $("#chatuserprofile").click(function () {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/GetDetailsInfoAboutUser',
+                    success:
+                        function (response) {
+                            $("#myUserProfile").css("display", "block");
+                            $("#myContacts").css("display", "none");
+                            var json = $.parseJSON(response);
+                            $("#myName").val(json.response.name);
+                            $("#myEmail").val(json.response.email);
+                            $("#myPhone").val(json.response.phone_number);
+                            var imgVal = json.response.image_url;
+                            if (imgVal == null) {
+                                imgVal = "../Content/Assets/images/UserIcon.png";
+                            }
+                            $("#myUserPic").attr('src', imgVal);
+                        }
+                });
+            });
+
+            $("#chatContacts").click(function () {
+                $("#myContacts").toggle();
+                $("#insertGroupText").css("display", "none");
+                $("#trayContentDiv").css("display", "none");
+                $("#myUserProfile").css("display", "none");
+                if ($("#myContacts").is(":hidden")) {
+                }
+                else {
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: '/Dashboard/GetAllGroups',
+                        success:
+                            function (response) {
+                                $("#trayBodyContacts ul").empty();
+                                var json = $.parseJSON(response);
+                                $.each(json.response, function (i, value) {
+                                    $.each(value.members, function (i, memval) {
+                                        if (i != 0) {
+                                            var imgVal = memval.image_url;
+                                            if (imgVal == null) {
+                                                imgVal = "../Content/Assets/images/UserIcon.png";
+                                            }
+                                            $("#trayBodyContacts ul").append('<li id="' + memval.user_id + '">' + '<a href="javascript:void(0)">' + '<img src="' + imgVal + '" style="width:50px;height:50px;" />' + '    ' + '<span>' + memval.nickname + '</span></a>' + '</li>');
+                                        }
+                                    });
+                                });
+                                GetLogInUserId();
+                            }
+                    });
+                }
+            });
+
+            $('#myContactsul').on('click', 'li', function () {
+                $("#trayDMcontent").css("display", "block");
+                $("#trayDMContentBodyDiv").empty();
+                $("#insertDirectMessageText").css("display", "block");
+                $("#hdnDirectMessageId").val(this.id);
+                $("#myContacts").css("display", "block");
+                $("#tray-content").toggleClass("tray-content-active");
+            });
+
+            $('#traybodyul').on('click', 'li', function () {
+                $('#trayContentDiv').css('display', 'none');
+                $("#hdnGroupId").val(this.id);
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/LoadSpecificGroupInfo?groupId=' + this.id,
+                    success:
+                        function (response) {
+                            $("#AddMembers").empty();
+                            $('#trayContentDiv').css('display', 'block');
+                            var json = $.parseJSON(response);
+                            $("#hdnShareUrl").val(json.response.share_url);
+                            $("#GroupNameHeading").text(json.response.name);
+                            $("#GroupSettingsTitle").text("Settings for" + " " + "'" + json.response.name + "'");
+                            $("#GroupSettingsName").text(json.response.name);
+                            $("#GroupSettingsTopic").text(json.response.description);
+                            var GroupImg = json.response.image_url;
+                            if (GroupImg == null) {
+                                GroupImg = "../Content/Assets/images/default_group_300.png";
+                            }
+                            if ($("#GroupSettingsImg").find('img').length) {
+                            }
+                            else {
+                                $("#GroupSettingsImg").append('<img src="' + GroupImg + '" style="width:200px;height:200px;margin-left:95px;" />');
+                            }
+                            $("#MembersCount").text(json.response.members.length + " " + "Members");
+                            $("#myModalLabelMembers").text(json.response.members.length + " " + "Members of " + "'" + json.response.name + "'");
+                            $("#GroupPopularTitle").text("Popular messages in " + "'" + json.response.name + "'");
+                            $("#GroupGalleryTitle").text("Gallery in " + "'" + json.response.name + "'");
+                            $("#GroupCalendarTitle").text("Events in " + "'" + json.response.name + "'");
+                            $("#AddMembers").append('<div class="col-sm-3">' + '<div class="member">' + '<div class="img-circle avatar" style="color: #d4d4d4;font-size: 42px;background-color: #f2f2f2;">' + '<a href="javascript:void(0)" data-toggle="modal" data-target="#AddNewMembers">'
+                                                + '<img src="' + "../Content/Assets/images/UserIcon-200x200.png" + '" style="width:100%;" />' + '</a>' + '</div>' + '<label>Add Members</label>'
+                                                + '</div>' + '</div>');
+                            $.each(json.response.members, function (i, value) {
+                                var imgVal = value.image_url;
+                                if (imgVal == null) {
+                                    imgVal = "../Content/Assets/images/UserIcon-200x200.png";
+                                }
+                                if (value.user_id == json.response.creator_user_id) {
+                                    $("#AddMembers").append('<div class="col-sm-3">' + '<div class="member">' + '<div class="img-circle avatar">'
+                                                   + '<a href="javascript:void(0)"> <i class="fa fa-user-plus"> </i> </a>'
+                                                   + '<a href="javascript:void(0)">'
+                                                   + '<img src="' + imgVal + '" style="width:100%;" />' + '</a>' + '</div>' + '<label>' + value.nickname + '</label>'
+                                                   + '</div>' + '</div>');
+                                }
+                                else {
+                                    $("#AddMembers").append('<div class="col-sm-3">' + '<div class="member">' + '<div class="img-circle avatar">' + '<a href="javascript:void(0)">'
+                                                    + '<img src="' + imgVal + '" style="width:100%;" />' + '</a>' + '</div>' + '<label>' + value.nickname + '</label>'
+                                                    + '</div>' + '</div>');
+                                }
+                            });
+                        }
+                });
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/GetSpecificGroup?groupId=' + this.id,
+                    success:
+                        function (response) {
+                            $("#trayContentBodyDiv").empty();
+                            $("#AddImagesInGroupGallery").empty();
+                            $("#AddEventsInGroupCalendar").empty();
+                            var json = $.parseJSON(response);
+                            for (i = json.response.messages.length - 1; i >= 0; i--) {
+                                var imgVal = json.response.messages[i].avatar_url;
+                                if (imgVal == null) {
+                                    imgVal = "../Content/Assets/images/UserIcon.png";
+                                }
+                                if (json.response.messages[i].text == null) {
+                                    $("#trayContentBodyDiv").append(
+                                        '<img src="' + imgVal + '" style="width:30px; height:30px; margin-right:5px; border-radius:50%;" />' +
+                                        '<div class="col-md-12"> <div class="col-md-11"> <span><b>' + json.response.messages[i].name + '</b></span>' + '<br />' +
+                                               '<div>' + '<img src="' + json.response.messages[i].attachments[0].url + '" style="width:100%;" />' + '</div>' + '</div>' +
+                                        '<div class="col-md-1 text-right"><a href="javascript:void(0)" class="HeartIcon" id=' + json.response.messages[i].id + '><i class="fa fa-heart"></i></a></div></div>' +
+                                        '<br /> <br />');
+                                }
+                                else {
+                                    $("#trayContentBodyDiv").append(
+                                        '<img src="' + imgVal + '" style="width:30px; height:30px; margin-right:5px; border-radius:50%;" />' +
+                                        '<div class="col-md-12"> <div class="col-md-11"> <span><b>' + json.response.messages[i].name + '</b></span>' + '<br />' +
+                                               '<span class="liSpan">' + json.response.messages[i].text + '</span></div>' +
+                                        '<div class="col-md-1 text-right"><a href="javascript:void(0)" class="HeartIcon" id=' + json.response.messages[i].id + '><i class="fa fa-heart"></i></a></div></div>' +
+                                        '<br /> <br />');
+                                }
+                                if (json.response.messages[i].favorited_by.length > 0) {
+                                    if (json.response.messages[i].favorited_by[0] == $("#LoginUserId").val()) {
+                                        $("#" + json.response.messages[i].id).css("color", "#f77070");
+                                        $("#" + json.response.messages[i].id).attr('title', json.response.messages[i].favorited_by.length);
+                                    }
+                                    else {
+                                        $("#" + json.response.messages[i].id).attr('title', json.response.messages[i].favorited_by.length);
+                                    }
+                                }
+                                if (json.response.messages[i].attachments.length > 0) {
+                                    if (json.response.messages[i].attachments[0].url != undefined) {
+                                        $("#AddImagesInGroupGallery").append('<div style="height:100%;width:500%;">'
+                                                                            + '<img src="' + json.response.messages[i].attachments[0].url + '" style="width:8%;" />' + '</div>');
+                                    }
+                                }
+                                if (json.response.messages[i].event != undefined) {
+                                    if (json.response.messages[i].event.data.event != undefined) {
+                                        if (json.response.messages[i].event.data.url != undefined) {
+                                            $("#AddEventsInGroupCalendar").append('<div style="height:100%;width:500%;">'
+                                                                                    + '<span><h3>' + json.response.messages[i].event.data.event.name + '</h3></span>'
+                                                                                    + '<span><h4>' + "Created By " + json.response.messages[i].event.data.user.nickname + '</h4></span>'
+                                                                                    + '<h4><a target="_blank" style="text-decoration: underline;" href="' + json.response.messages[i].event.data.url + '">View Event</a></h4>' + '</div>');
+                                        }
+                                    }
+                                }
+                            }
+                            $("#insertGroupText").css("display", "block");
+                        }
+                });
+            });
+
+            $("#btnCreateGroup").click(function () {
+                var groupName = $("#groupName").val();
+                if (groupName === "") {
+                    alert("Please Enter Group Name");
+                }
+                else {
+                    $.ajax({
+                        url: "/Dashboard/CreateNewGroup?groupName=" + groupName,
+                        datatype: "application/json",
+                        type: "GET",
+                        success: function (response) {
+                            if (response.IsSuccessStatusCode === true && response.StatusCode === 201) {
+                                $("#myUserProfile").css("display", "none");
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    url: '/Dashboard/GetAllGroups',
+                                    success:
+                                        function (response) {
+                                            $("#tray-body ul").empty();
+                                            $("#trayContentBodyDiv").empty();
+                                            var json = $.parseJSON(response);
+                                            $.each(json.response, function (i, value) {
+                                                var imgVal = value.image_url;
+                                                if (imgVal == null) {
+                                                    imgVal = "../Content/Assets/images/default_group_300.png";
+                                                }
+                                                $("#tray-body ul").append('<li id="' + value.group_id + '">' + '<a href="javascript:void(0)">' + '<img src="' + imgVal + '" style="width:50px; height:50px; margin-right:5px; border-radius:50%;" />' + '    ' + '<span>' + value.name + '</span></a>' + '</li>');
+                                            });
+                                            GetLogInUserId();
+                                        }
+                                });
+                                $('#startGroup').modal('hide');
+                            }
+                            else {
+                                $('#startGroup').modal('hide');
+                            }
+                        }
+                    });
+                }
+            });
+            $(".group-dialog").click(function () {
+                var groupId = $("#hdnGroupId").val();
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/LoadSpecificGroupInfo?groupId=' + groupId,
+                    success:
+                        function (response) {
+                            var json1 = $.parseJSON(response);
+                            var userid = json1.response.creator_user_id;
+                            $.ajax({
+                                type: 'GET',
+                                dataType: 'json',
+                                contentType: 'application/json',
+                                url: '/Dashboard/GetDetailsInfoAboutUser',
+                                success:
+                                    function (response) {
+                                        var json = $.parseJSON(response);
+                                        if (json.response.id == userid) {
+                                            $("#btnEndGroup").val("End Group");
+                                        }
+                                        else {
+                                            $("#btnEndGroup").val("Leave Group");
+
+                                        }
+                                    }
+                            })
+                        }
+                })
+            });
+            $("#chatClose").click(function () {
+                $('#trayContentDiv').css('display', 'none');
+            });
+            $("#chatSettings").click(function () {
+                $("#chatSetting").toggle();
+                $("#insertGroupText").css("display", "none");
+                $("#trayContentDiv").css("display", "none");
+                $("#myUserProfile").css("display", "none");
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function img_pathUrl(input) {
+            $('#img_url')[0].src = (window.URL ? URL : webkitURL).createObjectURL(input.files[0]);
+            $("#img_url").css("display", "block");
+        }
+        $(document).ready(function () {
+            $(function () {
+                $('#startAtDateInput').datetimepicker({
+                    controlType: 'select',
+                    oneLine: true,
+                    timeFormat: 'hh:mm tt'
+                });
+                $('#endAtDateInput').datetimepicker({
+                    controlType: 'select',
+                    oneLine: true,
+                    timeFormat: 'hh:mm tt'
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#insertGroupText').emojiPicker({
+            });
+            $(".emojiPickerIcon").css("background-color", "#f5f5f5;");
+            $(".emojiPickerIcon").css("width", "36px");
+            $(".emojiPickerIcon").css("height", "36px");
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

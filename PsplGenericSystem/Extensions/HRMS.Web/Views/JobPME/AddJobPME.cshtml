@@ -1,0 +1,59 @@
+﻿@using HRMS.Web.Helper
+@model HRMS.Web.ViewModels.JobPMEFormModel
+@using HRMS.Common.Helpers
+@{
+    ViewBag.Title = "AddJobPME";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddJobPME", "JobPME", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <fieldset>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobPME.Category, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(k => k.JobPME.Category, new { @class = "form-control" })
+                        </div>
+                        @Html.HiddenFor(k => k.JobPME.PMEId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobPME.Description, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(k => k.JobPME.Description, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobPME.Frequency, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(k => k.JobPME.Frequency, new SelectList(Model.FrequencyList, "ID", "Name"), "--select--", new { @class = "drplookup form-control", @data_val_1 = LocalizedStrings.Frequency })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.JobPME.Essential, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(k => k.JobPME.Essential, new SelectList(Model.EssentialList, "ID", "Name"), "--select--", new { @class = "drplookup form-control", @data_val_1 = LocalizedStrings.Essential })
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-1 control-button">
+            
+            @Html.ActionLink("Cancel", "SelectAllJobPME", "JobPME", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })
+            <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Add PME</h1><ol class=" + '" breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../JobPME/SelectAllJobPME"' + ">Job PME's</a></li><li class=" + '"active"' + ">Add Job PME</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

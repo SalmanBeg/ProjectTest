@@ -1,0 +1,99 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.Lunch>
+@{
+    ViewBag.Title = "SelectAllLunchDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div style="padding-top: 10px;">
+    @Html.ActionLink("Add  ", "AddLunchDetail", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteLunchDetail", null, new { @class = "btn btn-danger", @id = "btnDelete" })
+    @Html.ActionLink("<< Back to Configuration", "TimeAttendanceConfiguration", "Home", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="LunchGridContent">
+        <thead>
+            <tr>
+                <th></th>
+                <th data-toggle="true" class="fooEditable">
+                    @Html.DisplayNameFor(model => model.LunchDescription)
+                </th>
+                <th class="fooEditable">
+                    @Html.DisplayNameFor(model => model.MinimumWorkTime)
+                </th>
+                <th class="fooEditable">
+                    @Html.DisplayNameFor(model => model.LunchMinutes)
+                </th>
+                <th class="fooEditable">
+                    @Html.DisplayNameFor(model => model.LunchTime)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" id="@item.LunchId" data-val-1="@item.LunchId" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.LunchDescription), "EditLunchDetail", new { @LunchId = item.LunchId }, new { id = "LunchId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MinimumWorkTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LunchMinutes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LunchTime)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Lunch <small>Lunch List </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Lunch</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnDelete").click(function (e) {
+            debugger
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#LunchGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+
+            $.ajax({
+                url: baseurl + "Lunch/DeleteLunchDetail",
+                type: "POST",
+                cache: "false",
+                data: { LunchIds: searchIDs.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        window.location.href = window.location.href;
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        });
+    });
+</script>

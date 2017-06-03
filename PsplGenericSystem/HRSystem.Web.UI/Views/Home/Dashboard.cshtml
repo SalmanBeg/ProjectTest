@@ -1,0 +1,46 @@
+﻿@using HRSystem.Web.UI.Models
+@model dashboard
+
+<h2>@Model.Title</h2>
+<h3>@Model.Description</h3>
+<hr />
+<div class="row">
+ <div class="user-apps">
+@foreach (var app in Model.UserApplications)
+{
+    <div class="user-app @app.Name.ToLower()-app">
+        @app.Name
+    </div>
+}
+    
+ </div>
+</div>
+<script>
+
+    function callEmployee()
+    {
+        //var userName = document.getElementById("Email").value;
+        //var pwd = document.getElementById("Password").value;
+        //var loginData = {
+        //    userName: userName,
+        //    password: pwd,
+        //    grant_type:'password'
+        //};
+        var serviceBase = 'http://localhost:61069/'
+        $.ajax({
+            type: 'GET',
+            url: serviceBase + 'Dashboard',
+          //  data: loginData
+        }).done(function (data) {
+            //sessionStorage.setItem(tokenKey, data.access_token);
+            $('#body-content').load('/Api/Test');
+            var tkn = data.access_token;
+
+        }).fail(showError);
+    }
+    
+    function showError(data)
+    {
+
+    }
+</script>

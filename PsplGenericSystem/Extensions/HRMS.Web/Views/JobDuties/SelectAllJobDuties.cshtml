@@ -1,0 +1,116 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.JobDuties>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectJobDuties";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div>
+    @Html.ActionLink("Add", "AddJobDuties", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteJobDuties", null, new { @class = "btn btn-danger", @id = "btnDeletejobduties" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="JobDutiesGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="selectAll" class="chksa"/>
+                    @Html.DisplayName("SelectAll")
+                </th>
+                <th> 
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Priority)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    
+                    <input type="checkbox" id="childchk" value="" data-val-1="@item.JobDutyId" class="btncheckjobduty" onchange="cbChange(this)" />
+                </td>
+                <td>
+                    @Html.ActionLink(((string)item.Description), "AddJobDuties", new { @JobDutyId = item.JobDutyId }, new { id = "JobDutyID" })
+                </td>
+                <td>
+                    @Html.Label(item.Category)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.PriorityName))
+                    { 
+                    @Html.Label(Convert.ToString(item.PriorityName))
+                    }
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>JobDuties</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">JobDuties</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $("#btnDeletejobduties").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#JobDutiesGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "JobDuties/DeleteJobDuties",
+                    type: "POST",
+                    cache: "false",
+                    data: { jobdutyIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+
+
+
+    //$(document).ready(function () {
+    //    $("#selectAll").change(function () {
+
+    //        if ($(this).is(":checked")) {
+    //            $("#JobDutiesGridContent input:checkbox").prop('checked', true);
+    //        }
+    //        else {
+    //            $("#JobDutiesGridContent input:checkbox").prop('checked', false);
+    //        }
+    //    });
+
+    //    $("#JobDutiesGridContent input:checkbox").on("change", function () {
+    //        if (!$(this).is(":checked")) {
+    //            $("#selectAll").prop('checked', false);
+    //        }
+    //        if ($("#JobDutiesGridContent input:checkbox").length == $("#JobDutiesGridContent input:checkbox").length) {
+    //            $("#selectAll").prop('checked', true);
+    //        }
+
+    //    });
+    //});
+
+
+</script>
+

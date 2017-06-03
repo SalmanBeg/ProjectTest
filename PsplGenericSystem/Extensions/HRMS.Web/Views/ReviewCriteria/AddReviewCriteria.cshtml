@@ -1,0 +1,122 @@
+﻿@model HRMS.Web.ViewModels.ReviewCriteriaFormModel
+@using HRMS.Common.Helpers;
+@using System.Web.Optimization;
+@using HRMS.Web.Helper;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "AddRevieewCriteria";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("AddReviewCriteria", "ReviewCriteria", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(k => k.ReviewCriteria.JobTitleId, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(k => k.ReviewCriteria.JobTitleId, new SelectList(Model.JobTitleList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "jobcategorydropdown", @data_val_1 = LocalizedStrings.JobCategory })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        @Html.LabelFor(k => k.ReviewCriteria.CategoryType, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(k => k.ReviewCriteria.CategoryType, new SelectList(Model.CategoryList, "CategoryTypeList", "Description"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" },  { "id", "dpCategory" } })
+                        </div>
+                    </div>*@
+                <div class="form-group" id="dvcriteria">
+                    @Html.LabelFor(k => k.ReviewCriteria.CriteriaTypeId, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.ReviewCriteria.CriteriaTypeId, new SelectList(Model.CategoryList, "ReviewCriteriaTypeId", "Description"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "ID" }, { "id", "dpCriteriaType" } })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        @Html.LabelFor(k => k.ReviewCriteria.Description, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(k => k.ReviewCriteria.Description, new SelectList(Model.CategoryList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "ID" }, { "id", "dpCategory" } })
+                        </div>
+                    </div>*@
+                @*<div class="form-group">
+                        @Html.LabelFor(k => k.ReviewScore.Question, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(k => k.ReviewScore.Question, new { @class = "form-control" })
+                        </div>
+                    </div>*@
+                <div style="display:none" id="dvresponse">
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.ReviewCriteria.Description, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(k => k.ReviewCriteria.Description, new { @class = "form-control", @Id = "dpDescription" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <input type="radio" name="name" value="clickMe" onclick="javascript: alert('hey');"/>
+                        @Html.LabelFor(k => k.ReviewCriteria.ResponseTypeId, new { @class = "col-sm-4 control-label ", @Id = "dpResponseType" })
+                        <div class="col-sm-8" style="padding: 9px 0px 1px 12px;">
+                            @Html.RadioButton("ResponseTypeId", "List", false, new { @id = "Listchk" }) List                                                    
+                            @Html.RadioButton("ResponseTypeId", "Text", false , new { @id = "Listchk" }) Text
+                            @Html.RadioButton("ResponseTypeId", "Value", false, new { @id = "Listchk" }) Value                        
+                                @Html.RadioButtonFor(k => k.ReviewCriteria.ResponseTypeId, "Text")                 
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.ReviewCriteria.ResponseTypeId, new { @class = "col-sm-4 control-label ", @Id = "dpResponseType" })
+                        <div class="col-sm-8" style="padding: 9px 0px 1px 12px;">
+                            @Html.RadioButton("ResponseTypeId", "List", false, new { @id = "Listchk" }) List
+                            @Html.RadioButton("ResponseTypeId", "Text", false, new { @id = "Listchk" }) Text
+                            @Html.RadioButton("ResponseTypeId", "Value", false, new { @id = "Listchk" }) Value                         
+                        </div>
+                    </div>
+
+                </div>
+                <div id="dvitem" class="form-group" style="display:none" >
+                    @Html.LabelFor(k => k.ReviewScoreContent.ItemValue, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(k => k.ReviewScoreContent.ItemValue, new SelectList(Model.ItemValueList, "ReviewScoreDescriptionId", "Description"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "ID" }, { "id", "dpItemValue" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            
+            @Html.ActionLink("Cancel", "SelectAllReviewCriteria", null, null, new { @class = "btn btn-success" })
+            <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>ReviewCriteria<small>Review Criteria</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">ReviewCriteria</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+
+        $(".iCheck-helper").click(function () {
+            var type = $(this).parent().find("#Listchk").attr("value");
+            if(type =="List")
+            {
+                $("#dvitem").show();               
+            }
+            else if(type == "Text" || type == "Value")
+            {
+                $("#dvitem").hide();
+            }
+        });
+
+
+        $("#dpCriteriaType").change(function () {
+            var value = $(this).val();
+            if (value > 0)
+                $("#dvresponse").show();
+            else
+                $("#dvresponse").hide();
+        });       
+    });
+</script>
+
+

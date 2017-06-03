@@ -1,0 +1,113 @@
+﻿@model HRMS.Web.ViewModels.TrainingEmployeeViewFormModel
+@using System.Web.Optimization;
+@using HRMS.Web.Models;
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "TrainingEmployeeView";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.10.3.min.js"></script>
+@using (Html.BeginForm("TrainingEmployeeView", "TrainingEmployeeView", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TrainingEmployeeView.ClassName, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.TrainingEmployeeView.ClassName, new { @class = "form-control",@id="className" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TrainingEmployeeView.CompletionDate, new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.TrainingEmployeeView.CompletionDate, (Model.TrainingEmployeeView.CompletionDate == null ? "" : ((DateTime)Model.TrainingEmployeeView.CompletionDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtBirthDate" })
+                            <label for="dtBirthDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TrainingEmployeeView.ExpirationDate, new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.TrainingEmployeeView.ExpirationDate, (Model.TrainingEmployeeView.ExpirationDate == null ? "" : ((DateTime)Model.TrainingEmployeeView.ExpirationDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtSeniorityDate" })
+                            <label for="dtSeniorityDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                    @Html.LabelFor(m => m.TrainingEmployeeView.ExpirationDate, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.TrainingEmployeeView.ExpirationDate, (Model.TrainingEmployeeView.ExpirationDate == null ? "" : ((DateTime)Model.TrainingEmployeeView.ExpirationDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtexpirationdate" })
+                            <label for="txtexpirationdate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CertificateFile, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(m => m.File, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.File, new { type = "file" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            
+            @Html.ActionLink("Cancel", "SelectAllTrainingEmployee", "TrainingEmployeeView", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })
+            <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Employee<small>Training Employee</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">TrainingEmployee</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+    if($("#btnsubmit").click(function(){
+        var val = $("#className").val();
+        if (val == "") {
+        alert("Enter Class Name");
+        return false;
+    }
+
+    }));
+
+  
+</script>
+@*<script type="text/javascript">
+    var completionDate = $("#txtcompletiondate").val();
+    var expiryDate = $("#txtexpirationdate").val();
+    if (Date.parse(completionDate) > Date.parse(expiryDate)) {
+        alert("hi");
+        alert("Invalid Date Range!\n Hire Date cannot be after seniority Date!");
+    }
+</script>*@
+<script type="text/javascript">
+    var fromDate = $("#dtBirthDate").val();
+    var toDate = $("#dtSeniorityDate").val();
+    if (Date.parse(fromDate) > Date.parse(toDate)) {
+        alert("Invalid Date Range!\n Hire Date cannot be after expiry Date!");
+    }
+</script>
+
+
+
+
+

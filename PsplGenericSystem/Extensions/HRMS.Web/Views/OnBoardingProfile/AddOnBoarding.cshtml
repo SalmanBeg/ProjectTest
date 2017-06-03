@@ -1,0 +1,171 @@
+﻿@model HRMS.Web.ViewModels.OnBoardingFormModel
+@{
+    ViewBag.Title = "AddOnBoarding";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<link href="~/Content/HRMSStylesheet.css" rel="stylesheet" />
+
+@using HRMS.Web.Helper;
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "addonboarding" }))
+{
+    @Html.ValidationSummary(true)   
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.OnBoarding.OnBoardingName, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.HiddenFor(k => k.OnBoarding.OnBoardingId)
+                    @*@Html.HiddenFor(k => k.ConsentForms.ConsentFormId)*@
+                    @Html.HiddenFor(k => k.OnBoarding.CompanyId)
+                    @Html.TextBoxFor(m => m.OnBoarding.OnBoardingName)
+                </div>
+            </div>
+            <div class="col-md-6">
+                @*<button type="submit" class="btn btn-success">Save</button>*@
+                <a href="#" id="acreateonboarding" class="btn btn-success">Save</a>    
+                          
+                @Html.ActionLink("<<Back to Onboarding list", "SelectAllOnBoardingsbyCompanyId", null, new { @class = "btn  btn-success", @style = "float:right" })
+                </div>
+        </div>
+        <small class="text-light-blue">Select document(s) below to be consent.</small>
+        <div id="add_item" title="click to add a item">+ <span style="font-size: 13px;">Add a document</span></div>
+       
+        <!--Form for adding documents-->
+        <div id="add_document_area" style="display: none;">
+            <div id="add_document_instructions">
+                Only files of format (.pdf,.jpg,.gif,.png,.bmp) are allowed...
+            </div>
+            <div id="document_file_button_wrapper" style="width: 98%;">
+                <span class="btn btn-default btn-flat">Select files</span>
+            </div>
+        </div>   
+         
+        <div id="container1">
+            <div>
+                
+            </div>   
+            @Html.Partial("ConsentFiles", Model.ConsentForm)
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>OnBoarding<small>OnBoarding</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">OnBoarding</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        Addfile();
+        //add_item click event area..
+        $('#add_item').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            OpenAddDocumentArea();           
+            return false;
+        });
+        $('#acreateonboarding').click(function (e) {
+            CreateOnBoarding();
+        });
+        $('#adeleteonboarding').click(function (e) {
+            DeleteOnBoarding();
+        });       
+    });//end of dcoument ready   
+
+    function cbChange(e) {
+        if (e.checked == true)
+            e.value = e.id;
+    }
+
+    var OpenAddDocumentArea = function() {
+        //hide other areas
+        if ($("#add_document_area").is(":visible")) {
+            $("#add_document_area").toggle();
+        } else {
+            $("#add_document_area").show();
+        }
+    };
+
+    function Addfile() {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $("#document_file_button_wrapper").uploadFile({
+            url: baseurl + 'Files/AddFiles',
+            allowedTypes: "pdf,jpg,gif,png,bmp",
+            multiple: true,
+            autoSubmit: true,
+            maxFileSize: 5287590,
+            showAbort: false,
+            showDone: false,
+            onSelect: function (files) {
+                files[0].name;
+                files[0].size;
+                if (files[0].size > 5287590) { // 5mb
+                    alert("Cannot upload file greater than 5mb.");
+                    return false;
+                }
+                else
+                    return true; //to allow file submission.
+            },
+            onSuccess: function (files, data, xhr, pd) {
+                $("#add_document_area").hide();
+                // ShowFiles();
+                window.location.href = window.location.href;
+            },
+            onError: function (files, status, errMsg, pd) {
+                errMsg: "file size exceeded."
+            }
+        });
+    }
+
+    function CreateOnBoarding() {
+        var checkedIds = $("#consentgridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        var onBoardingModelName = $.find("#OnBoarding_OnBoardingName")[0].value;
+        if (checkedIds.length > 0) {
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var parms = { consentIds: checkedIds.toString(), onBoardingName: onBoardingModelName };
+            if ($("#addonboarding").valid()) {
+                $.ajax({
+                    url: baseurl + "OnBoardingProfile/AddOnBoarding",
+                    type: 'POST',
+                    cache: false,
+                    data: parms,
+                    success: function (data) {
+                        window.location.href = baseurl + "OnBoardingProfile/SelectAllOnBoardingsbyCompanyId";
+                    },
+                    error: function () {
+                        alert(Error);
+                    }
+                });
+            }
+        }
+        else {
+            alert('please select Files for Creating OnBoardProfile.');
+        }
+    }
+
+    function DeleteOnBoarding() {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var searchIDs = $("#consentgridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        if (searchIDs.toString().length > 0) {          
+                $.ajax({
+                    url: baseurl + "OnBoardingProfile/DeleteConsentForm",
+                    type: "POST",
+                    cache: "false",
+                    data: { ConsentFormIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            
+        }
+        else { alert("Please select item(s) to delete."); }
+    }
+    
+</script>

@@ -1,0 +1,122 @@
+﻿@model @HRMS.Web.ViewModels.PayPeriodFormModel
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllPayPeriodDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div style="padding-top: 10px;">
+    @Html.ActionLink("Add  ", "AddPayPeriodDetail", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeletePayPeriodDetail", null, new { @class = "btn btn-danger", @id = "btnDelete" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="PayPeriodGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.PayPeriod.PayPeriodDescription)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.PayPeriod.PayPeriodTypename)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.PayPeriod.PayPeriodDays)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.PayPeriod.StartDateTime)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.PayPeriod.EndDateTime)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.PayPeriod.StartDayOfWeek)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.PayPeriod.NextSchedule)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PayPeriodList)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" id="@item.PayPeriodId" data-val-1="@item.PayPeriodId" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.PayPeriodDescription), "EditPayPeriodDetail", new { @PayPeriodId = item.PayPeriodId }, new { id = "PayPeriodId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayPeriodTypename)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayPeriodDays)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDayOfWeek)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NextSchedule)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>PayPeriod <small>PayPeriod List </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">PayPeriod</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnDelete").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#PayPeriodGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+
+            $.ajax({
+                url: baseurl + "PayPeriod/DeletePayPeriodDetail",
+                type: "POST",
+                cache: "false",
+                data: { PayPeriodIds: searchIDs.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        window.location.href = window.location.href;
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+
+

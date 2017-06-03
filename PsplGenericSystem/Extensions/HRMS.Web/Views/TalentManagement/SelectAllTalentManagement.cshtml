@@ -1,0 +1,121 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.TalentManagement>
+@using HRMS.Web.Helper;
+    @{
+        ViewBag.Title = "SelectAllTalentManagement";
+        Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    }
+<div>
+    @Html.ActionLink("Add", "ViewTalentManagements", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeletetalentManagement" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success",style ="float:right" })
+</div>
+@{
+    var talentmanagementgrid = new WebGrid(@Model, canPage: false, canSort: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+}
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="TalentmanagementGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true" style="padding-left:33px;">
+                    <input type="checkbox" id="chksa"/>
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Level)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.SchoolName)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.Major)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.GPA)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.TalentManagementId" class="btncheckdependent" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.LevelName), "UpdateTalentManagement", new { @TalentManagementId = item.TalentManagementId }, new { id = "TalentManagementId" })
+                        @*@Html.DisplayFor(modelItem => item.LevelName)*@                                          
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SchoolName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Major)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GPA)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>TalentManagement<small>Talent Management</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">TalentManagement</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $("#btnDeletetalentManagement").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#TalentmanagementGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "TalentManagement/DeleteTalentManagement",
+                    type: "POST",
+                    cache: "false",
+                    data: { talentManagementIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#TalentmanagementGridContent input:checkbox').iCheck('check');
+    });
+
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#TalentmanagementGridContent input:checkbox').iCheck('uncheck');
+    });
+</script>

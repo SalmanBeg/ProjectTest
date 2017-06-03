@@ -1,0 +1,613 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.nav-quirk {
+    margin: 0;
+}
+
+.headerpanel {
+    background-color: #00416f;
+}
+
+    .headerpanel .logopanel {
+        background-color: #003458;
+    }
+
+.searchpanel .input-group .form-control {
+    background-color: #064b7b;
+}
+
+.searchpanel .input-group .btn {
+    background-color: #003a63;
+}
+
+.menutoggle {
+    color: #4973b1;
+}
+
+    .menutoggle:hover, .menutoggle:focus {
+        color: #3a97d4;
+    }
+
+.leftpanel-profile {
+    background-color: #001f35;
+}
+
+.headermenu > li .btn:hover, .headermenu > li .btn:focus {
+    color: #9fa8bc;
+}
+
+.headermenu > li .btn-chat {
+    font-size: 21px !important;
+}
+
+.nav-sidebar.nav-justified > li > a {
+    background-color: #001523;
+    color: #91b9d4;
+}
+
+.form-group {
+    margin-bottom: 5px;
+    width: 100%;
+    display: inline-block;
+}
+
+.btn {
+    padding: 8px 15px;
+}
+
+.nav-quirk > li > a {
+    color: #505b72;
+    padding: 12px 14px;
+    border-radius: 0;
+    font-weight: 600;
+}
+
+.signin {
+    width: 550px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(3, 169, 244, 0.35);
+    padding: 20px;
+    z-index: 300;
+    border-radius: 0;
+}
+
+.signpanel {
+    background-color: rgba(0, 36, 62, 0.95);
+    background-image: -webkit-linear-gradient(left, transparent 0%, #1b1f27 100%);
+    background-image: -o-linear-gradient(left, transparent 0%, #1b1f27 100%);
+    background-image: linear-gradient(to right, transparent 0%, #01435d 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#ff1b1f27', GradientType=1);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 200;
+    opacity: .75;
+}
+
+.signin h1 {
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    font-weight: 500;
+}
+
+.headermenu > li .btn {
+    color: #abb8cc;
+    font-size: 14px;
+}
+
+.profile-left-heading {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+    .profile-left-heading .profile-name {
+        color: #464f63;
+        font-weight: 300;
+        font-size: 20px;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+
+.profile-left-body {
+    padding: 20px;
+    background-color: #acb3bf;
+    color: #9fa8bc;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.img-circle {
+    border-radius: 50%;
+    margin: auto;
+}
+
+.user-list .media-left {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    padding: 10px 12px;
+    font-size: 20px;
+    background: #fff;
+    border: 2px solid #ccc;
+    display: block;
+    float: left;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.user-list .media-body .media-heading {
+    margin: 2px 0;
+    margin-top: 15px;
+}
+
+    .user-list .media-body .media-heading > a {
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+/*.user-list .media-body span {
+    color: #3a97d4;
+    font-size: 19px;
+    font-weight: 600;
+}*/
+
+.leftpanel-profile .media-object {
+    width: 50px;
+    height: 50px;
+    padding: 3px;
+    border: 2px solid #657390;
+}
+
+.modal-header {
+    background: #5bc0de;
+}
+
+.input-group .form-control:not(:first-child):not(:last-child) {
+    border-radius: 0 3px 3px 0;
+}
+
+.signwrapper .input-group > .input-group-addon {
+    background-color: #fff;
+    border-color: transparent;
+    padding-right: 10px;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.form-control {
+    height: 34px;
+}
+
+.btn-quirk {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    letter-spacing: .5px;
+}
+
+.panel-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.panel-body {
+    min-height: 240px;
+}
+
+.panel-primary .panel-heading {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.panel-default .panel-heading {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.user-list .media-body a {
+    color: #3b4354;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Helvetica Neue", Helvetica, sans-serif, Arial;
+    font-weight: normal;
+    line-height: 20px;
+    color: #6d6d6d;
+}
+
+.user-list .media-body span {
+    color: #848484;
+    font-size: 16px;
+    font-weight: 500;
+}
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
+/* COMPONENTS - NANO-SCROLL*/
+/*================================================*/
+.nano {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+    .nano > .nano-content {
+        position: absolute;
+        overflow: scroll;
+        overflow-x: hidden;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+        .nano > .nano-content:focus {
+            outline: thin dotted;
+        }
+
+        .nano > .nano-content::-webkit-scrollbar {
+            display: none;
+        }
+
+    .nano.has-scrollbar > .nano-content::-webkit-scrollbar {
+        display: block;
+    }
+
+    .nano > .nano-pane {
+        display: block !important;
+        background: rgba(0, 0, 0, 0.25);
+        position: absolute;
+        width: 5px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        visibility: hidden\9;
+        /* Target only IE7 and IE8 with this hack */
+        opacity: .01;
+        -webkit-transition: .2s;
+        -moz-transition: .2s;
+        -o-transition: .2s;
+        transition: .2s;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+        .nano > .nano-pane > .nano-slider {
+            background: #004E90;
+            position: relative;
+            margin: 0 1px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+        }
+
+    .nano:hover > .nano-pane {
+        visibility: visible\9;
+        /* Target only IE7 and IE8 with this hack */
+        opacity: 0.99;
+    }
+
+    .nano .nano-pane.active, .nano .nano-pane.flashed {
+        visibility: visible\9;
+        /* Target only IE7 and IE8 with this hack */
+        opacity: 0.99;
+    }
+
+.control-label {
+    text-align: right;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+
+/*----------------------------------------  CHAT CSS  ----------------------------------------------------------------------*/
+
+.quickMenuDiv-overly {
+    background: rgba(27, 31, 39, 0.41);
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    display: block;
+}
+
+.quickMenuDiv {
+    width: 70%;
+    position: fixed;
+    right: 0;
+    display: none;
+    top: 64px;
+    background: #d8dce3;
+    border: 0 solid #9fa8bc;
+    border-right: 0;
+    box-shadow: -3px 4px 5px rgba(0, 0, 0, 0.27);
+    overflow: hidden;
+}
+
+.quickMenuHeader {
+    padding: 10px;
+    color: #1b1f27;
+    background: #ffffff;
+    border-bottom: 1px solid #d8dce3;
+    font-size: 18px;
+}
+
+.QuickMenuBody {
+    background: #e6e9ef;
+    height: 500px;
+}
+
+/************************************************************************/
+.pillar {
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 48px;
+    height: 100%;
+    background-color: #f7f7f7;
+    border-right: solid 1px #d0d4d8;
+}
+
+    .pillar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .pillar ul li a {
+            padding: 8px 15px;
+            border-bottom: 0 solid rgba(0, 0, 0, 0.25);
+            color: #00aff0;
+            display: block;
+            text-align: center;
+            font-size: 20px;
+        }
+
+            .pillar ul li a:hover {
+                background: #fff;
+            }
+
+.tray {
+    left: 48px;
+    bottom: 0;
+    width: 320px;
+    height: 100%;
+    background-color: #f7f7f7;
+    position: absolute;
+    top: 46px;
+    display: block;
+    border-right: 1px solid #ccc;
+}
+
+.tray-header {
+    width: 100%;
+    height: 45px;
+    border-bottom: 1px solid #ccc;
+    background: #fff;
+    position: absolute;
+}
+
+.tray-body {
+    padding-bottom: 10px;
+    padding-top: 45px;
+}
+
+    .tray-body ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        .tray-body ul li {
+            margin-bottom: 0;
+        }
+
+            .tray-body ul li a {
+                padding: 10px;
+                background: #fff;
+                border-bottom: 1px solid #ccc;
+                display: block;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+.tray-header ul {
+    list-style: none;
+    padding: 0;
+}
+
+    .tray-header ul li {
+        display: inline-block;
+        float: left;
+    }
+
+        .tray-header ul li a {
+            display: block;
+            padding: 8px 12px;
+            color: #6d6c6c;
+            font-size: 20px;
+        }
+
+            .tray-header ul li a:hover {
+                color: #000;
+            }
+
+.tray-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #f7f7f7;
+    left: 48px;
+    top: 46px;
+    display: block;
+    color: #000;
+    font-size: 14px;
+}
+
+.tray-content-active {
+    left: 368px !important;
+}
+
+#trayContentDiv {
+    width: 60% !important;
+}
+
+#trayContentHeaderDiv {
+    width: 60%;
+    height: 45px;
+    float: left;
+    background: #fff;
+}
+
+#trayContentBodyDiv {
+    height: 400px;
+    width: 100%;
+    overflow: auto;
+    float: left;
+    padding: 10px;
+    margin-top: 45px;
+    background: #e5f1f6;
+}
+
+#trayContentFooterDiv {
+    width: 100%;
+    height: 50px;
+    float: left;
+    padding: 0 10px;
+    padding-top: 10px;
+}
+
+#myUserProfile {
+    padding-top: 50px;
+}
+
+
+/*---------------------------- tray header horizentol navigation css-------------------------------------------*/
+.tray-dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+.tray-dropdown-content {
+    left: 0px;
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 0px 6px 10px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+}
+
+    .tray-dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        font-size: 14px !important;
+    }
+
+        .tray-dropdown-content a:hover {
+            background-color: #00aff0;
+            color: #fff;
+        }
+
+.tray-dropdown:hover .tray-dropdown-content {
+    display: block;
+}
+/*-----------------------------------------------tray header horizentol navigation css end----------------*/
+
+
+
+
+
+.img-wrap {
+    background: url('../images/default_group_300.png') no-repeat center;
+    width: 200px;
+    height: 200px;
+    padding-top: 50px;
+    margin: 50px auto;
+}
+
+.chatuserprofile-tray {
+    display: block;
+    width: 100%;
+    height: 300px;
+    position: absolute;
+}
+
+.modal-lg {
+    width: 768px !important;
+}
+
+.modal-dialog .modal-title {
+    font-size: 16px;
+    color: #000;
+    font-weight: bold;
+}
+
+.modal-header .close {
+    font-size: 26px;
+    color: #000;
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: 420px;
+        margin: 30px auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .quickMenuDiv {
+        width: 500px;
+    }
+}
+
+
+/*-------------------------------------------------------------*/
+.member {
+    padding: 20px;
+}
+
+    .member .avatar {
+        width: 122px;
+        height: 122px;
+        text-align: center;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .member label {
+        margin-top: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        display: block;
+        text-align: center;
+    }
+    

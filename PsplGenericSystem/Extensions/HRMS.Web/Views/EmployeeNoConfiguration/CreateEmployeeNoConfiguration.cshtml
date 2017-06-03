@@ -1,0 +1,49 @@
+﻿@model HRMS.Service.Models.EDM.EmployeeNoConfiguration
+@{
+    ViewBag.Title = "CreateEmployeeNoConfiguration";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@Html.ValidationSummary(true)
+@using (Html.BeginForm("CreateEmployeeNoConfiguration", "EmployeeNoConfiguration", FormMethod.Post, new { id = "EmpNoConfigurationForm", enctype = "multipart/form-data" }))
+{     
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.EmployeeNoId)
+                    @Html.LabelFor(m => m.Prefix, "Prefix", new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Prefix, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.StartValue, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.StartValue, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.IncrementValue, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.IncrementValue, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            
+            @Html.ActionLink("Cancel", "EmployeeDashboard", "Home", null, new { @class = "btn btn-success", @style = "margin-left:10px" })
+            <button type="submit" class="btn btn-success" id="btnSaveEmpNo">Save</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>EmployeeNoConfiguration<small>Add Employee No</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Employee No Config</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

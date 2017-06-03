@@ -1,0 +1,119 @@
+﻿@*@model HRMS.Service.Models.EDM.JobProfile*@
+@using HRMS.Common.Enums
+@model HRMS.Web.ViewModels.AvailableJobFormModel
+           
+<link href="~/Content/JobPortal/style.css" rel="stylesheet" />
+<style>
+    .formstyle {
+        /*background-color: lavender;*/
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+    }
+
+    .heading {
+        background-color: #00a65a;
+        /*height: 60px;*/
+        color: #fff !important;
+    }
+</style>
+<div class="form-horizontal">
+    <div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.JobProfile.JobUrl, new { @class = "col-sm-2 control-label" })
+            <div class="input-group margin">
+                @Html.TextBoxFor(m => m.JobProfile.JobUrl, new { @class = "form-control", @id="JobUrl" })
+                <span class="input-group-btn">
+                    <input class="btn btn-info btn-flat" id="openLink" type="button" value="Go" />
+                </span>
+            </div>
+
+        </div>
+        @using (Html.BeginForm("_Preview", "Recruiting", FormMethod.Post, new { id = "previewview" }))
+        {
+            <div class="col-sm-8 page-content">
+
+                <div class="jobs-item with-thumb">
+
+                    <div class="clearfix visible-xs"></div>
+                    <div class="date">
+                        @if (Model.JobProfile.PostDate != null)
+                        {
+                            @:@Model.JobProfile.PostDate.Value.Day <span>@Model.JobProfile.PostDate.Value.ToString("MMMM") </span>
+                        }
+                    </div>
+                    <h6 class="title"><a href="#">@Model.JobProfile.Title</a></h6>
+                    <span class="meta">@Model.JobProfile.CityStateOrZipCode</span>
+
+                    <ul class="top-btns">
+                        <li><a href="#" class="btn btn-gray fa fa-plus toggle"></a></li>
+                    </ul>
+
+                    <p class="description">@Model.JobProfile.JobDescription <a href="#" class="read-more">Read More</a></p>
+
+                    <div class="content">
+                        <h5>Required Duties</h5>
+                        @foreach (var dutyitem in Model.SelectedJobProperties)
+                        {
+                            if (dutyitem.Property.Equals(GeneralEnum.JobProperties.JobDuty.ToString()))
+                            {
+                                <div class="toggle" data-progress="@dutyitem.PercentageOfTime">
+                                    <a href="#" class="progress-bar-toggle"></a>
+                                    @*<h6 class="progress-bar-title">Web Design</h6>*@
+                                    <div class="progress-bar-inner"><span></span></div>
+                                    <div class="progress-bar-content">
+                                        @Html.Label(@dutyitem.Description)
+                                    </div>
+                                </div>
+                            }
+                        }
+
+
+                        <h5>Required Qualifications</h5>
+                        @foreach (var qualificationitem in Model.SelectedJobProperties)
+                        {
+                            if (qualificationitem.Property.Equals(GeneralEnum.JobProperties.JobQualification.ToString()))
+                            {
+                                <div class="toggle">
+                                    @*<h6 class="progress-bar-title">Web Design</h6>*@
+                                    <div class="progress-bar-inner"><span>@qualificationitem.Proficiency</span></div>
+                                    <div class="progress-bar-content">
+                                        @Html.Label(@qualificationitem.Description)
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        <h5>Additional PME Benefits</h5>
+                        <ul class="additional-requirements clearfix">
+                            @foreach (var pmeitem in Model.SelectedJobProperties)
+                            {
+                                if (pmeitem.Property.Equals(GeneralEnum.JobProperties.JobPME.ToString()))
+                                {
+                                    @Html.Label(@pmeitem.Description)
+                                }
+                            }
+                        </ul>
+                        <hr>
+                        <div class="clearfix">
+                            <a href="#" id="aApplyJob" accesskey="jobapplication" data-val-1="@Model.JobProfile.JobProfileId" data-val-2="@Model.JobProfile.CompanyId" class="jobapply btn btn-default pull-left">Apply for this Job</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+
+
+    </div>
+</div>
+ <!--Custom css -->
+<script src="~/Scripts/JobPortal/script.js"></script>
+<script type="text/javascript">
+    $('#openLink').click(function (event) {
+        event.preventDefault();
+        var url = $('#JobUrl').val();
+        window.open(url, "popupWindow", "width=600,height=600,scrollbars=yes");
+    });
+</script>

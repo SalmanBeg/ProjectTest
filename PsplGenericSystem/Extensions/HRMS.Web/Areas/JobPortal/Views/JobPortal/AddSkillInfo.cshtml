@@ -1,0 +1,43 @@
+﻿@model HRMS.Service.Models.EDM.ApplicantAchievementsAndAssociations
+@{
+    ViewBag.Title = "AddSkillInfo";
+     Layout = "~/Areas/JobPortal/Views/Shared/_JobPortalMaster.cshtml";
+}
+
+<h3>AddSkillInfo</h3>
+@using (Html.BeginForm("AddSkillInfo", "JobPortal", FormMethod.Post))
+{
+    <div class="form-horizontal"> 
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(k => k.Type, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.Type, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.Description, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.Description, new { @class = "form-control" })
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            <button type="submit" class="btn btn-success">Save</button>
+            @Html.ActionLink("Cancel", "AddApplicationInfo", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+
+
+
+
+
+
+

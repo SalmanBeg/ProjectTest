@@ -1,0 +1,37 @@
+/*table.has-columns-hidden > tbody > tr > td > span.responsiveExpander {
+    background: url("../img/plus.png") no-repeat 5px center;
+    padding-left: 32px;
+    cursor: pointer;
+}
+
+table.has-columns-hidden > tbody > tr.detail-show > td span.responsiveExpander {
+    background: url("../img/minus.png") no-repeat 5px center;
+}*/
+
+table.has-columns-hidden > tbody > tr.row-detail > td {
+    background: #fff;
+}
+
+table.has-columns-hidden > tbody > tr.row-detail > td > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+table.has-columns-hidden > tbody > tr.row-detail > td > ul > li > span.columnTitle {
+    font-weight: bold;
+}
+
+
+/************************************************* BR Apr15******/
+table.has-columns-hidden > tbody > tr.row-detail > td > ul li{
+padding:5px 0px;
+background:#fff;
+border-bottom:1px solid #f4f4f9;
+}
+    table.has-columns-hidden > tbody > tr.row-detail > td > ul li:last-child {
+        border-width:0px;
+    }
+    table.has-columns-hidden > tbody > tr.row-detail > td > ul {
+        padding:-8px;
+    }

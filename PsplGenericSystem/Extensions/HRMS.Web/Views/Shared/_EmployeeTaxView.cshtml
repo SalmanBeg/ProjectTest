@@ -1,0 +1,215 @@
+﻿@model HRMS.Web.ViewModels.EmployeeTaxW4FormModel
+<script src="~/Scripts/plugins/numericInput.min.js"></script>
+@using (Html.BeginForm("_EmployeeTaxView", "EmployeeTax", FormMethod.Post, new { id = "addtaxformview" }))
+{    
+    <div class="form-group">
+        <div class="col-md-6">
+            <fieldset>
+                <legend>Federal Tax</legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.FederalWithholdingStatus, new { @class = "control-label" })
+                    @Html.HiddenFor(m => m.EmployeeTax.UserId)
+                    @Html.HiddenFor(m => m.EmployeeTax.CompanyId)
+                    @Html.HiddenFor(m => m.EmployeeTax.EmployeeTaxId)
+                    @Html.DropDownListFor(m => m.EmployeeTax.FederalWithholdingStatus, new SelectList(Model.FederalWithholdingStatusList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "WithholdingStatusId" }, { "id", "dpWithholdingStatus" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.FederalWithholdings, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.EmployeeTax.FederalWithholdings, new { @class = "form-control",@id="hdnFederalWithholdings" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.FederalExemptions, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.EmployeeTax.FederalExemptions, new { @class = "form-control",@id="hdnFederalExemptions" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.FederalBlock, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.FederalBlock, new SelectList(Model.FederalBlockList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "FederalBlockId" }, { "id", "dpfederalblock" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.FederalMedBlock, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.FederalMedBlock, new SelectList(Model.FederalMedBlockList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "FederalMedBlockId" }, { "id", "dpfederalssmedblock" } })
+
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Important Information:</legend>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <p>The IRS required employers to withhold Federal Income Tax based on W-4 Form completed by the employee.</p>
+                        <p>If an employee does not complete this form all the time of hire, taxes will be withheld based on a status of Single, with no allowances.</p>
+                        <p>Subsequent changes to employee withholdings cannot be made without a new W-4 Form completed by the employee.</p>
+                        <p>All W-4 records must be maintained at the employer's worksite.</p>
+                        @Html.ActionLink("View and Sign W4", "", null, new { @id = "btnSignW4" })
+                    </div>
+                </div>
+
+            </fieldset>
+            <fieldset>
+                <legend>Local Taxes</legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.LocalTaxesWithholdingStatus, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.LocalTaxesWithholdingStatus, new SelectList(Model.FederalWithholdingStatusList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "WithholdingStatusId" }, { "id", "dpfederalwithholdingstatus" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.LocalTaxesAllowancesorExemptions, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.EmployeeTax.LocalTaxesAllowancesorExemptions, new { @class = "form-control", @id = "hdnAllExemptions"  })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.LocalTaxesAdditionalWithholdingsAmount, new { @class = "control-label", @Style = "float:left; padding-top:10px;" })
+                    <div style="float: left; padding: 10px;">$</div>@Html.TextBoxFor(m => m.EmployeeTax.LocalTaxesAdditionalWithholdingsAmount, new { @class = "form-control", @id = "hdnWithHoldingAmount",@Style = "Width:75px; float:left;" })
+                    <div style="float: left; padding: 10px;">%</div>@Html.TextBoxFor(m => m.EmployeeTax.LocalTaxesAdditionalWithholdingsPercentage, new { @class = "form-control", @id = "hdnPercentageAmount",@Style = "Width:75px;  float:left;" })
+                </div>
+                <div class="form-group" style="display: inline-block; width: 100%;">
+                    @Html.CheckBoxFor(m => m.EmployeeTax.IsLocalTaxExempted1, new { @Style = "float:left;" })
+                    @Html.LabelFor(m => m.EmployeeTax.IsLocalTaxExempted)
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-6">
+            <fieldset>
+                <legend>State Taxes
+                </legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesLiveinCountryId, new { @class = "control-label required" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesLiveinCountryId, new SelectList(Model.StateTaxesLiveinCountryList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveincountry" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesLiveinStateId, new { @class = "control-label required" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesLiveinStateId, new SelectList(Model.StateTaxesLiveinStateList, "StateProvinceId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveinstate" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesWorkinCountryId, new { @class = "control-label required" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesWorkinCountryId, new SelectList(Model.StateTaxesWorkinCountryList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesworkincountry" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesWorkinStateId, new { @class = "control-label required" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesWorkinStateId, new SelectList(Model.StateTaxesWorkinStateList, "StateProvinceId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesworkinstate" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesWithholdingStatus, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesWithholdingStatus, new SelectList(Model.StateTaxesWithholdingStatusList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "WithholdingStatusId" }, { "id", "dpstatetaxeswithholdingstatus" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesExemptions, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.EmployeeTax.StateTaxesExemptions, new { @class = "form-control", @id="hdnStateTaxExemptions" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesAdditionalWithholding, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.EmployeeTax.StateTaxesAdditionalWithholding, new { @class = "form-control", @id="hdnStateTaxesAdditionalWithholding"  })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesTaxBlock, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesTaxBlock, new SelectList(Model.StateTaxesTaxBlockList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "TaxBlockId" }, { "id", "dptaxblock" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesSUISDIBlock, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesSUISDIBlock, new SelectList(Model.StateTaxesSUISDIBlockList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "SUISDIBlockId" }, { "id", "dpsuisdiblock" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesSchoolDistrict, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesSchoolDistrict, new SelectList(Model.StateTaxesSchoolDistrictList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "SchoolDistrictId" }, { "id", "dpschooldistrict" } })
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesSchoolBlock, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesSchoolBlock, new SelectList(Model.StateTaxesSchoolBlockList, "ID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "SchoolBlockId" }, { "id", "dpschoolblock" } })
+
+                </div>
+            </fieldset>
+        </div>
+    </div>          
+    <div class="form-group" style="display: none;">
+        <div class="col-sm-offset-2 control-button">
+            @Html.HiddenFor(m => m.EmployeeTax.CompanyId)
+            @Html.HiddenFor(m => m.EmployeeTax.UserId)
+            @Html.HiddenFor(m => m.EmployeeW4Form.CompanyId)
+            @Html.HiddenFor(m => m.EmployeeW4Form.UserId)
+            <button type="submit" id="btnTaxSave" class="btn btn-success">Save</button>
+        </div>
+    </div>   
+}
+
+<div class="modal fade modal-fullscreen  " id="ViewW4FormDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 0;">
+    <div class="modal-dialog modal-lg" style="width: 96%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_EmployeeW4FormView", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#btnTaxSave').click(function (e) {
+        e.preventDefault();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        if ($("#addtaxformview").valid()) { //if you use validation
+            $.ajax({
+                url: baseurl + "EmployeeTax/_EmployeeTaxView",
+                type: $("#addtaxformview").attr('method'),
+                data: $("#addtaxformview").serialize(),
+                success: function (data) {
+                    return data;
+                }
+            });
+        }
+        // else {
+        //    return $("#addtaxformview").valid();
+        //}
+    });
+    $("#btnSignW4").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#ViewW4FormDialog').modal();
+    });
+    function statebind(param) {
+        var countryregionId = $(param.data.countryid).val();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        if (countryregionId != null && countryregionId != "") {
+            var baseurl1 = baseurl + "Account/FillStatesByCountryId";
+            $.getJSON(baseurl1, { CountryRegionId: countryregionId }, function (countryData) {
+                var select = $(param.data.stateid);
+                select.html('');
+                $.each(countryData, function (index, itemData) {
+                    select.append($('<option/>', {
+                        value: itemData.StateProvinceID,
+                        text: itemData.Name,
+                    }));
+
+                });
+            });
+        }
+    }
+    $("#dpstatetaxesworkincountry").change({
+        stateid: '#dpstatetaxesworkinstate', countryid: '#dpstatetaxesworkincountry'
+    }, statebind);
+    $("#dpstatetaxesliveincountry").change({ stateid: '#dpstatetaxesliveinstate', countryid: '#dpstatetaxesliveincountry' }, statebind);
+
+    
+</script>
+<script type="text/javascript">
+    $(function () {
+        debugger;
+        $("#hdnWithHoldingAmount").numericInput();
+        $("#hdnPercentageAmount").numericInput();
+        $("#hdnAllExemptions").numericInput();
+        $("#hdnFederalWithholdings").numericInput();
+        $("#hdnFederalExemptions").numericInput();
+        $("#hdnStateTaxExemptions").numericInput();
+        $("#hdnStateTaxesAdditionalWithholding").numericInput();
+        
+    });
+</script>

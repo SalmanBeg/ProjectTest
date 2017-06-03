@@ -1,0 +1,380 @@
+﻿@model HRMS.Web.ViewModels.CommunicationFormModel
+@{
+    ViewBag.Title = "Alerts";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<style>
+    .block {
+        height: 50%;
+        background-color: blanchedalmond;
+        width: 250px;
+        border: 1px solid;
+        vertical-align: baseline;
+    }
+</style>
+<h2>Alerts</h2>
+@using (Html.BeginForm("AddAlert", "Communication", FormMethod.Post, new { id = "alertsForm", enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="col-sm-10">
+            <div class="form-group">
+                @Html.HiddenFor(m => m.AlertTemplate.AlertTemplateId)
+                @Html.LabelFor(m => m.AlertTemplate.AlertTemplateName, new { @class = "control-label" }) 
+                @Html.TextBoxFor(m => m.AlertTemplate.AlertTemplateName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AlertTemplate.AlertTemplateSubject, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.AlertTemplate.AlertTemplateSubject, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AlertTemplate.AlertTemplateBody, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.AlertTemplate.AlertTemplateBody, new { @id = "editor", @name = "editor", @rows = "10", @cols = "80" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AlertTemplate.IsAcknowledgementRequired, new { @class = "control-label" })
+                @Html.CheckBoxFor(m => m.AlertTemplate.IsAcknowledgementRequired1, new { @class = "form-control", @id = "cbxAcknowledgement" })
+            </div>
+            <div class="form-group" style="display: none;" id="divAcknowledgement">
+                @Html.LabelFor(m => m.AlertTemplate.AcknowledgementDescription, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.AlertTemplate.AcknowledgementDescription, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AlertTemplate.AttachmentId, new { @class = "control-label" })
+                @* @Html.TextBoxFor(m => m.AlertTemplate.AttachmentId, new { @class = "form-control" })*@
+                @Html.TextBoxFor(m => m.AlertTemplate.File, new { type = "file" })
+                @*@Html.ValidationMessageFor(m => m.File)*@
+
+            </div>
+            
+            @*<div class="form-group">
+                    @Html.LabelFor(m => m.AlertTemplate.FromAddress, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.AlertTemplate.FromAddress, new { @class = "form-control" })
+                </div>*@
+            <ul style="list-style-type: none">
+                @foreach (var a in Model.SendToList)
+                {
+                    if (a.AlertSendTypeId == 1)
+                    {
+                        <li>@Html.RadioButtonFor(b => b.AlertTemplate.SendTo, a.AlertSendTypeId, new { @checked = "checked", @id = a.AlertSendTypeName }) @a.AlertSendTypeName</li>
+                    }
+                    else
+                    {
+                        <li>@Html.RadioButtonFor(b => b.AlertTemplate.SendTo, a.AlertSendTypeId, new { @id = a.AlertSendTypeName }) @a.AlertSendTypeName</li>
+                    }
+                }
+            </ul>
+            <div class="form-group" id="externalemail" style="display: none;">
+                <div class="col-sm-4">
+                    @Html.LabelFor(m => m.AlertTemplate.ExternalEmail, new { @class = "control-label" })
+
+                    @Html.TextBoxFor(m => m.AlertTemplate.ExternalEmail, new { @class = "form-control" })
+                </div>
+            </div>
+            <div>  </div>
+            <div id="selectindividuals" style="display: none;">
+                <ul style="list-style: none; padding: 0;border:1px" id="individuallist">
+
+                    @foreach (var a in Model.EmployeeList)
+                    {
+                        <li>@Html.CheckBoxFor(entity => entity.AlertTemplate.Status1, new { @id = a.UserId }) @a.UserName </li>
+                    }
+                </ul>
+            </div>
+            <div class="form-group" id="selectalertcriteria" style="display: none;">
+                <table style="border-spacing: 10px; border-collapse: separate;" id="">
+                    <tbody>
+                        <tr>
+                           
+                            @foreach (var a in Model.SendCriteriaList)
+                            {
+                                <th>@Html.CheckBoxFor(b => b.AlertTemplate.AlertSendCriteria, new { @id = a.AlertSendCriteriaName }) @a.AlertSendCriteriaName</th>
+                            }
+                            
+                        </tr>
+                        <tr>
+                           
+                            <td class="block">
+                                <ul style="list-style: none; padding: 0" id="positionlist">
+                                    @foreach (var a in Model.PositionsList)
+                                    {
+                                        <li>@Html.CheckBoxFor(entity => entity.AlertTemplate.Status1, new { @id = a.Id }) @a.Name </li>
+                                    }
+                                </ul>
+                            </td>
+                            <td class="block">
+                                <ul style="list-style: none; padding: 0;" id="locationlist">
+                                    @foreach (var a in Model.LocationsList)
+                                    {
+                                        <li>@Html.CheckBoxFor(entity => entity.AlertTemplate.Status1, new { @id = a.Id }) @a.Name </li>
+                                    }
+                                </ul>
+                            </td>
+                            <td class="block">
+                                <ul style="list-style: none; padding: 0" id="departmentlist">
+                                    @foreach (var a in Model.DepartmentsList)
+                                    {
+                                        <li>@Html.CheckBoxFor(entity => entity.AlertTemplate.Status1, new { @id = a.Id }) @a.Name </li>
+                                    }
+                                </ul>
+                            </td>
+                            <td class="block">
+                                <ul style="list-style: none; padding: 0" id="employmentstatuslist">
+                                    @foreach (var a in Model.EmploymentStatusList)
+                                    {
+                                        <li>@Html.CheckBoxFor(entity => entity.AlertTemplate.Status1, new { @id = a.Id }) @a.Name</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                @Html.HiddenFor(m => m.AlertTemplate.positionIdList, new { @id = "positionIdList" })
+                @Html.HiddenFor(m => m.AlertTemplate.departmentIdList, new { @id = "departmentIdList" })
+                @Html.HiddenFor(m => m.AlertTemplate.locationIdList, new { @id = "locationIdList" })
+                @Html.HiddenFor(m => m.AlertTemplate.employmentstatusIdList, new { @id = "employmentstatusIdList" })
+                @Html.HiddenFor(m => m.AlertTemplate.individualEmployeeIdList, new { @id = "individualEmployeeIdList" })
+            </div>
+            <p><label>Begin Sending Alerts</label></p>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <div class="col-sm-3"> @Html.TextBoxFor(m => m.AlertTemplate.CriteriaValue, new { @class = "form-control", @id = "txtCriteriaValue", @placeholder = "No. of day/month/year" })</div>
+                <div class="col-sm-3">
+                    @Html.DropDownListFor(m => m.AlertTemplate.CriteriaDuration, new SelectList(Model.AlertTemplate.CriteriaDurationList, "SendingAlertDurationId", "SendingAlertDurationName"), "--Select--", new { @class = "form-control", @id = "drpCriteriaDuration" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.DropDownListFor(m => m.AlertTemplate.CriteriaTiming, new SelectList(Model.AlertTemplate.CriteriaTimingList, "SendingAlertTimingId", "SendingAlertTimingName"), new { @class = "form-control", @id = "drpTiming" })
+                </div>
+                <div class="col-sm-4">
+                    <div>
+                        @Html.DropDownListFor(m => m.AlertTemplate.CriteriaCondition, new SelectList(Model.AlertTemplate.CriteriaConditionList, "SendingAlertConditionId", "SendingAlertConditionName"), "--Select--", new { @class = "form-control",@id="drpConditionName" })
+                    </div>
+                </div>
+                </div>
+                <div class="col-sm-2" style="display:none" id="divCustomDate">
+                    @Html.TextBoxFor(m => m.AlertTemplate.CustomDate, (Model.AlertTemplate.CustomDate == null ? "" : ((DateTime)Model.AlertTemplate.CustomDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "dtCustomDate" })
+                </div>
+            </div>
+        <div class="col-sm-10">
+            <div class="form-group">
+                <div class="col-sm-6" id="divScheduleValue">
+                    @Html.LabelFor(m => m.AlertTemplate.ScheduleValue, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.AlertTemplate.ScheduleValue, new SelectList(Model.AlertTemplate.ScheduleValueList, "SendingAlertScheduleId", "SendingAlertScheduleName"), "--Select--", new { @class = "form-control", @id = "drpScheduleValue" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6" id="divCountToSend">
+                    @Html.LabelFor(m => m.AlertTemplate.CountToSend, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.AlertTemplate.CountToSend, new { @class = "form-control", @id = "txtCountToSend" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    @Html.LabelFor(m => m.AlertTemplate.SendVia, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.AlertTemplate.SendVia, new SelectList(Model.AlertTemplate.SendViaList, "SendingAlertViaId", "SendingAlertViaName"), "--Select--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 control-button">
+                    
+                    @Html.ActionLink("Back", "Alert", "Communication", null, new { @class = "btn btn-success", @style = "margin-left:10px" })
+                    <button type="submit" class="btn btn-success" id="btnSaveAlert">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor');
+
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea").wysihtml5();
+    });
+
+    $(document).ready(function () {
+
+        /*show criteria based on the radio checked*/
+        $('input:radio').on('ifChecked', function (event) {
+            if (this.id.trim() == "ExternalRecipients") {
+                $("#externalemail").show();
+            }
+            else {
+                $("#externalemail").hide();
+            }
+            if (this.id.trim() == "SelectIndividuals") {
+                $("#selectindividuals").show();
+            }
+            else {
+                $("#selectindividuals").hide();
+            }
+            if (this.id.trim() == "AllEmployees") {
+                $("#includemanager").show();
+            }
+            else {
+                $("#includemanager").hide();
+            }
+            if (this.id.trim() == "SelectAlertCriteria") {
+                $("#selectalertcriteria").show();
+                $("#selectalertcriteria :input").iCheck('uncheck');
+            }
+            else {
+                $("#selectalertcriteria").hide();
+            }
+        });
+
+        /*if header checked check all child checkboxes and vice versa*/
+        $('input:checkbox').on('ifChecked', function (event) {
+            if ($('departmentlist input:checkbox :checked')) {
+                if ($('#departmentlist li').length == $('#departmentlist :checked').length) {
+                    $('#Departments').iCheck('check');
+                }
+            }
+            if ($('employmentstatuslist input:checkbox :checked')) {
+                if ($('#employmentstatuslist li').length == $('#employmentstatuslist :checked').length) {
+                    $('#EmploymentStatus').iCheck('check');
+                }
+            }
+            if ($('positionlist input:checkbox :checked')) {
+                if ($('#positionlist li').length == $('#positionlist :checked').length) {
+                    $('#Positions').iCheck('check');
+                }
+            }
+            if ($('locationlist input:checkbox :checked')) {
+                if ($('#locationlist li').length == $('#locationlist :checked').length) {
+                    $('#Locations').iCheck('check');
+                }
+            }
+            if (this.id.trim() == "cbxAcknowledgement") {
+                $("#divAcknowledgement").show();
+            }
+            if (this.id.trim() == "Positions") {
+                check('positionlist');
+            }
+            if (this.id.trim() == "Locations") {
+                check('locationlist');
+            }
+            if (this.id.trim() == "Departments") {
+                check('departmentlist');
+            }
+            if (this.id.trim() == "EmploymentStatus") {
+                check('employmentstatuslist');
+            }
+        });
+
+        /*if header uchecked ucheck all child checkboxes and vice versa*/
+        $('input:checkbox').on('ifUnchecked', function (event) {
+            if (this.id.trim() == "cbxAcknowledgement") {
+                $("#divAcknowledgement").hide();
+            }
+            //uncheck td checkboxes based on th id's
+            if ($('departmentlist input:checkbox :checked')) {
+                if ($('#departmentlist li').length != $('#departmentlist :checked').length) {
+                    $('#Departments').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Departments") {
+                    uncheck('departmentlist');
+                }
+            }
+            if ($('employmentstatuslist input:checkbox :unchecked')) {
+                if ($('#employmentstatuslist li').length != $('#employmentstatuslist :checked').length) {
+                    $('#EmploymentStatus').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "EmploymentStatus") {
+                    uncheck('employmentstatuslist');
+                }
+            }
+            if ($('positionlist input:checkbox :unchecked')) {
+                if ($('#positionlist li').length != $('#positionlist :checked').length) {
+                    $('#Positions').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Positions") {
+                    uncheck('positionlist');
+                }
+            }
+            if ($('locationlist input:checkbox :unchecked')) {
+                if ($('#locationlist li').length != $('#locationlist :checked').length) {
+                    $('#Locations').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Locations") {
+                    uncheck('locationlist');
+                }
+
+            }
+        });
+
+        //to check and uncheck based on id
+        var uncheck = function (id) {
+            $('#' + id).children().iCheck('uncheck');
+        }
+        var check = function (id) {
+            $('#' + id).children().iCheck('check');
+        }
+
+        var checkchange = function (listname, headername) {
+            var rowCount = $('#' + listname + ' li').length;
+            var checkedCount = $('#' + listname + ' :checked').length;
+            if (rowCount == checkedCount)
+                $('#' + headername).iCheck('check');
+            else if (rowCount > checkedCount)
+                $('#' + headername).iCheck('uncheck')
+        }
+        /*get checked ids and assign to hidden fields when save clicked*/
+        $("#btnSaveAlert").click(function () {
+            var locationCount = $('#locationlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var departmentCount = $('#departmentlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var positionCount = $('#positionlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var employmentstatusCount = $('#employmentstatuslist :checked').map(function () {
+                return this.id;
+            }).get();
+            var individualEmployeeCount = $('#individuallist :checked').map(function () {
+                return this.id;
+            }).get();
+            $('#locationIdList').attr('value', locationCount);
+            $('#departmentIdList').attr('value', departmentCount);
+            $('#positionIdList').attr('value', positionCount);
+            $('#employmentstatusIdList').attr('value', employmentstatusCount);
+            $('#individualEmployeeIdList').attr('value', individualEmployeeCount);
+        });
+
+    });
+
+    /*Reset criteria value and criteria duration when criteria timing is 'on'*/
+    /*and hide counttosend,disable criteria value and disable criteria duration*/
+    $('#drpTiming').on('change', function () {
+        if ($('#drpTiming').val() == '2') {
+            $('#divCountToSend').hide();
+            $('#txtCriteriaValue').hide();
+            $('#drpCriteriaDuration').hide();
+            $('#divScheduleValue').hide();
+            $('#drpScheduleValue').val('');
+            $('#drpCriteriaDuration').val('');
+            $('#txtCriteriaValue').val('');
+            $('#txtCountToSend').val('');
+        }
+        else {
+            $('#divCountToSend').show();
+            $('#txtCriteriaValue').show();
+            $('#drpCriteriaDuration').show();
+            $('#divScheduleValue').show();
+        }
+    });
+    /*Show datefield when customdate is selected in sending condition dropdown*/
+    $('#drpConditionName').on('change', function () {
+        if ($('#drpConditionName').val() == '1') { $('#divCustomDate').show(); }
+        else { $('#divCustomDate').hide(); }
+    });
+
+</script>

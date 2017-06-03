@@ -1,0 +1,60 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.HireApprovalSetup>
+    @using HRMS.Web.Helper;
+    @{
+        ViewBag.Title = "SelectHireApprovalSetup";
+        Layout = "~/Areas/HireWizard/Views/Shared/_WizardMasterLayout.cshtml";
+    }
+
+    <h2>New Hire</h2>
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="gridContent">
+        <thead>
+            <tr>
+                <th></th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.StepName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsApproved)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApprovedOn)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    @*<td>
+                             @Html.ActionLink(((string)item.Email).ToString(), "HireMaster","NewHire",new {area = "HireWizard",  @UserSignUpID = item.UserSignUpID,@pagelayout="masterlayout" }, new { id = "UserSignUpID" })
+
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StepName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsApproved)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApprovedOn)
+                    </td>
+                    <td>
+                        @if (item.IsSubmitted == false)
+                        {<label>Not Submitted</label>}
+                        else
+                        {<label>Submitted</label>}
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>

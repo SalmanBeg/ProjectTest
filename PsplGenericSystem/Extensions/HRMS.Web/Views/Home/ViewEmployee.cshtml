@@ -1,0 +1,122 @@
+﻿@model HRMS.Web.ViewModels.EmployeeInfoFormModel
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "ViewEmployee";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@*<div class="header">
+    <h3>Employee Info</h3>
+</div>*@
+<div class="col-sm-12" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding: 0px;">
+    <h3 style="margin-top: 20px; color: #f58500;">
+    @GlobalsVariables.SelectedUserName</h3>
+</div>
+<div class="grid-area">
+    <div class="col-sm-3">
+        <a id="aEmployment" href="~/Employee/CreateEmployee" class="db-icon">
+            <img src="~/images/db-ico-2.png" style="width: 50px; height: 50px;" /><span>Employment</span></a>
+    </div>
+    <div class="col-sm-3">
+        <a id="aEmployeeTax" href="~/EmployeeTax/CreateEmployeeTax" class="db-icon">
+            <img src="~/images/db-ico-3.png" style="width: 50px; height: 50px;" /><span>Taxes</span></a>
+    </div>
+    <div class="col-sm-3">
+        <a href="~/EmployeePay/AddPay" class="db-icon">
+            <img src="~/images/db-ico-4.png" style="width: 50px; height: 50px;" /><span>Pay</span></a>
+    </div>
+
+    <div class="col-sm-3">
+        <a href="~/EmployeeEmergencyContact/SelectAllEmergencyContact" class="db-icon">
+            <img src="~/images/db-ico-6.png" style="width: 50px; height: 50px;" /><span>Emergency Contact</span></a>
+    </div>
+    <div class="col-sm-3">
+        <a href="~/EmployeeDependent/SelectAllEmployeeDependent" class="db-icon">
+            <img src="~/images/db-ico-7.png" style="width: 50px; height: 50px;" /><span>Dependents</span></a>
+    </div>
+    <div class="col-sm-3">
+        <a href="~/EmployeeDirectDeposit/SelectAllEmployeeDirectDeposit" class="db-icon">
+            <img src="~/images/db-ico-8.png" style="width: 50px; height: 50px;" /><span>Direct Deposits</span></a>
+    </div>
+    <div class="col-sm-3">
+        <a href="~/EmployeeOSHA/SelectAllEmployeeOSHA" class="db-icon">
+            <img src="~/images/db-ico-1.png" style="width: 50px; height: 50px;" /><span>OSHA</span></a>
+    </div>
+    <div class="col-sm-3">
+        <a href="~/PayType/SelectAllPayTypeDetails" class="db-icon">
+            <img src="~/images/db-ico-1.png" style="width: 50px; height: 50px;" /><span>Pay Type</span>
+        </a>
+    </div>
+    <div class="col-sm-3">
+        <a href="~/PayPeriod/SelectAllPayPeriodDetails" class="db-icon">
+            <img src="~/images/db-ico-1.png" style="width: 50px; height: 50px;" /><span>Pay Period</span>
+        </a>
+    </div>
+    @*<div class="col-sm-3">
+        <a href="~/I9Form/I9FormDetails" class="db-icon">
+            <img src="~/images/db-ico-1.png" style="width: 50px; height: 50px;" /><span>I9Form</span>
+        </a>
+    </div>*@
+
+    @*<div class="col-md-9">
+        <div id="dvEmployeeInfo">
+        </div>
+    </div>*@
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Employee<small>Employee Information</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Employee Information</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        @*   $("#aEmployment").click(function (e) {
+            e.preventDefault();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            $.ajax({
+                url: baseurl+"Employee/_EmploymentView",
+                type: "GET",
+                data: "",
+                success: function (data) {
+                    $("#dvEmployeeInfo").empty();
+                    $("#dvEmployeeInfo").html(data);
+                    $("#btnemploymentsubmit").show();
+
+                }
+            });
+        });
+        
+        $("#aEmployeeTax").click(function (e) {
+         
+            e.preventDefault();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            $.ajax({
+                url: baseurl + "EmployeeTaxDetail/_EmployeeTaxDetailView",
+                type: "GET",
+                data: "",
+                success: function (data) {
+                    $("#dvEmployeeInfo").empty();
+                    $("#dvEmployeeInfo").html(data);
+
+                }
+            });
+         });
+
+
+
+
+        $('#btnpersonalsubmit').click(function (e) {
+            e.preventDefault();
+            if ($("#addpersonalview").valid()) { //if you use validation
+                $.ajax({
+                    url: "../../../Account/_PersonalView",
+                    type: $("#addpersonalview").attr('method'),
+                    data: $("#addpersonalview").serialize(),
+                    success: function (data) {
+
+                    }
+                });
+            }
+        });*@
+    });
+</script>
+

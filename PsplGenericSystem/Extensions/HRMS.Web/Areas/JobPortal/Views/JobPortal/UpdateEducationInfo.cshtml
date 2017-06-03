@@ -1,0 +1,64 @@
+﻿@model HRMS.Service.Models.EDM.ApplicantEducation
+@{
+    ViewBag.Title = "AddEducationInfo";
+    Layout = "~/Areas/JobPortal/Views/Shared/_JobPortalMaster.cshtml";
+}
+
+<h3>Education Info</h3>
+@using (Html.BeginForm("UpdateEducationInfo", "JobPortal", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(k => k.University, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.University, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.Degree, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.Degree, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(k => k.FromDate, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.FromDate, (Model.FromDate == null ? "" : ((DateTime)Model.FromDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtfromdate", @maxlength = 10 })
+                            <label for="txtfromdate" class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ToDate, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.ToDate, (Model.ToDate == null ? "" : ((DateTime)Model.ToDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txttodate" })
+                            <label for="txttodate" class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.Activities, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.Activities, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            <button type="submit" class="btn btn-success">Save</button>
+            @Html.ActionLink("Cancel", "AddApplicationInfo", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+

@@ -1,0 +1,242 @@
+﻿@model HRMS.Web.ViewModels.EmployeeTaxW4FormModel
+@using HRMS.Common.Helpers
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "CreateEmployeeTax";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script src="~/Scripts/plugins/numericInput.min.js"></script>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Employee Tax </title>
+    </head>
+    <body>
+        <div style="width:100%;display:inline-block">
+            @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+        </div>
+
+        @using (Html.BeginForm("CreateEmployeeTax", "EmployeeTax", FormMethod.Post))
+        {
+        
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>Federal Taxes</legend>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.FederalWithholdingStatus, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.HiddenFor(m => m.EmployeeTax.UserId)
+                                    @Html.HiddenFor(m => m.EmployeeTax.CompanyId)
+                                    @Html.HiddenFor(m => m.EmployeeTax.EmployeeTaxId)
+                                    @Html.DropDownListFor(m => m.EmployeeTax.FederalWithholdingStatus, new SelectList(Model.FederalWithholdingStatusList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "dpfederalwthhldingdropdown", @data_val_1 = LocalizedStrings.WithholdingStatus })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.FederalWithholdings, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.EmployeeTax.FederalWithholdings, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.FederalExemptions, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.EmployeeTax.FederalExemptions, new { @class = "form-control ", @id = "input" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.FederalBlock, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.FederalBlock, new SelectList(Model.FederalBlockList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "dpfederalblkdropdown", @data_val_1 = LocalizedStrings.FederalBlock })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.FederalMedBlock, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.FederalMedBlock, new SelectList(Model.FederalMedBlockList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "federalmdblkdropdown", @data_val_1 = LocalizedStrings.SSMedBlock })
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Local Taxes</legend>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.LocalTaxesWithholdingStatus, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.LocalTaxesWithholdingStatus, new SelectList(Model.FederalWithholdingStatusList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "dpfederalwthhldingdropdown", @data_val_1 = LocalizedStrings.WithholdingStatus })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.LocalTaxesAllowancesorExemptions, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.EmployeeTax.LocalTaxesAllowancesorExemptions, new { @class = "form-control", @id = "hdnExemptions"  })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.LocalTaxesAdditionalWithholdingsAmount, new { @class = "col-sm-4 control-label", @Style = "float:left; padding-top:10px;" })
+                                <div class="col-sm-8">
+                                    <div style="float:left; padding:10px;">$ </div>@Html.TextBoxFor(m => m.EmployeeTax.LocalTaxesAdditionalWithholdingsAmount, new { @class = "form-control", @Style = "Width:41.5%; float:left;", @id = "hdnAddWithHolding" }) 
+                                    <div style="float:left; padding:10px;">(OR) %</div>@Html.TextBoxFor(m => m.EmployeeTax.LocalTaxesAdditionalWithholdingsPercentage, new { @class = "form-control", @Style = "Width:25.5%; float:left;", @id = "hdnAddWithHolding1" })
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                              <div class = "col-sm-4"><div Style = "float:right;">   @*@Html.CheckBoxFor(m => m.EmployeeTax.IsLocalTaxExempted, new { @Style = "float:right;" })*@</div></div>
+                                <div class="col-sm-8">
+                                    @Html.LabelFor(m => m.EmployeeTax.IsLocalTaxExempted, new { @Style = "float:left;" })
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>State Taxes
+                            </legend>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesLiveinCountryId, new { @class = "col-sm-4 control-label required" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesLiveinCountryId, new SelectList(Model.StateTaxesLiveinCountryList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveincountry" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesLiveinStateId, new { @class = "col-sm-4 control-label required" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesLiveinStateId, new SelectList(Model.StateTaxesLiveinStateList, "StateProvinceId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveinstate" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesWorkinCountryId, new { @class = "col-sm-4 control-label required" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesWorkinCountryId, new SelectList(Model.StateTaxesWorkinCountryList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesworkincountry" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesWorkinStateId, new { @class = "col-sm-4 control-label required" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesWorkinStateId, new SelectList(Model.StateTaxesWorkinStateList, "StateProvinceID", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesworkinstate" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesWithholdingStatus, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesWithholdingStatus, new SelectList(Model.StateTaxesWithholdingStatusList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "dpstatewthhldingdropdown", @data_val_1 = LocalizedStrings.WithholdingStatus })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesExemptions, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.EmployeeTax.StateTaxesExemptions, new { @class = "form-control ", @id = "statetaxExemptions" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesAdditionalWithholding, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    <div style="float:left; padding:10px;">$ </div>@Html.TextBoxFor(m => m.EmployeeTax.StateTaxesAdditionalWithholding, new { @class = "form-control", @Style = "Width:41.5%; float:left;", @id = "hdnAddWithHolding2" })
+                                    <div style="float:left; padding:10px;">(OR) %</div>@Html.TextBoxFor(m => m.EmployeeTax.StateTaxesAdditionalWithholdingsPercentage, new { @class = "form-control", @Style = "Width:25.5%; float:left;", @id = "hdnAddWithHolding3" })
+                                </div>
+                                @*<div class="col-sm-8">
+                                    <div style="float:left; padding:10px;">$</div>@Html.TextBoxFor(m => m.EmployeeTax.StateTaxesAdditionalWithholding, new { @class = "form-control", @Style = "Width:41.5%; float:left;", @id = "hdnAddWithHolding3" })
+                                    <div style="float:left; padding:10px;">(OR) %</div>@Html.TextBoxFor(m => m.EmployeeTax.StateTaxesAdditionalWithholding, new { @class = "form-control", @Style = "Width:25.5%; float:left;", @id = "hdnAddWithHolding2" })
+                                </div>*@
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesTaxBlock, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesTaxBlock, new SelectList(Model.StateTaxesTaxBlockList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "statetaxblockdropdown", @data_val_1 = LocalizedStrings.TaxBlock })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesSUISDIBlock, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesSUISDIBlock, new SelectList(Model.StateTaxesSUISDIBlockList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "suisdiblockdropdown", @data_val_1 = LocalizedStrings.SUISDIBlock })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesSchoolDistrict, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesSchoolDistrict, new SelectList(Model.StateTaxesSchoolDistrictList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "schooldistrictdropdown", @data_val_1 = LocalizedStrings.SchoolDistrict })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EmployeeTax.StateTaxesSchoolBlock, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.EmployeeTax.StateTaxesSchoolBlock, new SelectList(Model.StateTaxesSchoolBlockList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "schooldistrictdropdown", @data_val_1 = LocalizedStrings.SchoolBlock })
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="form-group">
+                <div class="col-sm-offset-2 control-button">
+                    
+                    @Html.ActionLink("Cancel", "ViewEmployee", "Home", new { @selectedUserId=GlobalsVariables.SelectedUserId}, new { @class = "btn btn-success" })
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+     
+        }
+    </body>
+</html>
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Tax<small>Employee Tax</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Tax</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+    $('#hdnAddWithHolding').keyup(function () {
+        s = $(this).val();
+        if (!/^\d*\.?\d*$/.test(s))
+            $(this).val(s.substr(0, s.length - 1));
+    });
+    $('#hdnAddWithHolding1').keyup(function () {
+        s = $(this).val();
+        if (!/^\d*\.?\d*$/.test(s))
+            $(this).val(s.substr(0, s.length - 1));
+    });
+    $('#hdnAddWithHolding2').keyup(function () {
+        s = $(this).val();
+        if (!/^\d*\.?\d*$/.test(s))
+            $(this).val(s.substr(0, s.length - 1));
+    });
+    $('#hdnAddWithHolding3').keyup(function () {
+        s = $(this).val();
+        if (!/^\d*\.?\d*$/.test(s))
+            $(this).val(s.substr(0, s.length - 1));
+    });
+    function statebind(param)
+    {
+        var countryregionId = $(param.data.countryid).val();
+        if (countryregionId != null && countryregionId != "") {
+            var baseurl1 = "../Account/FillStatesByCountryId";
+            $.getJSON(baseurl1, { CountryRegionId: countryregionId }, function (countryData) {
+                var select = $(param.data.stateid);
+                select.html('');
+                $.each(countryData, function (index, itemData) {
+                    select.append($('<option/>', {
+                        value: itemData.StateProvinceID,
+                        text: itemData.Name,
+                    }));
+
+                });
+            });
+        }
+    }
+    $("#dpstatetaxesworkincountry").change({ stateid: '#dpstatetaxesworkinstate', countryid: '#dpstatetaxesworkincountry' }, statebind);
+    $("#dpstatetaxesliveincountry").change({ stateid: '#dpstatetaxesliveinstate', countryid: '#dpstatetaxesliveincountry' }, statebind);
+</script>
+<script type="text/javascript">
+    $(function () {
+        
+        $("#input").numericInput();
+        $("#hdnAddWithHolding").numericInput();
+        $("#hdnAddWithHolding1").numericInput();
+        $("#hdnAddWithHolding3").numericInput();
+        $("#hdnAddWithHolding2").numericInput();
+        $("#hdnExemptions").numericInput();
+        $("#statetaxExemptions").numericInput();
+    });
+</script>
+

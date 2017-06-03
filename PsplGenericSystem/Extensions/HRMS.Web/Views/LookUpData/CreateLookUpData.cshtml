@@ -1,0 +1,93 @@
+﻿@model HRMS.Web.ViewModels.LookupFormModel
+@using HRMS.Web.Models;
+@using HRMS.Common.Helpers
+
+@{
+    ViewBag.Title = "CreateLookUpData";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+ 
+    <div class="form-horizontal">
+        <div class="col-sm-4">
+            <div>
+                <ul>
+                    <li>@Html.ActionLink("Department", "CreateLookUpData", new { @TableName = "Department" })</li>
+                    <li>@Html.ActionLink("Division", "CreateLookUpData", new { @TableName = "Division" })</li>
+                    <li>@Html.ActionLink("Change Reason", "CreateLookUpData", new { @TableName = "ChangeReason" })</li>
+                    <li>@Html.ActionLink("Employment Status", "CreateLookUpData", new { @TableName = "EmploymentStatus" })</li>
+                    <li>@Html.ActionLink("Employment Types", "CreateLookUpData", new { @TableName = "EmploymentTypes" })</li>
+                    <li>@Html.ActionLink("Location", "CreateLookUpData", new { @TableName = "Location" })</li>
+                    <li>@Html.ActionLink("Position", "CreateLookUpData", new { @TableName = "Position" })</li>
+                    <li>@Html.ActionLink("Job Category", "CreateLookUpData", new { @TableName = "JobCategory" })</li>
+                    <li>@Html.ActionLink("Termination Reason", "CreateLookUpData", new { @TableName = "TerminationReason" })</li>
+                    <li>@Html.ActionLink("FLSA Status", "CreateLookUpData", new { @TableName = "FLSAStatus" })</li>
+                    <li>@Html.ActionLink("Union Type", "CreateLookUpData", new { @TableName = "UnionType" })</li>
+                    <li>@Html.ActionLink("Relationship", "CreateLookUpData", new { @TableName = "Relationship" })</li>
+                    <li>@Html.ActionLink("FederalBlock", "CreateLookUpData", new { @TableName = "FederalBlock" })</li>
+                    <li>@Html.ActionLink("SSMedBlock", "CreateLookUpData", new { @TableName = "SSMedBlock" })</li>
+                    <li>@Html.ActionLink("Withholding Status", "CreateLookUpData", new { @TableName = "WithholdingStatus" })</li>
+                    <li>@Html.ActionLink("Tax Block", "CreateLookUpData", new { @TableName = "TaxBlock" })</li>
+                    <li>@Html.ActionLink("SUISDI Block", "CreateLookUpData", new { @TableName = "SUISDIBlock" })</li>
+                    <li>@Html.ActionLink("School District", "CreateLookUpData", new { @TableName = "SchoolDistrict" })</li>
+                    <li>@Html.ActionLink("School Block", "CreateLookUpData", new { @TableName = "SchoolBlock" })</li>
+                    <li>@Html.ActionLink("Pay Type", "CreateLookUpData", new { @TableName = "PayType" })</li>
+                    <li>@Html.ActionLink("Pay Grade", "CreateLookUpData", new { @TableName = "PayGrade" })</li>
+                    <li>@Html.ActionLink("Pay Frequency", "CreateLookUpData", new { @TableName = "PayFrequency" })</li>
+                    <li>@Html.ActionLink("Claim Type", "CreateLookUpData", new { @TableName = "ClaimType" })</li>
+                    <li>@Html.ActionLink("OutCome", "CreateLookUpData", new { @TableName = "OutCome" })</li>
+                    <li>@Html.ActionLink("Recruiting Profile","CreateLookUpData",new{@TableName="RecruitingProfile"})</li>
+                    <li>@Html.ActionLink("Training Tracks", "CreateLookUpData", new { @TableName = "TrainingTracks" })</li>
+                    <li>@Html.ActionLink("Work Profile", "CreateLookUpData", new { @TableName = "WorkProfile" })</li>
+                    <li>@Html.ActionLink("Workers CompCode", "CreateLookUpData", new { @TableName = "WorkersCompCode" })</li>
+                    <li>@Html.ActionLink("Contract Status", "CreateLookUpData", new { @TableName = "ContractStatus" })</li>
+                    <li>@Html.ActionLink("Degree Level", "CreateLookUpData", new { @TableName = "DegreeLevel" })</li>
+                    <li>@Html.ActionLink("Honorary Recognition", "CreateLookUpData", new { @TableName = "HonoraryRecognition" })</li>
+                    <li>@Html.ActionLink("Graduated", "CreateLookUpData", new { @TableName = "Graduated" })</li>
+                    <li>@Html.ActionLink("Certification License Type", "CreateLookUpData", new { @TableName = "CertificationLicenseType" })</li>
+                    <li>@Html.ActionLink("Endorsements", "CreateLookUpData", new { @TableName = "Endorsements" })</li>
+                    <li>@Html.ActionLink("Certification License Areas", "CreateLookUpData", new { @TableName = "CertificationLicenseAreas" })</li>
+                    <li>@Html.ActionLink("Certification License School", "CreateLookUpData", new { @TableName = "CertificationLicenseSchool" })</li>
+                    <li>@Html.ActionLink("Certification License JobAssignment", "CreateLookUpData", new { @TableName = "CertificationLicenseJobAssignment" })</li>
+                    <li>@Html.ActionLink("Certification License Certification", "CreateLookUpData", new { @TableName = "CertificationLicenseCertification" })</li>
+                    <li>@Html.ActionLink("Document Category", "CreateLookUpData", new { @TableName = "DocumentCategory" })</li>
+                    <li>@Html.ActionLink("Pay Status", "CreateLookUpData", new { @TableName = "PayStatus" })</li>
+                    <li>@Html.ActionLink("WageUnit", "CreateLookUpData", new { @TableName = "WageUnit" })</li>
+                    <li>@Html.ActionLink("WageType", "CreateLookUpData", new { @TableName = "WageType" })</li>
+                    <li>@Html.ActionLink("Priority", "CreateLookUpData", new { @TableName = "Priority" })</li>
+                    <li>@Html.ActionLink("Frequency", "CreateLookUpData", new { @TableName = "Frequency" })</li>
+                    <li>@Html.ActionLink("Essential", "CreateLookUpData", new { @TableName = "Essential" })</li>
+                    <li>@Html.ActionLink("Other", "CreateLookUpData", new { @TableName = "Other" })</li>
+                    <li>@Html.ActionLink("JobQualificationType", "CreateLookUpData", new { @TableName = "JobQualificationType" })</li>
+                   @*<li>@Html.ActionLink("RecruitingQuestionType", "CreateLookUpData", new { @TableName = "QuestionType" })</li>*@
+                    <li>@Html.ActionLink("InterviewType", "CreateLookUpData", new { @TableName = "InterviewType" })</li>
+                    <li>@Html.ActionLink("InterviewRoom", "CreateLookUpData", new { @TableName = "InterviewRoom" })</li>
+                    <li>@Html.ActionLink("InterviewStatus", "CreateLookUpData", new { @TableName = "InterviewStatus" })</li>
+                    <li>@Html.ActionLink("AccountType", "CreateLookUpData", new { @TableName = "DirectDepositAccountType" })</li>
+                    <li>@Html.ActionLink("JobAssignment", "CreateLookUpData", new { @TableName = "EmployeePayJobAssignment" })</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <fieldset>
+                <legend>@Model.TableName </legend>
+                @Html.Partial("LookUpPartialView", Model)
+            </fieldset>
+        </div>
+    </div>
+     
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>Administration<small>Master Tables</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Look up tables</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+        });
+
+    </script>

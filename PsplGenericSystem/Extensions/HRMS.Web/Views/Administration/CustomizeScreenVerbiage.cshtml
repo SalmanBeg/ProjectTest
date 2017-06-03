@@ -1,0 +1,103 @@
+﻿@model HRMS.Service.Models.EDM.ScreenVerbiage
+@{
+    ViewBag.Title = "CustomizeScreenVerbiage";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<section class="content">
+    @using (Html.BeginForm("CustomizeScreenVerbiage", "Administration", FormMethod.Post, new { id = "customizeScreenVerbiage" }))
+    {
+        <div class='row'>
+            <div class='col-md-12'>
+                <div class='box'>
+                    <div class='box-header'>
+                        <h3 class='box-title'>Hire Wizard Welcome</h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-default btn-sm" data-widget='collapse' data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-default btn-sm" data-widget='remove' data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header --> @Html.HiddenFor(m => m.CompanyId, new { @id = "companyId" })
+                    <div class='box-body pad' id="HireWizardWelcome">
+
+                        @Html.TextAreaFor(m => m.HireWizardWelcomeText, new { @id = "editor1", @name = "editor1", @rows = "10", @cols = "80" })
+                        @*<textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-12'>
+                <div class='box'>
+                    <div class='box-header'>
+                        <h3 class='box-title'>Hire Wizard Submit</h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-default btn-sm" data-widget='collapse' data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-default btn-sm" data-widget='remove' data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class='box-body pad' id="HireWizardSubmit">
+
+                        @Html.TextAreaFor(m => m.HireWizardSubmitText, new { @id = "editor2", @name = "editor2", @rows = "10", @cols = "80" })
+                        @*<textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-12'>
+                <div class='box'>
+                    <div class='box-header'>
+                        <h3 class='box-title'>Hire Wizard Approval</h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-default btn-sm" data-widget='collapse' data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-default btn-sm" data-widget='remove' data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class='box-body pad' id="HireWizardApproval">
+
+                        @Html.TextAreaFor(m => m.HireWizardApprovalText, new { @id = "editor3", @name = "editor3", @rows = "10", @cols = "80" })
+                        @*<textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="submit" id="btncustomizecreenVerbiageSubmit" class="btn btn-success" />
+    }
+</section>
+
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor1');
+        CKEDITOR.replace('editor2');
+        CKEDITOR.replace('editor3');
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea").wysihtml5();
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>CustomizeScreenVerbiage</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Screen Verbiage</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+</script>
+

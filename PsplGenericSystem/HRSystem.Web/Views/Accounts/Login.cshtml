@@ -1,0 +1,62 @@
+﻿@using HRSystem.Web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Priya International - BR">
+    <meta name="author" content="Priya International - BR">
+    <title>:: Resource Navigations ::</title>
+    <link rel="stylesheet" href="~/Content/Assets/css/font-awesome.css">
+    <link rel="stylesheet" href="~/Content/Assets/css/quirk.css">
+    <link rel="stylesheet" href="~/Content/Assets/css/Custom.css">
+    <script src="~/Content/Assets/lib/modernizr/modernizr.js"></script>
+</head>
+
+<body class="signwrapper">
+    <div class="sign-overlay"></div>
+    <div class="signpanel"></div>
+    <div class="panel signin">
+        <div class="panel-heading">
+            <h1 style="font-size:19px; text-align:left; padding-bottom:10px;"> :: Resource Navigations ::</h1>
+        </div>
+        <div class="panel-body" style="min-height:180px !important;">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Accounts", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group mb10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter Username", @style = "height:36px" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group mb10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter Password", @style = "height:36px" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @* <div class="form-group" style="height:20px;">
+                        <div class="checkbox">
+                          @Html.CheckBoxFor(m => m.RememberMe)
+                               @Html.LabelFor(m => m.RememberMe)
+                                       </div>
+                                        </div>*@
+                    <div class="form-group">
+                        <input type="submit" value="Log in" class="btn btn-success btn-quirk btn-block" style="background:#15c0d4; font-size:14px;" />
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+</body>
+</html>

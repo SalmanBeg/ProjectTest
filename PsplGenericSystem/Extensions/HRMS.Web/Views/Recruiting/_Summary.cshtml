@@ -1,0 +1,9 @@
+﻿@model HRMS.Service.Models.EDM.JobProfile
+<div class="form-horizontal">
+    <div class="formstyle form-group">
+      
+       <div> @Html.LabelFor(m => m.CreatedBy): @Model.CreatedByName</div>
+        <div>
+            @Html.LabelFor(m => m.CreatedOn): @Model.CreatedOn</div>
+        </div>
+</div>

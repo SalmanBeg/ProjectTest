@@ -1,0 +1,67 @@
+﻿@using System.Web.Mvc.Html
+@model IEnumerable<HRMS.Service.Models.EDM.CompanyInfo>
+
+@{
+    ViewBag.Title = "ConfigureCompany";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div class="header">
+    @Html.ActionLink("<< Back to Administration DashbBoard", "AdministrationDashboard", "Administration", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<p>
+    <a href="~/Company/EditCompany" class="btn btn-success">Add</a>
+    @*@Html.ActionLink("Delete","")</p>*@
+    <div class="grid-area">
+        <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="gridContent">
+            <thead>
+                <tr>
+                    <th data-sort-ignore="true">
+                        <input type="checkbox" />
+                    </th>
+                    <th data-toggle="true">
+                        @Html.DisplayNameFor(m => m.CompanyName)
+                    </th>
+                    <th data-hide="phone">
+                        @Html.DisplayNameFor(m => m.Status)
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" value="" id="@item.CompanyId" onchange="cbChange(this)" />
+                        </td>
+                        <td>
+                            @Html.ActionLink(((string)item.CompanyName), "EditCompany", new { @companyId = item.CompanyId }, new { id = "CompanyName" })
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination pagination-centered hide-if-no-paging"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>Company List</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Configure Company</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+        });
+
+    </script>
+

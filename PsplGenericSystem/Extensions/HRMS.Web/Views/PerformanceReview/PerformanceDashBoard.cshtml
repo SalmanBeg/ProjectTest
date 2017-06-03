@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "PerformanceDashboard";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<h2>PerformanceDashboard</h2>
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>
+                    <span>Add</span>
+                </h3>
+                <p>
+                    Reviews
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="../PerformanceReview/SelectReviewAll" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>
+                    <span>Edit</span>
+                </h3>
+                <p>
+                    Rating Scale
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="../RatingScale/SelectAllRatingScale" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>
+                    <span>Edit</span>
+                </h3>
+                <p>
+                    Review Criteria
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-compose"></i>
+            </div>
+            <a href="~/ReviewCriteria/SelectAllReviewCriteria" class="small-box-footer">
+                Go <i class="fa fa-arrow-circle-right"></i>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- ./col -->
+
+</div>
+<!-- /.row -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Dashboard<small>Performance Dashboard</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Performance dashboard</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+</script>

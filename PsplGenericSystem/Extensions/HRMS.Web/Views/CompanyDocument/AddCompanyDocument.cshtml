@@ -1,0 +1,547 @@
+﻿@model HRMS.Web.ViewModels.CompanyDocumentFormModel
+@using System.Web.Optimization;
+@using HRMS.Common.Helpers
+@using HRMS.Common.Enums;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "AddCompanyDocument";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<style>
+    .block {
+        height: 50%;
+        background-color: blanchedalmond;
+        width: 250px;
+        border: 1px solid;
+        vertical-align: baseline;
+    }
+</style>
+@using (Html.BeginForm("AddCompanyDocument", "CompanyDocument", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="col-sm-12">
+            @Html.HiddenFor(m => m.CompanyDocument.CompanyDocumentId)
+            @Html.HiddenFor(m => m.CompanyDocument.AttachmentId)
+            @Html.HiddenFor(m => m.CompanyDocument.CompanyId)
+        </div>
+        @* Hidden Fields for DocumentSendType and DocumentSendCriteria *@
+        <div>
+            @Html.HiddenFor(m => m.roleIdList, new { @id = "roleIdList" })
+            @Html.HiddenFor(m => m.companyIdList, new { @id = "companyIdList" })
+            @Html.HiddenFor(m => m.jobIdList, new { @id = "jobIdList" })
+            @Html.HiddenFor(m => m.locationIdList, new { @id = "locationIdList" })
+            @*@Html.HiddenFor(m => m.positionIdList, new { @id = "positionIdList" })*@
+            @Html.HiddenFor(m => m.departmentIdList, new { @id = "departmentIdList" })
+            @Html.HiddenFor(m => m.employmentstatusIdList, new { @id = "employmentstatusIdList" })
+            @Html.HiddenFor(m => m.employmenttypeIdList, new { @id = "employmenttypeIdList" })
+        </div>
+        <div class="form-group">
+            <div class="col-sm-7">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CompanyDocument.CompanyDocumentTitle, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.CompanyDocument.CompanyDocumentTitle, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CompanyDocument.CompanyDocumentText, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(m => m.CompanyDocument.CompanyDocumentText, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CompanyDocument.CategoryId, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(m => m.CompanyDocument.CategoryId, new SelectList(Model.DocumentCategoryList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "doccategorydropdown", @data_val_1 = LocalizedStrings.DocumentCategory })
+                       </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <label>
+                            @Html.CheckBoxFor(m => m.CompanyDocument.IsShowDocumentOnHomePage1) Show this document on home page
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CompanyDocument.AttachmentId, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.CompanyDocument.File, new { id = "fileUploader", type = "file", multiple = "multiple", @class = "form-control" })
+                    </div>
+                </div>
+                @*@if (Model.CompanyDocument == null)
+                {*@
+                    <div class="form-group" style="padding: 0px;">
+                        @Html.Label("Attached File", new { @class = "col-sm-3 control-label" })
+                        <div id="selectedFiles" class="col-sm-9" style=" border: 1px solid;"></div>
+                    </div>
+                @*}*@
+                @if (Model.CompanyDocument != null)
+                {
+                    <div class="form-group">
+                        @Html.Label("Current File", new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-9">
+                            @if (Model.FilesDBList != null)
+                            {
+                                <div class="upload">
+                                    <div style="width: 500px;">
+                                        <table id="uloadedFilesTable" border="1">
+                                            <thead>
+                                                <tr>
+                                                    <th>File Name</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.FilesDBList)
+                                                {
+                                                    <tr id="@item.FileName">
+                                                        <td>@item.FileName</td>
+                                                        <td style="text-align: center">
+                                                            <a class="viewc" href="@Url.Action("OpenFile", "CompanyDocument", new { @fileDBId = item.FilesDBId })">                                                               
+                                                                Open
+                                                            </a> |
+                                                            <a class="viewc" href="@Url.Action("DeleteFile", "CompanyDocument", new { @fileDBId = item.FilesDBId })">
+                                                                Delete
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                @*Send Type: TableName: DocumentSendType*@
+                <ul style="list-style-type: none">
+                    @foreach (var a in Model.SendToList)
+                    {
+                        if (a.DocumentSendTypeId == 1)
+                        {
+                            <li>@Html.RadioButtonFor(m => m.CompanyDocument.SendTo, a.DocumentSendTypeId, new { @checked = "checked", @id = a.DocumentSendTypeName }) @a.DocumentSendTypeName</li>
+                        }
+                        else
+                        {
+                            <li>@Html.RadioButtonFor(m => m.CompanyDocument.SendTo, a.DocumentSendTypeId, new { @id = a.DocumentSendTypeName }) @a.DocumentSendTypeName</li>
+                        }
+                    }
+                </ul>
+                <div id="selectroles" style="display: none;">
+                    <ul style="list-style: none; padding: 0;border:1px" id="rolelist">
+                        @*@Html.CheckBoxFor(m => m.CompanyDocument.CompanyDocumentSendCriteria, new { @id = "rolelist" }) Role List*@
+                        @foreach (var a in Model.RoleList)
+                        {
+                            <li>@Html.CheckBoxFor(entity => entity.CompanyDocument.Status1, new { @id = a.RoleMasterId }) @a.RoleName </li>
+                        }
+                    </ul>
+                </div>
+                @* Document Criteria. Table Name:DocumentSendCriteria *@
+                <div class="form-group" id="selectalertcriteria" style="display: none;">
+                    <table style="border-spacing: 10px; border-collapse: separate;" id="">
+                        <tbody>
+                            <tr>
+                                @foreach (var a in Model.SendCriteriaList)
+                                {
+                                    <th>@Html.CheckBoxFor(b => b.CompanyDocument.CompanyDocumentSendCriteria1, new { @id = a.DocumentSendCriteriaName }) @a.DocumentSendCriteriaName</th>
+                                }
+                            </tr>
+                            <tr>
+                                <td class="block">
+                                    <ul style="list-style: none; padding: 0;" id="companylist">
+                                        @foreach (var a in Model.CompanyList)
+                                        {
+                                            <li>@Html.CheckBoxFor(entity => entity.CompanyDocument.Status1, new { @id = a.CompanyId }) @a.CompanyName </li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td class="block">
+                                    <ul style="list-style: none; padding: 0;" id="joblist">
+                                        @foreach (var a in Model.JobList)
+                                        {
+                                            <li>@Html.CheckBoxFor(entity => entity.CompanyDocument.Status1, new { @id = a.Id }) @a.Name </li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td class="block">
+                                    <ul style="list-style: none; padding: 0;" id="locationlist">
+                                        @foreach (var a in Model.LocationsList)
+                                        {
+                                            <li>@Html.CheckBoxFor(entity => entity.CompanyDocument.Status1, new { @id = a.Id }) @a.Name </li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td class="block">
+                                    <ul style="list-style: none; padding: 0" id="departmentlist">
+                                        @foreach (var a in Model.DepartmentsList)
+                                        {
+                                            <li>@Html.CheckBoxFor(entity => entity.CompanyDocument.Status1, new { @id = a.Id }) @a.Name </li>
+                                        }
+
+                                    </ul>
+                                </td>
+                                <td class="block">
+                                    <ul style="list-style: none; padding: 0" id="employmentstatuslist">
+                                        @foreach (var a in Model.EmploymentStatusList)
+                                        {
+                                            <li>@Html.CheckBoxFor(entity => entity.CompanyDocument.Status1, new { @id = a.Id }) @a.Name</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td class="block">
+                                    <ul style="list-style: none; padding: 0" id="employmenttypelist">
+                                        @foreach (var a in Model.EmploymentTypeList)
+                                        {
+                                            <li>@Html.CheckBoxFor(entity => entity.CompanyDocument.Status1, new { @id = a.Id }) @a.Name</li>
+                                        }
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            
+            @Html.ActionLink("Cancel", "SelectAllCompanyDocument", null, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success" id="btnSaveDocument">Save</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Communication<small>Company Document</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Communication</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+@*Files*@
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+
+    $(function () {
+        $(":file").attr('title', '  ');
+        var $loading = $('#loadingDiv').hide();
+        $("input[id^='fileUploader']").change(function (e) {
+            doReCreate(e);
+        });
+        selDiv = $("#selectedFiles");
+    });
+
+    function doReCreate(e) {
+        //alert('a');
+        upc = upc + 1;
+        handleFileSelect(e);
+        $("input[id^='fileToUpload']").hide();
+        $('<input>').attr({
+            type: 'file',
+            multiple: 'multiple',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+        }).appendTo('#uploaders');
+    }
+
+    function handleFileSelect(e) {
+        selDiv = document.querySelector("#selectedFiles");
+        if (!e.target.files) return;
+        files = e.target.files;
+        for (var i = 0; i < files.length; i++) {
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name +
+            "<a onclick='removeAtt(this)'> Delete </a></div>";
+            storedFiles.push(f.name);
+        }
+    }
+
+    function removeAtt(t) {
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+        $("input[id^='fileUploader']")[0].file[0];
+    }
+</script>
+
+@*Send To Criteria*@
+@*<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>*@
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Radio Button selecttion functionality. Shows the corresponding list.
+        $('input:radio').on('ifChecked', function (event) {
+            if (this.id.trim() == "AllEmployees") { //Databae Table Value
+                $("#includemanager").show();
+            }
+            else {
+                $("#includemanager").hide();
+            }
+            if (this.id.trim() == "SelectRoles") { //Databae Table Value
+                $("#selectroles").show();
+            }
+            else {
+                $("#selectroles").hide();
+            }
+            if (this.id.trim() == "AdvancedCriteria") { //Databae Table Value
+                $("#selectalertcriteria").show();
+                $("#selectalertcriteria :input").iCheck('uncheck');
+            }
+            else {
+                $("#selectalertcriteria").hide();
+            }
+        });
+
+        //Code to check the checkboxez
+        $('input:checkbox').on('ifChecked', function (event) {
+           
+            if ($('companylist input:checkbox :checked')) {
+                if ($('#companylist li').length == $('#companylist :checked').length) {
+                    $('#Company').iCheck('check');
+                }
+            }
+            if ($('joblist input:checkbox :checked')) {
+                if ($('#joblist li').length == $('#joblist :checked').length) {
+                    $('#Job').iCheck('check');
+                }
+            }
+            if ($('locationlist input:checkbox :checked')) {
+                if ($('#locationlist li').length == $('#locationlist :checked').length) {
+                    $('#Location').iCheck('check');
+                }
+            }
+            if ($('departmentlist input:checkbox :checked')) {
+                if ($('#departmentlist li').length == $('#departmentlist :checked').length) {
+                    $('#Department').iCheck('check');
+                }
+            }
+            if ($('employmentstatuslist input:checkbox :checked')) {
+                if ($('#employmentstatuslist li').length == $('#employmentstatuslist :checked').length) {
+                    $('#EmploymentStatus').iCheck('check');
+                }
+            }
+            if ($('employmenttypelist input:checkbox :checked')) {
+                if ($('#employmenttypelist li').length == $('#employmenttypelist :checked').length) {
+                    $('#EmploymentType').iCheck('check');
+                }
+            }
+           
+            if (this.id.trim() == "Company") {
+                check('companylist');
+            }
+            if (this.id.trim() == "Job") {
+                check('joblist');
+            }
+            if (this.id.trim() == "Location") {
+                check('locationlist');
+            }
+            if (this.id.trim() == "Department") {
+                check('departmentlist');
+            }
+            if (this.id.trim() == "EmploymentStatus") {
+                check('employmentstatuslist');
+            }
+            if (this.id.trim() == "EmploymentType") {
+                check('employmenttypelist');
+            }
+        });
+
+        //Uncheck the checkboxes
+        $('input:checkbox').on('ifUnchecked', function (event) {
+            //uncheck td checkboxes based on th id's
+            if ($('companylist input:checkbox :checked')) {
+                if ($('#companylist li').length != $('#companylist :checked').length) {
+                    $('#Company').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Company") {
+                    uncheck('companylist');
+                }
+            }
+            if ($('joblist input:checkbox :checked')) {
+                if ($('#joblist li').length != $('#joblist :checked').length) {
+                    $('#Job').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Job") {
+                    uncheck('joblist');
+                }
+            }
+            if ($('locationlist input:checkbox :unchecked')) {
+                if ($('#locationlist li').length != $('#locationlist :checked').length) {
+                    $('#Location').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Location") {
+                    uncheck('locationlist');
+                }
+            }
+            if ($('departmentlist input:checkbox :checked')) {
+                if ($('#departmentlist li').length != $('#departmentlist :checked').length) {
+                    $('#Department').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Department") {
+                    uncheck('departmentlist');
+                }
+            }
+            if ($('employmentstatuslist input:checkbox :unchecked')) {
+                if ($('#employmentstatuslist li').length != $('#employmentstatuslist :checked').length) {
+                    $('#EmploymentStatus').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "EmploymentStatus") {
+                    uncheck('employmentstatuslist');
+                }
+            }
+            if ($('employmenttypelist input:checkbox :unchecked')) {
+                if ($('#employmenttypelist li').length != $('#employmenttypelist :checked').length) {
+                    $('#EmploymentType').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "EmploymentType") {
+                    uncheck('employmenttypelist');
+                }
+            }
+        });
+
+        //to check and uncheck based on id
+        var uncheck = function (id) {
+            $('#' + id).children().iCheck('uncheck');
+        }
+
+        var check = function (id) {
+            $('#' + id).children().iCheck('check');
+        }
+
+        var checkchange = function (listname, headername) {
+            var rowCount = $('#' + listname + ' li').length;
+            var checkedCount = $('#' + listname + ' :checked').length;
+            if (rowCount == checkedCount)
+                $('#' + headername).iCheck('check');
+            else if (rowCount > checkedCount)
+                $('#' + headername).iCheck('uncheck')
+        }
+
+        $("#btnSaveDocument").click(function () {
+            var roleCount = $('#rolelist :checked').map(function () {
+                return this.id;
+            }).get();
+            var companyCount = $('#companylist :checked').map(function () {
+                return this.id;
+            }).get();
+            var jobCount = $('#joblist :checked').map(function () {
+                return this.id;
+            }).get();
+            var locationCount = $('#locationlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var departmentCount = $('#departmentlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var employmentstatusCount = $('#employmentstatuslist :checked').map(function () {
+                return this.id;
+            }).get();
+            var employmentTypeCount = $('#employmenttypelist :checked').map(function () {
+                return this.id;
+            }).get();
+
+            $('#roleIdList').attr('value', roleCount);
+            $('#companyIdList').attr('value', companyCount);
+            $('#jobIdList').attr('value', jobCount);
+            $('#locationIdList').attr('value', locationCount);
+            $('#departmentIdList').attr('value', departmentCount);
+            $('#employmentstatusIdList').attr('value', employmentstatusCount);
+            $('#employmenttypeIdList').attr('value', employmentTypeCount);
+        });
+
+        //******Returns the stored Criteria***********
+        //RoleList
+        var selectedRoleIds = $('#roleIdList').val();
+        var RoleIds = selectedRoleIds.split(",");
+        //alert("All Saved Role IDs: "+RoleIds);
+        if (RoleIds.length > 0) {
+            $("#selectroles").show();
+            for (var i = 0; i < RoleIds.length; i++) {
+                //alert("Splitted RoleId: " + RoleIds[i]);
+                //alert("Role List Length: "+$('#rolelist li').length);
+                                
+                $('#rolelist li').find('div input[type=checkbox]').each(function() {
+                    //alert($(this).attr("id"));
+                    if ($(this).attr("id") == RoleIds[i]) {
+                        //alert("Object Id: " + $(this).attr("id") + " - Database Id: " + RoleIds[i]);
+                        //$(this).attr('checked',true);
+                        $(this).checked = true;
+
+                        //alert($(this).attr("name"));
+                        //alert($(this).val());
+                        //alert($('#rolelist li').find('div input[type=checkbox]').attr("checked"));
+                        //alert($('#rolelist li').find('div input[type=checkbox]').val());
+                        //alert($('#rolelist li').find('div input[type=checkbox]').checked);// = true;
+                        //$('input[value=checkbox"'+ $(this).attr("id") +'"]').attr('checked', true);
+
+                        //alert($(this).attr("checked",checked));
+                        //$(this).attr("value", true);
+                        //this.checked = true;
+                        //$("#"+(this).attr("id").on("checked","checked"));
+                        //$('input[name="' + $(this).attr("name") + '"]').attr('checked', 'checked');
+
+                        //$(this).prop(':checked', true);
+                        //$('#' + $(this).attr("name") + '"]').iCheck('check');
+                        //check($(this).id);
+                        //(this.id).attr('checked');
+                    }
+                    else {
+                        //$(this).attr('checked',false);
+
+                        $(this).checked = false;
+                        //$(this).attr("name").checked = false;
+                        //$(this).attr("id").checked = false;
+
+                        //$('#rolelist li').find('div input[type=checkbox]').val().attr("checked", false);
+                        //$('input[value=checkbox"' + $(this).attr("id") + '"]').attr('checked', false);
+                        // $('#rolelist li').find('div input[type=checkbox]').attr("id").checked = false;
+                        //(this).attr("value", false);
+                        //this.checked = false;
+
+                        //$("#" + (this).attr("id").removeAttr("checked"));
+                        //$('input[name="' + $(this).attr("name") + '"]').removeAttr('checked');
+                        //$(this).prop(':checked', false);
+                        //$('#' + $(this).attr("name") + '"]').iCheck('uncheck');
+                        
+                        //(this).prop(":checked", false);
+                    }
+                });                
+            }  //For 
+        } //If
+
+        //CompanyList
+        var selectedCompanyIds = $('#companyIdList').val();
+        var CompanyIds = selectedCompanyIds.split(",");
+        if (CompanyIds.length > 0) {
+            //$("#selectalertcriteria").show();
+            for (var i = 0; i < CompanyIds.length; i++) {
+                $('#companylist li').find('div input[type=checkbox]').each(function () {
+                    if ($(this).attr("id") == CompanyIds[i])
+                        $(this).checked = true;
+                    else
+                        $(this).checked = false;
+                });
+            }  //For 
+        } //If
+        //********************************************
+    });
+</script>
+
+

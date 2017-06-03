@@ -1,0 +1,398 @@
+﻿@model IList<HRMS.Service.Models.EDM.ImportEmployeedata>
+
+@{
+    ViewBag.Title = "ViewEmployeeData";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
+@*@if(ViewBag.Message!=null)
+{
+@ViewBag.Message
+}*@
+<script type="text/javascript">
+    $(document).ready(function () {     
+       
+        var cnt = @Model.Count;
+        if (cnt == 0) {
+            $("#GridImport").css("display", "none");
+            $("#divNoRecords").css("display", "block");
+        } else {
+            $("#GridImport").css("display", "block");
+            $("#divNoRecords").css("display", "none");
+        }
+
+        $("#btnDeleteDirectDepositDetail").click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#gridImportDetail input:checkbox:checked").map(function() {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "ImportEmployeecsvdata/ViewEmployeeData",
+                    type: "POST",
+                    cache: "false",
+                    data: { dependentIds: searchIDs.toString() },
+                    success: function(data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+        });
+         
+        $('#btnCancel').click(function (e) {
+            location.href = '@Url.Content("~/ImportEmployeecsvdata/ImportEmployeeData")';
+        });
+        $('#btnback').click(function (e) {
+            location.href = '@Url.Content("~/ImportEmployeecsvdata/ImportEmployeeData")';
+        });
+
+    });
+    
+</script>
+@using (Html.BeginForm())
+{   
+    <div id="GridImport" >
+    <div style="overflow-x: scroll; width: 100%;">
+          @Html.ValidationSummary(true)       
+        <table style="width: 100%; overflow: auto" class="webGrid" border="0" id="gridImportDetail">                   
+            <thead>
+                <tr style="background-color: #444444; color: white;" id="tr1">
+                    <td>
+                        @Html.DisplayName("Record Status")
+                    </td>
+                    <td>
+                        @Html.DisplayName("User Name")
+                    </td>
+                    <td>
+                        @Html.DisplayName("First Name")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Middle Name")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Last Name")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Suffix")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Salutation")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Street1")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Street2")
+                    </td>
+                    <td>
+                        @Html.DisplayName("City")
+                    </td>
+                    <td>
+                        @Html.DisplayName("CountryId")
+                    </td>
+                    <td>
+                        @Html.DisplayName("StateId")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Zip")
+                    </td>
+                    <td>
+                        @Html.DisplayName("HomeEmail")
+                    </td>
+                    <td>
+                        @Html.DisplayName("HomePhone")
+                    </td>
+                    <td>
+                        @Html.DisplayName("WorkPhone")
+                    </td>
+                    <td>
+                        @Html.DisplayName("SSN")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Birth Date")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Gender")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Status")
+                    </td>
+                    <td>
+                        @Html.DisplayName("ChangeReason")
+                    </td>
+                    <td>
+                        @Html.DisplayName("Position")
+                    </td>
+                    
+                    <td>
+                        @Html.DisplayName("FLSA Status")
+                    </td>
+                    <td>
+                        @Html.DisplayName("MaritalStatus")
+                    </td>
+                    
+                    <td>
+                        @Html.DisplayName("WorkEmail")
+                    </td>
+                    <td>
+                        @Html.DisplayName("HireDate")
+                    </td>
+                     
+                      
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                      
+                     
+                    <td>
+                        @Html.DisplayName("WC Job Class Code")
+                    </td>
+                    <td>
+                        @Html.DisplayName("WC status")
+                    </td>
+                    <td>
+                        @Html.DisplayName("WC Type")
+                    </td>    
+                    @*<td>
+                        @Html.DisplayName("Job Profile")
+                    </td>*@          
+                    <td>
+                        @Html.DisplayName("Action")
+                    </td>
+                </tr>
+            </thead>         
+            <tbody>  
+                @*@foreach (var item in Model)
+                {
+                    <tr >
+                     <td>                     
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => item.ImportTag, new { style = "width:200px;", @readonly = "readonly" })
+                        </span>
+                    </td>
+                        </tr>
+                }*@        
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                 @Html.HiddenFor(modelItem => modelItem[i].UserName)
+                @*@Html.HiddenFor(modelItem => modelItem[i].EmploymentDetailId)*@
+                <tr >
+                     <td>                     
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].ImportTag, new { style = "width:200px;", @readonly = "readonly" })
+                        </span>
+                    </td>
+                    
+                    <td>   
+                         <span class="edit-mode">                                      
+                            @Html.TextBoxFor(modelItem => modelItem[i].UserName, new { style = "width:200px;" })   
+                        </span>                
+                    </td>
+             
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].FirstName, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                       
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].MiddleName, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].LastName, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.DropDownListFor(modelItem => modelItem[i].Suffixid, new SelectList(Model[i].SuffixList, "ID", "Name", Model[i].Suffixid), "--Select--", new { @class = "form-control showdrp", style = "width:100px;", @id = "dpSuffix" })
+
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].Salutation, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                       
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].Address1, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                       
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].Address2, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].City, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.DropDownListFor(modelItem => modelItem[i].CountryId, new SelectList(Model[i].CountryList, "CountryRegionId", "Name", Model[i].CountryId), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "style", "width:200px;" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveincountry1" } })
+                        </span>
+                    </td>
+                    <td>                       
+                        <span class="edit-mode">
+                            @*  @Html.TextBoxFor(modelItem => modelItem[i].StateId, new { @class = "form-control" }) *@
+                            @Html.DropDownListFor(modelItem => modelItem[i].StateId, new SelectList(Model[i].StateList, "StateProvinceId", "StateName"), "--Select--", new { @class = "form-control showdrp", style = "width:200px;", @id = "personalStateId" })
+                           
+                        </span>
+                    </td>
+                    <td>                       
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].ZIP, new {@class="zipmask", style = "width:100px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].HomeEmail, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                       
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].HomePhone, new { @class = "phonemask", style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>
+                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].WorkPhone, new {@class="phonemask", style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].SSN, new { @class = "ssnmask", style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @*  @Html.TextBoxFor(modelItem => modelItem[i].BirthDate, new { @class = "form-control" })*@
+                            @Html.TextBoxFor(modelItem => modelItem[i].BirthDate, (Model[i].BirthDate == null ? "" : ((DateTime)Model[i].BirthDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", style = "width:150px;", @maxlength = "10", @id = "dtBirthDate" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.DropDownListFor(modelItem => modelItem[i].Gender, new SelectList(Model[i].GenderList, "ID", "Name", Model[i].Gender), "--Select--", new { @class = "form-control showdrp", style = "width:100px;", @id = "dpgender" })
+                        </span>
+                    </td>
+                    <td>                       
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].Status, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.DropDownListFor(modelItem => modelItem[i].ChangeReason, new SelectList(Model[i].ChangeReasonList, "ID", "Name", Model[i].ChangeReason), "--Select--", new { @class = "form-control ", style = "width:200px;", @id = "dpChangeReason" })
+                        </span>
+                    </td>
+                    <td>                       
+                        <span class="edit-mode">
+                            @Html.DropDownListFor(modelItem => modelItem[i].Position, new SelectList(Model[i].PositionList, "ID", "Name", Model[i].Position), "--Select--", new { @class = "form-control ", style = "width:200px;", })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="edit-mode">
+                            @*  @Html.TextBoxFor(modelItem => modelItem[i].ChangeReason, new { @class = "form-control" })*@
+                            @Html.DropDownListFor(modelItem => modelItem[i].FLSAStatus, new SelectList(Model[i].FLSAStatusList, "ID", "Name", Model[i].FLSAStatus), "--Select--", new { @class = "form-control ", style = "width:100px;" })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="edit-mode">
+                            @*  @Html.TextBoxFor(modelItem => modelItem[i].MaritalStatus, new { @class = "form-control" })*@
+                            @Html.DropDownListFor(modelItem => modelItem[i].MaritalStatus, new SelectList(Model[i].MaritalStatusList, "ID", "Name", Model[i].MaritalStatus), "--Select--", new { @class = "form-control showdrp", style = "width:100px;", @id = "maritalstatus" })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].WorkEmail, new { style = "width:200px;" })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="edit-mode">
+                            @* @Html.TextBoxFor(modelItem => modelItem[i].HireDate, new { @class = "form-control" })*@
+                            @Html.TextBoxFor(modelItem => modelItem[i].HireDate, (Model[i].HireDate == null ? "" : ((DateTime)Model[i].HireDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", style = "width:100px;", @id = "dthiredate" })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].WCJobClassCode, new { style = "width:100px;" })
+                        </span>
+                    </td>
+                    
+                    
+                    
+                    
+                                  
+                    
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].WCStatus, new { style = "width:100px;" })
+                        </span>
+                    </td>
+                    <td>                      
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem[i].WCType, new { style = "width:100px;" })
+                        </span>
+                    </td>
+                    @*<td>
+                        <span class="edit-mode">
+                            @Html.DropDownListFor(modelItem => modelItem[i].JobProfile, new SelectList(Model[i].JobProfileList, "ID", "Name", Model[i].JobProfile), "--Select--", new { @class = "form-control ", style = "width:200px;", })
+                        </span>
+                    </td>*@
+                     <td> 
+                           @*<input type="checkbox" id="chkDelete" value="@Model[i].DeleteCheckstatus"   data-val-1="@Model[i].EmploymentDetailId"   class="btncheckdependent"  onchange="cbChange(this)" />*@
+                      @*  <input type="checkbox" value="@Model[i].WorkEmail" data-val-1="@Model[i].EmploymentDetailId"   class="btncheckdependent"  onchange="cbChange(this)" />*@
+                    </td>                  
+                </tr>
+            }
+           </tbody>
+        </table>
+    </div>
+    <table>
+        <tr>
+            <td>
+                <div>
+                    <input type="submit" value="Import" id="btnImportSubmit" class="btn btn-success" />
+                 @*    @Html.ActionLink("Cancel", "ViewEmployeeData", new { @TableName = @Model }, new { @class = "btn btn-success" })*@
+                    <input type="submit" value="Delete" name="ViewEmployeeData" id="btnDelete" class="btn btn-success" />
+                </div>
+
+            </td>
+             <td>
+                <div>
+                    <input type="submit" value="Cancel" id="btnCancel" class="btn btn-success" />        
+                </div>
+
+            </td>
+             <td>
+                        <span>
+                            @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteDirectDepositDetail"  })
+                            @* <button class="save-user edit-mode">Save</button>*@
+                            @* <button class="cancel-user edit-mode">Cancel</button>*@
+                        </span>
+                    </td>
+        </tr>
+    </table>        
+    </div>
+    <div id="divNoRecords">
+        <h3> No Records found or Invalid csv file </h3>
+      @*  <input type="submit" value="Cancel" id="btnback" class="btn btn-success" /> *@ 
+    </div>
+    
+   
+}

@@ -1,0 +1,130 @@
+﻿@model HRMS.Web.ViewModels.PayPeriodFormModel
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllPayPeriodDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div style="padding-top: 10px;">
+    @Html.ActionLink("Refresh  ", "SelectAllPayPeriodDetails", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("<< Back to Configuration", "TimeAttendanceConfiguration", "Home", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="PayPeriodGridContent">
+        <thead>
+            <tr>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.PayPeriod.PayPeriodDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PayPeriod.PayPeriodTypename)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PayPeriod.PayPeriodDays)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PayPeriod.StartDateTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PayPeriod.EndDateTime)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.PayPeriod.StartDayOfWeek)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.PayPeriod.NextSchedule)
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PayPeriodList)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(((string)item.PayPeriodDescription), "EditPayPeriodDetail", new { @PayPeriodId = item.PayPeriodId }, new { id = "PayPeriodId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayPeriodTypename)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayPeriodDays)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDayOfWeek)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NextSchedule)
+                    </td>
+                    <td>
+                        @Html.ActionLink((("Show Employees")), "SelectedPayPeriod", new { @PayPeriodId = item.PayPeriodId }, new { id = @item.PayPeriodId })
+                        @*<a href="#" id ="@item.PayPeriodId" data-val-1="@item.PayPeriodId" onclick="SelectAllPayPeriodEmployeesDetails(this)">Show Employee Details</a>*@
+                        @*@Html.ActionLink((("Show Employees")), "SelectAllPayPeriodEmployeesDetails", new { @PayPeriodId = item.PayPeriodId }, new { id = @item.PayPeriodId, onclick= "SelectAllPayPeriodEmployeesDetails(this);"})*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div id="divSelectAllPayPeriodEmployeesDetails">
+    @if (ViewBag.PayPeriodId != null)
+    {
+        //Html.Partial("SelectAllPayPeriodEmployeesDetails");
+        @Html.Action("SelectAllPayPeriodEmployeesDetails", "Schedule", new { @PayPeriodId = ViewBag.PayPeriodId })
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Schedule <small>PayPeriod List </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Schedule</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+@*<script type="text/javascript">
+        function SelectAllPayPeriodEmployeesDetails(ctrl) {
+            debugger
+            var PayPeriodId = ctrl.id;
+            //alert(payperiodGUIDVal);
+            var parms = { PayPeriodId: PayPeriodId }
+            var baseURL = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            $.ajax({
+                url: baseURL + "Schedule/SelectAllPayPeriodEmployeesDetails",
+                type: 'Get',
+                cache: false,
+                data: parms,
+                success: function (data) {
+                    //alert(data);
+                    debugger
+                    if (data.ErrorMessage == "SystemSessionTimeOut") {
+                        window.location.href = baseURL + "Account/LogOff";
+                        return;
+                    }
+                    $("#divSelectAllPayPeriodEmployeesDetails").show();
+                    $("#divSelectAllPayPeriodEmployeesDetails").empty();
+                    $("#divSelectAllPayPeriodEmployeesDetails").empty().append(data);
+                },
+                error: function (request, status, error) {
+                    alert(request.error);
+                }
+            });
+        }
+    </script>*@

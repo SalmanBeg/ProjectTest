@@ -1,0 +1,10 @@
+﻿@using HRMS.Web.Helper
+@using MvcReportViewer
+@{
+    ViewBag.Title = "EmployeeAssetReport";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@Html.MvcReportViewer("/" + @System.Configuration.ConfigurationManager.AppSettings["ReportServerName"] +"/EmployeeAsset",
+    new { CompanyId = GlobalsVariables.CurrentCompanyId },
+    new { Height = 900, Width = "90%", style = "border: none" })
+

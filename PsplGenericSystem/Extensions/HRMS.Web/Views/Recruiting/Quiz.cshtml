@@ -1,0 +1,102 @@
+﻿@*@model HRMS.Web.ViewModels.JobProfileFormModel*@
+@model HRMS.Web.ViewModels.AvailableJobFormModel
+@{
+    ViewBag.Title = "Quiz";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    
+}
+
+<!-- Theme style -->
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+
+@*<link href="~/Content/css/AdminLTE.css" rel="stylesheet" type="text/css" />*@
+<style>
+    .heading {
+        background-color: #00a65a;
+        height: 60px;
+        color: #fff !important;
+    }
+</style>
+<div style="width:100%;display:inline-block">
+    @Html.ActionLink("<< Back to MyJobs", "MyJobs", "Recruiting", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div class="content" style="border: 1px solid #ccc;padding: 0px;">
+    <div class="heading">
+        <span style="font-size: xx-large">@Model.JobProfile.Title</span>
+        <p style="font-size: smaller">
+            @Model.JobProfile.CompanyAddress
+        </p>
+    </div>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Summary</a></li>
+            <li><a href="#tabs-2">Edit job</a></li>
+            <li><a href="#tabs-3">Preview</a></li>
+           @* <li><a href="#tabs-4">Add Interview</a></li>*@
+        </ul>
+        <div id="tabs-1">
+            <b>Job Summary:</b>
+            <div style="border:1px;@*background-color:floralwhite*@">
+                @{
+                    Html.RenderPartial("_Summary", Model.JobProfile);
+                }
+            </div>
+        </div>
+        <div id="tabs-2">
+            <b>Edit job details:</b>
+            <div style="border:1px;@*background-color:floralwhite*@">
+                @{
+                    Html.RenderPartial("_EditJob", Model);
+                }
+            </div>
+        </div>
+        <div id="tabs-3">
+            <div style="border:1px;@*background-color:floralwhite*@">
+                <b> Preview job page:</b>
+
+                @{
+                    Html.RenderPartial("_Preview", Model);
+                }
+            </div>
+        </div>
+        @*<div id="tabs-4">
+            <div id="dvInterviews">
+
+            </div>
+        </div>*@
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $("#tabs").tabs();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var url;
+        url = baseurl + "JobPortal/_InterviewSelectAll";
+        //LoadInterviewPartial(url, "");
+    });
+
+
+    var LoadInterviewPartial = function (url, params) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: params,
+            cache: false,
+            success: function (data) {
+                $("#dvInterviews").empty();
+                $("#dvInterviews").html(data);
+                return false;
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            } // When Service call fails
+
+        });
+    }
+
+</script>

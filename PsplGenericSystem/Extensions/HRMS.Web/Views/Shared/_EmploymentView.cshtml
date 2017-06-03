@@ -1,0 +1,367 @@
+﻿
+@model HRMS.Web.ViewModels.EmployeeFormModel
+@using HRMS.Web.Helper;
+@using (Html.BeginForm("_EmploymentView", "Employee", FormMethod.Post, new { id = "addemploymentview" }))
+{
+    <div class="form-group">
+        <div class="col-md-6">
+            <fieldset>
+                <legend>Employment Profile</legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.ChangeReason, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.HiddenFor(m=>m.Employee.UserId)
+                         @Html.HiddenFor(m=>m.EmployeePay.UserId)
+                        @Html.DropDownListFor(m => m.Employee.ChangeReason, new SelectList(Model.ChangeReasonList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.Status, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.EmploymentStatus, new SelectList(Model.EmploymentStatusList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.EmploymentType, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.EmploymentType, new SelectList(Model.EmploymentTypeList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.PositionId, new { @class = "col-sm-4 control-label  required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.PositionId, new SelectList(Model.PositionList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.JobProfileId, new { @class = "col-sm-4 control-label  required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.JobProfileId, new SelectList(Model.JobProfileList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.LocationId, new { @class = "col-sm-4 control-label  required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.LocationId, new SelectList(Model.LocationList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.DepartmentId, new { @class = "col-sm-4 control-label  required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.DepartmentId, new SelectList(Model.DepartmentList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.DivisionId, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.DivisionId, new SelectList(Model.DivisionList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.FLSAStatus, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.FLSAStatus, new SelectList(Model.FLSAStatusList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.Union, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.Union, new SelectList(Model.UnionList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.WorkPhone, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Employee.WorkPhone, new { @class = "form-control phonemask" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.WorkEmail, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Employee.WorkEmail, new { @class = "form-control" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                    @Html.LabelFor(m => m.Employee.OkToRehire, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.CheckBoxFor(m => m.Employee.OkToRehire)
+                    </div>
+                </div>*@
+                @*<div class="form-group">
+                                    @Html.LabelFor(m => m.Employee.Status, new { @class = "col-sm-4 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.Employee.Status, new { @class = "form-control"})
+                                    </div>
+                                </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.ManagerId, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.ManagerId, new SelectList(Model.ManagerList, "UserId", "UserName"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+
+                <div id="adminfields">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.WorkersCompCode, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Employee.WorkersCompCode, new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.PayGroupName, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.PayGroupName, new SelectList(new[] { new { ID = "1", Name = "" }, new { ID = "2", Name = "" } }, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.ComplianceCode, new { @class = "col-sm-4 control-label  required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.ComplianceCode, new SelectList(new[] { new { ID = "1", Name = "" }, new { ID = "2", Name = "" } }, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.EEOClass, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Employee.EEOClass, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.BenefitClass, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.BenefitClass, new SelectList(new[] { new { ID = "1", Name = "" }, new { ID = "2", Name = "" } }, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                    </div>
+            </fieldset>
+        </div>
+        <div class="col-md-6">
+            <fieldset>
+                <legend>Employment Dates</legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.HireDate, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.HireDate, (Model.Employee.HireDate == null ? "" : ((DateTime)Model.Employee.HireDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dthiredate" })
+                            <label for="dthiredate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.OriginalHireDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.OriginalHireDate, (Model.Employee.OriginalHireDate == null ? "" : ((DateTime)Model.Employee.OriginalHireDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtOriginalhiredate" })
+                            <label for="dtOriginalhiredate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.SeniorityDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.SeniorityDate, (Model.Employee.SeniorityDate == null ? "" : ((DateTime)Model.Employee.SeniorityDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtSeniorityDate" })
+                            <label for="dtSeniorityDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.TerminationDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.TerminationDate, (Model.Employee.TerminationDate == null ? "" : ((DateTime)Model.Employee.TerminationDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtTerminationDate" })
+                            <label for="dtTerminationDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.TerminationReason, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.Employee.TerminationReason, new SelectList(Model.TerminationReasonList, "ID", "Name"), "--Select--", new { @class = "form-control " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.LastPaidDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.LastPaidDate, (Model.Employee.LastPaidDate == null ? "" : ((DateTime)Model.Employee.LastPaidDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtLastPaidDate" })
+                            <label for="dtLastPaidDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.LastPayRise, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.LastPayRise, (Model.Employee.LastPayRise == null ? "" : ((DateTime)Model.Employee.LastPayRise).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtLastPayRise" })
+                            <label for="dtLastPayRise" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.LastPromotionDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.LastPromotionDate, (Model.Employee.LastPromotionDate == null ? "" : ((DateTime)Model.Employee.LastPromotionDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtLastPromotionDate" })
+                            <label for="dtLastPromotionDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.LastReviewDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.LastReviewDate, (Model.Employee.LastReviewDate == null ? "" : ((DateTime)Model.Employee.LastReviewDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtLastReviewDate" })
+                            <label for="dtLastReviewDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.NextReviewDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.NextReviewDate, (Model.Employee.NextReviewDate == null ? "" : ((DateTime)Model.Employee.NextReviewDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtNextReviewDate" })
+                            <label for="dtNextReviewDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.NewHireReportDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Employee.NewHireReportDate, (Model.Employee.NewHireReportDate == null ? "" : ((DateTime)Model.Employee.NewHireReportDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtNewHireReportDate" })
+                            <label for="dtNewHireReportDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="approvalpayfields" >
+                    <h3>Pay Profile</h3>
+                 <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.EffectiveDate, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.EmployeePay.EffectiveDate, (Model.EmployeePay.EffectiveDate == null ? "" : ((DateTime)Model.EmployeePay.EffectiveDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtEffectiveDate" })
+                                <label for="dtEffectiveDate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        @Html.LabelFor(m => m.EmployeePay.PayType, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayType, new SelectList(Model.PayTypeList, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                        </div>
+                    </div>
+                <div class="col-sm-offset-4 col-sm-8">
+                        <label>
+                            @Html.CheckBoxFor(m => m.AutoPay)Auto Pay
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.Compensation, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.Compensation, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                 <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.HourlyRate2, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.HourlyRate2, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.HourlyRate3, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.HourlyRate3, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.StandardHours, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.StandardHours, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                 <div class="col-sm-offset-4 col-sm-8">
+                        <label>
+                            @Html.CheckBoxFor(m => m.Tipped)Tipped</label>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayStatus, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayStatus, new SelectList(new[] { new { ID = "1", Name = "" }, new { ID = "2", Name = "" } }, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayGrade, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayGrade, new SelectList(Model.PayGradeList, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayCode, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayCode, new SelectList(new[] { new { ID = "1", Name = "" }, new { ID = "2", Name = "" } }, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    </div>
+                @* <div class="form-group">
+                                    <div class="col-sm-offset-4 col-sm-8">
+                                        @Html.CheckBoxFor(m=>m.NewHireReported)
+                                       
+                                    </div>
+                                </div>*@
+                <input type="hidden" value=@GlobalsVariables.CurrentUserRoleName id="roleName"/>
+                <input type="submit" id="btnemploymentsubmit" value="Save" class="btn btn-success" style="display: none" />
+            </fieldset>
+        </div>
+
+    </div>
+       
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnemploymentsubmit').click(function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            if ($("#addemploymentview").valid()) { //if you use validation
+                $.ajax({
+                    url: baseurl+"Employee/_EmploymentView",
+                    type: $("#addemploymentview").attr('method'),
+                    data: $("#addemploymentview").serialize(),
+                    success: function (data) {
+
+                    }
+                });
+            }
+        });
+        if ($('#roleName')[0].value != 'administrator') {
+            $('#approvalpayfields').addClass('hidden');
+            $('#adminfields').addClass('hidden');
+        }
+    });
+</script>
+

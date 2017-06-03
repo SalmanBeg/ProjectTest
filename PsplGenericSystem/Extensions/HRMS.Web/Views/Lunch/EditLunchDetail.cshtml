@@ -1,0 +1,90 @@
+﻿@model HRMS.Service.Models.EDM.Lunch
+@using System.Web.Optimization;
+@using HRMS.Data;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "EditLunchDetail";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<html>
+
+<head>
+    <title></title>
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <link href="~/Content/css/jquery.datetimepicker.css" rel="stylesheet" />
+</head>
+<body>
+    @using (Html.BeginForm("EditLunchDetail", "Lunch", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LunchDescription, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.LunchDescription, new { @class = "form-control", placeholder = "Description" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MinimumWorkTime, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.MinimumWorkTime, new { @class = "form-control", placeholder = "Minimum Work Hours" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LunchMinutes, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.LunchMinutes, new { @class = "form-control", placeholder = "Lunch Minutes [Example. 0.5 for 30 Minutes]" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LunchTime, new { @class = "col-sm-4 control-label  required" })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.LunchTime, (Model.LunchTime == null ? "" : ((DateTime)Model.LunchTime).ToString("H:mm")), new { @class = "form-control", @id = "LunchTime" })
+                                <label for="dthiredate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                @Html.ActionLink("Cancel", "SelectAllLunchDetails", "Lunch", new { @CompanyId = GlobalsVariables.CurrentCompanyId }, new { @class = "btn btn-success" })
+            </div>
+            <div>
+                @Html.HiddenFor(m => m.LunchId)
+                @Html.HiddenFor(m => m.CompanyId)
+                @Html.HiddenFor(m => m.LunchCode)
+
+            </div>
+        </div>
+
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>Lunch <small>Edit Lunch </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Lunch</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#LunchTime').datetimepicker({
+                format: 'H:i'
+            });
+        });
+    </script>
+
+</body>
+</html>
+

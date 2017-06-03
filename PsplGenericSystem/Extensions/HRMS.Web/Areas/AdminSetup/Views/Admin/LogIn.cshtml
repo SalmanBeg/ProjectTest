@@ -1,0 +1,132 @@
+﻿@model HRMS.Web.ViewModels.LoginFormModel
+@{
+    ViewBag.Title = "Login";    
+}
+<!DOCTYPE html>
+<html class="bg-black">
+<head>
+    <meta charset="UTF-8">
+    <title>PowWowHR Admin | Log in</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- bootstrap 3.0.2 -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="~/Content/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body class="bg-black">
+
+    <div class="form-box" id="login-box">
+        @using (Html.BeginForm(new { Redirecturl = ViewBag.Redirecturl }))
+        {
+            <div class="header">Sign In to your account</div>
+
+            <div class="body bg-gray">
+                <!-- / .signin-text -->
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-lg", @placeholder = "Username or email" })
+
+                </div>
+                <!-- / Username -->
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg", @placeholder = "Password" })
+
+                </div>
+                <!-- / Password -->
+                <div class="form-group">
+                    <input type="checkbox" name="remember_me" />
+                    Remember me
+                </div>
+            </div>
+            <div class="footer">
+                <span style="color: red">@Html.ValidationSummary()</span>
+                <button type="submit" class="btn bg-olive btn-block">Sign me in</button>
+
+                <a href="#" class="forgot-password" id="forgot-password-link" style="float: right;display:none;">Forgot your password?</a>
+                @Html.ActionLink("Register", "RegisterUser", "Account", new { @class = "text-center",@style="display:none;" })
+            </div>
+@*
+            <div class="margin text-center">
+                <span>Sign in using social networks</span>
+                <br />
+                <button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>
+                <button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button>
+                <button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>
+
+            </div>*@
+        }
+    </div>
+    
+
+
+
+    <div class="form-box" id="passwordresetform" style="display:none">
+        @using (Html.BeginForm("SendPasswordReset", "Account", FormMethod.Post, new { id = "ForgotPasswordform" }))
+        {
+            @Html.ValidationSummary(true)
+            <div class="header">
+                <div class="signintext">
+                    <span>Password reset</span>
+                    <div class="close">&times;</div>
+                </div>
+            </div>            
+             <div class="body bg-gray">
+            <div class="margin textcenter">
+                <div class="formgroup">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control inputlg", @placeholder = "Enter your email",@id="txtemail" })                  
+                </div>
+
+                <div class="formactions">
+                    <input type="submit" value="SEND NEW PASSWORD " id="btnResetPassword" class="btn bg-olive btn-block">
+                </div>
+                </div>
+            </div>
+        }
+    </div>
+   
+
+    <!-- jQuery 2.0.2 -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <!-- Bootstrap -->
+   
+    <script src="../Scripts/bootstrap.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">       
+
+        $("#btnResetPassword").click(function (e) {
+            e.preventDefault();
+            if (($('#txtemail').val())!="") {
+                $.ajax({
+                    url: "Account/SendPasswordReset",
+                    type: $("#ForgotPasswordform").attr('method'),
+                    data: $("#ForgotPasswordform").serialize(),
+                    success: function (data) {
+                        window.location.href = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                    }
+                });
+            }
+            else { alert("Enter valid email");}
+        });
+            // Show/Hide password reset form on click
+            
+                $('#forgot-password-link').click(function () {
+                    $('#login-box').fadeOut(1000);
+                    $('#passwordresetform').fadeIn(1000);
+                });
+                $('#passwordresetform .close').click(function () {
+                    $('#passwordresetform').fadeOut(1000);
+                    $('#login-box').fadeIn(1000);
+                });
+    </script>
+</body>
+</html>
+
+

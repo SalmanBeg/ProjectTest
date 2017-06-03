@@ -1,0 +1,210 @@
+﻿@using HRMS.Common.Enums
+@using HRMS.Web.Helper
+@model HRMS.Web.ViewModels.EmployeeConfigurationFormModel
+@{
+    ViewBag.Title = "ConfigureEmployeePartial";
+}
+<div>
+    @using (Html.BeginForm("ConfigureEmployee", "Home", FormMethod.Post, new { id = "ConfigureEmployeeform" }))
+    {
+        <div id="right" class="col-md-8">
+            <h2>Hire/Add Employee</h2>@Html.ValidationSummary(true)
+            <hr />
+            @foreach (var item in Model.HireStepList)
+            {
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+
+                            @Html.CheckBoxFor(modelItem => item.IsSelected, new { @value = item.StepId, @name = "StepNames" })
+                        </div>
+                        <span class="form-control checkbox-names">
+                            @Html.DisplayFor(modelItem => item.StepName)
+                            @if (item.StepName == "ConsentForms")
+                            {
+                                @Html.ActionLink("Select Consent Forms", "", null, new { @id = "btnConsentForms" })
+                                @Html.ActionLink("Configure On Boarding", "SelectAllOnBoardingsbyCompanyId", "OnBoardingProfile", null, new { @style = "float: right;" })
+                                @Html.HiddenFor(u => u.OnBoardingId, new { @id = "OnBoardingId" })
+                                <label id="lblOnBoardingName"></label>
+                            }
+                        </span>
+                    </div>
+                </div>
+            }
+            <div class="modal fade modal-fullscreen  " id="consentFormscontainer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="width: 80%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Partial("_SelectOnBoardingPartialByCompanyId", Model.OnBoardingList)
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*   <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.Personal)
+                          </div>
+                          <span class="form-control checkbox-names required">Employee Personal</span>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.ConsentForms, new { @id = "consentid" })
+                          </div>
+                          <span class="form-control checkbox-names">Consent Forms
+                               @Html.ActionLink("Select Consent Forms", "", null, new { @id = "btnConsentForms" })
+                              <div style="float: right;">
+                                  @Html.ActionLink("Configure On Boarding", "SelectAllOnBoardingsbyCompanyId", "OnBoardingProfile")
+                              </div>
+                          </span>
+                          @Html.HiddenFor(u => u.OnBoardingId, new { @id = "OnBoardingId" })
+
+                      </div>
+                      <label id="lblOnBoardingName"></label>
+                  </div>
+
+                <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.Employment)
+                          </div>
+                          <span class="form-control checkbox-names required">Employment</span>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.DirectDeposit)
+                          </div>
+                          <span class="form-control checkbox-names required">Direct Deposit</span>
+                      </div>
+                  </div>
+                  <h3>Hiring Documents</h3>
+                  <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.SendOfferletter)
+                          </div>
+                          <span class="form-control checkbox-names">Send Offer Letter</span>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.SendAgreement)
+                          </div>
+                          <span class="form-control checkbox-names">Send Agreements</span>
+                      </div>
+                  </div>
+                  <h3>Collect Information</h3>
+                  <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.CollectForPayroll)
+                          </div>
+                          <span class="form-control checkbox-names">Collect for payroll</span>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.TaxW4)
+                          </div>
+                          <span class="form-control checkbox-names">Tax/W4</span>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.I9Eligibility)
+                          </div>
+                          <span class="form-control checkbox-names">Eligibility/I9</span>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group">
+                          <div class="input-group-addon">
+                              @Html.CheckBoxFor(u => u.EligibilityDoc)
+                          </div>
+                          <span class="form-control checkbox-names">Documents</span>
+                      </div>
+                  </div>*@
+            <hr />
+            <input class="btn btn-success" type="submit" value="Start" id="btnConfigureEmployee" />
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("consentFormscontainer").hide();
+    });
+
+    $("#btnConsentForms").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#consentFormscontainer').modal();
+        $("#consentFormscontainer").modal('show');
+       
+    });
+
+    $("#btnConfigureEmployee").click(function (e) {
+        e.preventDefault();
+        var onBoardingId = $('#OnBoardingId')[0].value;
+      
+        var StepIds = $("#right input:checkbox:checked").map(function () {
+            if ($(this)[0].id == "item_IsSelected")
+                return $(this)[0].value;
+        }).get();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "Home/ConfigureEmployee",
+            type: "POST",
+            data: { "StepIds": StepIds.toString(), "onBoardingId": onBoardingId },
+            success: function (data) {
+                if (data == "True") {
+                    window.location.href = '@Url.Action("AddNewEmployee","Home")' + "?Steps=" + StepIds.toString() + '&HireType=@GeneralEnum.HireType.SelfHire';
+                }
+            }
+        });
+
+
+    });
+
+    $("#btnSelectConsent").click(function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+        var onBoardingIds = $("#onBoardingGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        var onBoardingName = $("#onBoardingGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-2");
+        }).get();
+        if (onBoardingIds != "") {
+            $('#lblOnBoardingName').html(onBoardingName.toString());
+
+            $('#OnBoardingId').attr("value", onBoardingIds.toString());
+
+            $("#consentFormscontainer").modal('hide');
+        }
+        else {
+            alert("Please select item(s)");
+            return false;
+        }
+    });
+
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#onBoardingGridContent input:checkbox').iCheck('check');
+    });
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#onBoardingGridContent input:checkbox').iCheck('uncheck');
+
+    });
+</script>

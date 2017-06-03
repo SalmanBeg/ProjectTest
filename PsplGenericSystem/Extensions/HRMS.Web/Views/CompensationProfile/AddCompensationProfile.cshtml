@@ -1,0 +1,119 @@
+﻿@using HRMS.Web.Helper;
+@using HRMS.Common.Helpers;
+@model HRMS.Web.ViewModels.CompensationFormModel
+@{
+    ViewBag.Title = "AddCompensationProfile";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<html>
+<head>
+    <title>Create CompensationProfile</title>
+</head>
+<body>
+    @using (Html.BeginForm("AddCompensationProfile", "CompensationProfile", FormMethod.Post))
+    {
+        <fieldset>
+            <legend style="margin: 0;">Regular Pay Plan</legend>
+            <div class="form-horizontal">
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.Title, new { @class = "control-label required" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.Title, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.WageAmount, new { @class = "control-label required" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.WageAmount, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.WageType, new { @class = "control-label required" })
+                    @Html.DropDownListFor(k => k.CompensationProfileObj.WageType, new SelectList(Model.WageTypeList, "ID", "Name"), "--Select--",  new { @class = "drplookup form-control showdrp", @id = "wagetypedropdown", @data_val_1 = LocalizedStrings.WageType })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.WageUnit, new { @class = "control-label required" })
+                    @Html.DropDownListFor(k => k.CompensationProfileObj.WageUnit, new SelectList(Model.WageUnitList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "wageunitdropdown", @data_val_1 = LocalizedStrings.WageUnit })
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.SalaryGrade, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.SalaryGrade, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.AnnualizedPay, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.AnnualizedPay, new { @class = "form-control" })
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend style="padding-top: 25px; margin: 0; ">Variable Plan</legend>
+            <div class="form-horizontal">
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.Commissions, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.Commissions, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.Bonus, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.Bonus, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-horizontal">
+
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.BenefitGroup, new { @class = "control-label required" })
+
+                    @Html.DropDownList("Benefitclassdropdown3", new List<SelectListItem> { new SelectListItem { Text = "Life PlanE", Value = "1"},
+                            new SelectListItem { Text = "Master", Value = "2"},}, "Select", new { @class = "form-control" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.Stock, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.Stock, new { @class = "form-control" })
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend style="padding-top: 36px; margin: 0; ">  Other Cash Comp </legend>
+            <div class="form-horizontal">
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.Type, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.Type, new { @class = "form-control" })
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.Amount, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.Amount, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.PTOPlan, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.PTOPlan, new { @class = "form-control" })
+
+                </div>
+                <div class="col-sm-6">
+                    @Html.LabelFor(k => k.CompensationProfileObj.OtherBenefits, new { @class = "control-label" })
+                    @Html.TextBoxFor(k => k.CompensationProfileObj.OtherBenefits, new { @class = "form-control" })
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group" style="padding-top: 30px; ">
+            <div class="col-sm-offset-5 control-button">
+                
+                @Html.ActionLink("Cancel", "SelectAllCompensationProfile", null, new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    }
+</body>
+
+
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Administration<small>Create Compensation Profile</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">CompensationProfile</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+    });
+</script>

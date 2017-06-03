@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C631C2D2-3486-415F-B8CD-D2E21A409A22}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMS.BusinessLayer</RootNamespace>
+    <AssemblyName>HRMS.BusinessLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExpressiveAnnotations">
+      <HintPath>..\packages\ExpressiveAnnotations.2.2.0\lib\net45\ExpressiveAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="ExpressiveAnnotations.MvcUnobtrusiveValidatorProvider">
+      <HintPath>..\packages\ExpressiveAnnotations.2.2.0\lib\net45\ExpressiveAnnotations.MvcUnobtrusiveValidatorProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlertSendCriteria.cs" />
+    <Compile Include="AlertSendType.cs" />
+    <Compile Include="AlertTemplate.cs" />
+    <Compile Include="Employee.cs" />
+    <Compile Include="EmployeeAlert.cs" />
+    <Compile Include="FormSecurity.cs" />
+    <Compile Include="ImportEmployeecsvdata.cs" />
+    <Compile Include="Mail.cs" />
+    <Compile Include="ModuleSecurity.cs" />
+    <Compile Include="CompanyInfo.cs" />
+    <Compile Include="ConsentForm.cs" />
+    <Compile Include="EmployeeConfigurationSetupModel.cs" />
+    <Compile Include="CountryRegion.cs" />
+    <Compile Include="EmployeeDependentDetail.cs" />
+    <Compile Include="EmployeeDirectDepositDetail.cs" />
+    <Compile Include="EmployeeEmergencyContactDetail.cs" />
+    <Compile Include="EmployeeOSHADetail.cs" />
+    <Compile Include="EmployeePayDetail.cs" />
+    <Compile Include="EmployeeTaxDetail.cs" />
+    <Compile Include="EmployeeW4Form.cs" />
+    <Compile Include="FilesDB.cs" />
+    <Compile Include="HireApprovalSetup.cs" />
+    <Compile Include="HireConfigurationSetup.cs" />
+    <Compile Include="I9AcceptableDocuments.cs" />
+    <Compile Include="HireStepMaster.cs" />
+    <Compile Include="I9Form.cs" />
+    <Compile Include="I9WorkAuthorization.cs" />
+    <Compile Include="JobCompensationDetail.cs" />
+    <Compile Include="JobComplianceCode.cs" />
+    <Compile Include="JobDutiesDetail.cs" />
+    <Compile Include="JobPMEDetails.cs" />
+    <Compile Include="JobProfileDetails.cs" />
+    <Compile Include="JobQualification.cs" />
+    <Compile Include="LookUpDataEntity.cs" />
+    <Compile Include="OnBoarding.cs" />
+    <Compile Include="PositionDetails.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleMaster.cs" />
+    <Compile Include="ScheduledTasks.cs" />
+    <Compile Include="ScreenVerbiage.cs" />
+    <Compile Include="StateProvince.cs" />
+    <Compile Include="SubmittedNewHires.cs" />
+    <Compile Include="UserFiles.cs" />
+    <Compile Include="UserLoginModel.cs" />
+    <Compile Include="UserSignUp.cs" />
+    <Compile Include="WorkAuthorizationDocumentation.cs" />
+    <Compile Include="WorkAuthorizationDocumentationType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HRMS.Common\HRMS.Common.csproj">
+      <Project>{dca43604-53f1-49e5-9234-30a245809b1e}</Project>
+      <Name>HRMS.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\expressive.annotations.validate.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,42 @@
+﻿@model HRMS.Web.ViewModels.ChangeUserNameFormModel
+@{
+    ViewBag.Title = "ChangeUserName";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+<label id="lblText" style="color:green">@ViewBag.Message</label>
+<div class="form-horizontal">
+    <div class="form-group">
+        @using (Html.BeginForm("ChangeUserName", "Account", FormMethod.Post))
+        {
+            <div class="col-sm-6">
+                
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-5"></div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 control-button">
+                        
+                        @Html.ActionLink("Cancel", "EmployeeDashboard", "Home", "", new { @class = "btn btn-success" })
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                    
+                        @Html.ValidationSummary(true)
+                    </div>
+            </div>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Security<small>Change Username</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Security</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+

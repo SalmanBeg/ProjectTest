@@ -1,0 +1,170 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.PayType>
+@using HRMS.Web.Helper;
+
+@{
+    ViewBag.Title = "SelectAllPayTypeDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<p>
+    @Html.ActionLink("Add  ", "AddPayTypeDetail", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeletePayTypeDetail", null, new { @class = "btn btn-danger", @id = "btnDelete" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</p>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="PayTypeGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PayTypeCode)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.PayCode)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.PunchType)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.TimeTypeId)
+                    </th>*@
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.GLCode)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.RateFactor)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.PayrollCode)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.AccrueToOT)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.Display)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.MapToHR)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.MapToPayroll)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.IsDefault)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.BypassBRM)
+                    </th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.IsDefault == true)
+                        { <input type="checkbox" value="" id="@item.PayTypeId" data-val-1="@item.PayTypeId" onchange="cbChange(this)" disabled="disabled" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="" id="@item.PayTypeId" data-val-1="@item.PayTypeId" onchange="cbChange(this) " />
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.PayTypeCode), "EditPayTypeDetail", new { @PayTypeId = item.PayTypeId }, new { id = "PayTypeId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    @* <td>
+                            @Html.DisplayFor(modelItem => item.PunchType)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.TimeTypeId)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GLCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RateFactor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayrollCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccrueToOT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Display)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.MapToHR)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.MapToPayroll)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.IsDefault)
+                        </td>*@
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.BypassBRM)
+                        </td>*@
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="9">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Pay Types<small>Pay Types List </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Pay Types</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnDelete").click(function (e) {
+
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#PayTypeGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "PayType/DeletePayTypeDetail",
+                    type: "POST",
+                    cache: "false",
+                    data: { PayTypeIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+</script>

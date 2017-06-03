@@ -1,0 +1,245 @@
+﻿@model HRSystem.Web.Models.WidgetLayerViewModels
+
+@{
+    ViewBag.Title = "Widgets";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<style>
+    fieldset {
+        margin: 10px;
+        border: 2px solid silver;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    legend {
+        padding: 4px;
+    }
+</style>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Menu Layer</h2>
+    </div>
+    <div class="panel-body">
+        <fieldset>
+
+            <div class="widgets-actions">
+                <h3 style="background:#f2f2f2; margin:0; padding:10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
+                    Header
+                    <a href="#" class="btn btn-primary" onclick="window.location.href='@Url.Action("AddWidget","EmployeePortalView")'" style="float:right; padding:2px 5px;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </a>
+                </h3>
+            </div>
+            @foreach (var item in ViewBag.widgetList)
+            {
+                if (item.Zone == "Header")
+                {
+                    <table width="100%" style="margin-bottom:2px;">
+                        <tr>
+                            <td align="left" style="padding: 5px;">
+                                <div id="headerzone">
+                                    <a href="@Url.Action("EditWidget", "EmployeePortalView", new { Id = item.Id })">@item.Title - @item.Name</a>
+                                </div>
+                            </td>
+                            <td align="right" style="padding: 5px; padding-right:10px; width:60px;">
+                                <button class="DeleteWidget btn btn-danger btn-stroke" style="padding:2px 5px;" data-id="@item.Id">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                }
+            }
+        </fieldset>
+
+        <fieldset>
+            
+            <div class="widgets-actions">
+                <h3 style="background:#f2f2f2; margin:0; padding:10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
+                    AsideFirst
+                    <a href="#" class="btn btn-primary" onclick="window.location.href='@Url.Action("AddWidget", "EmployeePortalView")'" style="float:right; padding:2px 5px;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </a>
+                </h3>
+                
+            </div>
+            @foreach (var item in ViewBag.widgetList)
+            {
+                if (item.Zone == "AsideFirst")
+                {
+                    <table width="100%">
+                        <tr>
+                            <td align="left">
+                                <div id="leftzone">
+                                    <a href="@Url.Action("EditWidget", "EmployeePortalView", new { Id = item.Id })">@item.Title - @item.Name</a>
+                                </div>
+                            </td>
+                            <td align="right" style="padding: 5px; padding-right:10px; width:60px;">
+                                <div>
+                                    <button class="DeleteWidget  btn btn-danger btn-stroke" style="padding:2px 5px;" data-id="@item.Id">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                }
+            }
+        </fieldset>
+
+        <fieldset>
+            
+            <div class="widgets-actions">
+                <h3 style="background:#f2f2f2; margin:0; padding:10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
+                    Content
+                    <a href="#" class="btn btn-primary" onclick="window.location.href='@Url.Action("AddWidget", "EmployeePortalView")'" style="float:right; padding:2px 5px;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </a>
+                </h3>
+            </div>
+            @foreach (var item in ViewBag.widgetList)
+            {
+                if (item.Zone == "Content")
+                {
+                    <table width="100%">
+                        <tr>
+                            <td align="left">
+                                <div id="contentzone">
+                                    <a href="@Url.Action("EditWidget", "EmployeePortalView", new { Id = item.Id })">@item.Title - @item.Name</a>
+                                </div>
+                            </td>
+                            <td align="right" style="padding: 5px; padding-right:10px; width:60px;">
+                                <div>
+                                    <button class="DeleteWidget btn btn-danger btn-stroke" style="padding:2px 5px;" data-id="@item.Id">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                }
+            }
+        </fieldset>
+
+        <fieldset>
+            <div class="widgets-actions">
+                <h3 style="background:#f2f2f2; margin:0; padding:10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
+                    AsideSecond
+                    <a href="#" class="btn btn-primary" onclick="window.location.href='@Url.Action("AddWidget","EmployeePortalView")'" style="float:right; padding:2px 5px;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </a>
+                </h3>
+            </div>
+            @foreach (var item in ViewBag.widgetList)
+            {
+                if (item.Zone == "AsideSecond")
+                {
+                    <table width="100%">
+                        <tr>
+                            <td align="left">
+                                <div id="rightzone">
+                                    <a href="@Url.Action("EditWidget", "EmployeePortalView", new { Id = item.Id })">@item.Title - @item.Name</a>
+                                </div>
+                            </td>
+                            <td align="right" style="padding: 5px; padding-right:10px; width:60px;">
+                                <div>
+                                    <button class="DeleteWidget btn btn-danger btn-stroke" style="padding:2px 5px;" data-id="@item.Id">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                }
+            }
+        </fieldset>
+
+        <fieldset>
+            
+            <div class="widgets-actions">
+                <h3 style="background:#f2f2f2; margin:0; padding:10px; border-bottom: 1px solid #ccc; margin-bottom: 10px;">
+                    Footer
+                    <a href="#" class="btn btn-primary" onclick="window.location.href='@Url.Action("AddWidget","EmployeePortalView")'" style="float:right; padding:2px 5px;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </a>
+                </h3>
+            </div>
+            @foreach (var item in ViewBag.widgetList)
+            {
+                if (item.Zone == "Footer")
+                {
+                    <table width="100%">
+                        <tr>
+                            <td align="left">
+                                <div id="footerzone">
+                                    <a href="@Url.Action("EditWidget", "EmployeePortalView", new { Id = item.Id })">@item.Title - @item.Name</a>
+                                </div>
+                            </td>
+                            <td align="right" style="padding: 5px; width:60px;">
+                                <div>
+                                    <button class="DeleteWidget btn btn-danger btn-stroke" style="padding:2px 5px;" data-id="@item.Id">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                }
+            }
+        </fieldset>
+
+    </div>
+</div>
+
+
+
+<div id="widgets-zones" class="widgets-listed">
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".DeleteWidget").click(function () {
+            debugger;
+            var id = $(this).data("id");
+            var result = confirm("Are you sure you want to delete selected record(s)?");
+            if (result) {
+                $.ajax({
+                    url: '/EmployeePortalView/DeleteWidget',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { Id: id },
+                    success: function (result) {
+                        if (result == true) {
+                            location = location.href;
+                        }
+                        else {
+                            alert("Could not delete");
+                        }
+                    },
+                    error: function () {
+                        alert("Could not delete");
+                    }
+                });
+            }
+        });
+    });
+</script>

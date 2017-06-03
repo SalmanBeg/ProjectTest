@@ -1,0 +1,215 @@
+﻿@model @HRMS.Web.ViewModels.RoundingFormModel
+@using HRMS.Web.Helper;
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "AddRoundingDetail";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Rounding Detail</title>
+
+</head>
+<body>
+
+    @using (Html.BeginForm("AddRoundingDetail", "Rounding", FormMethod.Post))
+    {
+
+        <div class="form-horizontal">
+            <fieldset>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.RoundingDescription, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Rounding.RoundingDescription, new { @class = "form-control", placeholder = "Rounding Description" })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Work Time</legend>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.StartRoundType, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.StartRoundType, new SelectList(Model.RoundTypeList, "RoundTypeId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpSRoundType" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.StartRoundMinutes, new { @class = "col-sm-4 control-label required " })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.StartRoundMinutes, new SelectList(Model.RoundMinuteList, "RoundMinutesId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpSRoundMinutes" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.EndRoundType, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.EndRoundType, new SelectList(Model.RoundTypeList, "RoundTypeId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpERoundType" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.EndPunchMinutes, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.EndPunchMinutes, new SelectList(Model.RoundMinuteList, "RoundMinutesId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpEPunchMinutes" } })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>Lunch Time</legend>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.LunchStartRoundType, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.LunchStartRoundType, new SelectList(Model.RoundTypeList, "RoundTypeId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpLSRoundType" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.LunchStartRoundMinutes, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.LunchStartRoundMinutes, new SelectList(Model.RoundMinuteList, "RoundMinutesId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpLSRoundMinutes" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.LunchEndRoundType, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.LunchEndRoundType, new SelectList(Model.RoundTypeList, "RoundTypeId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpLERoundType" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.LunchEndRoundTMinutes, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.LunchEndRoundTMinutes, new SelectList(Model.RoundMinuteList, "RoundMinutesId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpLERoundMinutes" } })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>Break Time</legend>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.BreakStartRoundType, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.BreakStartRoundType, new SelectList(Model.RoundTypeList, "RoundTypeId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpBSRoundType" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.BreakStartRoundMinutes, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.BreakStartRoundMinutes, new SelectList(Model.RoundMinuteList, "RoundMinutesId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpBSRoundMinutes" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.BreakEndRoundType, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.BreakEndRoundType, new SelectList(Model.RoundTypeList, "RoundTypeId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpBERoundType" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.BreakEndRoundTMinutes, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Rounding.BreakEndRoundTMinutes, new SelectList(Model.RoundMinuteList, "RoundMinutesId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpBERoundMinutes" } })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>Report Exception Configuration</legend>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.ReportEarlyIn, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Rounding.ReportEarlyIn, new { @class = "form-control", placeholder = "Early In" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.ReportEarlyOut, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Rounding.ReportEarlyOut, new { @class = "form-control", placeholder = "Early Out" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.ReportLateIn, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Rounding.ReportLateIn, new { @class = "form-control", placeholder = "Late In" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.ReportLateOut, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Rounding.ReportLateOut, new { @class = "form-control", placeholder = "Late Out" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.ReportLunchUnder, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Rounding.ReportLunchUnder, new { @class = "form-control", placeholder = "Lunch Under" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rounding.ReportLunchOver, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Rounding.ReportLunchOver, new { @class = "form-control", placeholder = "lunch Over" })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                @Html.ActionLink("Cancel", "SelectAllRoundingDetails", "Rounding", new { @CompanyId = GlobalsVariables.CurrentCompanyId }, new { @class = "btn btn-success" })
+            </div>
+        </div>
+
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>Rounding <small>Add Rounding </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Rounding</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+        });
+    </script>
+</body>
+</html>
+

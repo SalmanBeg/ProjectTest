@@ -1,0 +1,256 @@
+﻿@model @HRMS.Web.ViewModels.OvertimePolicyFormModel
+@using System.Web.Optimization;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "EditOverTimePolicyDetail";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<script src="~/Scripts/HRMS.TIME.Plugins.js"></script>
+<html>
+<body>
+
+    @using (Html.BeginForm("EditOverTimePolicyDetail", "OverTimePolicy", FormMethod.Post))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <fieldset>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.OverTimePolicy.OTPolicyName, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.OverTimePolicy.OTPolicyName, new { @class = "form-control", placeholder = "Policy Name" })
+                                @Html.HiddenFor(m=>m.OverTimePolicy.OvertimeId)
+                                @Html.HiddenFor(m=>m.OverTimePolicy.CompanyId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.OverTimePolicy.OTPolicytype, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.OverTimePolicy.OTPolicytype, new SelectList(Model.OTPolicyTypeList, "OTPolicyTypeId", "Name"), "--Select--", new { @class = "form-control", id = "drpOTPolicyType", @onchange = "showContentByOvertimeType(this)" })
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="divDailyOvertimeSetup" class="content" style="display: inline-block; width: 100%;">
+                    <fieldset style="padding: 15px;">
+                        <legend>Daily Rules</legend>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.DailyOTHours, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.DailyOTHours, new { @class = "form-control", id = "txtDailyOTHours", placeholder = "Daily OT Hours" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.DailyDTHours, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.DailyDTHours, new { @class = "form-control", id = "txtDailyDTHours", placeholder = "Daily DT Hours" })
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="divWeeklyOvertimeSetup" class="content" style="display: inline-block; width: 100%;">
+                    <fieldset style="padding: 15px;">
+                        <legend>Weekly Rules</legend>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.WeeklyOTHours, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.WeeklyOTHours, new { @class = "form-control", id = "txtWeeklyOTHours", placeholder = "Weekly OT Hours" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.WeeklyDTHours, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.WeeklyDTHours, new { @class = "form-control", id = "txtWeeklyDTHours", placeholder = "Weekly DT Hours" })
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="divCombinedOvertimeSetup" class="content" style="display: inline-block; width: 100%;">
+                    <fieldset style="padding: 15px;">
+                        <legend>Combined Rules</legend>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.CRDailyOTHours, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.CRDailyOTHours, new { @class = "form-control", id = "txtCRDailyOTHours", placeholder = "Daily OT Hours" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.CRDailyDTHours, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.CRDailyDTHours, new { @class = "form-control", id = "txtCRDailyDTHours", placeholder = "Daily DT Hours" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.CRWeeklyOTHours, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.CRWeeklyOTHours, new { @class = "form-control", id = "txtCRWeeklyOTHours", placeholder = " Weekly OT Hours" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.CRWeeklyDTHours, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.CRWeeklyDTHours, new { @class = "form-control", id = "txtCRWeeklyDTHours", placeholder = "Weekly DT Hours" })
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="divWeekendOvertimeSetup" class="content" style="display: inline-block; width: 100%;">
+                    <fieldset style="padding: 15px;">
+                        <legend>Weekend Rules</legend>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.SatPayType, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.OverTimePolicy.SatPayType, new SelectList(Model.OTPayTypeList, "OTPayTypeId", "Name"), "--Select--", new { @class = "form-control", id = "drpSaturdayPermium", @onchange = "showSaturdayDollarPremium(this)" })
+                                </div>
+                            </div>
+                            <div class="form-group" id="divSaturdayDollarPremium">
+                                @Html.LabelFor(m => m.OverTimePolicy.SatDolPremium, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.SatDolPremium, new { @class = "form-control", id = "txtSatDolPremium", placeholder = "Saturday Premium" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OverTimePolicy.SunPayType, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(m => m.OverTimePolicy.SunPayType, new SelectList(Model.OTPayTypeList, "OTPayTypeId", "Name"), "--Select--", new { @class = "form-control", id = "drpSundayPermium", @onchange = "showSundayDollarPremium(this)" })
+                                </div>
+                            </div>
+                            <div class="form-group" id="divSundayDollarPremium">
+                                @Html.LabelFor(m => m.OverTimePolicy.SunDolPremium, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => m.OverTimePolicy.SunDolPremium, new { @class = "form-control", id = "txtSunDolPremium", placeholder = "Sunday Premium" })
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                @Html.ActionLink("Cancel", "SelectAllOverTimePolicyDetails", "OverTimePolicy", new { @CompanyId = GlobalsVariables.CurrentCompanyId }, new { @class = "btn btn-success" })
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>OverTime Policy <small>Edit OverTime </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">OverTime Policy</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+<!-- JQUERY/JAVASCRIPT SECTON -->
+<script>
+    //Load: Initial Settings
+    $(document).ready(function () {
+        hideComponent('divDailyOvertimeSetup');
+        hideComponent('divWeeklyOvertimeSetup');
+        hideComponent('divCombinedOvertimeSetup');
+
+        var selectedOvertimeType = $('#drpOTPolicyType option:selected').val();
+        //alert(selectedOvertimeType);
+        switch (selectedOvertimeType) {
+            case "6":
+                showComponent('divDailyOvertimeSetup');
+                break;
+            case "7":
+                showComponent('divWeeklyOvertimeSetup');
+                break;
+            case "8":
+                showComponent('divCombinedOvertimeSetup');
+                break;
+        }
+
+        //Weekend Dollar Premium for Saturday and Sunday
+        hideComponent('divSaturdayDollarPremium');
+        hideComponent('divSundayDollarPremium');
+
+        //Saturday Premium
+        var saturdayPremiumType = $('#drpSaturdayPermium option:selected').val();
+        if (saturdayPremiumType == 8)
+            showComponent('divSaturdayDollarPremium');
+        else
+            hideComponent('divSaturdayDollarPremium');
+
+        //Sunday Premium
+        var sundayPremiumType = $('#drpSundayPermium option:selected').val();
+        if (sundayPremiumType == 8)
+            showComponent('divSundayDollarPremium');
+        else
+            hideComponent('divSundayDollarPremium');
+    });
+
+    //Displays the fields/content
+    function showContentByOvertimeType(e) {
+
+        //var overtimeType = e.options[e.selectedIndex].value;
+        var overtimeType = e.selectedIndex;
+
+        //alert(overtimeType);
+        hideComponent('divDailyOvertimeSetup');
+        hideComponent('divWeeklyOvertimeSetup');
+        hideComponent('divCombinedOvertimeSetup');
+
+        switch (overtimeType) {
+            case 2:
+                showComponent('divDailyOvertimeSetup');
+                break;
+            case 3:
+                showComponent('divWeeklyOvertimeSetup');
+                break;
+            case 4:
+                showComponent('divCombinedOvertimeSetup');
+                break;
+        }
+    }
+
+    //Shows/Hides the Saturday Premium as per Saturday Premium Type
+    function showSaturdayDollarPremium(e) {
+        // var saturdayPremiumType = e.options[e.selectedIndex].value;
+        var saturdayPremiumType = e.selectedIndex;
+        //alert(saturdayPremiumType);
+        if (saturdayPremiumType == 4)
+            showComponent('divSaturdayDollarPremium');
+        else
+            hideComponent('divSaturdayDollarPremium');
+    }
+
+    //Shows/Hides the Sunday Premium as per Sunday Premium Type
+    function showSundayDollarPremium(e) {
+        //  var sundayPremiumType = e.options[e.selectedIndex].value;
+        var sundayPremiumType = e.selectedIndex;
+        //alert(saturdayPremiumType);
+        if (sundayPremiumType == 4)
+            showComponent('divSundayDollarPremium');
+        else
+            hideComponent('divSundayDollarPremium');
+    }
+</script>
+

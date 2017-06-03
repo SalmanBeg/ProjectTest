@@ -1,0 +1,33 @@
+﻿/*----------------------------------------------------------
+tce - Telerik Client Extensions
+----------------------------------------------------------*/
+
+/* Shared Styles
+----------------------------------------------------------*/
+.tce-hidden
+{
+    display: none;
+}
+
+/* TabStrip Styles
+----------------------------------------------------------*/
+a.tce-tab-close
+{
+	background-image: url("images/tab-close.gif"); 
+	top: 4px; 
+	display: block; 
+	background-repeat: no-repeat; 
+	opacity: 0.6; 
+	width: 11px; 
+	height: 11px; 
+	position: absolute; 
+	right: 3px; 
+	cursor: pointer; 
+	z-index: 2;
+}
+
+/*
+div.tce-closable-tabs
+{
+}
+*/

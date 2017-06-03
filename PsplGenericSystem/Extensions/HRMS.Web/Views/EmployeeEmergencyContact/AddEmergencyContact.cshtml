@@ -1,0 +1,142 @@
+﻿@model HRMS.Web.ViewModels.EmergencyContactFormModel
+@using HRMS.Common.Helpers
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "Emergency Contact ";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddEmergencyContact", "EmployeeEmergencyContact", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+   
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.HiddenFor(k => k.EmployeeEmergencyContact.EmployeeEmergencyContactId)
+                    @Html.HiddenFor(k => k.EmployeeEmergencyContact.CompanyId)
+                    @Html.HiddenFor(k => k.UserId)
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.Name, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-4">
+                        <br />
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.Name, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                    <div class="col-sm-3">
+                        <br />
+                        @Html.CheckBoxFor(m => m.IsPrimaryContact)
+                        @Html.LabelFor(m => m.EmployeeEmergencyContact.IsPrimaryContact, new { @class = "control-label" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.HomePhone, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.HomePhone, new { @class = "form-control phonemask"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.WorkPhone, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.WorkPhone, new { @class = "form-control phonemask"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.CellPhone, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.CellPhone, new { @class = "form-control phonemask" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.PersonalEmail, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.PersonalEmail, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.WorkEmail, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.WorkEmail, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.Relationship, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.EmployeeEmergencyContact.Relationship, new SelectList(Model.RelationShipList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "pyfrqncydropdown", @data_val_1 = LocalizedStrings.Relationship })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.Street1, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.Street1, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.Street2, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.Street2, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.City, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.City, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.CountryId, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.EmployeeEmergencyContact.CountryId, new SelectList(Model.CountryList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "drpdwncountry" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.StateId, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.EmployeeEmergencyContact.StateId, new SelectList(Model.StateList, "StateProvinceId", "Name"), "--Select--", new { @class = "form-control", @id = "drpdwnstate" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.Zip, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.EmployeeEmergencyContact.Zip, new { @class = "form-control zipmask" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">            
+            @Html.ActionLink("Cancel", "SelectAllEmergencyContact", null, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Emergency Contact<small>Add Emergency Contact</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Emergency Contact</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+    $("#drpdwncountry").change(function () {
+
+        var countryregionId = $(this).val();
+        if (countryregionId != null && countryregionId != "") {
+            var baseurl1 = "../Account/FillStatesByCountryId";
+            $.getJSON(baseurl1, { CountryRegionId: countryregionId }, function (countryData) {
+                var select = $('#drpdwnstate');
+                select.html('');
+                $.each(countryData, function (index, itemData) {
+                    select.append($('<option/>', {
+                        value: itemData.StateProvinceID,
+                        text: itemData.Name,
+                    }));
+
+                });
+            });
+        }
+    });
+
+</script>

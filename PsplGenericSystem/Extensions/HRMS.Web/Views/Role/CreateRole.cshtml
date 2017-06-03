@@ -1,0 +1,44 @@
+﻿@model HRMS.Service.Models.EDM.RoleMaster
+@{
+    ViewBag.Title = "CreateRole";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm("CreateRole", "Role", FormMethod.Post, new { id = "createroleview" }))
+{
+    <div class="form-horizontal">
+        <div></div>
+        <div class="col-sm-7">
+               <hr />
+            <div class="form-group">
+                @Html.LabelFor(m => m.RoleName, new { @class = "col-sm-3 control-label required" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Status, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.CheckBoxFor(m => m.Status, new { @class = "form-control" })
+                </div>
+            </div>
+            <hr />
+            
+             @Html.ActionLink("Cancel", "SelectAllRoles", null, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success" id="btnCreateRole">Save</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Security<small>Create Role</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Create Roles</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

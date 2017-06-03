@@ -1,0 +1,146 @@
+﻿@model HRMS.Web.ViewModels.CompetencyFormModel
+@using System.Web.Optimization;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "Competency";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("AddCompetency", "Competency", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">               
+                <div class="form-group">
+                    @*@Html.HiddenFor(k => k.Competency.CompetencyId, new { @class = "form-control" })*@
+                    <br />
+                    @Html.LabelFor(k => k.Competency.CompetencySetName, new { @class = "col-sm-4 control-label " })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(k => k.Competency.CompetencySetName, new { @class = "form-control" })
+                    </div>
+                   
+                </div>    
+                <h4 style="color:blue">Categories And points:</h4>           
+                
+
+
+                <div class="col-sm-9" style="padding:0px">
+
+                    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="container">
+                        <thead>
+                            <tr>
+                                <td>
+                                    Category
+                                </td>
+                                <td>
+                                    Points
+                                </td>
+                                <td>
+                                    <span id="btnAdd" style="text-decoration:underline;">Add</span>
+                                    @*<img src="~/Content/img/del.gif" id="btnAdd" />*@
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.TextBoxFor(k => k.Competency.Category, new { @class = "form-control", @id = "CmpCategory", @name = "CmpCategory" })
+                                    @*<input type='text' id='CompetencyCategory' name='CompetencyCategory' />*@
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(k => k.Competency.Points, new { @class = "form-control", @id = "CmpPoints", @name = "CmpCategory", onkeypress = "return IsNumeric(event);" })
+                                    @*<input type='text' id='CompetencyPoints' name='CompetencyPoints' onkeypress="return IsNumeric(event);" />*@
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>  
+     <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+           
+            @Html.ActionLink("Cancel", "SelectAllCompetency", null, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Competency<small>Competency</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Competency</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+
+        function removeRow(selector) {
+            if ($('#container tr').length > 1) {
+                $(selector).closest('tr').remove();
+            }
+        }
+
+
+        //$("#btnAdd").click(function (e) {
+
+        //    var ind = $("#container tr:last").find("input.iHidden").val();
+        //    var itemIndex = parseInt(ind);
+        //    itemIndex++;
+        //    e.preventDefault();
+        //    var newItem = $("<tr>" +
+        //        "<td><input type='text' id='Competency_" + itemIndex + "__CmpCategory' name='Competency[" + itemIndex + "].CmpCategory'/></td>" +
+        //        "<td><input type='text' id='Competency_" + itemIndex + "__CmpPoints' name='Competency[" + itemIndex + "].CmpPoints'  onkeypress = 'return IsNumeric(event);'/></td>" +
+        //        "<td><a onclick='removeRow(this)'>x</a></td>" +
+        //        "</tr>");
+        //    $("#container").append(newItem);
+
+
+        //});
+
+        $("#btnAdd").click(function (e) {
+            var ind = $("#container tr:last").find("input.iHidden").prevObject[0].rowIndex;
+           // var ind = ("#container tr:last")[0].rowIndex;
+            var itemIndex = parseInt(ind);
+            itemIndex++;
+            e.preventDefault();
+            var newItem = $("<tr>" +
+                "<td><input type='text' id='Competency_" + itemIndex + "__Category' name='Scores[" + itemIndex + "].Category'/></td>" +
+                "<td><input type='text' id='Competency_" + itemIndex + "__Points' name='Scores[" + itemIndex + "].Points'  onkeypress = 'return IsNumeric(event);'/></td>" +
+                "<td><a onclick='removeRow(this)'>x</a></td>" +
+                "</tr>");
+            $("#container").append(newItem);
+
+
+        });
+
+
+    });
+
+    var specialKeys = new Array();
+    specialKeys.push(8); //Backspace
+    function IsNumeric(e) {
+        var keyCode = e.which ? e.which : e.keyCode
+        var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+        document.getElementById(e.currentTarget.id).style.borderColor = ret ? "transparent" : "Red";
+        return ret;
+    }
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#CmpPoints').keydown(function (e) {
+            if (e.shiftKey || e.ctrlKey || e.altKey) {
+                e.preventDefault();
+            } else {
+                var key = e.keyCode;
+                if (!((key == 8) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+                    e.preventDefault();
+                }
+            }
+        });
+    });
+</script>
+

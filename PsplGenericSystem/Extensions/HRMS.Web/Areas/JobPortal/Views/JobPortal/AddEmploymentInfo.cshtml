@@ -1,0 +1,69 @@
+﻿@model HRMS.Service.Models.EDM.ApplicantEmploymentHistory
+@{
+    ViewBag.Title = "AddEmploymentInfo";
+   Layout = "~/Areas/JobPortal/Views/Shared/_JobPortalMaster.cshtml";
+}
+
+<h3>Employment Info</h3>
+@using (Html.BeginForm("AddEmploymentInfo", "JobPortal", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(k => k.Title, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.Title, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.Description, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(k => k.Description, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.Location, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.Location, new { @class = "form-control" })
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    @Html.LabelFor(k => k.EmploymentStartDate, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.EmploymentStartDate, (Model.EmploymentStartDate == null ? "" : ((DateTime)Model.EmploymentStartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtstartdate", @maxlength = 10 })
+                            <label for="txtstartdate" class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>   
+                <div class="form-group">
+                    @Html.LabelFor(k => k.EmploymentEndDate, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.EmploymentEndDate, (Model.EmploymentEndDate == null ? "" : ((DateTime)Model.EmploymentEndDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtenddate", @maxlength = 10 })
+                            <label for="txtenddate" class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            <button type="submit" class="btn btn-success">Save</button>
+            @Html.ActionLink("Cancel", "AddApplicationInfo", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+
+
+
+
+

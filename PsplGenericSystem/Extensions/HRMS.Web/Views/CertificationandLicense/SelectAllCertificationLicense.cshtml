@@ -1,0 +1,130 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.CertificationandLicense>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllCertificationLicense";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add", "CertificationandLicense", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteCertificationandLicense" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="CertificationandLicenseGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true" style="padding-left:33px;">
+         <input type="checkbox" id="chksa">
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.LicenseNumber)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.LicenseState)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.IssueDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RenewalDate)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.ExpirationDate)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model =>model.FileName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                       
+                        <input type="checkbox" value="" data-val-1="@item.CertificationLicensesId" class="btncheckdependent" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.CertificationType), "UpdateCertificationandLicense", new { @CertificationLicensesId = item.CertificationLicensesId }, new { id = "CertificationLicensesId" })
+                        @*@Html.DisplayFor(modelItem => item.Type)*@
+                    </td>
+                    <td >
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td >
+                        @Html.DisplayFor(modelItem => item.LicenseNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicenseState)
+                    </td>
+                    <td >
+                        @Html.DisplayFor(modelItem => item.IssueDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RenewalDate)
+                    </td>
+                    <td >
+                        @Html.DisplayFor(modelItem => item.ExpirationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileName)
+                        @*@Html.TextBoxFor(modelItem => item.File, new { @type = "file" })*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="9">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Certification and License<small>Certification & License List</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Certification & License</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);   
+    $("#btnDeleteCertificationandLicense").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var searchIDs = $("#CertificationandLicenseGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        if (searchIDs.toString().length > 0) {
+            $.ajax({
+                url: baseurl + "CertificationandLicense/DeleteCertificationandLicense",
+                type: "POST",
+                cache: "false",
+                data: { certificationandLicenseIds: searchIDs.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        window.location.href = window.location.href;
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+        else { alert("Please select item(s) to delete."); }
+    });
+    });
+    //To Select all/Deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#CertificationandLicenseGridContent input:checkbox').iCheck('check');
+    });
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#CertificationandLicenseGridContent input:checkbox').iCheck('uncheck');
+    });
+</script>

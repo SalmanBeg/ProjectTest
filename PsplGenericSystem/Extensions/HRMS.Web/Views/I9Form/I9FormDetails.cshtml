@@ -1,0 +1,285 @@
+﻿@model @HRMS.BusinessLayer.I9WorkAuthorization
+@using System.Web.Optimization;
+@using HRMS.Data;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "I9FormDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee I9 Form Details</title>
+</head>
+<body>
+    <style>
+        .col-sm-4 {
+            padding-left: 2em;
+            padding-right: 2em;
+        }
+    </style>
+    @using (Html.BeginForm("", "", FormMethod.Post, new { id = "addI9Form" }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <fieldset>
+                    <legend>I9 Form Details</legend>
+                    <div class="form-group">
+                        @Html.Hidden("CitizenOfUSValue", Model.CitizenOfUS, new { @id = "CitizenOfUSValue" })
+                        <div class="col-sm-8">
+                            Form I-9 Employment Eligibility - This information is required by the U.S Government<br />
+                            I attest under penalty of perjury, that I am(Select one of the following):
+                        </div>
+                        <div class="col-sm-8">
+                            @Html.RadioButtonFor(model => model.CitizenOfUS, "", new { @id = "rbt0", @checked = false, })
+                            @Html.LabelFor(model => model.CitizenOfUS, "A Citizen or national of United States")
+                        </div>
+                        <div class="col-sm-8">
+                            @Html.RadioButtonFor(model => model.CitizenOfUS, "", new { @id = "rbt1", @checked = false })
+                            @Html.LabelFor(model => model.FederalLaw, "A lawful permanent resident")
+                        </div>
+                        <div id="divCitizen1">
+                            @if (Model.CitizenOfUS == 1)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="col-sm-4">
+                                        @Html.LabelFor(m => m.AlienNumber, new { @class = "col-sm-4 control-label" })
+                                        @Html.TextBoxFor(m => m.AlienNumber, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        @Html.LabelFor(m => m.PermanentResidentExpire, new { @class = "col-sm-4 control-label" })
+                                        @Html.TextBoxFor(m => m.PermanentResidentExpire, (Model.PermanentResidentExpire == null ? "" : ((DateTime)Model.PermanentResidentExpire).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtPermanentResidentExpire" })
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        @Html.LabelFor(m => m.AlienCitizenof, new { @class = "col-sm-4 control-label" })
+                                        @Html.DropDownListFor(m => m.StateTaxesLiveinCountry, new SelectList(Model.StateTaxesLiveinCountryList, "CountryRegionId", "CountryName"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveincountry" } })
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-sm-8">
+                            @Html.RadioButtonFor(model => model.CitizenOfUS, "", new { @id = "rbt2", @checked = false })
+                            @Html.LabelFor(model => model.CitizenOfUS, "An Alien authorized to work until:")
+
+                        </div>
+                        <div id="divCitizen2">
+                            *
+                            @if (Model.CitizenOfUS == 1)
+                            {
+                                <div class="col-sm-8">
+                                    @Html.LabelFor(m => m.AlienAuthorisedDate, new { @class = "col-sm-4 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(m => m.AlienAuthorisedDate, (Model.AlienAuthorisedDate == null ? "" : ((DateTime)Model.AlienAuthorisedDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtAlienAuthorisedDate" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    @Html.LabelFor(m => m.AlienCitizenof, new { @class = "col-sm-4 control-label" })
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(m => m.StateTaxesLiveinCountry, new SelectList(Model.StateTaxesLiveinCountryList, "CountryRegionId", "CountryName"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "dpstatetaxesliveincountry1" } })
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-8">For aliens authorized to work, provide your Alien Registration Number/USCIS Number OR Form I-94 Admission Number:</div>
+                        </div>
+
+
+                        <div class="col-sm-8">
+                            @Html.LabelFor(model => model.CitizenOfUS, "1. Alien Registration Number/USCIS Number:")
+                            @Html.TextBoxFor(m => m.AlienAuthorisedDate, new { @class = "form-control" })
+                        </div>
+
+
+                        <div class="col-sm-offset-3 col-sm-9">OR  </div>
+                        <div class="col-sm-8">
+                            @Html.LabelFor(model => model.CitizenOfUS, "2. Form I-94 Admission Number:")
+                            @Html.TextBoxFor(m => m.AlienAuthorisedDate, new { @class = "form-control" })
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-8">If you obtained your admission number from CBP in connection with your arrival in the United:</div>
+
+                        </div>
+
+                        <div class="col-sm-8">
+                            @Html.LabelFor(model => model.CitizenOfUS, "Foreign Passport Number:")
+                            @Html.TextBoxFor(m => m.AlienAuthorisedDate, new { @class = "form-control" })
+                        </div>
+
+                        <div class="col-sm-8">
+                            @Html.LabelFor(model => model.CitizenOfUS, "Country of Issuance:")
+                        </div>
+
+                        <div class="col-sm-8">
+                              @Html.DropDownListFor(m => m.AlienCitizenof, new SelectList(ViewBag.CountryList, "CountryRegionId", "Name"), "--Select--", new { @class = "form-control", @id = "drpdwnstate" })
+
+                        </div>
+
+
+                        <div class="col-sm-12">Some aliens may write "N/A" on the Foreign Passport Number and Country of Issuance fields. ( See instructions)</div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <div>Header1  </div>
+                                <div>Cert/Recert Date :</div>
+                                <div>List Type :</div>
+                                <div>Document Title:*</div>
+                                <div>Issuing Authority :</div>
+                                <div>Document Number:</div>
+                                <div>Expiration Date (if any):</div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div>LIST A  </div>
+                                <div>
+                                    @Html.TextBoxFor(m => m.CreatedOn, (Model.CreatedOn == null ? "" : ((DateTime)Model.CreatedOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtRecertA" })
+                                </div>
+                                <div>@Html.Label("LIST A", htmlAttributes: new { @class = "form-control" })</div>
+                                <div>@Html.DropDownListFor(m => m.I9AcceptableDocuments1, new SelectList(Model.I9AcceptableDocuments1List, "ID", "Name"), "--Select--", new { @class = "form-control", @id = "ddlDocumentTitle1" })</div>
+                                <div>
+                                    @Html.TextBoxFor(m => m.AttachmentName, new { @class = "form-control " })
+                                </div>
+                                <div>@Html.TextBoxFor(m => m.AttachmentName, new { @class = "form-control " })</div>
+                                <div>@Html.TextBoxFor(m => m.CreatedOn, (Model.CreatedOn == null ? "" : ((DateTime)Model.CreatedOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtRecertA" })  (if any):</div>
+
+                            </div>
+                            @* <div class="col-md-1">
+                    OR
+                </div>*@
+                            <div class="col-sm-3">
+                                LIST B
+                                <div>@Html.TextBoxFor(m => m.CreatedOn, (Model.CreatedOn == null ? "" : ((DateTime)Model.CreatedOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtRecertB" })   </div>
+                                <div>@Html.Label("LIST B", htmlAttributes: new { @class = "form-control" })</div>
+                                <div>@Html.DropDownListFor(m => m.I9AcceptableDocuments2, new SelectList(Model.I9AcceptableDocuments2List, "ID", "Name"), "--Select--", new { @class = "form-control", @id = "ddlDocumentTitle2" })</div>
+                                <div>
+                                    @Html.TextBoxFor(m => m.AttachmentName, new { @class = "form-control " })
+                                </div>
+                                <div>@Html.TextBoxFor(m => m.AttachmentName, new { @class = "form-control " })</div>
+                                <div>@Html.TextBoxFor(m => m.CreatedOn, (Model.CreatedOn == null ? "" : ((DateTime)Model.CreatedOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtRecertA" }) </div>
+
+                            </div>
+                            @*   <div class="col-md-1">
+                    AND
+                </div>*@
+                            <div class="col-sm-3">
+                                LIST C
+                                <div>@Html.TextBoxFor(m => m.CreatedOn, (Model.CreatedOn == null ? "" : ((DateTime)Model.CreatedOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtRecertC" })   </div>
+                                <div>@Html.Label("LIST C", htmlAttributes: new { @class = "form-control" })</div>
+                                <div>@Html.DropDownListFor(m => m.I9AcceptableDocuments3, new SelectList(Model.I9AcceptableDocuments3List, "ID", "Name"), "--Select--", new { @class = "form-control", @id = "ddlDocumentTitle3" })</div>
+                                <div>
+                                    @Html.TextBoxFor(m => m.AttachmentName, new { @class = "form-control " })
+                                </div>
+                                <div>@Html.TextBoxFor(m => m.AttachmentName, new { @class = "form-control " })</div>
+                                <div>@Html.TextBoxFor(m => m.CreatedOn, (Model.CreatedOn == null ? "" : ((DateTime)Model.CreatedOn).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtRecertA" }) </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div></div>
+                            @Html.LabelFor(m => m.AlienNumber, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.AlienNumber, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div></div>
+                            @Html.LabelFor(m => m.AlienAuthorisedDate, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.AlienAuthorisedDate, new { @class = "form-control" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-8">Some aliens may write "N/A" on the Foreign Passport Number and Country of Issuance fields. (See instructions)</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+            </div>
+        </div>
+    }
+ 
+
+        //$(document).ready(function () {
+        //    debugger;
+        //    var select = $('#CitizenOfUSValue');
+
+        //    var rbt0 = $('#rbt0');
+        //    var rbt1 = $('#rbt1');
+        //    var rbt2 = $('#rbt2');
+
+        //    if (select[0].value == "0") {
+        //        rbt0[0].checked = true;
+        //        //rbt0[0].currentStyle.opacity = "inherit";
+        //    }
+        //    if (select[0].value == "1") {
+        //        rbt1[0].checked = true;
+        //        //rbt1[0].currentStyle.opacity = "inherit";
+        //    }
+        //    if (select[0].value == "2") {
+        //        rbt2[0].checked = true;
+        //        //rbt2[0].currentStyle.opacity = "inherit";
+        //    }
+
+        //});
+
+
+        //$(document).ready(function () {
+        //    debugger;
+        //    alert('hi');
+        //});
+        @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+        }
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>I9Form<small>I9Form </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">I9Form</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#addI9Form").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#addI9Form input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "OnBoardingProfile/DeleteOnBoarding",
+                    type: "POST",
+                    cache: "false",
+                    data: { OnBoardingIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+
+    });
+    </script>
+
+</body>
+</html>

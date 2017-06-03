@@ -1,0 +1,164 @@
+﻿@model HRMS.Web.ViewModels.CompanyMenuFormModel
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "ManageMenu";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add  ", "CompanyLevelSecurity", null, new { @class = "btn btn-success" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="25" data-page-previous-text="prev" data-page-next-text="next" id="ManageMenuGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    @Html.DisplayName("Display Name")
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayName("Module Name")
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayName("Form Order")
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayName("Controller Name")
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayName("Action Name")
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayName("Route Attribute")
+                </th>
+                <th data-hide="phone,tablet">@Html.DisplayName("Actions")</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (var i = 0; i < Model.ListOrganizationMenus.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(modelItem => modelItem.ListOrganizationMenus[i].ModuleId)
+                        @Html.HiddenFor(modelItem => modelItem.ListOrganizationMenus[i].Name)
+                        @Html.HiddenFor(modelItem => modelItem.ListOrganizationMenus[i].FormId, new { id = "FormId" })
+                        @Html.HiddenFor(modelItem => modelItem.ListOrganizationMenus[i].FormName)
+
+                        <span class="display-mode">
+                            @Html.DisplayFor(modelItem => modelItem.ListOrganizationMenus[i].DisplayFormName, new { @class = "form-control" })
+                        </span>
+                        <span class="edit-mode">
+                            @Html.DisplayFor(modelItem => modelItem.ListOrganizationMenus[i].DisplayFormName, new { @class = "form-control" })
+                                @*@Html.TextBoxFor(modelItem => modelItem.ListOrganizationMenus[i].DisplayFormName, new { @class = "form-control" })*@
+                            </span>
+                    </td>
+                    <td>
+                        <span class="display-mode">
+                            @Html.DisplayFor(modelItem => modelItem.ListOrganizationMenus[i].ModuleName, new { @class = "form-control" })
+                        </span>
+                        <span class="edit-mode">
+                            @Html.DropDownListFor(modelItem => modelItem.ListOrganizationMenus[i].ModuleId, new SelectList(Model.Modules, "ModuleId", "ModuleName"), "--Select--", new Dictionary<string, Object> { { "class", "form-control edit-mode" }, { "id", "dpmodules" }, { "data-val-1", Model.ListOrganizationMenus[i].ModuleId } })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="display-mode">
+                            @Html.DisplayFor(modelItem => modelItem.ListOrganizationMenus[i].FormOrderNo, new { @class = "form-control" })
+                        </span>
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem.ListOrganizationMenus[i].FormOrderNo, new { @class = "form-control", id = "txtFormOrderNo" })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="display-mode">
+                            @Html.DisplayFor(modelItem => modelItem.ListOrganizationMenus[i].ControllerName, new { @class = "form-control" })
+                        </span>
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem.ListOrganizationMenus[i].ControllerName, new { @class = "form-control", id = "txtControllerName" })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="display-mode">
+                            @Html.DisplayFor(modelItem => modelItem.ListOrganizationMenus[i].ActionName, new { @class = "form-control" })
+                        </span>
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem.ListOrganizationMenus[i].ActionName, new { @class = "form-control", id = "txtActionName" })
+                        </span>
+                    </td>
+                    <td>
+                        <span class="display-mode">
+                            @Html.DisplayFor(modelItem => modelItem.ListOrganizationMenus[i].RouteAttribute, new { @class = "form-control" })
+                        </span>
+                        <span class="edit-mode">
+                            @Html.TextBoxFor(modelItem => modelItem.ListOrganizationMenus[i].RouteAttribute, new { @class = "form-control", id = "txtRouteAttribute" })
+                        </span>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="edit-user display-mode">Edit</a>
+                        <a href="javascript:void(0)" class="save-user edit-mode">Save</a>
+                        <a href="javascript:void(0)" class="cancel-user edit-mode">Cancel</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Company Level Security<small>Manage Menu</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Manage Menu</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $('.edit-mode').hide();
+        $('.display-mode').show();
+    });
+    $('.edit-mode').hide();
+    $('.edit-user, .cancel-user').on('click', function (e) {
+        
+        e.stopPropagation();
+        e.preventDefault();
+        var tr = $(this).parents('tr:first');
+        var moduleId = tr.find("#dpmodules").attr("data-val-1");
+        tr.find('.edit-mode,.display-mode').toggle();
+        var dpModules = $("#dpmodules");
+        tr.find("#dpmodules").val(moduleId).attr("selected", "selected");
+    });
+    $('.save-user').on('click', function () {
+        var tr = $(this).parents('tr:first');
+        var moduleId = tr.find("#dpmodules").attr("data-val-1");
+        var dpModules = $("#dpmodules");
+        var SelectedModuleId = tr.find("#dpmodules").val();
+        var CompanyId = '@HRMS.Web.Helper.GlobalsVariables.CurrentCompanyId';
+        var FormId = tr.find("#FormId")[0].value;
+        var FormOrderNo = tr.find("#txtFormOrderNo")[0].value;
+        var ControllerName = tr.find("#txtControllerName")[0].value;
+        var ActionName = tr.find("#txtActionName")[0].value;
+        var RouteAttribute = tr.find("#txtRouteAttribute")[0].value;
+        $('.edit-mode').hide();
+        $('.display-mode').show();
+        var parms = {
+            FormId: FormId, ModuleId: SelectedModuleId, ControllerName: ControllerName
+            , ActionName: ActionName, RouteAttribute: RouteAttribute, CompanyId: CompanyId, OrderNo: FormOrderNo
+        };
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "CompanyLevelSecurity/ManageMenu",
+            type: 'post',
+            cache: false,
+            data: parms,
+            success: function (data) {
+                if (data) {
+                    window.location.href = window.location.href;
+                }
+            },
+            error: function () {
+                alert(Error);
+            }
+        });
+    });
+</script>
+

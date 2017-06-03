@@ -1,0 +1,111 @@
+﻿@model HRMS.Web.ViewModels.CandidateFormModel
+@using HRMS.Common.Enums;
+@{
+    ViewBag.Title = "Candidates";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<link href="~/Content/css/jquerytreegrid/jquery.treegrid.css" rel="stylesheet" />
+<script src="../Scripts/plugins/jquerytreegrid/jquery.treegrid.js"></script>
+<script src="../Scripts/plugins/jquerytreegrid/jquery.treegrid.bootstrap3.js"></script>
+<style type="text/css">
+    .horizontal {
+        display: inline;
+        font-size: medium;
+        padding-right: 40px;
+    }
+</style>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable tree" data-filter="#filter" data-page-size="100" data-page-previous-text="prev" data-page-next-text="next" id="candidatesGridContent">
+        <thead>
+            <tr>
+                @*<th data-sort-ignore="true">
+                        <input type="checkbox" />
+                    </th>*@
+                <th data-sort-ignore="true">
+                    @Html.DisplayName("Candidate")
+                </th>
+                <th data-sort-ignore="true">
+                    @Html.DisplayName("Job Applied On")
+                </th>
+                <th data-sort-ignore="true">
+                    @Html.DisplayName("Job Location")
+                </th>
+                <th data-sort-ignore="true">
+                    @Html.DisplayName("Job Status")
+                </th>
+                @*<th data-sort-ignore="true">
+                    @Html.DisplayName("Scehdule Interview")
+                </th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.JobApplicantsList.Count; i++)
+            {
+                <tr class="treegrid-@i">
+                    <td>
+                        @Html.HiddenFor(modelItem => modelItem.JobApplicantsList[i].JobApplicantId)
+                        @Html.ActionLink(Model.JobApplicantsList[i].FirstName + " " + Model.JobApplicantsList[i].LastName, "CandidatePreview", new { @JobApplicantId = Model.JobApplicantsList[i].JobApplicantId })
+                    </td>
+                    <td>
+                        @*  @Html.DisplayFor(modelItem => modelItem.JobApplicantsList[i])*@
+                    </td>
+                    <td>
+                        @*   @Html.DisplayFor(modelItem => modelItem.Modules[i].IsModuleEditable)*@
+                    </td>
+                    @*<td></td>*@
+                </tr>
+                for (var j = 0; j < Model.AppliedjobsList.Count; j++)
+                {
+                    <tr class="treegrid-parent-@i">
+                        @if (Model.JobApplicantsList[i].JobApplicantId == Model.AppliedjobsList[j].JobApplicantId)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.AppliedjobsList[j].JobTitle, new { @class = "form-control" })
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.AppliedjobsList[j].JobAppliedOn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.AppliedjobsList[j].JobLocation)
+                            </td>
+                            <td>
+                                @{
+                            var jobStatus = @Model.AppliedjobsList[j].JobStatus;
+                                }
+                                @if (jobStatus != null)
+                                {
+                                    @Html.Label(((GeneralEnum.JobApplicationStatus)@Model.AppliedjobsList[j].JobStatus).ToString())
+                                }
+                            </td>
+                            @*<td>
+                               
+                                @Html.ActionLink("Schedule Interview", "AddInterview", "Interview", new { applicantId = Model.AppliedjobsList[j].JobApplicantId, jobProfileId = Model.AppliedjobsList[j].JobProfileId }, null)
+                            </td>*@
+                        }
+                    </tr>
+                }
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    var resultingSiteview = "<h1>Applicants</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../Home/SelectOnBoardingStep"' + ">Administration</a></li><li><a href=" + '"../Recruiting/RecruitingDashboard"' + ">Recruiting</a></li><li class=" + '"active"' + ">My Candidates</li></ol>";
+    $("#header-section").empty();
+    $("#header-section").html(resultingSiteview);
+    $(document).ready(function () {
+        $('.tree').treegrid();
+    });
+</script>
+
+
+
+

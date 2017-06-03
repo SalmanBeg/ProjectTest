@@ -1,0 +1,166 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.EmployeeDirectDeposit>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "EmployeeDirectDepositDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+<div class="form-group" id="hideAdd">
+
+    Waive Direct Deposit Authorization:
+    <input type="checkbox" name="space" />
+</div>
+<div id="DirectDeposit" >
+    <div>
+        <a href="~/EmployeeDirectDeposit/AddDirectDeposit" class="btn btn-success">Add</a>
+        @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteDirectDeposit" })
+        @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+    </div>
+    <div class="grid-area">
+        @{
+            var directdepositgrid = new WebGrid(@Model, canPage: true, rowsPerPage: 5, canSort: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+        }
+        <div id="gridContent" style="padding-top: 10px;">         
+            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="gridDirectDeposit">
+                <thead>
+                    <tr>
+                        <th data-sort-ignore="true">
+                            <input type="checkbox" id="chksa" />
+                            @Html.DisplayName("Select All")
+                        </th>
+                        <th data-toggle="true">
+                            @Html.DisplayNameFor(model => model.AccountType)
+                        </th>
+                        <th data-hide="phone">
+                            @Html.DisplayNameFor(model => model.AccountNumber)
+                        </th>
+                        <th data-hide="phone,tablet">
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+                        <th data-hide="phone,tablet">
+                            @Html.DisplayNameFor(model => model.TransitorABANumber)
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" value="" data-val-1="@item.EmployeeDirectDepositId"  />
+                            </td>
+                            <td>
+                                @Html.ActionLink(((string)item.AccountTypeName), "EditEmployeeDirectDeposit", new { @DirectDepositId = item.EmployeeDirectDepositId }, new { id = "DepositId" })
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransitorABANumber)
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagination pagination-centered hide-if-no-paging"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<div>
+    @*<button type="submit" id="btnsubmit" class="btn btn-success">Disapprove</button>*@
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var resultingSiteview = "<h1>Employee<small>Direct Deposit Details</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li>Employee</li><li class=" + '"active"' + ">Direct Deposit</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#btnDeleteDirectDeposit").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#gridDirectDeposit input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                var confirmationmessage = "Do you really want to delete selected item(s)?";
+
+                if (!confirm(confirmationmessage)) {
+
+                    // !confirm == the user did not confirm. Therefore stop the form submission.
+
+                    event.preventDefault(); // --> This stops the form submit from happening.
+                    e.stopPropagation();
+
+                }
+                else {
+                    $.ajax({
+                        url: baseurl + "EmployeeDirectDeposit/DeleteDirectDeposit",
+                        type: "POST",
+                        cache: "false",
+                        data: { employeeDirectDepositIds: searchIDs.toString() },
+                        success: function (data) {
+                            if (data == "True") {
+                                //TODO:Check
+                                window.location.href = window.location.href;
+                            }
+
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+                    });
+                }
+            }
+            else { alert("Please select item(s) to delete."); }
+
+
+        });
+
+
+    });
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#gridDirectDeposit input:checkbox').iCheck('check');
+    });
+
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#gridDirectDeposit input:checkbox').iCheck('uncheck');
+    });
+
+    debugger;
+    var rowCount = $("#gridDirectDeposit > tbody").children().length;
+ 
+    if (rowCount > 0) {
+        $("#hideAdd").hide();
+    }
+    else {
+        $("#hideAdd").show();
+    }
+    //else if( $("#hideAdd").change(function())
+    
+   
+    //{
+    //    $("#DirectDeposit").hide();
+    //})
+
+
+</script>
+
+

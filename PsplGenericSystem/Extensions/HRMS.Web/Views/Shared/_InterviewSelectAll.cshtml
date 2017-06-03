@@ -1,0 +1,93 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.Interview>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "InterviewSelectAll";
+    //Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div>
+
+    <input type="submit" class="btn btn-success" id="btnAddinterview" value="Add" />
+    
+    @*  <a href="" id="btnAddinterview" class="btn btn-success">Add</a>*@
+    <a href="#" id="btnDeleteinterview" class="btn btn-danger">Delete</a>
+
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="InterviewGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.InterviewRoom)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.InterviewId" class="btncheckinterview" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink((Convert.ToString(item.Type)), "_AddInterview", new { @InterviewId = item.InterviewId }, new { id = "InterviewID" })
+                    </td>
+                    <td>
+                        @Html.Label(Convert.ToString(item.InterviewRoom))
+                    </td>
+                    <td>
+                        @Html.Label(Convert.ToString(item.Status))
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    //To navigate to add interview screen
+    $("#btnAddinterview").click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        url = baseurl + "Interview/_AddInterview";
+        LoadInterviewPartial(url, "");
+    });
+    // to remove interviews
+    $("#btnDeleteinterview").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var searchIDs = $("#InterviewGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        if (searchIDs.toString().length > 0) {
+            $.ajax({
+                url: baseurl + "Interview/DeleteInterview",
+                type: "POST",
+                cache: "false",
+                data: { deleteInterviewIds: searchIDs.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                        url = baseurl + "Interview/_InterviewSelectAll";
+                        LoadInterviewPartial(url, "");
+                    }
+                },
+                error: function (request, status, error) {
+                }
+            });
+        }
+        else { alert("Please select item(s) to delete."); }
+    });
+</script>

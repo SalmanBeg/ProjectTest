@@ -1,0 +1,111 @@
+﻿@model HRMS.Web.ViewModels.CompanyAnnouncementFormModel
+@{
+    ViewBag.Title = "AddCompanyAnnouncement";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    }
+
+<style>
+    .block {
+        height: 50%;
+        background-color: blanchedalmond;
+        width: 250px;
+        border: 1px solid;
+        vertical-align: baseline;
+    }
+</style>
+
+@using (Html.BeginForm("AddCompanyAnnouncement", "CompanyAnnouncement", FormMethod.Post, new { id = "announcementForm", enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="col-sm-10">
+            <div class="form-group">
+                @Html.HiddenFor(m => m.CompanyAnnouncement.CompanyAnnouncementId)
+                @Html.LabelFor(m => m.CompanyAnnouncement.Title, new { @class = "control-label required" })
+                @Html.TextBoxFor(m => m.CompanyAnnouncement.Title, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CompanyAnnouncement.Message, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.CompanyAnnouncement.Message, new { @id = "editor", @name = "editor", @rows = "10", @cols = "80" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CompanyAnnouncement.IsDraft, new { @class = "control-label" })
+                @Html.CheckBoxFor(m => m.CompanyAnnouncement.IsDraft1, new { @class = "form-control", @id = "cbxIsDraft" })
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(m => m.CompanyAnnouncement.PublishStartDate, new { @class = "control-label required" })
+                <div class="input-group">
+                    @if (Model.CompanyAnnouncement != null)
+                    {
+                        @Html.TextBoxFor(m => m.CompanyAnnouncement.PublishStartDate, (Model.CompanyAnnouncement.PublishStartDate == null ? "" : ((DateTime)Model.CompanyAnnouncement.PublishStartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtpublishstartDate" });
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.CompanyAnnouncement.PublishStartDate, new { @class = "form-control dateControl", @maxlength = "10", @id = "dtpublishstartDate" });
+                    }
+                    <label for="dtpublishstartDate" class="input-group-addon btn">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CompanyAnnouncement.PublishEndDate, new { @class = "control-label required" })
+                <div class="input-group">
+                    @if (Model.CompanyAnnouncement != null)
+                    {
+                        @Html.TextBoxFor(m => m.CompanyAnnouncement.PublishEndDate, (Model.CompanyAnnouncement.PublishEndDate == null ? "" : ((DateTime)Model.CompanyAnnouncement.PublishEndDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtpublishendDate" });
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m.CompanyAnnouncement.PublishEndDate, new { @class = "form-control dateControl", @maxlength = "10", @id = "dtpublishendDate" });
+                    }
+                    <label for="dtpublishendDate" class="input-group-addon btn">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                &nbsp;
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 control-button">
+                    
+                    @Html.ActionLink("Back", "SelectAllCompanyAnnouncement", "CompanyAnnouncement", null, new { @class = "btn btn-success", @style = "margin-left:10px" })
+                    <button type="submit" class="btn btn-success" id="btnSaveAnnouncement">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Communication<small>Company Announcement</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Communication</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+<script type="text/javascript">
+    $("#btnSaveAnnouncement").click(function () {
+        var fromDate = $("#dtpublishstartDate").val();
+        var toDate = $("#dtpublishendDate").val();
+        if (Date.parse(fromDate) > Date.parse(toDate)) {
+            alert("Invalid Date Range!\n Publish Start Date cannot be after Pubshish End Date!");
+            return false;
+        }
+    });
+</script>
+
+
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        CKEDITOR.replace('editor');
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea").wysihtml5();
+    });
+</script>
+
+

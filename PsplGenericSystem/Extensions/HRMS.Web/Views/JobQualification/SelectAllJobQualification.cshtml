@@ -1,0 +1,155 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.JobQualification>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectJobQualification";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+<div>
+    @Html.ActionLink("Add", "AddJobQualification", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteJobQualification", null, new { @class = "btn btn-danger", @id = "btnDeletejobqualification" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="JobQualificationGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa" />
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.SubjectArea)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Proficiency)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.JobQualificationId" class="btncheckjobqualification" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.Description), "AddJobQualification", new { @JobQualificationID = item.JobQualificationId}, new { id = "JobQualificationID" })
+                    </td>
+                    <td>
+                        @if(!string.IsNullOrEmpty(item.SubjectArea))
+                        {
+                        @Html.Label(item.SubjectArea)
+                        }
+                    </td>
+                    <td>
+                        @if(!string.IsNullOrEmpty(item.Proficiency))
+                        {
+                        @Html.Label(item.Proficiency)
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Job Qualifications</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Job Qualifications</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $("#btnDeletejobqualification").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#JobQualificationGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "JobQualification/DeleteJobQualification",
+                    type: "POST",
+                    cache: "false",
+                    data: { jobqualificationIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+
+    
+    //To Select all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#JobQualificationGridContent input:checkbox').iCheck('check');
+    });
+    //To Deselect all checkboxes
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#JobQualificationGridContent input:checkbox').iCheck('uncheck');
+    });
+   if ($('#JobQualificationGridContent input:checkbox').on('ifUnchecked', function (event) {
+        //counts the number of selected check-boxes
+        // if count=0 hide div
+       //$('#JobQualificationGridContent input:checkbox').iCheck('uncheck'); 
+        //$('#JobQualificationGridContent input:checkbox').prop('unchecked', this.unchecked);
+        $('#chksa input:checkbox').prop('unchecked');
+       
+    }));
+
+
+
+    //$(document).ready(function () {
+    //    //Check all/UncheckAll skills if Select All is Checked/UnChecked
+    //    $('#chksa').click(function () {
+    //        $('#JobQualificationGridContent input:checkbox').prop('checked', this.checked);
+    //    });
+    //    $('#chksa input:checkbox').click(function () {
+    //        //If Select All checkbox is checked but Skill checkbox is unchecked then uncheck
+    //        if ($('#JobQualificationGridContent input:checkbox').prop('checked') == true && this.checked == false) {
+    //            $('#chksa').prop('checked', false);
+    //        }
+    //    });
+    //    $('#chksa').on('ifUnchecked', function (event) {
+    //        //counts the number of selected check-boxes
+    //        // if count=0 hide div
+    //        if ($('#JobQualificationGridContent input:checkbox').size() == 0)
+    //            $('#JobQualificationGridContent').hide();
+
+    //        else {
+    //            var flag = true;
+    //            //If any of the Skills Checkbox is unchecked then also Uncheck Select All Checkbox
+    //            $('#JobQualificationGridContent input:checkbox').each(function () {
+    //                if (this.checked == false)
+    //                    flag = false;
+    //            }
+    //        );
+    //            //If all of the Skills Checkbox is checked then also check Select All Checkbox
+    //            $('#JobQualificationGridContent').prop('checked', flag);
+    //        }
+    //    });
+    //});
+    //$('#chksa').on('ifUnchecked', function (event) {
+    //    //counts the number of selected check-boxes
+    //    // if count=0 hide div
+    //    if ($('#JobQualificationGridContent input:checkbox').size() == 0)
+    //        $('#JobQualificationGridContent').hide();
+    //});
+
+
+</script>
+
+
+
+
+

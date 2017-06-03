@@ -1,0 +1,196 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.EmployeeDirectDeposit>
+@using HRMS.Web.Helper;
+
+
+<div class="form-group" id="ShowData">
+<div class="form-group" id="hideAdd">
+
+    Waive Direct Deposit Authorization:
+    <input type="checkbox" name="space" />
+</div>
+<div class="content">
+
+    <div>
+        <input type="submit" class="btn btn-info" id="btnAddDirectDeposit" value="Add" />
+        @*<input type="submit" class="btn btn-danger" id="btnDeleteDirectDeposit" value="Delete" />*@
+    </div>
+        @*<a href="~/EmployeeDirectDeposit/_AddDirectDepositView" class="btn btn-success">Add</a>*@
+    
+
+    <input type="hidden" value=@GlobalsVariables.CurrentUserRoleName id="roleName" />
+    <div class="grid-area">
+        <div id="gridContent">
+
+
+            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="gridTable">
+
+                <thead>
+                    <tr>
+                        <th data-sort-ignore="true">
+                            <input type="checkbox" />
+                            
+                        </th>
+                        <th data-toggle="true">
+                           @*@Html.HiddenFor(k => k)*@
+                            @Html.DisplayNameFor(model => model.AccountType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AccountNumber)
+                        </th>
+                        <th data-hide="phone">
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+                        <th data-hide="phone,tablet">
+                            @Html.DisplayNameFor(model => model.TransitorABANumber)
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                               
+                                <input type="checkbox" value="" data-val-1="@item.EmployeeDirectDepositId"  id="@item.EmployeeDirectDepositId" />
+                            </td>
+                            <td>
+                          
+                                @Html.ActionLink(((string)item.AccountTypeName), "", new { EmployeeDirectDepositId = item.EmployeeDirectDepositId }, new { id = "EmployeeDirectDepositId", test="edittest" })
+                                @*@Html.DisplayFor(modelItem => item.AccountTypeName)*@
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransitorABANumber)
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagination pagination-centered hide-if-no-paging"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnDeleteDirectDeposit").click(function (e) {
+           
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#gridTable input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+           
+            if (searchIDs.toString().length > 0) {
+                var confirmationmessage = "Do you really want to delete selected item(s)?";
+
+                if (!confirm(confirmationmessage)) {
+
+                    // !confirm == the user did not confirm. Therefore stop the form submission.
+
+                    event.preventDefault(); // --> This stops the form submit from happening.
+                    e.stopPropagation();
+
+                }
+                else {
+                    var urldata = baseurl + "EmployeeDirectDeposit/DeleteDirectDeposit";
+                    $.ajax({
+                        url: baseurl + "EmployeeDirectDeposit/DeleteDirectDeposit",
+                        type: "POST",
+                        cache: "false",
+                        data: { employeeDirectDepositIds: searchIDs.toString() },
+                        success: function (data) {
+                            if (data == "True") {
+                                //TODO:Check
+                                //alert("hi");
+                                event.preventDefault(); // --> This stops the form submit from happening.
+                                e.stopPropagation();
+                               // $("#ShowData").show();
+                                window.location.reload();
+                                //$("#ShowData").show();
+                               
+                            }
+
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+                    });
+                }
+            }
+            else { alert("Please select item(s) to delete."); return false; }
+
+
+        });
+
+    });
+    $("#DepositId").click(function (e) {
+        e.preventDefault();
+
+    });
+
+    $("#btnAddDirectDeposit").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "EmployeeDirectDeposit/_AddDirectDepositView",
+            type: "GET",
+            data: "",
+            success: function (data) {
+                $("#directdeposit").empty();
+                $("#directdeposit").html(data);
+
+            }
+        });
+
+    });
+
+
+    $("#EmployeeDirectDepositId").click(function (e) {
+        debugger;
+        e.preventDefault();
+        e.stopPropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+           
+            
+            url: baseurl + "EmployeeDirectDeposit/_EditDirectDepositView",
+            type: "GET",
+            data: "",
+            success: function (data) {
+                $("#directdeposit").empty();
+                $("#directdeposit").html(data);
+
+            }
+        });
+
+    });
+
+    if ($('#roleName')[0].value == 'administrator') {
+        $('#btnAddDirectDeposit').addClass('hidden');
+    }
+</script>
+
+
+<script type="text/javascript">
+    $("#edittest").click(function () {
+        alert("test");
+        var id = document.getElementById("#EmployeeDirectDepositId");
+        alert("id");
+    });
+</script>
+

@@ -1,0 +1,77 @@
+﻿@model HRMS.Web.ViewModels.JobQualificationFormModel
+@using HRMS.Web.Helper
+@using HRMS.Common.Helpers
+@{
+    ViewBag.Title = "AddJobQualification";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+    @using (Html.BeginForm("AddJobQualification", "JobQualification", FormMethod.Post))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <fieldset>
+                        <div class="form-group">
+                            @Html.LabelFor(j => j.JobQualification.Type, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(j => j.JobQualification.Type, new SelectList(Model.TypeList, "ID", "Name"), "--select--", new { @class = "drplookup form-control", @data_val_1 = LocalizedStrings.JobQualificationType })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(j => j.JobQualification.SubjectArea, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(j => j.JobQualification.SubjectArea, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(j => j.JobQualification.Description, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.TextAreaFor(j => j.JobQualification.Description, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(j => j.JobQualification.Proficiency, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(j => j.JobQualification.Proficiency, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(j => j.JobQualification.Years, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(j => j.JobQualification.Years, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(j => j.JobQualification.LastUsed, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(j => j.JobQualification.LastUsed, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(j => j.JobQualification.Mandatory, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(j => j.JobQualification.Mandatory1, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(j => j.JobQualification.JobQualificationId)
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">               
+                @Html.ActionLink("Cancel", "SelectAllJobQualification", "JobQualification", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Add Qualification</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../JobQualification/SelectAllJobQualification"' + ">Job Qualifications</a></li><li class=" + '"active"' + ">Add Job Qualification</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

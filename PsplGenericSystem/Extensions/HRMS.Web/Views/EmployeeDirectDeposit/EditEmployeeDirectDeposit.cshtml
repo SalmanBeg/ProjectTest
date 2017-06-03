@@ -1,0 +1,66 @@
+﻿@model HRMS.Web.ViewModels.EmployeeDirectDepositFormModel
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "EditEmployeeDirectDepositDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script src="~/Scripts/plugins/numericInput.min.js"></script>
+@using (Html.BeginForm())
+{<div class="header">
+        <h3>Edit Employee Direct Deposit Details</h3>
+    </div>
+
+    <div class="form-horizontal">
+        
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmployeeDirectDeposit.AccountType, new { @class = "col-sm-2 control-label required" })
+                <div class="col-sm-5">
+                   
+                    @Html.HiddenFor(m => m.EmployeeDirectDeposit.CompanyId)
+                    @Html.HiddenFor(k => k.EmployeeDirectDeposit.EmployeeDirectDepositId)
+                    @Html.HiddenFor(m => m.EmployeeDirectDeposit.UserId)
+                    @Html.DropDownListFor(m => m.EmployeeDirectDeposit.AccountType, new SelectList(Model.AccountTypeList, "Id", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmployeeDirectDeposit.TransitorABANumber, new { @class = "col-sm-2 control-label required" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(m => m.EmployeeDirectDeposit.TransitorABANumber, new { @class = "form-control", @maxlength = "10", @id = "input1" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmployeeDirectDeposit.AccountNumber, new { @class = "col-sm-2 control-label required" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(m => m.EmployeeDirectDeposit.AccountNumber, new { @class = "form-control", @maxlength = "50", @id = "input2" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmployeeDirectDeposit.Amount, new { @class = "col-sm-2 control-label required" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(m => m.EmployeeDirectDeposit.Amount, new { @class = "form-control", @maxlength = "50", @id = "input3" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 control-button">
+                    
+                    @Html.ActionLink("Cancel", "SelectAllEmployeeDirectDeposit", null, new { @class = "btn btn-success" })
+                    <input type="submit" value="Update" class="btn btn-success" />
+                </div>
+            </div>
+       
+    </div>
+
+}
+
+<script type="text/javascript">
+
+ $(function () {
+
+        $("#input1").numericInput();
+        $("#input2").numericInput();
+        $("#input3").numericInput();
+
+
+
+ });
+    </script>

@@ -1,0 +1,652 @@
+﻿@model HRMS.Web.ViewModels.CandidateProcessingFormModel
+@using HRMS.Web.Models;
+@using HRMS.Web.Helper;
+@using HRMS.Common.Enums;
+@{
+    ViewBag.Title = "CandidatePreview";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+
+}
+@*<script type="text/javascript" src="jquery.print.js"></script>*@
+
+<link href="~/Content/css/ratingstar/star-rating.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/bootstrap-ratingstar/star-rating.js"></script>
+
+<!-- START ACCORDION-->
+
+<div id="candidatepreviewpage" class="row">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <div class="col-md-6">
+                <div class="box box-solid">
+                    <div class="pull-left image">
+                        @if (!string.IsNullOrEmpty(Convert.ToString(GlobalsVariables.EmpImgValue)))
+                        { <img src="@GlobalsVariables.EmpImgValue" alt="User image" height="65px" class="img-circle" />}
+                        else
+                        { <img src="../images/avatar3.png" class="img-circle" />}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-10">
+                    <ul class="list-group">
+                        <li class="list-group-item">@Model.ApplicantName</li>
+                        <li id="liJobTitle" class="list-group-item"></li>
+                        <li class="list-group-item"><i class="fa fa-phone"></i> @Model.JobApplicant.Phone </li>
+                        <li class="list-group-item"><i class="fa fa-envelope"></i> @Model.JobApplicant.Email</li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div class="col-md-6 pull-right">
+                <div class="rating-stars" data-content="" style="width: 0%;">
+                </div>
+                <input id="input-21e" value="0" type="number" class="rating form-control hide" min="0" max="5" step="0.5" data-size="xs">
+                <div class="caption">
+                    <div style="padding-top:30px;">
+                        Selected Job and Status ----
+                        <label id="lblJobTitle"></label>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="padding-top:40px;">
+                <div class="box box-success">
+                    <div class="box-header ui-sortable-handle" style="cursor: move;">
+                        <h3 class="box-title">COMMENTS</h3>
+                        <div class="box-tools pull-right" data-toggle="tooltip" title="">
+                            <div class="btn-group" data-toggle="btn-toggle">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slimScrollDiv" style=" overflow: hidden; width: auto; height: 250px;">
+                        <div class="box-body chat" id="chat-box" style="overflow: scroll; width: auto; height: 150px;">
+
+                            <!-- comment item -->
+                            @foreach (var item in Model.RecruiterComments)
+                            {
+                                <div class="item">
+                                    <img src="img/avatar.png" alt="user image" class="online">
+                                    <p class="message">
+                                        <a href="#" class="name">
+                                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> @item.PostedDate</small>
+                                            @item.RecruiterName
+                                        </a>
+                                        @item.Comments
+                                    </p>
+                                </div>
+                                <!-- /.item -->
+                            }
+                        </div>
+                        <div class="input-group" style="padding:10px;">
+                            <input class="form-control" placeholder="Type message..." id="commentsadded">
+                            <div class="input-group-btn">
+                                <button class="btn btn-success" id="btnsavecomments"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="slimScrollBar" style="width: 7px; position: absolute; top: 65px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 184.91124260355px; background: rgb(0, 0, 0);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(51, 51, 51);"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" style="padding:10px;">
+
+            <div class="row pull-right" style="padding-right:70px;">
+
+                <button type="submit" id="btnsubmithire" class="btn btn-success">HIRE</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <button type="submit" id="btnofferletter" class="btn btn-success">OFFER LETTER</button>
+
+            </div>
+            <div style="padding-top:145px;">
+
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <div class="box-group" id="accordion">
+                            <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                            <div class="panel box box-primary">
+                                <div class="box-header">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            JOBS APPLIED
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="box-body">
+                                        @Html.DropDownListFor(model => model.Jobprofileid, new SelectList(Model.AppliedJobsInfo, "JobProfileId", "JobTitle"), new { @class = "form-control", @id = "drpjobprofile" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel box box-info">
+                                <div class="box-header">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                            CANDIDATE STATUS
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="box-body">
+                                        @Html.EnumDropDownListFor(model => model.Candidatestatusid, Model.ApplicantStatus, new { @id = "DrpApplicantStatus", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel box box-success">
+                            <div class="box-header">
+                                <h4 class="box-title">
+                                    <a href="#" id="aSheduleInterview">SCHEDULE INTERVIEW</a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @Html.HiddenFor(m => m.JobApplicant.JobApplicantId, new { @id = "hdnApplicantId" })
+        <div class="col-md-12" style="padding:5px; padding-top:10px;">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">RESUME</a></li>
+                    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">SUMMARY</a></li>
+                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                </ul>
+                <div style="padding:5px; padding-top:10px;">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="row pull-right" style="padding-right:70px;">
+                                <span class="fa fa-download">
+                                </span>
+                                <a href="~/Recruiting/Download?fileDbId=@Model.JobApplicant.ResumeAttachmentId">Download</a>&nbsp&nbsp&nbsp
+                                <span class="fa fa-print">
+                                </span>
+                                <a href="~/Recruiting/PrintPreview?fileDbId=@Model.JobApplicant.ResumeAttachmentId">Print</a>
+                                @*<a href="#"  class="print" id="cndtPrint">Print</a>*@
+                            </div>
+                            @Html.HiddenFor(k => k.JobApplicant.ResumeAttachmentId, new { @Id = "hdnResumeAttachmentId" })
+                            <iframe src="../Files/Showfile?fileid=+@Model.JobApplicant.ResumeAttachmentId + &FileMode=fullview" height="500px" width="1060px" seamless="seamless"></iframe>
+                        </div><!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_2">
+                            <h4>Education Info</h4>
+                            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="tabeducation">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            University
+                                        </th>
+                                        <th>
+                                            Degree
+                                        </th>
+                                        <th>
+                                            From Date
+                                        </th>
+                                        <th>
+                                            To Date
+                                        </th>
+                                        <th>
+                                            Activities
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (var i = 0; i < Model.lstApplicantEducation.Count; i++)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                <span class="display-mode">
+
+                                                    @Html.DisplayFor(k => k.lstApplicantEducation[i].University, new { @class = "form-control", id = "txtUniversity" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantEducation[i].Degree, new { @class = "form-control", id = "txtDegree" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantEducation[i].FromDate, new { @class = "form-control", id = "txtfromDate" })
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantEducation[i].ToDate, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantEducation[i].Activities, new { @class = "form-control", id = "txtActivities" })
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <h4>Employment Info </h4>
+                            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="tabEmployment">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Title
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                        <th>
+                                            Location
+                                        </th>
+                                        <th>
+                                            Start Date
+                                        </th>
+                                        <th>
+                                            End Date
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (var i = 0; i < Model.lstApplicantEmploymentHistory.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="display-mode">
+
+                                                    @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].Title, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].Description, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].Location, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].EmploymentStartDate, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].EmploymentEndDate, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <h4>Skill Info</h4>
+                            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="tabskill">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Type
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (var i = 0; i < Model.lstApplicantAchievementsAndAssociations.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantAchievementsAndAssociations[i].Type, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstApplicantAchievementsAndAssociations[i].Description, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <h4> Certification and Licence </h4>
+                            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="tablicence">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            File Name
+                                        </th>
+                                        <th>
+                                            Issue Date
+                                        </th>
+                                        <th>
+                                            Renewal Date
+                                        </th>
+                                        <th>
+                                            Expiration Date
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (var i = 0; i < Model.lstCertificationandLicense.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.HiddenFor(k => k.lstCertificationandLicense[i].CertificationLicensesId)
+                                                    @Html.DisplayFor(k => k.lstCertificationandLicense[i].Name, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="display-mode">
+                                                    @Html.DisplayFor(k => k.lstCertificationandLicense[i].FileName, new { @class = "form-control" })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.lstCertificationandLicense[i].IssueDate, new { @class = "control-label col-sm-3" })
+                                                    <div class="col-sm-9">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.lstCertificationandLicense[i].RenewalDate, new { @class = "control-label col-sm-3" })
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.lstCertificationandLicense[i].ExpirationDate, new { @class = "control-label col-sm-3" })
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div><!-- /.tab-pane -->
+                    </div><!-- /.tab-content -->
+                </div><!-- nav-tabs-custom -->
+            </div>
+            <!-- end of Custom Tabs -->
+        </div>
+
+    </div>
+    <!-- end of Master div -->
+</div>
+<!-- end of class row -->
+<!-- Job Property dialog-->
+<div class="modal fade" id="addHireModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Are you Sure you want to Hire the Employee?</h4>
+            </div>
+            @*<div id="confirm" class="modal hide fade">*@
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" id="Yes" class="btn btn-primary">Yes</button>
+                    <button type="button" data-dismiss="modal" id="No" class="btn btn-primary">No</button>
+                </div>
+            @*</div>*@
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {        
+
+        var resultingSiteview = "<h3></h3><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../Home/SelectOnBoardingStep"' + ">Administration</a></li><li><a href=" + '"../Recruiting/RecruitingDashboard"' + ">Recruiting</a></li><li><a href=" + '"../Recruiting/Candidates"' + ">My Candidates</a></li><li class=" + '"active"' + ">CandidatePreview</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+
+        @*if('@Model.IsHired' =='True')
+        {          
+            
+            $('#candidatepreviewpage :input').attr('disabled', true);
+        }*@
+
+
+        //Load job details
+        ListJobDetails();
+
+        //to redirect to schedule interview view for a candidate
+        $("#aSheduleInterview").click(function (e) {
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var jobProfileId = $("#drpjobprofile").val();
+            var applicantId = $("#hdnApplicantId").val();
+            if (jobProfileId != "" && applicantId != "") {
+                window.location.href = baseurl + "Interview/AddInterview?jobProfileId=" + jobProfileId + "&applicantId=" + applicantId;
+            } else {
+                alert('Please select a job profile.');
+            }
+        });
+
+        $("#DrpApplicantStatus").change(function () {
+
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var jobProfileId = $("#drpjobprofile").val();
+            var applicantId = $("#hdnApplicantId").val();
+            var applicantStatus = $(this).val();
+            if (jobProfileId != "") {
+                $.ajax({
+                    url: baseurl + "Recruiting/CandidateStatus",
+                    type: "POST",
+                    cache: "false",
+                    data: { applicantId: applicantId.toString(), jobProfileId: jobProfileId.toString(), applicantStatus: applicantStatus.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+
+                        alert(error);
+                    }
+                });
+            } else {
+                alert('Please select job Profile');
+            };
+
+        });
+
+        $('#input-21e').on('rating.change', function (event, value, caption) {
+
+
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var jobProfileId = $("#drpjobprofile").val();
+            var applicantId = $("#hdnApplicantId").val();
+            var rating = value;
+            if (jobProfileId != "") {
+                $.ajax({
+                    url: baseurl + "Recruiting/UpdateCandidateRating",
+                    type: "POST",
+                    cache: "false",
+                    data: { applicantId: applicantId.toString(), jobProfileId: jobProfileId.toString(), rating: rating.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+
+                        alert(error);
+                    }
+                });
+            } else {
+                alert('Please select job Profile');
+            };
+        });
+
+        $("#btnsavecomments").click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var applicantId = $("#hdnApplicantId").val();
+            var comments = $('#commentsadded').val();
+            $.ajax({
+                url: baseurl + "Recruiting/RecruiterComments",
+                type: "POST",
+                cache: "false",
+                data: { comments: comments.toString(), applicantId: applicantId.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        window.location.href = window.location.href;
+                    }
+                },
+                error: function (request, status, error) {
+                }
+            });
+        });
+
+
+
+
+
+        $("#drpjobprofile").change(function () {
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var jobProfileId = $("#drpjobprofile").val();
+            var applicantId = $("#hdnApplicantId").val();
+            if (jobProfileId != "") {
+                $.ajax({
+                    url: baseurl + "Recruiting/UpdateResultBasedonJobProfileId",
+                    type: "GET",
+                    cache: "false",
+                    data: { applicantId: applicantId.toString(), jobProfileId: jobProfileId.toString() },
+                    success: function (data) {
+                        debugger;
+                        if (data != null) {
+                            var result = data;
+                            $('#input-21e').rating('update', data.rating);
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(error);
+                    }
+                });
+            }
+        });
+
+    });
+
+
+    var ListJobDetails = function () {
+
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var jobProfileId = $("#drpjobprofile").val();
+        var applicantId = $("#hdnApplicantId").val();
+        if (jobProfileId != "") {
+            $.ajax({
+                url: baseurl + "Recruiting/UpdateResultBasedonJobProfileId",
+                type: "GET",
+                cache: "false",
+                data: { applicantId: applicantId.toString(), jobProfileId: jobProfileId.toString() },
+                success: function (data) {
+
+                    if (data != null) {
+
+                        $('#input-21e').rating('update', data.Rating);
+                        var jobStatus;
+                        switch (data.JobStatus) {
+                            case 1:
+                                jobStatus = '@GeneralEnum.JobApplicationStatus.IsApplied';
+                                break;
+                            case 2:
+                                jobStatus = '@GeneralEnum.JobApplicationStatus.Rejected';
+                                break;
+                            case 3:
+                                jobStatus = '@GeneralEnum.JobApplicationStatus.Withdrawn';
+                                break;
+                            case 3:
+                                jobStatus = '@GeneralEnum.JobApplicationStatus.IsSubmitted';
+                                break;
+
+                        }
+
+                        $("#lblJobTitle")[0].innerText = data.JobTitle + "-" + jobStatus;
+                        $("#liJobTitle")[0].innerHTML = data.JobTitle;
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(error);
+                }
+            });
+        }
+    }
+
+
+    $("#btnofferletter").click(function (e) {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var applicantId = $("#hdnApplicantId").val();
+        var jobProfileId = $("#drpjobprofile").val();
+        window.location.href = baseurl + "OfferLetter/OfferLetter?jobApplicantId=" + applicantId + "&jobProfileId=" + jobProfileId;
+    });
+
+
+
+    $(function () {
+        $("#cndtPrint").find('.print').on('click', function () {
+
+            alert("print");
+            $.print("#cndtPrint");
+        });
+    });
+
+
+
+
+    $('#btnsubmithire').on('click', function (e) {
+        //var $form = $(this).closest('form');
+        e.preventDefault();
+        $('#addHireModal').modal({ backdrop: 'static', keyboard: false })
+            .one('click', '#Yes', function (e) {
+                var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                var jobProfileId = $("#drpjobprofile").val();
+                var applicantId = $("#hdnApplicantId").val();
+                var applicantStatus = "Hired";
+                if (jobProfileId != "") {
+                    $.ajax({
+                        url: baseurl + "Recruiting/HireCandidate",
+                        type: "POST",
+                        cache: "false",
+                        data: { applicantId: applicantId.toString(), jobProfileId: jobProfileId.toString()},
+                        success: function (data) {
+                            if (data == "True") {
+                                window.location.href = window.location.href;
+                            }
+                        },
+                        error: function (request, status, error) {
+
+                            alert(error);
+                        }
+                    });
+                }
+                else {
+                    alert('Please select job Profile');
+                };
+           
+            });     
+    });
+
+
+</script>
+@*<script type="text/javascript">
+
+        $('#DownloadFile').click(function (e) {
+            debugger;
+            var val = $("#hdnResumeAttachmentId").val();
+            var filename = 'thumbnail';
+            alert(val);
+
+            $.download('../Recruiting/Download', 'fileId=' + fileid + '&FileName=' + filename);
+        });
+    </script>*@

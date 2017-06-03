@@ -1,0 +1,202 @@
+﻿@model HRMS.Web.ViewModels.RecruitingQuestionsFormModel
+@using HRMS.Common.Helpers
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "RecruitingQuestions";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("AddRecruitingQuestions", "Recruiting", FormMethod.Post, new { id = "recruitingquestions" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RecruitingQuestions.QuestionText, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(m => m.RecruitingQuestions.QuestionText, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RecruitingQuestions.QuestionType, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-6">
+                        @Html.DropDownListFor(m => m.RecruitingQuestions.QuestionType, new SelectList(Model.QuestionTypes, "Id", "Name", new { @Id = 2 }), "--Select--", new { @class = "form-control", @id = "ddlrecruitingquestions" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RecruitingQuestions.SequenceNumber, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(m => m.RecruitingQuestions.SequenceNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RecruitingQuestions.IsActive, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-6">
+                        @Html.CheckBoxFor(m => m.RecruitingQuestions.IsActive, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RecruitingQuestions.IsRequired, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-6">
+                        @Html.CheckBoxFor(m => m.RecruitingQuestions.IsRequired, new { @class = "form-control" })
+
+                    </div>
+                </div>
+                <div style="display:none;" id="RecAns">
+                    <div id="AddAnswers" class="col-sm-9" style="padding:0px">
+                        <table class="table" id="container">
+                            <thead style="background: #52b9e9; ">
+                                <tr>
+                                    <th>
+                                        Active
+                                    </th>
+                                    <th>
+                                        Answers
+                                    </th>
+                                    <th>
+                                        Value
+                                    </th>
+                                    <th>
+                                        KnockOutValue
+                                    </th>
+                                    <th>
+                                        <span id="btnAdd" style="text-decoration:underline;">Add</span>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @for (var i = 0; i < Model.lstRecruitingAnswers.Count; i++)
+                                {                                  
+                                    <tr>
+                                        <td>
+
+                                            @Html.HiddenFor(k => k.lstRecruitingAnswers[i].CompanyId)
+                                            @Html.HiddenFor(k => k.lstRecruitingAnswers[i].QuestionId)
+                                            @Html.HiddenFor(k => k.lstRecruitingAnswers[i].AnswerId)
+                                            
+                                            @Html.CheckBoxFor(k => k.lstRecruitingAnswers[i].IsActive, new { @class = "form-control", @checked = "checked" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(k => k.lstRecruitingAnswers[i].Answers, new { @class = "form-control" })
+
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(k => k.lstRecruitingAnswers[i].Value, new { @class = "form-control" })
+
+                                        </td>
+                                        <td>
+                                            @Html.CheckBoxFor(k => k.lstRecruitingAnswers[i].IsKnockOutValue, new { @class = "form-control" })
+
+                                        </td>
+                                        <td><a onclick="$(this).parent().parent().remove();">x</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="pagination pagination-centered hide-if-no-paging"></div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                @*<div class="col-sm-8">
+                    <fieldset>
+                        
+                        @Html.Partial("_RecruitingAnswer", Model.lstRecruitingAnswers)
+                    </fieldset>
+                </div>*@
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.RecruitingQuestions.RecruitingQuestionId)
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3">
+        
+        @Html.ActionLink("Back", "SelectAllRecruitingQuestions", "Recruiting", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", @style = "margin-left:10px" })
+        <button type="submit" id="submit" class="btn btn-success">Save</button>
+         <img src="~/Content/ajax-loader.gif" id="imgload" style="display:none" />
+    </div>
+
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Configure Recruitment Questions </h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../Recruiting/RecruitingDashboard"' + ">Recruiting</a></li><li><a href=" + '"../Recruiting/SelectAllRecruitingQuestions"' + ">RecruitingQuestions</a></li><li class=" + '"active"' + ">Add Recruiting Question</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $('#btnAddEmployee').click(function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            if ($("#addnewemployeeview").valid()) { //if you use validation
+                $.ajax({
+                    url: baseurl + "Home/AddNewEmployee",
+                    type: 'POST',
+                    data: $("#addnewemployeeview").serialize(),
+                    success: function (data) {
+                        window.location.href = baseurl + "Home/ConfigureEmployee";
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $("#btnAdd").click(function (e) {
+        
+        var index = $("#AddAnswers tr:last").find("input.iHidden").prevObject[0].rowIndex;
+        var itemIndex = parseInt(index);
+        itemIndex++;
+        e.preventDefault();
+        var newItem = $("<tr>" +
+            "<td><div class='icheckbox_minimal checked' ><input type='checkbox' check=checked class='icheckbox_minimal' id='RecruitingAnswers_Active " + itemIndex + "_Active'  name='RecruitingAnswers[" + itemIndex + "].Active'/></input></div></td>" +
+            "<td><input type='text' class='form-control'  id='RecruitingAnswers_Answers " + itemIndex + "__Answers' name='RecruitingAnswers[" + itemIndex + "].Answers'/></td>" +
+            "<td><input type='text' class='form-control' id='RecruitingAnswers_Value" + itemIndex + "__Value' name='RecruitingAnswers[" + itemIndex + "].Value'/></td>" +
+            "<td><div class='icheckbox_minimal ' ><input type='checkbox'  class='icheckbox_minimal'  id='RecruitingAnswers_KnockOutValue" + itemIndex + "__KnockOutValue' name='RecruitingAnswers[" + itemIndex + "].KnockOutValue'  onkeypress = 'return IsNumeric(event);'/></input></div></td>" +
+            "<td><a onclick='$(this).parent().parent().remove();'>x</a></td>" +
+            "</tr>");
+        $("#container").append(newItem);
+    });
+
+    // based on selection recruiting answers Grid display
+
+
+    $(document).ready(function () {
+        if ($('#ddlrecruitingquestions :selected').text().trim() == "Multiple Choice") {
+            $("#RecAns").show();
+        }
+        else {
+            $("#RecAns").hide();
+        }
+    });
+
+    $("#ddlrecruitingquestions").change(function () {
+
+        if ($('#ddlrecruitingquestions :selected').text().trim() == "Multiple Choice") {
+            $("#RecAns").show();
+        }
+        else {
+            $("#RecAns").hide();
+        }
+
+    });
+
+    var specialKeys = new Array();
+    specialKeys.push(8); //Backspace
+    function IsNumeric(e) {
+        var keyCode = e.which ? e.which : e.keyCode
+        var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+        document.getElementById(e.currentTarget.id).style.borderColor = ret ? "transparent" : "Red";
+        return ret;
+    }
+</script>
+
+

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.EmployeeSign>
+@using HRMS.Web.Helper;
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="SignGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th data-hide="phone">Signature</th>
+                <th data-hide="phone,tablet">Default Sign</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.EmployeeSignId" data-val-2="@item.Name" class="btncheckdependent" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                        @*@Html.ActionLink(((string)item.Name), "UpdateEmployeeSign", new { @EmployeeSignId = item.EmployeeSignId }, new { id = "EmployeeSignId" })*@
+                    </td>
+                    <td>
+                        <img src="item.SignFileBytes" />
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(modelItem => item.IsDefault1)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div>
+        <input class="btn btn-success" type="submit" value="Select" id="btnSelectESign" />
+    </div>
+</div>

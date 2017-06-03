@@ -1,0 +1,144 @@
+﻿@model HRMS.Web.ViewModels.RatingScaleFormModel
+
+@using HRMS.Service.Models.EDM;
+@using System.Web.Optimization;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "AddRatingScale";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+
+    var tmpScoreCriteria = TempData["tmpScoreModel"] as List<ReviewScoreContent>;
+
+}
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td valign="middle" height="30" class="Indicates-mandatory-fields" align="right" style="color:red">
+            * indicates mandatory field !&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+    </tr>
+</table>
+
+<div id="gridContent" style="padding-top: 10px;">
+    @using (Html.BeginForm("EditRatingScale", "RatingScale", FormMethod.Post))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-12">
+
+                    @Html.HiddenFor(k => k.ReviewScoreDescription.ReviewScoreDescriptionId)
+                    @Html.LabelFor(k => k.ReviewScoreDescription.Description, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-4" style="padding:0px">
+                       
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(k => k.ReviewScoreDescription.Description, new { @class = "form-control" })
+                            </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12" style="padding-top:5px">
+                            <div class="col-sm-3">
+                                @Html.LabelFor(k => k.ReviewScoreDescription.IsChildCompany, new { @class = "col-sm-12 control-label " })
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.RadioButtonFor(k => k.ReviewScoreDescription.IsChildCompany, true, new { id = "ChildCompany-true" })
+                                @Html.Label("ChildCompany-true", "Yes")
+                                @Html.RadioButtonFor(k => k.ReviewScoreDescription.IsChildCompany, false, new { id = "ChildCompany-false" })
+                                @Html.Label("ChildCompany-false", "No")
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-sm-9" style="padding:0px">
+
+                            <table class="footable table" id="container">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            List Name
+                                        </td>
+                                        <td>
+                                            List Value
+                                        </td>
+                                        <td>
+                                            <span id="btnAdd" style="text-decoration:underline;">Add</span>
+                                            @*<img src="~/Content/img/del.gif" id="btnAdd" />*@
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in tmpScoreCriteria)
+                                {
+                                        <tr>
+                                            <td>
+                                                @Html.TextBoxFor(p => item.ItemName)
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(p => item.ItemValue, new { onkeypress = "return IsNumeric(event);" })
+                                            </td>
+                                            <td><a onclick="$(this).parent().parent().remove();">x</a></td>
+                                        </tr>
+                                }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 control-button">
+                   
+                    @Html.ActionLink("Cancel", "SelectAllRatingScale", null, new { @class = "btn btn-success" })
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>RatingScale<small>Rating Scale</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">RatingScale</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+
+
+
+        //function removeRow() {
+        //    debugger;
+        //    if ($('#container tr').length > 1) {
+        //        $(this).parent().parent().remove();
+        //    }
+        //}
+
+        $("#btnAdd").click(function (e) {
+            var ind = $("#container tr:last").find("input.iHidden").val();
+            var itemIndex = parseInt(ind);
+            itemIndex++;
+            e.preventDefault();
+            var newItem = $("<tr>" +
+                "<td><input type='text' id='Scores_" + itemIndex + "__ListName' name='Scores[" + itemIndex + "].ListName'/></td>" +
+                "<td><input type='text' id='Scores_" + itemIndex + "__ListValue' name='Scores[" + itemIndex + "].ListValue'  onkeypress = 'return IsNumeric(event);'/></td>" +
+                "<td><a onclick='$(this).parent().parent().remove();'>x</a></td>" +
+                "</tr>");
+            $("#container").append(newItem);
+
+
+        });
+
+    });
+
+    var specialKeys = new Array();
+    specialKeys.push(8); //Backspace
+    function IsNumeric(e) {
+        var keyCode = e.which ? e.which : e.keyCode
+        var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+        document.getElementById(e.currentTarget.id).style.borderColor = ret ? "transparent" : "Red";
+        return ret;
+    }
+
+
+
+</script>

@@ -1,0 +1,109 @@
+﻿@model HRMS.Web.ViewModels.TalentManagementFormModel
+@using System.Web.Optimization;
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "TalentManagements";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("UpdateTalentManagement", "TalentManagement", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.HiddenFor(k => k.TalentManagement.TalentManagementId)
+                    @Html.HiddenFor(k => k.TalentManagement.CompanyId)
+                    @Html.LabelFor(k => k.TalentManagement.SchoolName, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.TalentManagement.SchoolName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.TalentManagement.Location, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.TalentManagement.Location, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TalentManagement.Level, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(m => m.TalentManagement.Level, new SelectList(Model.LevelList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "lvldropdown", @data_val_1 = LocalizedStrings.DegreeLevel })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TalentManagement.StartDate, new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.TalentManagement.StartDate, (Model.TalentManagement.StartDate == null ? "" : ((DateTime)Model.TalentManagement.StartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "txtstartdate" })
+                            <label for="txtstartdate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TalentManagement.Graduated, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(m => m.TalentManagement.Graduated, new SelectList(Model.GraduatedList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "gradatddropdown", @data_val_1 = LocalizedStrings.Graduated })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TalentManagement.GPA, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(m => m.TalentManagement.GPA, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TalentManagement.HonoraryRecognition, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(m => m.TalentManagement.HonoraryRecognition, new SelectList(Model.HonoraryRecognitionList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "hnryrecgdropdown", @data_val_1 = LocalizedStrings.HonoraryRecognition })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TalentManagement.VerificationDate, new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.TalentManagement.VerificationDate, (Model.TalentManagement.VerificationDate == null ? "" : ((DateTime)Model.TalentManagement.VerificationDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "txtverificationdate" })
+                            <label for="txtverificationdate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.TalentManagement.Major, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.TalentManagement.Major, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.TalentManagement.SecondMajor, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.TalentManagement.SecondMajor, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.TalentManagement.Minor, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.TalentManagement.Minor, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+
+            @Html.ActionLink("Cancel", "SelectAllTalentManagement", null, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success">Update</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>TalentManagement<small>Add Talent Management</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">TalentManagement</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

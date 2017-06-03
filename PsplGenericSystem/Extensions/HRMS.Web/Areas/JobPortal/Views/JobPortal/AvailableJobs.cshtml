@@ -1,0 +1,314 @@
+﻿@using HRMS.Common.Enums
+@model HRMS.Web.ViewModels.AvailableJobFormModel
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "AvailableJobs";
+    Layout = "~/Areas/JobPortal/Views/Shared/_JobPortalMaster.cshtml";
+}
+@using (Html.BeginForm("AvailableJobs", "JobPortal", FormMethod.Post))
+{
+    <div id="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 page-sidebar">
+                    <aside>
+                        <div class="white-container mb0">
+                            <div class="widget sidebar-widget jobs-search-widget">
+                                <h5 class="widget-title">Search</h5>
+
+                                <div class="widget-content">
+                                    <span>I'm looking for a ...</span>
+
+                                    @Html.DropDownListFor(m => m.JobCategory, new SelectList(Model.JobCategoryList, "ID", "Name"), "--Select--", new { @class = "form-control", @id = "ddlavailablejob" })
+                                    <span> </span>
+
+
+                                    @*<span>in</span>
+
+                                        <input type="text" class="form-control mt10" name="Command" placeholder="Location">
+
+                                        <input type="text" class="form-control mt15 mb15" placeholder="Industry / Role" name="Command">*@
+
+                                    <input type="submit" class="mt15 btn btn-default" value="Search">
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div> <!-- end .page-sidebar -->
+
+                <div class="col-sm-8 page-content">
+                    @if (Model.Jobs.Count() > 0)
+                    {
+
+                        foreach (var item in Model.Jobs)
+                        {
+
+                        <div class="jobs-item with-thumb">
+                            @*<div class="thumb"><img src="images/bus-00.png" alt=""></div>*@
+                            <div class="clearfix visible-xs"></div>
+                            <div class="date">
+                                @if (item.PostDate != null)
+                                {
+                                    @:@item.PostDate.Value.Day <span>@item.PostDate.Value.ToString("MMMM") </span>
+                                }
+                            </div>
+                            <h6 class="title"><a href="#">@item.Title</a></h6>
+                            <span class="meta">@item.CityStateOrZipCode</span>
+
+                            <ul class="top-btns">
+                                <li><a href="#" class="btn btn-gray fa fa-plus toggle"></a></li>
+                            </ul>
+
+                            <p class="description">@item.JobDescription <a href="#" class="read-more">Read More</a></p>
+
+                            <div class="content">
+                                <h5>Required Duties</h5>
+                                @foreach (var dutyitem in Model.SelectedJobProperties)
+                                {
+                                    if (dutyitem.Property.Equals(GeneralEnum.JobProperties.JobDuty.ToString()))
+                                    {
+                                    <div class="toggle" data-progress="@dutyitem.PercentageOfTime">
+                                        <a href="#" class="progress-bar-toggle"></a>
+                                        @*<h6 class="progress-bar-title">Web Design</h6>*@
+                                        <div class="progress-bar-inner"><span></span></div>
+                                        <div class="progress-bar-content">
+                                            @Html.Label(@dutyitem.Description)
+                                        </div>
+                                    </div>
+                                    }
+                                }
+
+
+                                <h5>Required Qualifications</h5>
+                                @foreach (var qualificationitem in Model.SelectedJobProperties)
+                                {
+                                    if (qualificationitem.Property.Equals(GeneralEnum.JobProperties.JobQualification.ToString()))
+                                    {
+                                    <div class="toggle">
+                                        @*<h6 class="progress-bar-title">Web Design</h6>*@
+                                        <div class="progress-bar-inner"><span>@qualificationitem.Proficiency</span></div>
+                                        <div class="progress-bar-content">
+                                            @qualificationitem.Description
+                                        </div>
+                                    </div>
+                                    }
+                                }
+
+                                <h5>Additional PME Benefits</h5>
+                                <ul class="additional-requirements clearfix">
+                                    @foreach (var pmeitem in Model.SelectedJobProperties)
+                                    {
+                                        if (pmeitem.Property.Equals(GeneralEnum.JobProperties.JobPME.ToString()))
+                                        {
+                                        <li>@pmeitem.Description</li>
+                                        }
+                                    }
+                                </ul>
+                                <hr>
+                                <div class="clearfix">
+                                    <a href="#" id="aApplyJob" accesskey="jobapplication" data-val-1="@item.JobProfileId" data-val-2="@item.CompanyId" class="jobapply btn btn-default pull-left">Apply for this Job</a>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="sub-heading">Currently we do not possess any openings.</div>
+                    }
+                </div> <!-- end .page-content -->
+            </div>
+        </div> <!-- end .container -->
+    </div>
+    <!-- end #page-content -->
+}
+
+<!-- Job Apply dialog-->
+<div class="modal fade" id="addJobModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Fill this form to register with us</h4>
+            </div>
+
+            <div class="modal-body">
+                <div id="dvRegister"></div>
+            </div>
+            <div class="modal-footer">
+                If you are registered with us. Please click here to <a href="~/Account/LogIn">login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Job Application status dialog-->
+<div class="modal fade" id="addJobApplicationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Job Application</h4>
+            </div>
+
+            <div class="modal-body ">
+                <div> Your application is under process.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Additional Info dialog-->
+<div class="modal fade" id="addAdditionalInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">We require some additional info.</h4>
+            </div>
+
+            <div class="modal-body ">
+                <div id="dvAdditionalInfo"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        $("#lbljobcount")[0].textContent = '@Model.Jobs.Count()';
+
+        // click event to Apply Job Event to load modal
+        $(".jobapply").click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var jobId = $(this).attr("data-val-1");
+
+            if ("@GlobalsVariables.CurrentUserId" == "") {
+                var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                var url;
+                url = baseurl + "JobPortal/JobPortal/_RegisterApplicant";
+                //url = baseurl + "JobPortal/JobPortal/_ApplicantInfo";
+                LoadRegisterApplicantPartial(url, jobId);
+            } else {
+                var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                var url;
+                url = baseurl + "JobPortal/JobPortal/ApplyJob";
+                ApplyJob(url, jobId);
+            };
+
+        });
+        //save click for applicant to send basic info and resume
+        $("#btnApplyJob").click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            UploadResume();
+        });
+    });
+
+    var LoadRegisterApplicantPartial = function (url, jobId) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: { "jobId": jobId },
+            cache: false,
+            success: function (data) {
+
+                if (data != null) {
+                    $("#dvRegister").empty();
+                    $("#dvRegister").html(data);
+                    $("#addJobModal").modal('show');
+                    return false;
+                }
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            } // When Service call fails
+
+        });
+    }
+
+    var ApplyJob = function (url, jobId) {
+        
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: { "jobId": jobId },
+            cache: false,
+            success: function (data) {
+                if (data == "1") {
+                    $("#addJobApplicationModal").modal('show');
+                    return false;
+                }
+                else if (data == "0") {
+
+                }
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            } // When Service call fails
+
+        });
+    };
+
+
+    var LoadApplicationInfoPartial = function (url, params) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: params,
+            cache: false,
+            success: function (data) {
+                if (data != null) {
+                    $("#dvAdditionalInfo").empty();
+                    $("#dvAdditionalInfo").html(data);
+                    $("#addAdditionalInfoModal").modal('show');
+                    return false;
+                }
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            } // When Service call fails
+
+        });
+    }
+
+    function UploadResume() {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $("#document_file_button_wrapper").uploadFile({
+            url: baseurl + 'Home/UploadEmployeePhoto',
+            allowedTypes: "pdf,jpg,gif,png,bmp",
+            multiple: true,
+            autoSubmit: true,
+            maxFileSize: 5287590,
+            showAbort: false,
+            showDone: false,
+            onSelect: function (files) {
+                files[0].name;
+                files[0].size;
+                if (files[0].size > 5287590) { // 5mb
+                    alert("Cannot upload file greater than 5mb.");
+                    return false;
+                } else
+                    return true; //to allow file submission.
+            },
+            onSuccess: function (files, data, xhr, pd) {
+                $("#add_image_area").hide();
+                $.ajax({
+                    url: baseurl + "Home/SelectEmployeePhotoByUserId",
+                    type: "Post",
+                    data: {},
+                    success: function (data) {
+                        window.location.href = baseurl + "Home/EmployeeDashBoard";
+                    }
+                });
+            },
+            onError: function (files, status, errMsg, pd) {
+                errMsg: "file size exceeded."
+            }
+        });
+    }
+</script>

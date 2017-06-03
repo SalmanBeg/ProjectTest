@@ -1,0 +1,73 @@
+﻿@using HRMS.Web.Helper;
+@model HRMS.Web.ViewModels.JobProfileFormModel
+@{
+    ViewBag.Title = "UpdateJobProfileById";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<html>
+<head>
+    <title>Create JobProfile</title>
+</head>
+<body>
+    @using (Html.BeginForm("UpdateJobProfileById", "JobProfile", FormMethod.Post))
+    {
+        <div class="form-horizontal">
+            <div class="col-sm-10">
+                <div class="form-group">
+                    @Html.HiddenFor(k => k.JobProfile.JobProfileId)
+                    @Html.HiddenFor(k => k.JobProfile.CompanyId)
+                    @Html.LabelFor(k => k.JobProfile.JobCode, new { @class = "control-label" })
+
+                    @Html.TextBoxFor(k => k.JobProfile.JobCode, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <div class="editor-field">
+                        @Html.LabelFor(k => k.JobProfile.Title, new { @class = "control-label" })
+                        @Html.TextBoxFor(k => k.JobProfile.Title, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.JobProfile.JobCategory, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.JobProfile.JobCategory, new SelectList(Model.JobCategoryList, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.JobProfile.Status, new { @class = "control-label" })
+                    @if (Model.JobProfile.Status == null)
+                    {
+                        Model.JobProfile.Status1 = false;
+                    }
+                    @Html.CheckBoxFor(k => k.JobProfile.Status1, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.JobProfile.JobDescription, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.JobProfile.JobDescription, new { @id = "editor" })
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 control-button">
+                        
+                        @Html.ActionLink("Cancel", "ShowAllJobProfile", null, new { @class = "btn btn-success" })
+                        <button type="submit" class="btn btn-success">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor');
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea").wysihtml5();
+    });
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>JobProfile<small>Update Job Profile</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">JobProfile</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

@@ -1,0 +1,168 @@
+﻿@model @HRMS.Web.ViewModels.PayPeriodFormModel
+@using System.Web.Optimization;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "AddPayPeriodDetail";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script src="~/Scripts/HRMS.TIME.Plugins.js"></script>
+<html>
+<body>
+
+    @using (Html.BeginForm("AddPayPeriodDetail", "PayPeriod", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriod.PayPeriodDescription, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.PayPeriod.PayPeriodDescription, new { @class = "form-control", placeholder = "Description" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriod.PayPeriodTypeId, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.PayPeriod.PayPeriodTypeId, new SelectList(Model.PayPeriodTypeList, "PayPeriodTypeId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "Days" }, { "id", "dpPayPeriodType" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriod.PayPeriodDays, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.PayPeriod.PayPeriodDays, new { @readonly = "readonly", @class = "form-control", id = "txtpayperioddays", placeholder = "PayPeriod Days" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriod.StartDateTime, new { @class = "col-sm-4 control-label  required" })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.PayPeriod.StartDateTime,new { @onchange = "setPeriodEndValues()", @class = "form-control dateControl", @id = "txtStartDateTime" })
+                                <label for="txtStartDateTime" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriod.EndDateTime, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @* @Html.TextBoxFor(m => m.EndDateTime, (Model.EndDateTime == null ? "" : ((DateTime)Model.EndDateTime).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10"})*@
+                                @Html.TextBoxFor(m => m.PayPeriod.EndDateTime,  new { @readonly = "readonly", @class = "form-control dateControl", @id = "txtEndDateTime" })
+                                <label for="txtEndDateTime" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriod.PayPeriodCheckDate, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @* @Html.TextBoxFor(m => m.EndDateTime, (Model.EndDateTime == null ? "" : ((DateTime)Model.EndDateTime).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10"})*@
+                                @Html.TextBoxFor(m => m.PayPeriod.PayPeriodCheckDate, new { @readonly = "readonly", @class = "form-control dateControl", @id = "txtPaycheckDateTime" })
+                                <label for="txtPaycheckDateTime" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriod.StartDayOfWeek, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.PayPeriod.StartDayOfWeek, new { @class = "form-control", id = "txtStartDay", placeholder = "Start Day Of Week" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriod.NextSchedule, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            @Html.CheckBoxFor(m => m.PayPeriod.NextSchedule, new { @class = "form-control", id = "chkNextSchedule", placeholder = "Builds next schedule on closing the Pay Period" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                
+                @Html.ActionLink("Cancel", "SelectAllPayPeriodDetails", "PayPeriod", new { @CompanyId = GlobalsVariables.CurrentCompanyId }, new { @class = "btn btn-success" })
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>PayPeriod <small>Add PayPeriod </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">PayPeriod</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#dpPayPeriodType").change(function () {
+            
+                var payperiodTypeIdVal = $(this).val();
+                if (payperiodTypeIdVal) {
+                    var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                    baseurl += "PayPeriod/GetPayPeriodDays";
+                    $.getJSON(baseurl, { PayPeriodTypeId: payperiodTypeIdVal }, function (payperiodTypeData) {
+                     
+                        $("#txtpayperioddays").val(payperiodTypeData[0].Days);
+                        setPeriodEndValues();
+                    });
+                }
+            });
+
+        });
+
+
+        function setPeriodEndValues() {
+         
+            if (validateNullValue('txtStartDateTime')) {
+                var periodDays = $("#txtpayperioddays").val();
+                var startDate = new Date($("#txtStartDateTime").val());
+                var periodEndDate = new Date(startDate);
+                periodEndDate.setDate(periodEndDate.getDate() + parseInt(periodDays - 1));
+                $("#txtEndDateTime").val((periodEndDate.getMonth() + 1) + "/" + periodEndDate.getDate() + "/" + periodEndDate.getFullYear());
+                $("#txtPaycheckDateTime").val((periodEndDate.getMonth() + 1) + "/" + periodEndDate.getDate() + "/" + periodEndDate.getFullYear());
+                
+                var dayOfWeek = new Date($("#txtStartDateTime").val()).getDay();
+                switch (dayOfWeek) {
+                    case 0:
+                        $("#txtStartDay").val("Sunday");
+                        break;
+                    case 1:
+                        $("#txtStartDay").val("Monday");
+                        break;
+                    case 2:
+                        $("#txtStartDay").val("Tuesday");
+                        break;
+                    case 3:
+                        $("#txtStartDay").val("Wednesday");
+                        break;
+                    case 4:
+                        $("#txtStartDay").val("Thursday");
+                        break;
+                    case 5:
+                        $("#txtStartDay").val("Friday");
+                        break;
+                    case 6:
+                        $("#txtStartDay").val("Saturday");
+                        break;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

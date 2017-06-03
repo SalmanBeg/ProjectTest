@@ -1,0 +1,63 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.MailingInfo>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "CheckMailingInfo";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<h2>AllMails</h2>
+
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="MailingInfoGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="selectAll" class="chksa" />
+                    @Html.DisplayName("SelectAll")
+                </th>
+                <th data-sort-ignore="true">
+                    @Html.DisplayNameFor(model => model.MailSubject)
+                </th>
+                <th data-sort-ignore="true">
+                    @Html.DisplayNameFor(model => model.MailRecipientTo)
+                </th>
+                <th data-sort-ignore="true">
+                    @Html.DisplayNameFor(model => model.MailStatus)
+                </th>
+                <th data-sort-ignore="true">
+                    @Html.DisplayNameFor(model => model.MailContent)
+                </th>
+                <th data-sort-ignore="true">
+                    @Html.DisplayNameFor(model => model.MailCount)
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        <input type="checkbox" id="childchk" value="" data-val-1="@item.MailId" class="btncheckselectedmail" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.MailSubject, "CheckMailingInfo", new { @MailId = @item.MailId }, new { id = "MailId" })
+                    </td>
+                    <td>
+                        @Html.Label(item.MailRecipientTo)
+                    </td>
+                    <td>                       
+                        @Html.Label(Convert.ToString(item.MailStatus))                       
+                    </td>
+                    <td>
+                        @Html.Label(Convert.ToString(item.MailContent))
+                    </td>
+                    <td>
+                        @Html.Label(Convert.ToString(item.MailCount))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

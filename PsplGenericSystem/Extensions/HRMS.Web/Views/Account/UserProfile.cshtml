@@ -1,0 +1,184 @@
+﻿@model HRMS.Web.ViewModels.EmployeeFormModel
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div class="header">
+    <h3>User Profile</h3>
+</div>
+@using (Html.BeginForm("UserProfile", "Account", FormMethod.Post))
+{
+   
+    <div style="display: block">
+        <b>My Profile </b><a id="aedit" href="#">Edit</a>
+    </div>
+ 
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.Salutation, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.Employee.Salutation, new SelectList(Model.SalutationList, "ID", "Name"), "--Select--", new { @class = "form-control showdrp", @id = "saltndropdown", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.FirstName, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.FirstName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.MiddleName, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.MiddleName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.LastName, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.LastName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.Suffix, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.Employee.Suffix, new SelectList(Model.SuffixList, "ID", "Name"), "--Select--", new { @class = "form-control showdrp", @id = "drpdwnsuffix", @disabled = "disabled" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.Email, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.Email, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.Address1, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.Address1, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.Address2, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.Address2, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.City, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.City, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.ZIP, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.ZIP, new { @class = "form-control zipmask", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.CountryId, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.Employee.CountryId, new SelectList(Model.CountryList, "CountryRegionId", "CountryName"), "--Select--", new { @class = "form-control showdrp", @id = "countryid", @disabled = "disabled" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.StateId, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.Employee.StateId, new SelectList(Model.StateList, "StateProvinceId", "StateName"), "--Select--", new { @class = "form-control showdrp", @id = "stateid", @disabled = "disabled" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.SSN, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.SSN, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.WorkPhone, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.WorkPhone, new { @class = "form-control phonemask", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.HomePhone, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.HomePhone, new { @class = "form-control phonemask", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.BirthDate, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+
+                                @Html.TextBoxFor(m => m.Employee.BirthDate, (Model.Employee.BirthDate == null ? "" : ((DateTime)Model.Employee.BirthDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.Gender, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.Employee.Gender, new SelectList(Model.GenderList, "ID", "Name"), "--Select--", new { @class = "form-control showdrp", @id = "gender", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.MaritalStatus, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.Employee.MaritalStatus, new SelectList(Model.MaritalStatusList, "ID", "Name"), "--Select--", new { @class = "form-control showdrp", @id = "maritalstatus", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.WorkEmail, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.WorkEmail, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Employee.HomeEmail, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Employee.HomeEmail, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                <button type="submit" id="btnsubmit" class="btn btn-success" style="display: none">Save</button>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $("#aedit").click(function () {
+                $(":text").removeAttr('readonly');
+                $("#btnsubmit").show();
+                $('.showdrp').removeAttr('disabled');
+            });
+            $("#countryid").change(function () {
+
+                var countryregionId = $(this).val();
+                if (countryregionId != null && countryregionId != "") {
+                    var baseurl1 = "../Account/FillStatesByCountryId";
+                    $.getJSON(baseurl1, { CountryRegionId: countryregionId }, function (countryData) {
+                        var select = $('#stateid');
+                        select.html('');
+                        $.each(countryData, function (index, itemData) {
+                            select.append($('<option/>', {
+                                value: itemData.StateProvinceId,
+                                text: itemData.StateName,
+                            }));
+
+                        });
+                    });
+                }
+            });
+
+        </script>
+
+    
+}
+

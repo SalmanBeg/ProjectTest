@@ -1,0 +1,150 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.CompensationProfile>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllCompensationProfile";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add", "AddCompensationProfile", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeletecompensationprofile" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="CompensationProfilegrid">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true" style="padding-left:33px">
+                    <input type="checkbox" id="chksa"/>
+                    @Html.DisplayName("Select All")
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.WageType)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.WageUnit)
+                </th>
+                <th data-hide ="phone,tablet">
+                    @Html.DisplayNameFor(model => model.WageAmount)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Commissions)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Bonus)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.BenefitGroup)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.Stock)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.OtherCashComp)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.PTOPlan)
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayNameFor(model => model.OtherBenefits)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.CompensationProfileId" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.Title), "UpdateCompensationProfile", new { @CompensationProfileId = item.CompensationProfileId }, new { id = "CompensationProfileId" })
+
+                    </td>
+                    <td>
+                        @Html.Label(item.WageType.ToString())
+                    </td>
+                    <td>
+                        @Html.Label(item.WageUnit.ToString())
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.WageAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Commissions)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Bonus)
+                    </td>
+                    <td>
+                        @Html.Label(item.BenefitGroup.ToString())
+                    </td>
+                    <td>
+                        @Html.Label(item.Stock)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OtherCashComp)
+                    </td>
+                    <td>
+                        @Html.Label(item.PTOPlan)
+                    </td>
+                    <td>
+                        @Html.Label(item.OtherBenefits)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Administration<small>Compensation Profile</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">CompensationProfile</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#btnDeletecompensationprofile").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#CompensationProfilegrid input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "CompensationProfile/DeleteCompensationProfile",
+                    type: "POST",
+                    cache: "false",
+                    data: { CompensationprofileIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+    //To Select all/Deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#CompensationProfilegrid input:checkbox').iCheck('check');
+    });
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#CompensationProfilegrid input:checkbox').iCheck('uncheck');
+        //var n = $('#CompensationProfilegrid input:checkbox').count;
+        //alert(n);
+
+    });
+
+</script>
+
+
+
+

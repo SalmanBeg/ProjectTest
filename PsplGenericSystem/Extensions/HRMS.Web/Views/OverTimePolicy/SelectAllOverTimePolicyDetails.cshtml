@@ -1,0 +1,104 @@
+﻿@model HRMS.Web.ViewModels.OvertimePolicyFormModel
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllOverTimePolicyDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+<div style="padding-top: 10px;">
+@Html.ActionLink("Add  ", "AddOverTimePolicyDetail", null, new { @class = "btn btn-success" })
+@Html.ActionLink("Delete", "DeleteOverTimePolicyDetail", null, new { @class = "btn btn-danger", @id = "btnDelete" })
+@Html.ActionLink("<< Back to TimeAttendance Configuration", "TimeAttendanceConfiguration", "Home", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="OverTimeGridContent">
+        <thead>
+            <tr>
+                <th></th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.OverTimePolicy.OTPolicyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OverTimePolicy.OTPolicytype)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.OverTimePolicy.SatPayType)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.OverTimePolicy.SunPayType)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+           @for (int i = 0; i < Model.OverTimePolicyList.Count; i++)
+{
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" id="@Model.OverTimePolicyList[i].OvertimeId" data-val-1="@Model.OverTimePolicyList[i].OvertimeId" onchange="cbChange(this)" />
+                    </td>
+
+                    <td>
+                        @Html.ActionLink(((string)Model.OverTimePolicyList[i].OTPolicyName), "EditOverTimePolicyDetail", new { @OvertimeId = Model.OverTimePolicyList[i].OvertimeId }, new { id = "OvertimeId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.OverTimePolicyList[i].OTPolicytypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.OverTimePolicyList[i].SatPayTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.OverTimePolicyList[i].SunPayTypeName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>OverTime Policy <small>OverTime List </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">OverTime Policy</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnDelete").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#OverTimeGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+
+            $.ajax({
+                url: baseurl + "OverTimePolicy/DeleteOverTimePolicyDetail",
+                type: "POST",
+                cache: "false",
+                data: { OverTimeIds: searchIDs.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        window.location.href = window.location.href;
+                    }
+
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        });
+
+    });
+</script>

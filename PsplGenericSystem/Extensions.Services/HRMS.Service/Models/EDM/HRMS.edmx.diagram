@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8e6c0f0ea0ae4bde88e2ba56d82ec462" Name="Diagram1" ZoomLevel="32">
+        <EntityTypeShape EntityType="HRMSModel.EmployeeDependent" Width="2.125" PointX="2.5" PointY="7.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeDirectDeposit" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeEmergencyContact" Width="1.5" PointX="0.75" PointY="15.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeOSHA" Width="1.5" PointX="2.75" PointY="15.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeTax" Width="1.5" PointX="17.75" PointY="9.75" />
+        <EntityTypeShape EntityType="HRMSModel.HireApprovalSetup" Width="1.5" PointX="16" PointY="5" />
+        <EntityTypeShape EntityType="HRMSModel.HireStepMaster" Width="1.5" PointX="13.75" PointY="5.875" />
+        <EntityTypeShape EntityType="HRMSModel.OnBoarding" Width="1.5" PointX="15" PointY="12.125" />
+        <EntityTypeShape EntityType="HRMSModel.ScreenVerbiage" Width="1.5" PointX="8" PointY="8.125" />
+        <EntityTypeShape EntityType="HRMSModel.UserConsentDocument" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.WorkAuthorizationDocumentation" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="HRMSModel.WorkAuthorizationDocumentationType" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.FilesDB" Width="1.5" PointX="8" PointY="3.875" />
+        <EntityTypeShape EntityType="HRMSModel.RoleMaster" Width="1.5" PointX="11" PointY="7.125" />
+        <EntityTypeShape EntityType="HRMSModel.ChangeReason" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="HRMSModel.ClaimType" Width="1.5" PointX="17.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.CompensationFrequency" Width="1.5" PointX="17.75" PointY="17.75" />
+        <EntityTypeShape EntityType="HRMSModel.CountryRegion" Width="1.5" PointX="10.75" PointY="1.25" />
+        <EntityTypeShape EntityType="HRMSModel.Department" Width="1.5" PointX="19.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.DirectDepositAccountType" Width="1.5" PointX="19.75" PointY="7.75" />
+        <EntityTypeShape EntityType="HRMSModel.EEOCode" Width="1.5" PointX="19.75" PointY="10.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmploymentStatu" Width="1.5" PointX="19.75" PointY="13.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmploymentType" Width="1.5" PointX="19.75" PointY="16.75" />
+        <EntityTypeShape EntityType="HRMSModel.Ethnicity" Width="1.5" PointX="19.75" PointY="19.75" />
+        <EntityTypeShape EntityType="HRMSModel.FederalBlock" Width="1.5" PointX="20.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.FLSAStatu" Width="1.5" PointX="21.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.Gender" Width="1.5" PointX="21.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HRMSModel.GLCode" Width="1.5" PointX="21.75" PointY="9.75" />
+        <EntityTypeShape EntityType="HRMSModel.I9AcceptableDocuments1" Width="1.5" PointX="21.75" PointY="12.75" />
+        <EntityTypeShape EntityType="HRMSModel.I9AcceptableDocuments2" Width="1.5" PointX="21.75" PointY="15.75" />
+        <EntityTypeShape EntityType="HRMSModel.I9AcceptableDocuments3" Width="1.5" PointX="21.75" PointY="18.75" />
+        <EntityTypeShape EntityType="HRMSModel.InfractionType" Width="1.5" PointX="21.75" PointY="21.75" />
+        <EntityTypeShape EntityType="HRMSModel.JobCostNumber" Width="1.5" PointX="22.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.LaborLevel5" Width="1.5" PointX="23.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.Location" Width="1.5" PointX="23.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HRMSModel.MaritalStatu" Width="1.5" PointX="23.75" PointY="9.75" />
+        <EntityTypeShape EntityType="HRMSModel.OutCome" Width="1.5" PointX="23.75" PointY="12.75" />
+        <EntityTypeShape EntityType="HRMSModel.PayFrequency" Width="1.5" PointX="23.75" PointY="15.75" />
+        <EntityTypeShape EntityType="HRMSModel.PayGrade" Width="1.5" PointX="23.75" PointY="18.75" />
+        <EntityTypeShape EntityType="HRMSModel.Position" Width="1.5" PointX="0.75" PointY="24.75" />
+        <EntityTypeShape EntityType="HRMSModel.Project" Width="1.5" PointX="2.75" PointY="24.75" />
+        <EntityTypeShape EntityType="HRMSModel.Relationship" Width="1.5" PointX="24.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.Salutation" Width="1.5" PointX="19.75" PointY="24.75" />
+        <EntityTypeShape EntityType="HRMSModel.SchoolBlock" Width="1.5" PointX="21.75" PointY="24.75" />
+        <EntityTypeShape EntityType="HRMSModel.SchoolDistrict" Width="1.5" PointX="23.75" PointY="24.75" />
+        <EntityTypeShape EntityType="HRMSModel.ShiftPremium" Width="1.5" PointX="25.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.SSMedBlock" Width="1.5" PointX="4.75" PointY="25.75" />
+        <EntityTypeShape EntityType="HRMSModel.StateProvince" Width="1.5" PointX="13" PointY="1" />
+        <EntityTypeShape EntityType="HRMSModel.StockOptionType" Width="1.5" PointX="25.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HRMSModel.Suffix" Width="1.5" PointX="25.75" PointY="9.75" />
+        <EntityTypeShape EntityType="HRMSModel.SUISDIBlock" Width="1.5" PointX="25.75" PointY="12.75" />
+        <EntityTypeShape EntityType="HRMSModel.TaxBlock" Width="1.5" PointX="12.75" PointY="25.75" />
+        <EntityTypeShape EntityType="HRMSModel.TerminationReason" Width="1.5" PointX="14.75" PointY="25.75" />
+        <EntityTypeShape EntityType="HRMSModel.TimeProfile" Width="1.5" PointX="25.75" PointY="15.75" />
+        <EntityTypeShape EntityType="HRMSModel.UnionType" Width="1.5" PointX="25.75" PointY="22.75" />
+        <EntityTypeShape EntityType="HRMSModel.WCJobClassCode" Width="1.5" PointX="25.75" PointY="25.75" />
+        <EntityTypeShape EntityType="HRMSModel.WCStatu" Width="1.5" PointX="26.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.WCType" Width="1.5" PointX="27.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.WithholdingStatu" Width="1.5" PointX="0.75" PointY="27.75" />
+        <EntityTypeShape EntityType="HRMSModel.WorkersCompCode" Width="1.5" PointX="27.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HRMSModel.WorkProfile" Width="1.5" PointX="6.75" PointY="27.75" />
+        <EntityTypeShape EntityType="HRMSModel.AlertSendType" Width="1.5" PointX="14.75" PointY="9.75" />
+        <AssociationConnector Association="HRMSModel.FK_HireApprovalSetup_HireStepMaster" />
+        <AssociationConnector Association="HRMSModel.FK_StateProvince_CountryRegion_CountryRegionCode" />
+        <EntityTypeShape EntityType="HRMSModel.Attendance" Width="1.5" PointX="22.75" PointY="28.25" />
+        <EntityTypeShape EntityType="HRMSModel.AttendanceException" Width="1.5" PointX="5.75" PointY="31.25" />
+        <EntityTypeShape EntityType="HRMSModel.ClockData" Width="1.5" PointX="34" PointY="32.25" />
+        <EntityTypeShape EntityType="HRMSModel.ClockDataAudit" Width="1.5" PointX="36.25" PointY="33.25" />
+        <EntityTypeShape EntityType="HRMSModel.ClockDeviceAttendanceLog" Width="1.5" PointX="3" PointY="47.375" />
+        <EntityTypeShape EntityType="HRMSModel.ClockDevice" Width="1.5" PointX="0.75" PointY="38.25" />
+        <EntityTypeShape EntityType="HRMSModel.ClockDevicesAssigndEmployee" Width="1.5" PointX="3" PointY="44.625" />
+        <EntityTypeShape EntityType="HRMSModel.ClockLocation" Width="1.5" PointX="31.75" PointY="60.625" />
+        <EntityTypeShape EntityType="HRMSModel.ClockProfile" Width="1.5" PointX="34" PointY="47.125" />
+        <EntityTypeShape EntityType="HRMSModel.CompensatoryEmployeeHistory" Width="1.5" PointX="37" PointY="47.375" />
+        <EntityTypeShape EntityType="HRMSModel.CompensatoryTimePlan" Width="1.5" PointX="31.75" PointY="52.375" />
+        <EntityTypeShape EntityType="HRMSModel.ExpenseEmployee" Width="1.5" PointX="16" PointY="30.5" />
+        <EntityTypeShape EntityType="HRMSModel.ExpenseReport" Width="1.5" PointX="13.75" PointY="35.125" />
+        <EntityTypeShape EntityType="HRMSModel.ExpenseType" Width="1.5" PointX="13.75" PointY="31" />
+        <EntityTypeShape EntityType="HRMSModel.HolidayGroup" Width="1.5" PointX="28.75" PointY="10.25" />
+        <EntityTypeShape EntityType="HRMSModel.HolidayMaster" Width="1.5" PointX="36" PointY="1.5" />
+        <EntityTypeShape EntityType="HRMSModel.Holiday" Width="1.5" PointX="33.75" PointY="2.375" />
+        <EntityTypeShape EntityType="HRMSModel.ImportMap" Width="1.5" PointX="7.75" PointY="31.25" />
+        <EntityTypeShape EntityType="HRMSModel.ImportProfile" Width="1.5" PointX="28.75" PointY="13.25" />
+        <EntityTypeShape EntityType="HRMSModel.ImportTable" Width="1.5" PointX="33.75" PointY="6.25" />
+        <EntityTypeShape EntityType="HRMSModel.Lunch" Width="1.5" PointX="31.75" PointY="11.625" />
+        <EntityTypeShape EntityType="HRMSModel.PayPeriodHistory" Width="1.5" PointX="34" PointY="42" />
+        <EntityTypeShape EntityType="HRMSModel.PayPeriodHour" Width="1.5" PointX="33.75" PointY="9.25" />
+        <EntityTypeShape EntityType="HRMSModel.PayPeriodType" Width="1.5" PointX="33.75" PointY="12.25" />
+        <EntityTypeShape EntityType="HRMSModel.RateMatrix" Width="1.5" PointX="31.75" PointY="8.25" />
+        <EntityTypeShape EntityType="HRMSModel.ReportList" Width="1.5" PointX="33.75" PointY="15.25" />
+        <EntityTypeShape EntityType="HRMSModel.Rounding" Width="1.5" PointX="31.75" PointY="45.75" />
+        <EntityTypeShape EntityType="HRMSModel.Rule" Width="1.5" PointX="22.75" PointY="34.25" />
+        <EntityTypeShape EntityType="HRMSModel.RulesErrorLog" Width="1.5" PointX="24.75" PointY="34.25" />
+        <EntityTypeShape EntityType="HRMSModel.ScheduleArchiveEmployee" Width="1.5" PointX="3" PointY="31.5" />
+        <EntityTypeShape EntityType="HRMSModel.ScheduleEmployee" Width="1.5" PointX="0.75" PointY="31.5" />
+        <EntityTypeShape EntityType="HRMSModel.ScheduleGroup" Width="1.5" PointX="15.75" PointY="35.25" />
+        <EntityTypeShape EntityType="HRMSModel.TimeOffApproval" Width="1.5" PointX="2.75" PointY="36.25" />
+        <EntityTypeShape EntityType="HRMSModel.TimeOffEmployee" Width="1.5" PointX="31" PointY="17.75" />
+        <EntityTypeShape EntityType="HRMSModel.TimeOffEmployeeHistory" Width="1.5" PointX="31" PointY="23.75" />
+        <EntityTypeShape EntityType="HRMSModel.TimeOffMaster" Width="1.5" PointX="28.75" PointY="24.75" />
+        <EntityTypeShape EntityType="HRMSModel.TimeOffPlan" Width="1.5" PointX="37" PointY="24.125" />
+        <EntityTypeShape EntityType="HRMSModel.TimeOffService" Width="1.5" PointX="31" PointY="29.375" />
+        <EntityTypeShape EntityType="HRMSModel.Timesheet" Width="1.5" PointX="31" PointY="75.375" />
+        <EntityTypeShape EntityType="HRMSModel.TimesheetArchive" Width="1.5" PointX="33.25" PointY="80.875" />
+        <EntityTypeShape EntityType="HRMSModel.TimesheetArchiveShift" Width="1.5" PointX="35.5" PointY="88.875" />
+        <EntityTypeShape EntityType="HRMSModel.TimesheetAudit" Width="1.5" PointX="33.25" PointY="64.5" />
+        <EntityTypeShape EntityType="HRMSModel.TimesheetDetailsCustamization" Width="1.5" PointX="7.75" PointY="36.25" />
+        <EntityTypeShape EntityType="HRMSModel.TimesheetPolicy" Width="1.5" PointX="34" PointY="21.75" />
+        <EntityTypeShape EntityType="HRMSModel.TimesheetShift" Width="1.5" PointX="33.25" PointY="102.75" />
+        <EntityTypeShape EntityType="HRMSModel.Timesheetsubmission" Width="1.5" PointX="35.75" PointY="12.25" />
+        <EntityTypeShape EntityType="HRMSModel.TimesheetType" Width="1.5" PointX="31.75" PointY="57" />
+        <EntityTypeShape EntityType="HRMSModel.TimeType" Width="1.5" PointX="26.5" PointY="31" />
+        <EntityTypeShape EntityType="HRMSModel.Variable" Width="1.5" PointX="26.75" PointY="36.25" />
+        <EntityTypeShape EntityType="HRMSModel.AlertSendCriteria" Width="1.5" PointX="30.75" PointY="15.25" />
+        <AssociationConnector Association="HRMSModel.FK_ClockData_ClockDevices" />
+        <AssociationConnector Association="HRMSModel.FK_ClockData_ClockDevices1" />
+        <AssociationConnector Association="HRMSModel.FK_ClockData_ClockLocation" />
+        <AssociationConnector Association="HRMSModel.FK_ClockData_ClockLocation1" />
+        <AssociationConnector Association="HRMSModel.FK_ClockDataAudit_ClockData" />
+        <AssociationConnector Association="HRMSModel.FK_ClockDataAudit_ClockDevices" />
+        <AssociationConnector Association="HRMSModel.FK_ClockDataAudit_ClockDevices1" />
+        <AssociationConnector Association="HRMSModel.FK_ClockDataAudit_ClockLocation" />
+        <AssociationConnector Association="HRMSModel.FK_ClockDataAudit_ClockLocation1" />
+        <AssociationConnector Association="HRMSModel.FK_ClockDeviceAttendanceLogs_ClockDevices" />
+        <AssociationConnector Association="HRMSModel.FK_ClockDevicesAssigndEmployees_ClockDevices" />
+        <AssociationConnector Association="HRMSModel.FK_ClockProfiles_ClockLocation" />
+        <AssociationConnector Association="HRMSModel.FK_CompensatoryEmployeeHistory_CompensatoryTimePlan" />
+        <AssociationConnector Association="HRMSModel.FK_TimesheetPolicies_CompensatoryTimePlan" />
+        <AssociationConnector Association="HRMSModel.FK_ExpenseEmployee_ExpenseReport" />
+        <AssociationConnector Association="HRMSModel.FK_ExpenseEmployee_ExpenseTypes" />
+        <AssociationConnector Association="HRMSModel.FK_HolidayMaster_Holidays" />
+        <AssociationConnector Association="HRMSModel.FK_TimesheetPolicies_Lunch" />
+        <AssociationConnector Association="HRMSModel.FK_TimesheetPolicies_RateMatrix" />
+        <AssociationConnector Association="HRMSModel.FK_TimesheetPolicies_Rounding" />
+        <AssociationConnector Association="HRMSModel.FK_ScheduleArchiveEmployee_ScheduleEmployee" />
+        <AssociationConnector Association="HRMSModel.FK_TimeOffEmployee_TimeOffMaster" />
+        <AssociationConnector Association="HRMSModel.FK_TimeOffEmployeeHistory_TimeOffMaster" />
+        <AssociationConnector Association="HRMSModel.FK_TimeOffPlan_TimeOffMaster" />
+        <AssociationConnector Association="HRMSModel.FK_TimeOffService_TimeOffMaster" />
+        <AssociationConnector Association="HRMSModel.FK_TimesheetPolicies_TimeOffMaster" />
+        <AssociationConnector Association="HRMSModel.FK_TimeSheetArchive_TimeSheet" />
+        <AssociationConnector Association="HRMSModel.FK_TimeSheetArchiveShift_TimeSheet" />
+        <AssociationConnector Association="HRMSModel.FK_TimeSheetAudit_TimeSheet" />
+        <AssociationConnector Association="HRMSModel.FK_TimeSheetShifts_TimeSheet" />
+        <AssociationConnector Association="HRMSModel.FK_TimeSheetArchiveShift_TimeSheetShifts" />
+        <AssociationConnector Association="HRMSModel.FK_TimesheetPolicies_TimesheetType" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeSign" Width="1.5" PointX="29.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.AlertCriteriaSaveLog" Width="1.5" PointX="1.9027742417076481" PointY="11.310681422851365" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeNote" Width="1.5" PointX="21.375" PointY="37.75" />
+        <EntityTypeShape EntityType="HRMSModel.ImportEmployeedata" Width="1.5" PointX="18.375" PointY="29.75" />
+        <EntityTypeShape EntityType="HRMSModel.JobCategory" Width="1.5" PointX="33.375" PointY="18.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeePhoto" Width="1.5" PointX="3.375" PointY="28.75" />
+        <EntityTypeShape EntityType="HRMSModel.OTPayType" Width="1.5" PointX="38.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.OTPolicyType" Width="1.5" PointX="38.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.OverTimePolicy" Width="1.5" PointX="23.375" PointY="38.125" />
+        <EntityTypeShape EntityType="HRMSModel.RoundMinute" Width="1.5" PointX="38.375" PointY="6.75" />
+        <EntityTypeShape EntityType="HRMSModel.RoundType" Width="1.5" PointX="38.375" PointY="9.75" />
+        <AssociationConnector Association="HRMSModel.FK_TimesheetPolicies_OverTimePolicy" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeFolder" Width="1.5" PointX="10.25" PointY="39.375" />
+        <AssociationConnector Association="HRMSModel.FK_EmpFolder_FilesDB" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeAsset" Width="1.5" PointX="38.375" PointY="12.75" />
+        <EntityTypeShape EntityType="HRMSModel.Competency" Width="1.5" PointX="12.375" PointY="16.75" />
+        <EntityTypeShape EntityType="HRMSModel.Form" Width="1.5" PointX="41.625" PointY="24" />
+        <EntityTypeShape EntityType="HRMSModel.CertificationLicenseArea" Width="1.5" PointX="30.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.CertificationLicenseJobAssignment" Width="1.5" PointX="40.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.CertificationLicenseSchool" Width="1.5" PointX="40.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.CertificationLicenseType" Width="1.5" PointX="40.375" PointY="6.75" />
+        <EntityTypeShape EntityType="HRMSModel.ContractStatu" Width="1.5" PointX="40.375" PointY="9.75" />
+        <EntityTypeShape EntityType="HRMSModel.DegreeLevel" Width="1.5" PointX="40.375" PointY="12.75" />
+        <EntityTypeShape EntityType="HRMSModel.Endorsement" Width="1.5" PointX="12.375" PointY="40.75" />
+        <EntityTypeShape EntityType="HRMSModel.Graduated" Width="1.5" PointX="14.375" PointY="40.75" />
+        <EntityTypeShape EntityType="HRMSModel.HonoraryRecognition" Width="1.5" PointX="40.375" PointY="15.75" />
+        <EntityTypeShape EntityType="HRMSModel.Module" Width="1.5" PointX="39.375" PointY="24.875" />
+        <AssociationConnector Association="HRMSModel.FK_Forms_Modules" />
+        <EntityTypeShape EntityType="HRMSModel.CompanyDocument" Width="1.5" PointX="40.375" PointY="29.75" />
+        <EntityTypeShape EntityType="HRMSModel.TalentManagement" Width="1.5" PointX="40.375" PointY="38.75" />
+        <EntityTypeShape EntityType="HRMSModel.TrainingEmployeeView" Width="1.5" PointX="5.375" PointY="41.75" />
+        <EntityTypeShape EntityType="HRMSModel.CertificationLicenseCertification" Width="1.5" PointX="36.375" PointY="29.75" />
+        <EntityTypeShape EntityType="HRMSModel.FormLevelSecurity" Width="1.5" PointX="42.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.ModuleLevelSecurity" Width="1.5" PointX="42.375" PointY="4.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeDocument" Width="1.5" PointX="42.625" PointY="30.5" />
+        <AssociationConnector Association="HRMSModel.FK_EmployeeDocument_CompanyDocument" />
+        <EntityTypeShape EntityType="HRMSModel.DocumentSendCriteria" Width="1.5" PointX="25.375" PointY="28.75" />
+        <EntityTypeShape EntityType="HRMSModel.DocumentSendType" Width="1.5" PointX="29.375" PointY="35.75" />
+        <EntityTypeShape EntityType="HRMSModel.CompanyLink" Width="1.5" PointX="38.375" PointY="34.75" />
+        <EntityTypeShape EntityType="HRMSModel.JobRecruiter" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="HRMSModel.Review" Width="1.5" PointX="42.375" PointY="13.875" />
+        <EntityTypeShape EntityType="HRMSModel.Reviewee" Width="1.5" PointX="44.625" PointY="13.875" />
+        <EntityTypeShape EntityType="HRMSModel.Reviewer" Width="1.5" PointX="42.625" PointY="35" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewMaster" Width="1.5" PointX="40.375" PointY="35" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewSchedule" Width="1.5" PointX="44.625" PointY="9.5" />
+        <AssociationConnector Association="HRMSModel.FK_Review_Schedule_Review" />
+        <AssociationConnector Association="HRMSModel.FK_Reviewee_Review" />
+        <AssociationConnector Association="HRMSModel.FK_ReviewReviewer_ReviewMaster" />
+        <EntityTypeShape EntityType="HRMSModel.CompanyAnnouncement" Width="1.5" PointX="38.375" PointY="18.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewCriteria" Width="1.5" PointX="25.375" PointY="42.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewCriteriaCategory" Width="1.5" PointX="27.375" PointY="42.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewCriteriaType" Width="1.5" PointX="42.375" PointY="38.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewResponseType" Width="1.5" PointX="42.375" PointY="42.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewReviewerCriteria" Width="1.5" PointX="9.375" PointY="43.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewScore" Width="1.5" PointX="44.625" PointY="19" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewScoreDescription" Width="1.5" PointX="11.375" PointY="43.75" />
+        <AssociationConnector Association="HRMSModel.FK_Review_Type_Score_Review" />
+        <EntityTypeShape EntityType="HRMSModel.DocumentCategory" Width="1.5" PointX="13.375" PointY="43.75" />
+        <AssociationConnector Association="HRMSModel.FK_ReviewReviewerCriteria_ReviewCriteria" />
+        <EntityTypeShape EntityType="HRMSModel.DocumentBasicCriteria" Width="1.5" PointX="31.625" PointY="35.5" />
+        <AssociationConnector Association="HRMSModel.FK_DocumentBasicCriteria_DocumentSendType" />
+        <EntityTypeShape EntityType="HRMSModel.SendingAlertCondition" Width="1.5" PointX="44.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.SendingAlertDuration" Width="1.5" PointX="44.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.SendingAlertSchedule" Width="1.5" PointX="44.375" PointY="6.75" />
+        <EntityTypeShape EntityType="HRMSModel.SendingAlertTiming" Width="1.5" PointX="44.375" PointY="23.75" />
+        <EntityTypeShape EntityType="HRMSModel.SendingAlertVia" Width="1.5" PointX="44.375" PointY="26.75" />
+        <EntityTypeShape EntityType="HRMSModel.DocumentAdvancedCriteria" Width="1.5" PointX="35.375" PointY="18.75" />
+        <EntityTypeShape EntityType="HRMSModel.PayType" Width="1.5" PointX="28.75" PointY="29.375" />
+        <AssociationConnector Association="HRMSModel.FK_ClockData_PayType" />
+        <AssociationConnector Association="HRMSModel.FK_PayType_TimeType" />
+        <AssociationConnector Association="HRMSModel.FK_TimeOffEmployee_PayType" />
+        <AssociationConnector Association="HRMSModel.FK_TimeOffEmployeeHistory_PayType" />
+        <AssociationConnector Association="HRMSModel.FK_TimeOffPlan_PayType" />
+        <AssociationConnector Association="HRMSModel.FK_TimeOffService_PayType" />
+        <AssociationConnector Association="HRMSModel.FK_TimeSheet_PayType" />
+        <EntityTypeShape EntityType="HRMSModel.PayStatus" Width="1.5" PointX="44.375" PointY="38.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewScoreContent" Width="1.5" PointX="45.375" PointY="29.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeePay" Width="1.5" PointX="46.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.PayPeriods" Width="1.5" PointX="31.75" PointY="38.875" />
+        <AssociationConnector Association="HRMSModel.FK_ClockProfiles_PayPeriods" />
+        <AssociationConnector Association="HRMSModel.FK_CompensatoryEmployeeHistory_PayPeriods" />
+        <AssociationConnector Association="HRMSModel.FK_PayPeriodHistory_PayPeriods" />
+        <AssociationConnector Association="HRMSModel.FK_TimesheetPolicies_PayPeriods" />
+        <EntityTypeShape EntityType="HRMSModel.CompensationProfile" Width="1.5" PointX="5.375" PointY="46.75" />
+        <EntityTypeShape EntityType="HRMSModel.WageType" Width="1.5" PointX="14.375" PointY="19.75" />
+        <EntityTypeShape EntityType="HRMSModel.WageUnit" Width="1.5" PointX="16.375" PointY="20.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewerEmployee" Width="1.5" PointX="19.375" PointY="44.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewReviewerScoreDetails" Width="1.5" PointX="44.375" PointY="41.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewReviewer" Width="1.5" PointX="45.375" PointY="33.75" />
+        <EntityTypeShape EntityType="HRMSModel.ReviewReviewerOtherEmployee" Width="1.5" PointX="13.375" PointY="46.75" />
+        <EntityTypeShape EntityType="HRMSModel.AlertTemplate" Width="1.5" PointX="15.375" PointY="43.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeAlert" Width="1.5" PointX="46.375" PointY="23.75" />
+        <EntityTypeShape EntityType="HRMSModel.TrainingClass" Width="1.5" PointX="46.375" PointY="37.75" />
+        <EntityTypeShape EntityType="HRMSModel.TrainingTrack" Width="1.5" PointX="47.375" PointY="9.75" />
+        <EntityTypeShape EntityType="HRMSModel.TrainingTrackClass" Width="1.5" PointX="9.375" PointY="47.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeNoConfiguration" Width="1.5" PointX="27.375" PointY="46.75" />
+        <EntityTypeShape EntityType="HRMSModel.TrainingClassSchedule" Width="1.5" PointX="41.375" PointY="46.75" />
+        <EntityTypeShape EntityType="HRMSModel.TrainingClassScheduleDate" Width="1.5" PointX="46.375" PointY="42.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeFilterCriteria" Width="1.5" PointX="10.375" PointY="22.75" />
+        <EntityTypeShape EntityType="HRMSModel.TrainingClassResource" Width="1.5" PointX="47.375" PointY="13.75" />
+        <EntityTypeShape EntityType="HRMSModel.CompanyLevelSecurity" Width="1.5" PointX="8" PointY="16.25" />
+        <EntityTypeShape EntityType="HRMSModel.ActivityLog" Width="1.5" PointX="24.375" PointY="47.75" />
+        <EntityTypeShape EntityType="HRMSModel.ManageSecurityCriteria" Width="1.5" PointX="36.375" PointY="44.75" />
+        <AssociationConnector Association="HRMSModel.FK_TrainingClass_TrainingClass" />
+        <AssociationConnector Association="HRMSModel.FK_TrainingClassResource_TrainingClassId" />
+        <EntityTypeShape EntityType="HRMSModel.SecurityRole" Width="1.5" PointX="9.375" PointY="11.75" />
+        <EntityTypeShape EntityType="HRMSModel.RegisteredUsers" Width="1.5" PointX="8" PointY="21.375" />
+        <EntityTypeShape EntityType="HRMSModel.HireConfigurationSetup" Width="1.5" PointX="48.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HRMSModel.Employee" Width="1.5" PointX="10.25" PointY="51.125" />
+        <AssociationConnector Association="HRMSModel.FK_Employee_RegisteredUsers" />
+        <EntityTypeShape EntityType="HRMSModel.CompanyInfo" Width="1.5" PointX="5.75" PointY="15.125" />
+        <AssociationConnector Association="HRMSModel.FK_ScreenVerbiage_CompanyInfo" />
+        <AssociationConnector Association="HRMSModel.FK_CompanyLevelSecurity_CompanyInfo" />
+        <AssociationConnector Association="HRMSModel.FK_FilesDB_CompanyInfo" />
+        <EntityTypeShape EntityType="HRMSModel.UserCompany" Width="1.5" PointX="8" PointY="39.125" />
+        <AssociationConnector Association="HRMSModel.FK_UserCompany_CompanyInfo" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeLevelSecurity" Width="1.5" PointX="48.375" PointY="22.75" />
+        <EntityTypeShape EntityType="HRMSModel.Essential" Width="1.5" PointX="12.375" PointY="22.75" />
+        <EntityTypeShape EntityType="HRMSModel.Frequency" Width="1.5" PointX="47.375" PointY="31.75" />
+        <EntityTypeShape EntityType="HRMSModel.Other" Width="1.5" PointX="47.375" PointY="34.75" />
+        <EntityTypeShape EntityType="HRMSModel.Priority" Width="1.5" PointX="46.375" PointY="47.75" />
+        <EntityTypeShape EntityType="HRMSModel.CompanyLevelSaveLog" Width="1.5" PointX="48.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.ExceptionLog" Width="1.5" PointX="48.375" PointY="37.75" />
+        <EntityTypeShape EntityType="HRMSModel.JobQualificationType" Width="1.5" PointX="43.375" PointY="48.75" />
+        <EntityTypeShape EntityType="HRMSModel.WorkAuthorization" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="HRMSModel.FK__WorkAutho__WorkA__509BDCCF" />
+        <AssociationConnector Association="HRMSModel.FK_WorkAuthorization_WorkAuthorization" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeW4Form" Width="1.5" PointX="10.25" PointY="25.625" />
+        <AssociationConnector Association="HRMSModel.FK_EmployeeW4Form_UserSignUp" />
+        <EntityTypeShape EntityType="HRMSModel.RecruitingAnswers" Width="1.5" PointX="40.375" PointY="18.75" />
+        <EntityTypeShape EntityType="HRMSModel.Interview" Width="1.5" PointX="12.375" PointY="50.75" />
+        <EntityTypeShape EntityType="HRMSModel.ApplicantAchievementsAndAssociations" Width="1.5" PointX="14.375" PointY="15.75" />
+        <EntityTypeShape EntityType="HRMSModel.ApplicantEducation" Width="1.5" PointX="21.375" PointY="45.75" />
+        <EntityTypeShape EntityType="HRMSModel.ApplicantEmploymentHistory" Width="1.5" PointX="47.375" PointY="18.75" />
+        <EntityTypeShape EntityType="HRMSModel.JobInterviewers" Width="1.5" PointX="14.625" PointY="52.625" />
+        <AssociationConnector Association="HRMSModel.FK_JobInterviewers_Interview" />
+        <EntityTypeShape EntityType="HRMSModel.JobApplicant" Width="1.5" PointX="49.375" PointY="27.125" />
+        <EntityTypeShape EntityType="HRMSModel.ConsentForms" Width="1.5" PointX="11.375" PointY="10.75" />
+        <EntityTypeShape EntityType="HRMSModel.JobApplied" Width="1.5" PointX="51.625" PointY="39.125" />
+        <AssociationConnector Association="HRMSModel.FK_JobApplied_JobApplicant" />
+        <EntityTypeShape EntityType="HRMSModel.JobDuties" Width="1.5" PointX="21.375" PointY="49.75" />
+        <EntityTypeShape EntityType="HRMSModel.JobPME" Width="1.5" PointX="49.375" PointY="18.75" />
+        <EntityTypeShape EntityType="HRMSModel.JobProfile" Width="1.5" PointX="48.375" PointY="43.125" />
+        <EntityTypeShape EntityType="HRMSModel.JobQualification" Width="1.5" PointX="48.375" PointY="49.75" />
+        <AssociationConnector Association="HRMSModel.FK_JobApplied_JobProfile" />
+        <AssociationConnector Association="HRMSModel.DutiesinJob" />
+        <AssociationConnector Association="HRMSModel.PMEinJob" />
+        <AssociationConnector Association="HRMSModel.QualificationinJob" />
+        <EntityTypeShape EntityType="HRMSModel.ApplicantInterview" Width="1.5" PointX="38.375" PointY="44.75" />
+        <EntityTypeShape EntityType="HRMSModel.RecruitingQuestions" Width="1.5" PointX="50.625" PointY="44.5" />
+        <AssociationConnector Association="HRMSModel.FK_RecruitingAnswers_RecruitingQuestions" />
+        <AssociationConnector Association="HRMSModel.RecruitingQuestioninJob" />
+        <EntityTypeShape EntityType="HRMSModel.CandidateHiringComments" Width="1.5" PointX="49.375" PointY="7.75" />
+        <EntityTypeShape EntityType="HRMSModel.CertificationandLicense" Width="1.5" PointX="49.375" PointY="11.75" />
+        <EntityTypeShape EntityType="HRMSModel.CandidateOfferLetter" Width="1.5" PointX="50.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMSModel.MailingInfo" Width="1.5" PointX="17.375" PointY="50.75" />
+        <EntityTypeShape EntityType="HRMSModel.EmployeeGoal" Width="1.5" PointX="26.375" PointY="50.75" />
+        <EntityTypeShape EntityType="HRMSModel.HTABLES" Width="1.5" PointX="28.375" PointY="50.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

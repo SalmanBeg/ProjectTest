@@ -1,0 +1,136 @@
+﻿@model HRMS.Web.ViewModels.PayTypeFormModel
+@using HRMS.Web.Helper;
+
+@{
+    ViewBag.Title = "AddPayTypeDetail";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<html>
+<body>
+    @using (Html.BeginForm("AddPayTypeDetail", "PayType", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <br/>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.PayTypeId, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.PayType.PayTypeId, new SelectList(Model.PayTypeList, "PayTypeId", "PayTypeCode"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "PayCode" }, { "id", "dpPayType" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.PayCode, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.PayType.PayCode, new { @readonly = "readonly", @class = "form-control", id = "txtPayCode", placeholder = "Pay Code" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.Description, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.PayType.Description, new { @class = "form-control", placeholder = "Description" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.TimeTypeId, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.PayType.TimeTypeId, new SelectList(Model.TimeTypeList, "TimeTypeId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "PayCode" }, { "id", "dpTimeType" }, { "disabled", "disabled" } })
+                        @Html.HiddenFor(m => m.PayType.TimeTypeId)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.GLCode, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.PayType.GLCode, new { @class = "form-control", placeholder = "GL Code" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.RateFactor, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.PayType.RateFactor, new { @class = "form-control", placeholder = "Rate Factor" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.PayrollCode, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.PayType.PayrollCode, new { @class = "form-control", placeholder = "Payroll Code" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.AccrueToOT, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.CheckBoxFor(m => m.PayType.AccrueToOT, new { @class = "form-control", id = "chkAccrueToOT", placeholder = "Exclude from Overtime" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PayType.Display, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.CheckBoxFor(m => m.PayType.Display, new { @class = "form-control", id = "chkDisplay", placeholder = "Display" })
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IsDefault, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.CheckBoxFor(m => m.IsDefault, new { @class = "form-control", id = "chkIsDefault", placeholder = "Default Pay Type" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.BypassBRM, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.CheckBoxFor(m => m.BypassBRM, new { @class = "form-control", id = "chkIsDefault", placeholder = "Bypass Rule" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MapToPayroll, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.MapToPayroll, new { @class = "form-control", placeholder = "Map to Payroll" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MapToHR, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.MapToHR, new { @class = "form-control", placeholder = "Map to HR" })
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                
+                @Html.ActionLink("Cancel", "SelectAllPayTypeDetails", "PayType", new { @CompanyId = GlobalsVariables.CurrentCompanyId }, new { @class = "btn btn-success" })
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+            </div>
+            <div>
+                @Html.HiddenFor(m => m.PayType.PayTypeId)
+            </div>
+        </div>
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>Pay Type<small>Add Pay Type </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Pay Type</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+        });
+    </script>
+
+    <script type="text/javascript">
+        $("#dpPayType").change(function () {
+            var payTypeIdVal = $(this).val();
+            if (payTypeIdVal) {
+                var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                baseurl += "PayType/GetPayCode";
+                $.getJSON(baseurl, { PayTypeId: payTypeIdVal }, function (payTypeData) {                  
+                    $("#txtPayCode").val(payTypeData[0].PayCode);
+                    $("#dpTimeType").val(payTypeData[0].TimeTypeId).attr("selected", "selected");       
+                });
+            }
+        });
+    </script>
+</body>
+</html>

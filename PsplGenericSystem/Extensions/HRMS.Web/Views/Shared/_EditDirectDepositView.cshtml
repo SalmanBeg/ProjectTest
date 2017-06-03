@@ -1,0 +1,90 @@
+﻿@model HRMS.Web.ViewModels.EmployeeDirectDepositFormModel
+@using HRMS.Common.Helpers
+@using System.Web.Optimization;
+
+<script src="~/Scripts/jquery-1.11.2.min.js"></script>
+<script src="~/Scripts/plugins/numericInput.min.js"></script>
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "editdirectdepositview" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmployeeDirectDeposit.AccountType, new { @class = "col-sm-2 control-label required" })
+            <div class="col-sm-5">
+                @Html.HiddenFor(k => k.EmployeeDirectDeposit.CompanyId)
+                @Html.HiddenFor(k => k.EmployeeDirectDeposit.UserId)
+                @Html.HiddenFor(m => m.EmployeeDirectDeposit.EmployeeDirectDepositId, new { @id = "hdnEmployeeDirectDepositId" })
+                @Html.DropDownListFor(m => m.EmployeeDirectDeposit.AccountType, new SelectList(Model.AccountTypeList, "ID", "Name"), "--Select--", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmployeeDirectDeposit.TransitorABANumber, new { @class = "col-sm-2 control-label required" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(m => m.EmployeeDirectDeposit.TransitorABANumber, new { @class = "form-control", @maxlength = "50", @id = "input1" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmployeeDirectDeposit.AccountNumber, new { @class = "col-sm-2 control-label required" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(m => m.EmployeeDirectDeposit.AccountNumber, new { @class = "form-control", @maxlength = "50", @id = "input2" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.EmployeeDirectDeposit.Amount, new { @class = "col-sm-2 control-label required" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(m => m.EmployeeDirectDeposit.Amount, new { @class = "form-control", @maxlength = "50", @id = "input3" })
+            </div>
+        </div>
+        <div class="form-horizontal">
+            @*<div class="col-sm-offset-2 control-button">*@
+            <div class="form-group" style="padding-left:20%">
+                <input type="submit" value="Cancel" id="btnEditDiretDepositCancel" class="btn btn-success" />
+                <br />
+                <input type="submit" value="Update" id="btnDiretDepositUpdate" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    
+}
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#input1").numericInput();
+        $("#input2").numericInput();
+        $("#input3").numericInput();
+    });
+
+
+   
+    $("#btnDiretDepositUpdate").click(function (e) {
+        debugger;
+            e.preventDefault();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]'; 
+            //if ($("#btnDiretDepositUpdate").valid()) { //if you use validation
+                $.ajax({                   
+                    url: baseurl + "EmployeeDirectDeposit/_EditDirectDepositView",
+                    type: "POST",
+                    async: false,
+               
+                    data: $("#editdirectdepositview").serialize(),
+                    success: function (data) {
+                      
+                        if (data == "True") {
+                            LoadDirectDepositGrid();
+                        }
+                    }
+                });
+            //}
+        });
+
+        $('#btnEditDiretDepositCancel').click(function (e) {
+            e.preventDefault();
+            LoadDirectDepositGrid();
+        });
+
+
+      
+    
+</script>

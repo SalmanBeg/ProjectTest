@@ -1,0 +1,73 @@
+﻿@*@model IList<HRMS.Web.ViewModels.RecruitingQuestionsFormModel*@
+       @Model.lstRecruitingAnswers
+
+@{
+    ViewBag.Title = "RecruitingAnswers";
+    var lstRecruitingAnswers = Model;
+}
+@using (Html.BeginForm("AddRecruitingQuestions", "Recruiting", FormMethod.Post, new { id = "recruitingAnswerId" }))
+{
+    <div style="display:none;" id="RecAns">
+        <div id="AddAnswers" class="col-sm-9" style="padding:0px">
+            <table class="table" id="container">
+                <thead style="background: #52b9e9; ">
+                    <tr>
+                        <th>
+                            Active
+                        </th>
+                        <th>
+                            Answers
+                        </th>
+                        <th>
+                            Value
+                        </th>
+                        <th>
+                            KnockOutValue
+                        </th>
+                        <th>
+                            <span id="btnAdd" style="text-decoration:underline;">Add</span>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (var i = 0; i < Model.lstRecruitingAnswers.Count; i++)
+                    {
+                        <tr>
+                            <td>
+
+                                @Html.HiddenFor(k => k.lstRecruitingAnswers[i].CompanyId)
+                                @Html.HiddenFor(k => k.lstRecruitingAnswers[i].QuestionId)
+                                @Html.HiddenFor(k => k.lstRecruitingAnswers[i].AnswerId)
+
+                                @Html.CheckBoxFor(k => k.lstRecruitingAnswers[i].IsActive, new { @class = "form-control", @checked = "checked" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(k => k.lstRecruitingAnswers[i].Answers, new { @class = "form-control" })
+
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(k => k.lstRecruitingAnswers[i].Value, new { @class = "form-control" })
+
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(k => k.lstRecruitingAnswers[i].IsKnockOutValue, new { @class = "form-control" })
+
+                            </td>
+                            <td><a onclick="$(this).parent().parent().remove();">x</a></td>
+                        </tr>
+                    }
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagination pagination-centered hide-if-no-paging"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+}

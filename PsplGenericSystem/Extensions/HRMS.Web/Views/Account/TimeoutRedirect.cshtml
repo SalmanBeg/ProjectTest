@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "TimeoutRedirect";
+}
+
+<!DOCTYPE html>
+<html class="bg-black">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="refresh" content="5;url=@System.Configuration.ConfigurationManager.AppSettings["_loginurl"]" />
+    <title>::: HRMS :::</title>
+    <!-- bootstrap 3.0.2 -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="~/Content/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <style>
+        .box-width {
+            width: 45%;
+            margin: 90px auto 0 auto;
+          
+        }
+    </style>
+
+</head>
+<body class="bg-black">
+    <div class="form-box box-width">
+        <div class="header">
+            <span>Session TimeOut</span>
+        </div>
+        <div class="body bg-gray" >
+            <h3><i>Sorry, your session has timed out.<br /> You'll be redirected to the LogIn page in 5 seconds...</i></h3>
+        </div>
+    </div>
+</body>
+
+</html>

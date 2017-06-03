@@ -1,0 +1,81 @@
+﻿@model HRMS.Web.ViewModels.CompanyMenuFormModel
+
+@{
+    ViewBag.Title = "CompanyLevelSecurity";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("CompanyLevelSecurity", "CompanyLevelSecurity", FormMethod.Post, new { id = "AssetForm", enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.form.CompanyId)
+                    @Html.LabelFor(m => m.form.FormName, "FormName", new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.form.FormName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.form.FormId)
+                    @Html.LabelFor(m => m.form.DisplayName, "DisplayName", new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.form.DisplayName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form.ModuleId, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.form.ModuleId, new SelectList(Model.Modules, "ModuleId", "ModuleName"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "ModuleId" }, { "id", "drpdwnmodule" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form.OrderNo, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.form.OrderNo, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form.ControllerName, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.form.ControllerName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form.ActionName, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.form.ActionName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form.RouteAttribute, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.form.RouteAttribute, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form.IsVisible, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.CheckBoxFor(m => m.IsVisible1, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                
+                @Html.ActionLink("Cancel", "ManageMenu", "CompanyLevelSecurity", null, new { @class = "btn btn-success", @style = "margin-left:10px" })
+                <button type="submit" class="btn btn-success" id="btnSaveAsset">Save</button>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Company Level Security<small>Add Form</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Add Form</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+

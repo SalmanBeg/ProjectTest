@@ -1,0 +1,229 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="images/favicon.png">
+    <title>::: HRMS :::</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,200,100' rel='stylesheet' type='text/css'>
+    @using HRMS.Web.Helper;
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/jsSteps/main.css" rel="stylesheet" />
+    <link href="~/Content/css/jsSteps/normalize.css" rel="stylesheet" />
+    <link href="~/Content/css/jsSteps/jquery.steps.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @Scripts.Render("~/bundles/validate")
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    @* <link href="~/Content/HireWizard.css" rel="stylesheet" />*@
+    <!-- bootstrap 3.0.2 -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="~/Content/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <!-- Daterange picker -->
+    <link href="~/Content/css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+    <!-- Date Picker -->
+    <link href="~/Content/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- core css for footable -->
+    <link href="~/Content/css/footable/footable.core.css" rel="stylesheet" />
+    <!-- customized css for footable -->
+    <link href="~/Content/css/footable/footable.metro.css" rel="stylesheet" />
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/fonts/font-awesome-4/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/customize.css" rel="stylesheet" />
+    <link href="~/Content/datepicker.css" rel="stylesheet" />
+    <link href="~/Content/ESign/assets/jquery.signaturepad.css" rel="stylesheet" />
+    <style type="text/css">
+        .tooltip-inner {
+            max-width: 300px;
+            padding: 0;
+        }
+
+        .tooltip-alert {
+            padding: 8px 10px;
+            font-weight: bolder;
+            color: #A94442;
+        }
+
+        .required:after {
+            content: "*";
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+
+<body class="skin-green  pace-done" style="overflow-x: hidden;">
+
+    <!-- Fixed navbar -->
+    @*<div style="background: #fff; position: fixed; width: 100%; height: 70px; z-index: 9999;">
+            <a href="../NewHire/HireMaster">
+                <img src="~/images/powwowhr%20logo4color_wo_tagline.jpg" style="padding-top: 2px; padding-left: 10px;" border="0"></a>
+        </div>
+        <div id="head-nav" class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" id=""><span class="fa fa-gear"></span></button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right user-nav" style="margin-right: 5px;">
+                       <li style="padding-top: 12px;"><span>Welcome </span>
+                            <label id="lblUserName">@GlobalsVariables.CurrentUserName</label></li>
+                        <li> <ul class="dropdown-menu">
+                            <li><a href="~/Account/UserAccount.cshtml">My Account</a></li>
+
+                        </ul>
+                        </li>
+                    </ul>
+                 </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>*@
+
+    <header class="header">
+        <a href="../Home/EmployeeDashboard" class="logo">
+            <!-- Add the class icon to your logo image or logo icon to add the margining -->
+            <img src="~/images/powwowhr%20logo4color_wo_tagline.jpg">
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <span>@GlobalsVariables.CurrentUserName <i class="caret"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header bg-light-blue">
+
+                                <img src="~/images/avatar3.png" class="img-circle" alt="User Image" />
+                                <p>
+                                    @GlobalsVariables.CurrentUserName - @GlobalsVariables.CurrentUserRoleName
+                                    <small>Last Login - @GlobalsVariables.LastLogin</small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <li class="user-body">
+                                @*<div class="col-xs-4 text-center">
+                                        <a href="~/Account/UserAccount.cshtml">Account</a>
+                                    </div>*@
+
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                @*<div class="pull-left">
+                                        <a href="~/Account/UserProfile" class="btn btn-default btn-flat">Profile</a>
+                                    </div>*@
+                                <div class="pull-right">
+                                    <a href="~/Account/Login" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div id="cl-wrapper" style="background: #fff;">
+        <div class="container-fluid" id="pcont">
+            <div class="page-head" style="background: #ff7f00;">
+            </div>
+            <div class="cl-mcont">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="block-flat">
+                            <section class="content-header" id="header-section" style="padding-left:20px;"></section>
+                            <section class="content">
+                                @RenderBody()
+                                @*@Scripts.Render("~/bundles/jquery")*@
+                                @RenderSection("scripts", required: false)
+                            </section>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //var date = new Date();
+            //date.setDate(date.getDate() - 365 * 100);
+            //$(".dateControl").datepicker({
+            //    startDate: date,
+            //    format: "mm/dd/yyyy"
+            //});
+
+            $(".dateControl").datepicker();
+            $(".datepicker-trigger").on("click", function () {
+                $(".dateControl").datepicker("show");
+            });
+            var classes = { groupIdentifier: ".form-group", error: 'has-error', success: null };//success: 'has-success'
+            function updateClasses(inputElement, toAdd, toRemove) {
+                var group = inputElement.closest(classes.groupIdentifier);
+                if (group.length > 0) {
+                    group.addClass(toAdd).removeClass(toRemove);
+                }
+            }
+            function onError(inputElement, message) {
+                updateClasses(inputElement, classes.error, classes.success);
+
+                var options = { html: true, title: '<div class="tooltip-alert alert-danger">' + message + '</div>' };
+                inputElement.tooltip("destroy")
+                    .addClass("error")
+                    .tooltip(options);
+            }
+            function onSuccess(inputElement) {
+                updateClasses(inputElement, classes.success, classes.error);
+                inputElement.tooltip("destroy");
+            }
+
+            function onValidated(errorMap, errorList) {
+                $.each(errorList, function () {
+                    onError($(this.element), this.message);
+                });
+
+                if (this.settings.success) {
+                    $.each(this.successList, function () {
+                        onSuccess($(this));
+                    });
+                }
+            }
+
+            $(function () {
+                $('form').each(function () {
+                    var validator = $(this).data('validator');
+                    if (validator != null)
+                        validator.settings.showErrors = onValidated;
+                });
+            });
+        });
+
+    </script>
+
+</body>
+</html>
+

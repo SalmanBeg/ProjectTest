@@ -1,0 +1,117 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.TrainingClass>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllClasses";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add", "AddNewClass", null, new { @class = "btn  btn-success", @style = "margin-bottom:10px;" })
+    @Html.ActionLink("Delete", "", null, new { @class = "btn  btn-danger", @style = " margin-bottom:10px;", @id = "btnDeleteClass" })
+    @*@Html.ActionLink("<<Back", "EmployeeDashboard", "Home", null, new { @class = "btn  btn-success", @style = "float:right; margin-bottom:10px;" })*@
+    @{
+        var trainingClassGrid = new WebGrid(@Model, canPage: false, canSort: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    }
+
+</div> 
+<div id="gridContent" style="padding-top:10px; ">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="trainingClassGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa"/>
+                    @Html.DisplayName("Select All")
+                </th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(m => m.TrainingClassName)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(m=> m.TrainingClassDescription)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(m => m.TrainingClassCost)
+                </th>
+                <th data-hide="phone" data-sort-ignore="true">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.TrainingClassId" class="btncheckdependent" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.TrainingClassName), "AddNewClass", new { @TrainingClassId = item.TrainingClassId })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingClassDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingClassCost)
+                    </td>
+                    <td>
+                        @if (item.hasSchedule)
+                        { 
+                            @Html.ActionLink("Edit Schedules", "SelectAllTraingClassSchedule", "TrainingClassSchedule", new { @TrainingClassId = item.TrainingClassId }, null)
+                        }
+                        else
+                        { @Html.ActionLink("Add Schedules", "EnrollSchedule", "TrainingClassSchedule", new { @TrainingClassId = item.TrainingClassId },null) }
+                        @if (item.hasResource)
+                        { @Html.ActionLink("Edit Resources", "TrainingClassResources", "TrainingClassResources", new { @TrainingClassId = item.TrainingClassId }, null)}
+                        else
+                        { { @Html.ActionLink("Add Resources", "TrainingClassResources", "TrainingClassResources")} }                                                                                       
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+        </table>
+</div>
+<script type="text/javascript">
+    var resultingSiteview = "<h1>Training<small>Training Class</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../TrainingClass/SelectAllClasses"' + "><i class=" + '"fa fa-dashboard"' + "></i>Training</a></li><li class=" + '"active"' + ">TrainingClass</li></ol>";
+    $("#header-section").empty();
+    $("#header-section").html(resultingSiteview);
+
+    $("#btnDeleteClass").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var classIDList = $("#trainingClassGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        if (classIDList.toString().length > 0) {
+            $.ajax({
+                url: baseurl + "TrainingClass/DeleteTrainingClass",
+                type: "POST",
+                cache: "false",
+                data: { classIds: classIDList.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        window.location.href = window.location.href;
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+        else { alert("Please select item(s) to delete."); }
+    });
+
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#trainingClassGridContent input:checkbox').iCheck('check');
+    });
+
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#trainingClassGridContent input:checkbox').iCheck('uncheck');
+    });
+</script>

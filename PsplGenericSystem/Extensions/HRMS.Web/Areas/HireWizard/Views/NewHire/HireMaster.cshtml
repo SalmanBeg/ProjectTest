@@ -1,0 +1,497 @@
+﻿@model HRMS.Web.Areas.HireWizard.Models.NewHireModel
+@{
+    ViewBag.Title = "HireMaster";
+    { Layout = "~/Areas/HireWizard/Views/Shared/_WizardMasterLayout.cshtml"; }
+}
+ <!-- jQuery UI 1.10.3 -->
+<script src="../Scripts/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<script src="../Scripts/bootstrap.min.js" type="text/javascript"></script>
+<!-- datepicker -->
+<script src="../Scripts/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+    <!-- Date Picker -->
+@*<link href="../Content/css/datepicker/datepicker.css" rel="stylesheet" />*@
+<link href="~/Content/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+   <!-- daterangepicker -->
+<script src="../Scripts/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<!--Time Picker-->
+<script src="../Scripts/plugins/timepicker/bootstrap-timepicker.js"></script>
+<style>
+    .wizard > .steps > ul > li {
+        width: 18%;
+    }
+
+    .wizard.vertical > .steps {
+        display: inline;
+        float: left;
+        width: 18%;
+    }
+
+    .wizard > .steps a,
+    .wizard > .steps a:hover,
+    .wizard > .steps a:active {
+        padding: .5em .5em;
+    }
+
+    .wizard.vertical > .content {
+        display: inline;
+        float: left;
+        margin: 0 2em 0.5em 1em;
+        width: 78%;
+    }
+
+    .wizard > .content > .body {
+        padding: 0 2.5% 2.5% 2.5%;
+        width: 100%;
+    }
+
+    .container {
+        width: 100%;
+    }
+</style>
+<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+<style type="text/css">
+    #image_preview_area {
+        font-size: 14px;
+        top: 248px;
+        left: 411px;
+        position: absolute;
+        padding: 15px;
+        background-color: White;
+        border: 1px solid #aaaaaa;
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+        z-index: 100;
+    }
+
+    .form-group {
+        margin-bottom: 7px;
+    }
+
+    .body {
+        font-size: 13px;
+    }
+
+    .wizard .content .body input {
+        min-height: 0px;
+    }
+
+    .wizard > .content {
+        min-height: 43em;
+    }
+</style>
+
+@using HRMS.Web.Helper;
+<div class="content">
+    <div class="content-header" id="header" style="margin-left: 20.5%;"></div>
+
+    <div class="container" id="wrap" style="width: 98%">
+        <div>
+            <div id="wizard">
+                <h1>Welcome</h1>
+                <section>
+                    <div data-val-1="Welcome">
+                        @if (Model.ScreenVerbiage != null && Model.ScreenVerbiage.HireWizardWelcomeText != null)
+                       {
+                           @Html.Raw(Model.ScreenVerbiage.HireWizardWelcomeText)
+                       }
+                       else
+                       {
+                           <p>You are welcome and please fill the mentioned forms</p>
+                        }
+                    </div>
+                </section>
+
+                @Html.HiddenFor(m => m.Employee.UserId)
+                @foreach (var step in Model.HireActiveStepList)
+                {
+
+                    if (step.StepName == "Employee" && (step.IsActive == true))
+                    {
+                        <h1>Employee</h1>
+                <section style="overflow-y: auto;">
+                    <div data-val-1="Employee" data-val-2="@step.StepId">
+                        @{
+                        Html.RenderPartial("_EmployeeView", Model.EmployeeFormModel);
+                                }
+                    </div>
+                </section>
+                }
+                    if (step.StepName == "Tax_W4" && (step.IsActive == true))
+                    {
+                        <h1>Taxes</h1>
+                <section style="overflow-y: auto;">
+                    <div id="dvTaxes" data-val-1="Taxes" data-val-2="@step.StepId">
+                        @*  @{
+                                    //Html.RenderPartial("_EmployeeTaxDetailView", Model.EmployeeTaxW4Model);
+                                        }*@
+                    </div>
+                </section>
+                }
+                    if (step.StepName == "DirectDeposit" && (step.IsActive == true))
+                    {
+                        <h1>Direct Deposit</h1>
+                <section>
+                    <div id="directdeposit" data-val-1="DirectDeposit" data-val-2="@step.StepId"></div>
+                </section>
+                }
+                    if (step.StepName == "ConsentForms" && (step.IsActive == true))
+                    {
+                        <h1>Consent Forms</h1>
+                <section>
+                    <div id="consentForms" data-val-1="ConsentForms" data-val-2="@step.StepId"></div>
+                </section>
+                }
+                    if (step.StepName == "Eligibility_I9" && (step.IsActive == true))
+                    {
+                        <h1>FormI9</h1>
+                <section style="overflow-y: auto;">
+                    <div id="divEligibility_I9" data-val-1="Eligibility_I9" data-val-2="@step.StepId">
+                    </div>
+                </section>
+                }
+                
+                }
+                <h1>Approval</h1>
+                <section>
+                    <div id="approvalGrid" data-val-1="ApprovalGrid">
+                        @if (Model.ScreenVerbiage != null )
+                        {
+                            @Html.Raw(Model.ScreenVerbiage.HireWizardApprovalText)
+                        }
+                        else
+                        {
+                        <p>Please make sure the provided details are correct before submitting. Your details will be processed and you will be contacted on approval</p>
+                        }
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var HireWizard;
+    $(document).ready(function () {
+        var userid = '@GlobalsVariables.CurrentUserId';
+        HireWizard = new HRMS.HireWizard(userid);
+    });
+
+</script>
+
+<script type="text/javascript">
+    var i = 0;
+    //set start index value to 1 in hire wizard if not hirewizard
+    if ('@GlobalsVariables.IsHireWizard' == 'false') {
+        i = 1;
+    }
+
+    $("#wizard").steps({
+        headerTag: "h1",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        stepsOrientation: 1,
+        startIndex: i,
+        // Enables all steps from the begining
+        enableAllSteps: true,
+        onStepChanging: function (event, currentIndex, newIndex) {
+            debugger;
+            var currentstep = $("#wizard-p-" + currentIndex + " div").attr("data-val-1");
+            var currentstepId = $("#wizard-p-" + currentIndex + " div").attr("data-val-2");
+            var validresult;
+            switch (currentstep) {
+                case "Welcome":
+                    return true;
+                    break;
+                case "Employee":
+                    validresult = $("#addemployeeview").valid();
+                    if (validresult == false) {
+                        return validresult;
+                    } else {
+                        $('#btnemployeesubmit').click();
+                        UpdateStepSubmitStatus(currentstepId);
+                    }
+                    break;
+                case "DirectDeposit":
+                    UpdateStepSubmitStatus(currentstepId);
+                    break;
+                case "ConsentForms":
+                    UpdateStepSubmitStatus(currentstepId);
+                    break;
+                case "Taxes":
+                    validresult = $("#addtaxformview").valid();
+                    if (validresult == false) {
+                        return validresult;
+                    } else {
+                        $('#btnTaxSave').click();
+                        UpdateStepSubmitStatus(currentstepId);
+                    }
+                    break;
+                case "Eligibility_I9":
+
+                    $('#btnI9FormSave').click();
+                    validresult = $("#txtFlag").val();//$("#I9WorkAuthorizationformview").valid();
+
+
+                    if (validresult == "true") {
+
+                        $('#btnI9FormSave').click();
+                        UpdateStepSubmitStatus(currentstepId);
+
+                    }
+                    else {
+                        return false;
+                    }
+
+                    break;
+                default:
+                    return true;
+                    break;
+            }
+            return true;
+        },
+        onStepChanged: function (event, currentIndex, priorIndex) {
+
+            var currentstep = $("#wizard-p-" + currentIndex + " div").attr("data-val-1");
+            var currentstepId = $("#wizard-p-" + currentIndex + " div").attr("data-val-2");
+            var validresult;
+            switch (currentstep) {
+                case "Welcome":
+                    return true;
+                    break;
+                case "Personal":
+                    //validresult = $("#addemployeeview").valid();
+                    //if (validresult == false) {
+                    //    return validresult;
+                    //} else {
+                    //    $('#btnemployeesubmit').click();
+                    //    UpdateStepSubmitStatus(currentstepId);
+                    //}
+                    break;
+                case "Employee":
+                    //validresult = $("#addemploymentview").valid();
+                    //if (validresult == false) {
+                    //    return validresult;
+                    //} else {
+                    //    $('#btnemploymentsubmit').click();
+                    //    UpdateStepSubmitStatus(currentstepId);
+                    //}
+                    break;
+                case "DirectDeposit":
+                    LoadDirectDepositGrid();
+                    break;
+                case "ConsentForms":
+                    LoadConsentGrid();
+                    break;
+                case "Taxes":
+                    LoadTax();
+                    break;
+                case "Eligibility_I9":
+                    LoadI9WorkAuthorization();
+                    break;
+                default:
+                    return true;
+                    break;
+            }
+            return true;
+        },
+        onFinishing: function (event, currentIndex) {
+            var currentstep = $("#wizard-p-" + currentIndex + " div").attr("data-val-1");
+            var currentstepId = $("#wizard-p-" + currentIndex + " div").attr("data-val-2");
+            var validresult;
+            switch (currentstep) {
+                case "Welcome":
+                    //  return true;
+                    break;
+                case "Employee":
+                    validresult = $("#addemployeeview").valid();
+                    if (validresult == false) {
+                        return validresult;
+                    } else {
+                        $('#btnemployeesubmit').click();
+                        UpdateStepSubmitStatus(currentstepId);
+                    }
+                    break;
+                case "DirectDeposit":
+                    LoadDirectDepositGrid();
+                    UpdateStepSubmitStatus(currentstepId);
+                    validresult = true;
+                    break;
+                case "ConsentForms":
+                    LoadConsentGrid();
+                    UpdateStepSubmitStatus(currentstepId);
+                    validresult = true;
+                    break;
+                case "Taxes":
+                    validresult = $("#addtaxformview").valid();
+                    if (validresult == false) {
+                        return validresult;
+                    } else {
+                        $('#btnTaxSave').click();
+                        LoadTax();
+                        UpdateStepSubmitStatus(currentstepId);
+                    }
+                    break;
+                case "Eligibility_I9":
+                    validresult = $("#I9WorkAuthorizationxformview").valid();
+                    if (validresult == false) {
+                        return validresult;
+                    } else {
+                        $('#btnI9FormSave').click();
+                        LoadI9WorkAuthorization();
+                        UpdateStepSubmitStatus(currentstepId);
+                    }
+                    break;
+                default:
+                    validresult = true;
+                    break;
+            }
+            return validresult;
+        },
+        onFinished: function (event, currentIndex) {
+            debugger;
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            //Hirewizard check
+            if ('@GlobalsVariables.IsHireWizard' == "true") {
+
+                UpdateEmployeeStatus();
+
+            } else {
+                //applied in approval
+                UpdateApprovalForNewHireStatus();
+            }
+        }
+    });
+    //remove first step from wizard if not hirewizard
+    if ('@GlobalsVariables.IsHireWizard' == 'false') {
+
+        $("#wizard").steps("remove", 0, {
+        });
+    }
+
+
+    var UpdateApprovalForNewHireStatus = function () {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "NewHire/UpdateApprovalforNewHireEmployee",
+            type: "POST",
+            data: "",
+            success: function (data) {
+                if (data == "True") {
+                    window.location.href = baseurl + "Home/EmployeeDashboard";
+                }
+            }
+        });
+    };
+
+
+    var LoadDirectDepositGrid = function () {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "EmployeeDirectDeposit/_DirectDepositView",
+            type: "POST",
+            data: "",
+            success: function (data) {
+                $("#directdeposit").empty();
+                $("#directdeposit").html(data);
+            }
+        });
+    };
+
+    var UpdateEmployeeStatus = function () {
+
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "HireWizard/NewHire/UpdateHireStatusofEmployee",
+            type: "POST",
+            data: "",
+            success: function (data) {
+                if (data == "True") {
+                    alert("Submitted!");
+                    window.location.href = baseurl;
+                } else {
+                    alert("Cannot be submitted please contact administrator.");
+                }
+            },
+            error: function (errmsg) {
+
+            }
+        });
+    };
+
+    var UpdateStepSubmitStatus = function (stepID) {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var StepId = stepID;
+        $.ajax({
+            url: baseurl + "NewHire/UpdateStepSubmitStatus",
+            type: "POST",
+            data: { "stepId": StepId },
+            success: function (data) {
+                if (data == "True") { }
+            }
+        });
+    };
+
+    function statebind(param) {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var countryregionId = $(param.data.countryid).val();
+        if (countryregionId != null && countryregionId != "") {
+            var baseurl1 = baseurl + "Account/FillStatesByCountryId";
+            $.getJSON(baseurl1, { CountryRegionId: countryregionId }, function (countryData) {
+                var select = $(param.data.stateid);
+                select.html('');
+                $.each(countryData, function (index, itemData) {
+                    select.append($('<option/>', {
+                        value: itemData.StateProvinceID,
+                        text: itemData.Name,
+                    }));
+                });
+            });
+        }
+    }
+    $("#personalcountry").change({ stateid: '#personalstate', countryid: '#personalcountry' }, statebind);
+
+    var LoadConsentGrid = function () {
+        debugger;
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "OnBoardingProfile/_ConsentFormsView",
+            type: "POST",
+            data: "",
+            success: function (data) {
+                $("#consentForms").empty();
+                $("#consentForms").html(data);
+            }
+        });
+    };  //I9WorkAuthorizationxformview
+    var LoadTax = function () {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "EmployeeTax/_EmployeeTaxView",
+            type: "GET",
+            data: "",
+            success: function (data) {
+                $("#dvTaxes").empty();
+                $("#dvTaxes").html(data);
+                return false;
+            }
+        });
+    };
+
+    var LoadI9WorkAuthorization = function () {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "I9WorkAuthorization/_I9WorkAuthorizationView",
+            type: "GET",
+            data: "",
+            success: function (data) {
+                $("#divEligibility_I9").empty();
+                $("#divEligibility_I9").html(data);
+                return false;
+            }
+        });
+    };
+
+</script>

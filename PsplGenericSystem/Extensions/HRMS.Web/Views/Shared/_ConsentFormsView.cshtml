@@ -1,0 +1,534 @@
+﻿@model IEnumerable<HRMS.Web.ViewModels.ConsentFormsFormModel>
+
+
+<script src="~/Content/ESign/jquery.signaturepad.js"></script>
+<script src="~/Content/ESign/base64.js"></script>
+<script src="~/Content/ESign/html2canvas.js"></script>
+<script src="~/Content/ESign/canvas2image.js"></script>
+<script src="~/Content/ESign/jspdf.debug.js"></script>
+<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/ESign/assets/jquery.signaturepad.css" rel="stylesheet" />
+
+<style>
+    .tabs li {
+        list-style: none !important;
+        display: inline !important;
+    }
+
+    .tabs a {
+        padding: 5px 10px;
+        display: inline-block;
+        background: #ccc;
+        color: #fff;
+        text-decoration: none;
+    }
+
+        .tabs a.active {
+            /*-webkit-border-top-left-radius: 8px;
+            -webkit-border-top-right-radius: 8px;
+             border-radius: 8px 8px 0 0;*/
+            background: #fff;
+            color: #000;
+        }
+
+    .width {
+        width: 225px;
+        list-style: none !important;
+    }
+</style>
+<div class="content">
+    <div class="grid-area">
+        <div id="gridContent">
+            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="gridTable">
+                <thead>
+                    <tr>
+                        <th data-toggle="true">
+
+                            @Html.DisplayNameFor(model => model.DocumentName)
+                        </th>
+                        <th data-toggle="true">
+                            @Html.DisplayName("Signed")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(((string)item.DocumentName), "", new { id = item.AttachmentFileId, name = item.DocumentName }, new { @class = "myLink", data_id = item.AttachmentFileId })
+                            </td>
+                            <td>
+
+                                @if (item.EmployeeSignId > 0)
+                                {
+                                    <input type="hidden" id="hfEmployeeSignId" value=@item.EmployeeSignId>
+                                    @Html.CheckBox(" ", true, new { @id = "chksigned" }) }
+                                else
+                                {
+                                    <input type="hidden" id="hfEmployeeSignId" value=0>
+                                    @Html.CheckBox(" ", false, new { @id = "chksigned", @disabled = "disabled" })}
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagination pagination-centered hide-if-no-paging"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- show document dialog-->
+<div class="modal fade modal-fullscreen  " id="ViewConsentFormDocumentDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 0;">
+    <div class="modal-dialog modal-lg" style="width: 100%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <span id="filename"></span>
+            </div>
+            <div class="modal-body" style="overflow:scroll; height:450px;">
+                <iframe id="imgviewer" height="450px" width="55%" frameborder='0' scrolling='yes'></iframe>
+                @*<iframe id="signimgviewer" height="450px" width="55%" frameborder='0' scrolling='yes'></iframe>*@
+                <div style="width: 35%; display: inline-block;">
+                    <ul class='tabs'>
+                        <li><a href='#tab1'>Choose Existing Sign</a></li>
+                        <li><a href='#tab2'>Create New Sign</a></li>
+                    </ul>
+                    <div id='tab1'>
+                        <div>
+                            <ul>
+                                @foreach (var item in Model)
+                                {
+                                    if (item.EmployeeSignList != null)
+                                    {
+                                        foreach (var subitem in item.EmployeeSignList)
+                                        {
+                                            var x = "data:image/png;base64," + Convert.ToBase64String(@subitem.SignFileBytes);
+                                            <li><input type="image" src=@x alt=@subitem.EmployeeSignId id=@subitem.EmployeeSignId style="width:100px;height:50px" /></li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li>No existing signatures available.</li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div id='tab2'>
+                        <div class="sigPad" style="width: 25%;background-color: white; ">
+                            <label for="name">Type your name</label>
+                            <input type="text" name="name" id="name" class="name">
+                            <p class="typeItDesc width" id="EsignType">Review your signature</p>
+                            <p class="drawItDesc width" id="EsignDraw">Draw your signature</p>
+                            <ul class="sigNav width" style="list-style: none !important; ">
+                                <li class="typeIt"><a href="#type-it" class="current">Type</a></li>
+                                <li class="drawIt"><a href="#draw-it">Sign</a></li>
+                                <li class="clearButton"><a href="#clear">Clear</a></li>
+                            </ul>
+                            <div class="sig sigWrapper width" style="height:85px;">
+                                <div class="typed" id="idtyped"></div>
+                                <canvas class="pad" id="drawingCanvas" width="198" height="65"></canvas>
+                                <input type="hidden" name="output" class="output">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 44.5%; background-color: white; float: right;">
+                    <a href="#" id="asignConsent" class="btn btn-success">Sign Here</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div>
+    <input type="hidden" id="hfcanvas" />
+    <input type="hidden" id="hfsigdiv" />
+    <input type="hidden" id="hfconsentId" />
+    <input type="hidden" id="hfsignedImg" value="@TempData["I9SignImageId"]" />
+    <input type="hidden" id="hfmergedDoc" value="@TempData["mergedimage"]">
+</div>
+<!--show document dialog End-->
+
+<div class="modal fade modal-fullscreen  " id="ViewSignedConsentFormDocumentDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 0;">
+    <div class="modal-dialog modal-lg" style="width: 100%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <span id="filename"></span>
+            </div>
+            <div id="divMergedDocuments" class="modal-body" style="overflow:scroll; height:100%;">
+                <iframe id="consentDocument" height="450px" width="55%" frameborder='0' scrolling='yes'></iframe>
+                @*<img src="@TempData["consentDocument"]" alt="consentDocument" height="65px" id="iConsentDocument"/>*@
+                <p><img src="@TempData["consentSignImage"]" alt="Signature" height="65px" id="iSignature" /></p>
+                @*<div id="diviDocument"><iframe id="iMergedDocument" height="450px" width="55%" frameborder='0' scrolling='yes'></iframe></div>*@
+                @*<img id="imergedImage" src="" alt="mergedimage"/>*@
+            </div>
+            @*<input type="button" id="btnSaveSign" value="Save Document" class="btn btn-success" />*@
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-fullscreen" id="DialogViewSignedDocument" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 0;">
+    <div class="modal-dialog modal-lg" style="width: 100%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <span id="filename"></span>
+            </div>
+            <div id="divMergedDocument" class="modal-body" style="overflow:scroll; height:100%;">
+                <p><img src=@TempData["signedDocument"] alt="Signature" height="65px" id="iSignedDocument" /></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var activeTab;
+    var selectedImageId;
+    $(document).ready(function () {
+
+
+        $("#chksigned").click(function () {
+            // this function will get executed every time the #chksigned element is clicked and unsigns the consent form
+            if ($(this).is(":unchecked")) {
+                var consentId = $('.myLink').data("id");
+                var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                $.ajax({
+                    url: baseurl + "OnBoardingProfile/signConsentForm",
+                    type: 'post',
+                    cache: false,
+                    data: { signId: 0, consentFormId: consentId },
+                    success: function () {
+                        location.reload();
+                    }
+                });
+                alert('consent form is unsigned');
+            }
+        });
+        $('#btnSaveSign').click(function () {
+
+            html2canvas($("#divMergedDocuments"), {
+                onrendered: function (canvas) {
+                    theCanvas = canvas;
+                    document.body.appendChild(canvas);
+                    canvas.id = "idpdfview";
+                    var drawingCanvas = document.getElementById('idpdfview');
+                    var drawingContext = drawingCanvas.getContext('2d');
+                    var imgData;
+                    imgData = drawingCanvas.toDataURL("image/jpeg");
+                    document.body.removeChild(canvas);
+                    var pdf = new jsPDF();
+                    var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+
+                    var consentDocumentId = $('#hfconsentId').val();
+                    var timesheetId = '@TempData["TimesheetId"]';
+
+                    pdf.addImage(imgData, 'JPEG', 0, 0);
+                    var string = pdf.output('datauristring');
+                    var pdfbase64string = string.replace(/^data:application\/(pdf);base64,/, "")
+
+                    var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                    //$.ajax({
+                    //    url: baseurl + "OnBoardingProfile/CanvastoPDF",
+                    //    type: 'Post',
+                    //    cache: false,
+                    //    data: {
+                    //        ByteTextFromCanvas: pdfbase64string, ConsentDocumentId: consentDocumentId
+                    //    },
+                    //    success: function (data) {
+                    //        if (data != null) {
+                    //            $("#DialogViewSignedDocument").modal('show');
+                    //            $('#ViewConsentFormDocumentDialog').modal('hide');
+                    //            $('#ViewSignedConsentFormDocumentDialog').modal('hide');
+                    //        }
+                    //    },
+                    //    error: function () {
+                    //        alert(Error);
+                    //    }
+                    //});
+                }
+            });
+            @*html2canvas($("#diviDocument"), {
+                onrendered: function (canvas) {
+                    theCanvas = canvas;
+                    document.body.appendChild(canvas);
+                    canvas.id = "idpdfview";
+                    var drawingCanvas = document.getElementById('idpdfview');
+                    var drawingContext = drawingCanvas.getContext('2d');
+                    var imgData;
+                    imgData = drawingCanvas.toDataURL("image/jpeg");
+                    document.body.removeChild(canvas);
+                    var pdf = new jsPDF();
+                    var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+
+                    var consentDocumentId = $('#hfconsentId').val();
+                    var timesheetId = '@TempData["TimesheetId"]';
+
+                    pdf.addImage(imgData, 'JPEG', 0, 0);
+                    var string = pdf.output('datauristring');
+                    var pdfbase64string = string.replace(/^data:application\/(pdf);base64,/, "")
+                    var simage = $('#iSignature').attr('src');
+
+                    var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                    $.ajax({
+                        url: baseurl + "OnBoardingProfile/MergeFiles",
+                        type: 'Post',
+                        cache: false,
+                        data: {
+                            ByteTextFromCanvas: pdfbase64string, SignImage: simage
+                        },
+                        success: function (data) {
+                            if (data != null) {
+                                var icdocument = $('#iMergedDocument');
+                                icdocument[0].src = $('#hfmergedDoc').attr('value');
+                                $('#imergedImage')[0].src= $('#hfmergedDoc').attr('value');
+
+                                        //$("DialogViewSignedDocument").modal('show');
+                                        //$('#ViewConsentFormDocumentDialog').modal('hide');
+                                        //$('#ViewSignedConsentFormDocumentDialog').modal('hide');
+                                    }
+                                },
+                                error: function () {
+                                    alert(Error);
+                                }
+                            });
+                        }
+                    });*@
+
+        });
+
+
+        /* put border around selected sign */
+        $("input:image").click(function () {
+            $("input:image").css("border", '0px');
+            $(this).css("border", '3px solid black');
+            selectedImageId = $(this).attr('id');
+        });
+        /* to display sign tabs */
+        $('ul.tabs').each(function () {
+            // For each set of tabs, we want to keep track of
+            // which tab is active and it's associated content
+            var $active, $content, $links = $(this).find('a');
+
+            // If the location.hash matches one of the links, use that as the active tab.
+            // If no match is found, use the first link as the initial active tab.
+            $active = $($links.filter('[href="' + location.hash + '"]')[0] || $links[0]);
+            $active.addClass('active');
+            activeTab = $active[0].hash;
+            $content = $($active[0].hash);
+            // Hide the remaining content
+            $links.not($active).each(function () {
+                $(this.hash).hide();
+            });
+            // Bind the click event handler
+            $(this).on('click', 'a', function (e) {
+                // Make the old tab inactive.
+                $active.removeClass('active');
+                $content.hide();
+                // Update the variables with the new link and content
+                $active = $(this);
+                activeTab = $(this.hash);
+                $content = $(this.hash);
+                // Make the tab active.
+                $active.addClass('active');
+                $content.show();
+                // Prevent the anchor's default click action
+                e.preventDefault();
+            });
+        });
+        $('.sigPad').signaturePad();
+        $(".myLink").click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            $('#filename').text($(this)[0].innerHTML);
+            var EmptyCanvas = document.getElementById('drawingCanvas'),
+                            drawingContext = EmptyCanvas.getContext('2d');
+            $('#hfcanvas')[0].value = EmptyCanvas.toDataURL();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var isource = $("#imgviewer");
+            var source = $("#signimgviewer");
+            if (isource.length > 0) {
+                isource[0].src = baseurl + "OnBoardingProfile/Showfile?fileid=" + $(this).data("id") + "&FileMode=normal";//?fileid=" + fileid + "&FileMode=normal";
+                $('#hfconsentId').val($(this).data("id"));
+            }
+
+            if ($('#hfEmployeeSignId').val() > 0) {
+                var isign = $("#iSignature");
+                var iConsent = $('#consentDocument');
+                var isource = $("#imgviewer");
+                if (isign.length > 0) {
+                    $.ajax(
+                        {
+                            url: baseurl + "OnBoardingProfile/getSignedImage",
+                            type: 'post',
+                            cache: false,
+                            data: { signId: $('#hfEmployeeSignId').val() },
+                            success: function (signBytes) {
+                                if (signBytes) {
+                                    isign[0].src = signBytes;
+                                }
+                            }
+                        });
+                }
+                if (isource.length > 0) {
+                    iConsent[0].src = isource[0].src;
+                }
+                showSignedConsentDocument();
+            }
+            else {
+                $('#ViewConsentFormDocumentDialog').modal();
+            }
+        });
+
+        /*after clickin sign here*/
+        $('#asignConsent').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            SubmitConsentForm();
+        });
+    });
+    function SubmitConsentForm() {
+        /* if existing signature is selected */
+        if (activeTab != null && activeTab == "#tab1") {
+            var isign = $("#iSignature");
+            var iConsent = $('#consentDocument');
+            var isource = $("#imgviewer");
+            if (isign.length > 0) {
+                isign[0].src = $('#' + selectedImageId).attr('src');
+            }
+            if (isource.length > 0) {
+                iConsent[0].src = isource[0].src;
+            }
+            var consentId = $('#hfconsentId').val();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            $.ajax({
+                url: baseurl + "OnBoardingProfile/signConsentForm",
+                type: 'post',
+                cache: false,
+                data: { signId: selectedImageId, consentFormId: consentId },
+                success: function () {
+                    location.reload();
+                }
+            });
+            showSignedConsentDocument();
+        }
+            /* if new signature is signed */
+        else {
+            var _consentname = $('#filename')[0].innerHTML;
+            if (_consentname.length > 0) {
+                var typeItval = $('#EsignType');
+                var drawItval = $('#EsignDraw');
+                var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                var canvasstring;
+                if (drawItval[0].style.display == "block") {
+                    var drawingCanvasDraw = document.getElementById('drawingCanvas'),
+                        drawingContext = drawingCanvasDraw.getContext('2d');
+                    var dataUrlLocal;
+                    dataUrlLocal = drawingCanvasDraw.toDataURL();
+                    var myImageDraw = drawingCanvasDraw.toDataURL("image/png");
+                    myImageDraw = myImageDraw.replace(/^data:image\/(png|jpg);base64,/, "")
+                    canvasstring = $('#hfcanvas')[0].value;
+                    if ($('#hfcanvas')[0].value == dataUrlLocal || canvasstring == dataUrlLocal) {
+                        alert('please sign the signature.');
+                        return false;
+                    }
+                    $('#filename').text($(this)[0].innerHTML);
+                    var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                    var isource = $("#imgviewer");
+                    var source = $("#signimgviewer");
+                    if (isource.length > 0) {
+                        isource[0].src = baseurl + "OnBoardingProfile/Showfile?fileid=" + $('.myLink').data("id") + "&FileMode=normal";//?fileid=" + fileid + "&FileMode=normal";
+                    }
+                    var parms = { fileName: _consentname, eSign: myImageDraw, consentDocumentId: $('#hfconsentId').val(), filePath: $("#imgviewer")[0].src };
+                    var datvalue;
+                    var consentId = $('#hfconsentId').val();
+                    $.ajax({
+                        url: baseurl + "Files/SignConsentFiles",
+                        type: 'post',
+                        cache: false,
+                        data: parms,
+                        success: function (result) {
+
+                            if (result) {
+                                //showSignedConsentDocument();
+                                $.ajax({
+                                    url: baseurl + "OnBoardingProfile/signConsentForm",
+                                    type: 'post',
+                                    cache: false,
+                                    data: { signId: parseInt(result), consentFormId: consentId },
+                                    success: function () {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                            alert(Error);
+                        }
+                    });
+                }
+                else {
+                    html2canvas($("#idtyped"), {
+                        onrendered: function (canvas) {
+                            canvas.id = "idcanvasSubmit";
+                            theCanvas = canvas;
+                            document.body.appendChild(canvas);
+                            var drawingCanvasType = document.getElementById('idcanvasSubmit');
+                            var drawingContext = drawingCanvasType.getContext('2d');
+                            var myImageType = drawingCanvasType.toDataURL("image/png");
+                            myImageType = myImageType.replace(/^data:image\/(png|jpg);base64,/, "");
+                            var DefaultDivImage = $('#hfsigdiv')[0].value;
+                            var typevalue = $('#name');
+                            if (typevalue[0].value == "" || myImageType == DefaultDivImage) {
+                                document.body.removeChild(canvas);
+                                alert('please type the signature.');
+                                return false;
+                            }
+                            var source = $("#signimgviewer");
+                            if (source.length > 0) {
+                                source[0].src = baseurl + "OnBoardingProfile/Showfile?fileid=" + $('#hfconsentId').val() + "&FileMode=normal";//?fileid=" + fileid + "&FileMode=normal";;
+                            }
+                            var parms = { fileName: _consentname, eSign: myImageType, consentDocumentId: $('#hfconsentId').val(), filePath: $("#imgviewer")[0].src };
+                            var consentId = $('#hfconsentId').val();
+                            $.ajax({
+                                url: baseurl + "Files/SignConsentFiles",
+                                type: 'post',
+                                cache: false,
+                                data: parms,
+                                success: function (result) {
+                                    if (result) {
+
+                                        //showSignedConsentDocument();
+                                        $.ajax({
+                                            url: baseurl + "OnBoardingProfile/signConsentForm",
+                                            type: 'post',
+                                            cache: false,
+                                            data: { signId: parseInt(result), consentFormId: consentId },
+                                            success: function () {
+                                                location.reload();
+                                            }
+                                        });
+                                    }
+                                },
+                                error: function () {
+                                    alert(Error);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        }
+    }
+    function showSignedConsentDocument() {
+        $('#ViewConsentFormDocumentDialog').modal('hide');
+        $('#ViewSignedConsentFormDocumentDialog').modal();
+    }
+</script>

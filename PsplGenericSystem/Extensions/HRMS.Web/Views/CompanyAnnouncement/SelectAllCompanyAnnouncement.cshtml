@@ -1,0 +1,109 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.CompanyAnnouncement>
+@{
+    ViewBag.Title = "SelectAllCompanyAnnouncement";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div>
+    @Html.ActionLink("Add", "AddCompanyAnnouncement", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteCompanyAnnouncement" })
+    @Html.ActionLink("<< Back to Communication", "CommunicationDashboard", "Communication", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="companyAnnouncementGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa" />
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.PublishStartDate)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.PublishEndDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" id="@item.CompanyAnnouncementId" data-val-1="@item.CompanyAnnouncementId" class="btncheckcompanyannouncement" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.Title), "AddCompanyAnnouncement", new { @CompanyAnnouncementId = item.CompanyAnnouncementId }, new { id = "CompanyAnnouncementId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PublishStartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PublishEndDate)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Communication<small>Company Announcement List</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Communication</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#btnDeleteCompanyAnnouncement").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#companyAnnouncementGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "CompanyAnnouncement/DeleteCompanyAnnouncement",
+                    type: "POST",
+                    cache: "false",
+                    data: { companyAnnouncementIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                       
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#companyAnnouncementGridContent input:checkbox').iCheck('check');
+    });
+
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#companyAnnouncementGridContent input:checkbox').iCheck('uncheck');
+    });
+</script>
+
+

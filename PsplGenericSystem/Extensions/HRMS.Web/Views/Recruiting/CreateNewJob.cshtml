@@ -1,0 +1,277 @@
+﻿@using HRMS.Common.Helpers
+@model HRMS.Web.ViewModels.JobProfileFormModel
+@{
+    ViewBag.Title = "CreateNewJob";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<style type="text/css">
+    .horizontal {
+        display: inline;
+        font-size: medium;
+        padding-right: 40px;
+    }
+</style>
+
+@using (Html.BeginForm("CreateNewJob", "Recruiting", FormMethod.Post, new { id = "newJobForm" }))
+{
+    <div class="form-horizontal">
+        <div class="col-sm-10">
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobProfile.Title, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.JobProfile.Title, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobProfile.CityStateOrZipCode, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.JobProfile.CityStateOrZipCode, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobProfile.JobCategory, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.JobProfile.JobCategory, new SelectList(Model.JobCategoryList, "Id", "Name"), "--Select--", new { @class = "drplookup form-control", @data_val_1 = LocalizedStrings.JobCategory })
+            </div>
+
+            <ul style="padding-top: 10px;">
+
+                <li class="horizontal">
+                    @Html.Label("Select")
+                </li>
+                <li class="horizontal">
+                    <a href="#" class="jobproperties" data-val-1="jobduties">Job Duties</a>
+                </li>
+                <li class="horizontal">
+                    <a href="#" class="jobproperties" data-val-1="jobqualifications">Job Qualifications</a>
+                </li>
+                <li class="horizontal">
+                    <a href="#" class="jobproperties" data-val-1="jobpme">Job PME</a>
+                </li>
+                <li class="horizontal">
+                    <a href="#" class="jobproperties" data-val-1="ConfRecQue">Configure Recruiting Questions</a>
+                </li>
+
+                @*<li class="horizontal">
+                    @Html.ActionLink("Configure Recruiting Questions", "AddRecruitingQuestions", "Recruiting")
+                </li>*@
+            </ul>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobProfile.JobDescription, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.JobProfile.JobDescription, new { @id = "editor" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobProfile.CompanyDescription, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.JobProfile.CompanyDescription, new { @class = "form-control" })
+            </div>
+
+            <div id="additionaldetails">
+                <ul style="list-style: none; padding: 0;border:1px" id="additionaldetails">
+
+                    <li class="horizontal">
+                        @Html.Label("Additional Info Required")
+                    </li>
+                    <li class="horizontal">
+                        @Html.LabelFor(m => m.JobProfile.IsBasicInfo, new { @class = "control-label" })
+                        @Html.CheckBoxFor(m => m.JobProfile.IsBasicInfo)
+                    </li>
+                    <li class="horizontal">
+                        @Html.LabelFor(m => m.JobProfile.IsEducation, new { @class = "control-label" })
+                        @Html.CheckBoxFor(m => m.JobProfile.IsEducation)
+                    </li>
+                    <li class="horizontal">
+                        @Html.LabelFor(m => m.JobProfile.IsEmployment, new { @class = "control-label" })
+                        @Html.CheckBoxFor(m => m.JobProfile.IsEmployment)
+                    </li>
+                    <li class="horizontal">
+                        @Html.LabelFor(m => m.JobProfile.IsCertification, new { @class = "control-label" })
+                        @Html.CheckBoxFor(m => m.JobProfile.IsCertification)
+                    </li>
+                    <li class="horizontal">
+                        @Html.LabelFor(m => m.JobProfile.IsSkill, new { @class = "control-label" })
+                        @Html.CheckBoxFor(m => m.JobProfile.IsSkill)
+                    </li>
+                </ul>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobProfile.HiringManager, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.JobProfile.HiringManager, new SelectList(Model.HiringManagerList, "UserId", "UserName"), "--Select--", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>Send new candidates to following recruiters</label>
+                <div id="selectrecruiters" style="max-height:200px; overflow-y:scroll;">
+                    <ul style="list-style: none; padding: 0;border:1px" id="recruiterslist">
+
+                        @foreach (var a in Model.EmployeeList)
+                        {
+                            <li>@Html.CheckBoxFor(entity => entity.JobProfile.Status1, new { @id = a.UserId }) @a.UserName </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.JobProfile.PostDate, new { @class = "control-label" })
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.JobProfile.PostDate, (Model.JobProfile.PostDate == null ? "" : ((DateTime)Model.JobProfile.PostDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "postDate" })
+                    <label for="postDate" class="input-group-addon btn">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </label>
+                </div>
+            </div>
+            @*@Html.HiddenFor(m => m.JobQualifications, new { @id = ""})
+            @Html.HiddenFor(m => m.JobDuties, new { id = "" })
+            @Html.HiddenFor(m => m.JobPmes, new { id = ""})
+            @Html.HiddenFor(m => m.RecruitingQuestions, new { id= ""})*@
+            @Html.HiddenFor(m => m.RecruiterIdList, new { @id = "recruiterIdList" })
+            @Html.HiddenFor(m => m.JobProfile.IsPosted, new { @id = "isPosted" })
+
+        </div>
+        <div class="form-group">
+            @*<div class="col-sm-offset-2 control-button">*@
+            <div class="col-sm-10 control-button">
+                <input type="submit" id="btnSaveJob" value="Create Draft" class="btn btn-success" /> OR
+                <input type="submit" id="btnCreateandPost"  value="Create & Post Now" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Job Property dialog-->
+<div class="modal fade" id="addJobPropertyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:50%">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Select Job Properties</h4>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                <div id="dvjobproperties"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<!-- Configure Recruiting Question dialog-->
+<div class="modal fade" id="addConfigureRecQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Select Configure Recruiting Question</h4>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                <div id="dvConfRecQue"></div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor');
+
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea").wysihtml5();
+    });
+
+    $(document).ready(function () {
+        var resultingSiteview = "<h3></h3><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../Home/SelectOnBoardingStep"' + ">Administration</a></li><li><a href=" + '"../Recruiting/RecruitingDashboard"' + ">Recruiting</a></li><li class=" + '"active"' + ">Create New Job</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#btnSaveJob,#btnCreateandPost").click(function () {
+            var recruiterCount = $('#recruiterslist :checked').map(function () {
+                return this.id;
+            }).get();
+            $('#recruiterIdList').attr('value', recruiterCount);
+        });
+        $("#btnCreateandPost").click(function () {
+            $('#isPosted').attr('value', 'true');
+        });
+
+        $(".jobproperties").click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var url;
+            var args;
+            var jobproperty = $(this).attr("data-val-1");
+            switch (jobproperty) {
+                case "jobduties":
+                    url = baseurl + "JobDuties/_JobDuties";
+                    break;
+                case "jobqualifications":
+                    url = baseurl + "JobQualification/_JobQualification";
+                    break;
+                case "jobpme":
+                    url = baseurl + "JobPME/_JobPME";
+                    break;
+                case "ConfRecQue":
+                    url = baseurl + "Recruiting/_AddRecruitingQuestions";
+            }
+            LoadJobProperties(url, args);
+        });
+        // to save job duties and inherit its properties
+        //$("#savejobdutiesview").click(function (e) {
+        //    e.preventDefault();
+        //    e.stopPropagation();
+        //    var searchIDs = $("#JobDutiesGridContent input:checkbox:checked").map(function () {
+        //        return $(this).attr("data-val-1");
+        //    }).get();
+        //    if (searchIDs.toString().length > 0) {
+
+        //    }
+        //    else { alert("Please select item(s) to select."); }
+        //});
+      
+
+      
+
+    });//end of document ready
+    var LoadJobProperties = function (url, args) {
+        $.ajax({
+            type: "GET", //GET or POST or PUT or DELETE verb
+            url: url, // Location of the service
+            cache: false,
+            data: { jobProfileId: "0" },
+            success: function (jobPropertyhtml) {//On Successfull service call
+                if (jobPropertyhtml != null) {
+                    $("#dvjobproperties").empty();
+                    $("#dvjobproperties").html(jobPropertyhtml);
+                    $("#addJobPropertyModal").modal('show');
+                }
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+                varType = null; varUrl = null; varContentType = null; varDataType = null; varProcessData = null;
+            } // When Service call fails
+        });
+    };
+
+
+    //var LoadConfigureRecQuestion = function (url, args) {
+    //    $.ajax({
+    //        type: "GET", //GET or POST or PUT or DELETE verb
+    //        url: url, // Location of the service
+    //        cache: false,
+    //        success: function (jobPropertyhtml) {//On Successfull service call
+    //            if (jobPropertyhtml != null) {
+    //                $("#dvConfRecQue").empty();
+    //                $("#dvConfRecQue").html(jobPropertyhtml);
+    //                $("#addConfigureRecQuestion").modal('show');
+    //            }
+    //        },
+    //        error: function (msg) {
+    //            alert(msg.statusText);
+    //            varType = null; varUrl = null; varContentType = null; varDataType = null; varProcessData = null;
+    //        } // When Service call fails
+    //    });
+    //};
+</script>

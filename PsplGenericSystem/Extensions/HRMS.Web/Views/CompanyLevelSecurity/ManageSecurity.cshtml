@@ -1,0 +1,402 @@
+﻿@model HRMS.Web.ViewModels.CompanyLevelSecurityFormModel
+@{
+    ViewBag.Title = "ManageSecurity";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<style>
+    .modal-dialog-center {
+        margin-top: 10%;
+    }
+</style>
+<style>
+    .block {
+        height: 50%;
+        background-color: #FFFE99;
+        width: 250px;
+        border: 1px solid;
+        vertical-align: baseline;
+    }
+</style>
+<link href="~/Content/css/jquerytreegrid/jquery.treegrid.css" rel="stylesheet" />
+<script src="../Scripts/plugins/jquerytreegrid/jquery.treegrid.js"></script>
+<script src="../Scripts/plugins/jquerytreegrid/jquery.treegrid.bootstrap3.js"></script>
+<style type="text/css">
+    .horizontal {
+        display: inline;
+        font-size: medium;
+        padding-right: 40px;
+    }
+</style>
+@using (Html.BeginForm("ManageSecurity", "CompanyLevelSecurity", FormMethod.Post))
+{
+    <div style="padding-bottom: 10px;">
+        
+
+        @Html.ActionLink("Cancel", "SelectAllRoles", "Role", null, new { @class = "btn btn-success", @name = "Cancel" })
+        <input type="submit" name="Save" value="Save" class="btn btn-success" id="btnSaveCompany" />
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon">
+
+                @Html.CheckBoxFor(modelItem => modelItem.CompanyLevelSecurity.CanHire)
+            </div>
+            <span class="form-control checkbox-names">
+                Can hire an employee
+            </span>
+        </div>
+        <div class="input-group">
+
+            <div class="input-group-addon">
+                @Html.CheckBoxFor(modelItem => modelItem.CompanyLevelSecurity.CanViewHires)
+            </div>
+            <span class="form-control checkbox-names">
+                Can view new hires
+            </span>
+        </div>
+        <div class="input-group">
+            <div class="input-group-addon">
+                @Html.CheckBoxFor(modelItem => modelItem.CompanyLevelSecurity.CanAccessDashboard)
+            </div>
+            <span class="form-control checkbox-names">
+                Set start page as employee snapshot
+            </span>
+        </div>
+
+        @*<fieldset>
+            <legend>*@
+        I can view
+
+        <ul style="padding-top: 10px;">
+            @foreach (var filterobj in Model.FilterCriterias)
+            {
+                <li class="horizontal">
+                    @Html.RadioButtonFor(m => m.EmployeeCriteriaId, filterobj.FilterCriteriaId, new { @Id = filterobj.FilterCriteria })<span style="padding-left:10px;">@filterobj.FilterCriteria</span>
+                </li>
+            }
+            @*@Html.ActionLink("View Employee", "", new { @Id ="Checked" })*@
+            <a href="#" id="CheckedView" class="close" style="color:green" data-dismiss="modal" aria-hidden="true">View Employee</a>
+
+        </ul>
+        <div class="modal fade modal-fullscreen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="divselectcriteria" style="display:none">
+            <div class="modal-dialog modal-dialog-center" style="width: 80%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                        <table style="border-spacing: 10px; border-collapse: separate;" id="">
+                            <tbody>
+                                <tr>
+                                    @foreach (var a in Model.ManageSecurityCriteriaList)
+                                    {
+                                        <th>@Html.CheckBoxFor(b => b.CompanyLevelSecurity.ManageSecurityCriteria, new { @id = a.ManageSecurityCriteriaName }) @a.ManageSecurityCriteriaName</th>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td class="block">
+                                        <ul style="list-style: none; padding: 0" id="positionlist">
+                                            @foreach (var position in Model.PositionsList)
+                                            {
+                                                <li>@Html.CheckBox("PositionList1", isChecked: position.Status != null && (bool)position.Status, htmlAttributes: new { @id = position.Id }) @position.Name </li>
+
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td class="block">
+                                        <ul style="list-style: none; padding: 0" id="divisionlist">
+                                            @foreach (var division in Model.DivisionsList)
+                                            {
+
+                                                <li>@Html.CheckBox("divisionlist", isChecked: division.Status != null && (bool)division.Status, htmlAttributes: new { @id = division.Id }) @division.Name </li>
+                                                @*<li>@Html.CheckBoxFor(entity => entity.CompanyLevelSecurity.Status1, new { @id = a.Id }) @a.Name </li>*@
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td class="block">
+                                        <ul style="list-style: none; padding: 0;" id="locationlist">
+                                            @foreach (var location in Model.LocationsList)
+                                            {
+                                                <li>@Html.CheckBox("locationlist", isChecked: location.Status != null && (bool)location.Status, htmlAttributes: new { @id = location.Id }) @location.Name </li>
+                                                @*<li>@Html.CheckBoxFor(entity => entity.CompanyLevelSecurity.Status1, new { @id = a.Id }) @a.Name </li>*@
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td class="block">
+                                        <ul style="list-style: none; padding: 0" id="departmentlist">
+                                            @for (int index = 0; index < Model.DepartmentsList.Count; index++)
+                                            {
+                                                var department = Model.DepartmentsList[index];
+                                                <li>@Html.CheckBox("departmentlist", isChecked: department.Status != null && (bool) department.Status, htmlAttributes: new {@id = department.Id}) @department.Name </li>
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td class="block">
+                                        <ul style="list-style: none; padding: 0" id="employmentstatuslist">
+                                            @foreach (var employeeStatus in Model.EmploymentStatusList)
+                                            {
+                                                <li>@Html.CheckBox("EmployeeStatusList", isChecked: employeeStatus.Status != null && (bool)employeeStatus.Status, htmlAttributes: new { @id = employeeStatus.Id }) @employeeStatus.Name </li>
+                                                @*<li>@Html.CheckBoxFor(entity => entity.CompanyLevelSecurity.Status1, new { @id = a.Id }) @a.Name</li>*@
+                                            }
+                                        </ul>
+                                    </td>
+                                </tr>
+
+
+
+                                @Html.HiddenFor(m => m.CompanyLevelSecurity.EmployeeIdList, new { @id = "employeeIdList" })
+                                @Html.HiddenFor(m => m.CompanyLevelSecurity.positionIdList, new { @id = "positionIdList" })
+                                @Html.HiddenFor(m => m.CompanyLevelSecurity.divisionIdList, new { @id = "divisionIdList" })
+                                @Html.HiddenFor(m => m.CompanyLevelSecurity.departmentIdList, new { @id = "departmentIdList" })
+                                @Html.HiddenFor(m => m.CompanyLevelSecurity.locationIdList, new { @id = "locationIdList" })
+                                @Html.HiddenFor(m => m.CompanyLevelSecurity.employmentstatusIdList, new { @id = "employmentstatusIdList" })
+                            </tbody>
+                        </table>
+                        @*</legend>
+                            </fieldset>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gridContent" style="padding-top: 10px;">
+        <table class="footable tree" data-filter="#filter" data-page-size="200" data-page-previous-text="prev" data-page-next-text="next" id="SecurityMasterGridContent">
+            <thead>
+                <tr>
+                    <th data-sort-ignore="true">
+                        @Html.DisplayName("Module Name")
+                    </th>
+
+                    <th data-hide="phone" data-sort-ignore="true">
+                        @Html.DisplayName("Is Visible")
+                    </th>
+                    <th data-hide="phone,tablet" data-sort-ignore="true">
+                        @Html.DisplayName("Is Editable")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.Modules.Count; i++)
+                {
+                    <tr class="treegrid-@i">
+                        <td>
+                            @Html.HiddenFor(modelItem => modelItem.Modules[i].ModuleId)
+                            @Html.DisplayFor(modelItem => modelItem.Modules[i].ModuleName, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(modelItem => modelItem.Modules[i].IsModuleVisible)
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(modelItem => modelItem.Modules[i].IsModuleEditable)
+                        </td>
+                    </tr>
+                    for (var j = 0; j < Model.Forms.Count; j++)
+                    {
+                        <tr class="treegrid-parent-@i">
+                            @if (Model.Modules[i].ModuleId == Model.Forms[j].ModuleId)
+                            {
+                                <td>
+                                    @Html.HiddenFor(modelItem => modelItem.Forms[j].FormId)
+                                    @Html.DisplayFor(modelItem => modelItem.Forms[j].DisplayName, new { @class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => modelItem.Forms[j].IsFormVisible)
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => modelItem.Forms[j].IsFormEditable)
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination pagination-centered hide-if-no-paging"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    @Html.HiddenFor(modelItem => modelItem.RoleId)
+
+}
+
+
+
+
+<script type="text/javascript">
+    var resultingSiteview = "<h1>Security<small>Modify Authorization Access</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Manage Roles</li></ol>";
+    $("#header-section").empty();
+    $("#header-section").html(resultingSiteview);
+    $(document).ready(function () {
+        $('.tree').treegrid();
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        /*show criteria based on the radio checked*/
+        $('input:radio').on('ifChecked', function (event) {
+            if (this.id.trim() == "Employees from the following Criteria") {
+                //$("#divselectcriteria").show();
+                $("#divselectcriteria").modal('show');
+                $("#selectalertcriteria :input").iCheck('uncheck');
+            }
+            else {
+                $("#divselectcriteria").hide();
+            }
+        });
+
+        $("#CheckedView").click(function () {
+            $("#divselectcriteria").modal('show');
+
+        });
+
+
+        /*if header checked check all child checkboxes and vice versa*/
+        $('input:checkbox').on('ifChecked', function (event) {
+            if ($('positionlist input:checkbox :checked')) {
+                if ($('#positionlist li').length == $('#positionlist :checked').length) {
+                    $('#Positions').iCheck('check');
+                }
+                else if (this.id.trim() == "Positions") {
+                    check('positionlist');
+                };
+            }
+            if ($('divisionlist input:checkbox :checked')) {
+                if ($('#divisionlist li').length == $('#divisionlist :checked').length) {
+                    $('#Divisions').iCheck('check');
+                }
+                else if (this.id.trim() == "Divisions") {
+                    check('divisionlist');
+                };
+            }
+            if ($('locationlist input:checkbox :checked')) {
+                if ($('#locationlist li').length == $('#locationlist :checked').length) {
+                    $('#Locations').iCheck('check');
+                }
+                else if (this.id.trim() == "Locations") {
+                    check('locationlist');
+                };
+            }
+            if ($('departmentlist input:checkbox :checked')) {
+                if ($('#departmentlist li').length == $('#departmentlist :checked').length) {
+                    $('#Departments').iCheck('check');
+                }
+                else if (this.id.trim() == "Departments") {
+                    check('departmentlist');
+                };
+            }
+            if ($('employmentstatuslist input:checkbox :checked')) {
+                if ($('#employmentstatuslist li').length == $('#employmentstatuslist :checked').length) {
+                    $('#EmploymentStatus').iCheck('check');
+                } else if (this.id.trim() == "EmploymentStatus") {
+                    check('employmentstatuslist');
+                };
+            }
+
+        });
+
+        /*if header uchecked ucheck all child checkboxes and vice versa*/
+        $('input:checkbox').on('ifUnchecked', function (event) {
+            if (this.id.trim() == "cbxAcknowledgement") {
+                $("#divAcknowledgement").hide();
+            }
+            //uncheck td checkboxes based on th id's
+            if ($('positionlist input:checkbox :unchecked')) {
+                if ($('#positionlist li').length != $('#positionlist :checked').length) {
+                    $('#Positions').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Positions") {
+                    uncheck('positionlist');
+                }
+            }
+            if ($('divisionlist input:checkbox :checked')) {
+                if ($('#divisionlist li').length != $('#divisionlist :checked').length) {
+                    $('#Divisions').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Divisions") {
+                    uncheck('divisionlist');
+                }
+            }
+            if ($('locationlist input:checkbox :unchecked')) {
+                if ($('#locationlist li').length != $('#locationlist :checked').length) {
+                    $('#Locations').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Locations") {
+                    uncheck('locationlist');
+                }
+
+            }
+            if ($('departmentlist input:checkbox :checked')) {
+                if ($('#departmentlist li').length != $('#departmentlist :checked').length) {
+                    $('#Departments').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "Departments") {
+                    uncheck('departmentlist');
+                }
+            }
+
+            if ($('employmentstatuslist input:checkbox :unchecked')) {
+                if ($('#employmentstatuslist li').length != $('#employmentstatuslist :checked').length) {
+                    $('#EmploymentStatus').iCheck('uncheck');
+                }
+                else if (this.id.trim() == "EmploymentStatus") {
+                    uncheck('employmentstatuslist');
+                }
+            }
+        });
+
+        //to check and uncheck based on id
+        var uncheck = function (id) {
+            
+            $('#' + id).children().iCheck('uncheck');
+        }
+        var check = function (id) {
+            
+            $('#' + id).children().iCheck('check');
+        }
+
+        //var checkchange = function (listname, headername) {
+        //    var rowCount = $('#' + listname + ' li').length;
+        //    var checkedCount = $('#' + listname + ' :checked').length;
+        //    if (rowCount == checkedCount)
+        //        $('#' + headername).iCheck('check');
+        //    else if (rowCount > checkedCount)
+        //        $('#' + headername).iCheck('uncheck');
+        //}
+        $("#btnSaveCompany").click(function () {
+
+            var positionCount = $('#positionlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var divisionCount = $('#divisionlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var locationCount = $('#locationlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var departmentCount = $('#departmentlist :checked').map(function () {
+                return this.id;
+            }).get();
+            var employmentstatusCount = $('#employmentstatuslist :checked').map(function () {
+                return this.id;
+            }).get();
+            var individualEmployeeCount = $('#individuallist :checked').map(function () {
+                return this.id;
+            }).get();
+            $('#positionIdList').attr('value', positionCount);
+            $('#divisionIdList').attr('value', divisionCount);
+            $('#locationIdList').attr('value', locationCount);
+            $('#departmentIdList').attr('value', departmentCount);
+            $('#employmentstatusIdList').attr('value', employmentstatusCount);
+            $('#individualEmployeeIdList').attr('value', individualEmployeeCount);
+        });
+
+    });
+
+</script>
+

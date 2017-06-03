@@ -1,0 +1,91 @@
+﻿@model IEnumerable<HRMS.Web.ViewModels.SelectedPMEFormModel>
+@using HRMS.Web.Helper;
+
+    <div id="gridContent" style="padding-top: 10px;height:350px;overflow:scroll;">
+    <table class="footable table" data-filter="#filter" data-page-size="3" data-page-previous-text="prev" data-page-next-text="next" id="JobPMEGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa" />
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Frequency)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.PMEChecked)
+                        {
+                            <input type="checkbox" value="" data-val-1="@item.PMEId" class="btncheckjobpme" checked />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="" data-val-1="@item.PMEId" class="btncheckjobpme" />
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.Description), "_JobPME", new { @JobPMEId = item.PMEId }, new { id = "PMEId" })
+                    </td>
+                    <td>
+                        @Html.Label(item.Category)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Frequency))
+                        {
+                            @Html.Label(Convert.ToString(item.Frequency))
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+        <br />
+    <div class="form-group">
+        <div class="col-sm-6 control-button">
+            <input type="submit" id="savejobpmeview" value="save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+
+
+
+    <script type="text/javascript">
+        // to save job pme and inherit its properties
+        $("#savejobpmeview").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#JobPMEGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                var formData = $('#newJobForm').serialize() + '&jobPMEIds=' + searchIDs.toString();
+                $.ajax({
+                    url: baseurl + "JobPME/_JobPME",
+                    type: "POST",
+                    cache: "false",
+                    data: formData,
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = baseurl + "Recruiting/CreateNewJob";
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            }
+            else { alert("Please select item(s) to select."); }
+        });
+    </script>

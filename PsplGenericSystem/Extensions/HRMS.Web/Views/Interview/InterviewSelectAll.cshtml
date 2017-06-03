@@ -1,0 +1,108 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.Interview>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "InterviewSelectAll";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div>
+    @Html.ActionLink("Add", "AddInterview", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteInterview", null, new { @class = "btn btn-danger", @id = "btnDeleteinterview" })
+    @Html.ActionLink("<< Back to Candidate Preview", "CandidatePreview", "Recruiting", new { @JobApplicantId = GlobalsVariables.SelectedCandidateId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="InterviewGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicantName)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.JobTitle)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.InterviewRoom)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.InterviewId" class="btncheckinterview" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @{
+                            if (item.ApplicantName != null)
+                            {                               
+                            @Html.ActionLink(item.ApplicantName, "AddInterview", new { @InterviewId = item.InterviewId }, new { id = "InterviewID" })
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                             if (item.JobTitle != null)
+                            {
+                                @Html.Label(item.JobTitle)
+                            }
+                        }
+                    </td>
+                    <td>
+                        @Html.Label(Convert.ToString(item.InterviewType))
+                    </td>
+                    <td>
+                        @Html.Label(Convert.ToString(item.Room))
+                    </td>
+                    <td>
+                        @Html.Label(Convert.ToString(item.InterviewStatus))
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Interviews</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Interview</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $("#btnDeleteinterview").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#InterviewGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "Interview/DeleteInterview",
+                    type: "POST",
+                    cache: "false",
+                    data: { deleteInterviewIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+</script>
+
+
+

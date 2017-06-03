@@ -1,0 +1,233 @@
+﻿@model HRMS.Web.ViewModels.EmployeeSnapshotFormModel
+@using System.Web.Optimization;
+@*@using HRMS.Data;*@
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "EmployeeSnapshot";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Snapshot</title>
+    <style type="text/css">
+        .form-group > label:after {
+            content: " : ";
+            font-weight: 400;
+        }
+    </style>
+</head>
+@ViewBag.Message
+<div style="width:100%;display:inline-block">
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-6">
+            <fieldset>
+                <legend style="border-bottom: 1px solid #3c8dbc;">
+                    Personal
+                    <input type="image" name="btnPersonal" id="btnPersonal" src="~/Content/img/bullet-6.gif" style="height:12px;width:12px;border-width:0px;" />
+                </legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.FirstName, new { @class = "col-sm-4 col-xs-6 control-label " })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.FirstName)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.MiddleName, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.MiddleName)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.LastName, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.LastName)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.Suffix, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.Suffix)
+                        </div>
+                    </div>
+                </div>
+               <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.Salutation, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.Salutation)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.MaritalStatus, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.MaritalStatus)
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend style="border-bottom: 1px solid #3c8dbc;">Tax <input type="image" name="btnPersonal" id="btnPersonal" src="~/Content/img/bullet-6.gif" style="height:12px;width:12px;border-width:0px;" /></legend>
+                
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesExemptions, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeTax.StateTaxesExemptions)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesAdditionalWithholding, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeTax.StateTaxesAdditionalWithholding)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.FederalWithholdings, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeTax.FederalWithholdings)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeTax.StateTaxesSUISDIBlock, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeTax.StateTaxesSUISDIBlock)
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-6">
+            <fieldset>
+                <legend style="border-bottom: 1px solid #3c8dbc;">Employment <input type="image" name="btnPersonal" id="btnPersonal" src="~/Content/img/bullet-6.gif" style="height:12px;width:12px;border-width:0px;" /></legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.JobDescription, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.JobDescription)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EEOClass, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EEOClass)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.Division, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.Division)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.Department, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.Department)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.ComplianceCode, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.ComplianceCode)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeSnapshot.Position, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.Position)
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend style="border-bottom: 1px solid #3c8dbc;">Emergency Contacts <input type="image" name="btnPersonal" id="btnPersonal" src="~/Content/img/bullet-6.gif" style="height:12px;width:12px;border-width:0px;" /></legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.Name, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeEmergencyContact.Name)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.HomePhone, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.HomePhone, new { @class = "phonemask" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.WorkPhone, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.WorkPhone, new { @class = "phonemask" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.CellPhone, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeEmergencyContact.CellPhone, new { @class = "phonemask" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.PersonalEmail, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeEmergencyContact.PersonalEmail)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.WorkEmail, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeSnapshot.WorkEmail)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EmployeeEmergencyContact.RelationshipName, new { @class = "col-sm-4 col-xs-6 control-label" })
+                    <div class="col-sm-4 col-xs-6 control-label">
+                        <div class="input-group">
+                            @Html.DisplayFor(m => m.EmployeeEmergencyContact.RelationshipName)
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>

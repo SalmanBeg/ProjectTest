@@ -1,0 +1,310 @@
+﻿@model HRMS.Web.ViewModels.EmployeePayFormModel
+@using HRMS.Common.Helpers
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "Pay Details";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<script src="~/Scripts/plugins/jquery.maskedinput.js"></script>
+<script src="~/Scripts/plugins/jquery.formatCurrency-1.4.0.js"></script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Pay Details</title>
+    
+</head>
+@ViewBag.Message
+<div style="width:100%;display:inline-block">
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+
+@using (Html.BeginForm("AddPay", "EmployeePay", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <fieldset>
+                    <legend>Pay Profile</legend>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.Reason, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.HiddenFor(m => m.EmployeePay.UserId)
+                            @Html.HiddenFor(m => m.EmployeePay.CompanyId)
+                            @Html.HiddenFor(m => m.EmployeePay.EmployeePayId)
+                            @Html.DropDownListFor(m => m.EmployeePay.Reason, new SelectList(Model.ReasonList, "Id", "Name"), "--Select--", new  { @class = "drplookup form-control showdrp", @id = "saltndropdown", @data_val_1 = LocalizedStrings.ChangeReason })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.EffectiveDate, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.EmployeePay.EffectiveDate, (Model.EmployeePay.EffectiveDate == null ? "" : ((DateTime)Model.EmployeePay.EffectiveDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtEffectiveDate" })
+                                <label for="dtEffectiveDate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayType, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayType, new SelectList(Model.PayTypeList, "PayTypeId", "PayTypeCode"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "pytypedropdown", @data_val_1 = LocalizedStrings.PayType })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                        @Html.LabelFor(m => m.PayPeriodList, new { @class = "col-sm-4 control-label " })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayPeriodId, new SelectList(Model.PayPeriodList, "PayPeriodId", "PayPeriodDescription"), "--Select--", new { @class = "form-control", @id = "drpdwnPayPeriod" })
+                        </div>
+                    </div>*@
+
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <label>
+                            @Html.CheckBoxFor(m => m.AutoPay)Auto Pay
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.Compensation, new { @class = "col-sm-4 control-label required"})
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.Compensation, "{0:c}",new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.Annualizedpay, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.Annualizedpay, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.HourlyRate2, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.HourlyRate2, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.HourlyRate3, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.HourlyRate3, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayFrequency, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayFrequency, new SelectList(Model.PayFrequencyList, "Id", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "pyfrqncydropdown", @data_val_1 = LocalizedStrings.PayFrequency })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.StandardHours, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.StandardHours, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayPerCheck, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.PayPerCheck, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.HourlyEquivalent, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.HourlyEquivalent, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Pay Type</legend>
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <label>
+                            @Html.CheckBoxFor(m => m.Tipped)Tipped
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayStatus, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayStatus, new SelectList(Model.PayStatusList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "paystatusdropdown", @data_val_1 = LocalizedStrings.PayStatus })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayGrade, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayGrade, new SelectList(Model.PayGradeList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "pygradedropdown", @data_val_1 = LocalizedStrings.PayGrade })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayCode, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.PayCode, new SelectList(Model.PayTypeList, "PayTypeId", "PayTypeCode"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "pygradedropdown", @data_val_1 = LocalizedStrings.PayType })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.HourlyEquivalent, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.HourlyEquivalent, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayPeriodStartDate, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.EmployeePay.PayPeriodStartDate, (Model.EmployeePay.PayPeriodStartDate == null ? "" : ((DateTime)Model.EmployeePay.PayPeriodStartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtPayPeriodstartdate" })
+                                @*@Html.TextBoxFor(m => m.EmployeeDependent.BirthDate, (Model.EmployeeDependent.BirthDate == null ? "" : ((DateTime)Model.EmployeeDependent.BirthDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtbirthdate", @maxlength = 10 })*@
+                                <label for="dtPayPeriodstartdate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayPeriodEndDate, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.EmployeePay.PayPeriodEndDate, (Model.EmployeePay.PayPeriodEndDate == null ? "" : ((DateTime)Model.EmployeePay.PayPeriodEndDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtPayPeriodEndDate" })
+                                @*@Html.TextBoxFor(m => m.EmployeeDependent.BirthDate, (Model.EmployeeDependent.BirthDate == null ? "" : ((DateTime)Model.EmployeeDependent.BirthDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtbirthdate", @maxlength = 10 })*@
+                                <label for="dtPayPeriodEndDate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    @*<div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayPeriodEndDate, new { @class = "col-sm-4 control-label", @id = "enddate" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.PayPeriodEndDate, (Model.EmployeePay.PayPeriodEndDate == null ? "" : ((DateTime)Model.EmployeePay.PayPeriodEndDate).ToString("MM/dd/yyyy")), new { @maxlength = "10", @id = "dtPayPeriodEndDate", @readonly = "true" })
+                            <label for="dtPayPeriodEndDate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.PayrollEEId, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.PayrollEEId, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.WeeklyAmount, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.WeeklyAmount, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.FirstPayDate, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.EmployeePay.FirstPayDate, (Model.EmployeePay.FirstPayDate == null ? "" : ((DateTime)Model.EmployeePay.FirstPayDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtFirstPayDate" })
+                                <label class="input-group-addon btn" for="dtFirstPayDate">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset>
+                    <legend>Shift Premium</legend>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.ShiftType, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.EmployeePay.ShiftType, new SelectList(Model.ShiftTypeList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "shfttypedropdown", @data_val_1 = LocalizedStrings.ShiftPremium })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.ShiftGroup, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.ShiftGroup, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.Premium, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.EmployeePay.Premium, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Salary Schedule</legend>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.JobAssignment, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                            @*@Html.DropDownListFor(m => m.EmployeePay.JobAssignment, new SelectList(new[] { new { ID = "1", Name = "" }, new { ID = "2", Name = "" } }, "ID", "Name"), "--Select--", new { @class = "form-control" })*@
+                            @Html.DropDownListFor(m => m.EmployeePay.JobAssignment, new SelectList(Model.JobAssignmentList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "jobassignmentdropdown", @data_val_1 = LocalizedStrings.JobAssignment })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmployeePay.ContractStatus, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8">
+                           @* @Html.DropDownListFor(m => m.EmployeePay.ContractStatus, new SelectList(new[] { new { ID = "1", Name = "" }, new { ID = "2", Name = "" } }, "ID", "Name"), "--Select--", new { @class = "form-control" })*@
+                           @Html.DropDownListFor(m => m.EmployeePay.ContractStatus, new SelectList(Model.ContractStuatusList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control showdrp", @id = "contractstatusdropdown", @data_val_1 = LocalizedStrings.ContractStatus })
+                         </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                @Html.ActionLink("Cancel", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success" })
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Pay<small>Pay Details</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Pay</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+    $("#ddlPayPeriod").change(function () {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var ddlsource = "#ddlPayPeriod";
+        $.ajax({
+            url: "GetEmployeePayPeriodDates",
+            type: "POST",
+            datatype: "json",
+            data: { Id: $(ddlsource).val() },
+            success: function (resdata) {
+                var strstrtdtvalue = resdata.StartDateTime;
+                var strenddtvalue = resdata.EndDateTime;
+
+                var strstrtdtvalue = new Date(parseInt(resdata.StartDateTime.replace(/\/Date\((.*?)\)\//gi, "$1")));
+                var strenddtvalue = new Date(parseInt(resdata.EndDateTime.replace(/\/Date\((.*?)\)\//gi, "$1")));
+
+                var strstrtdtvalue1 = ((strstrtdtvalue.getMonth() + 1) + '/' + strstrtdtvalue.getDate() + '/' + strstrtdtvalue.getFullYear());
+                var strenddtvalue1 = ((strenddtvalue.getMonth() + 1) + '/' + strenddtvalue.getDate() + '/' + strenddtvalue.getFullYear());
+
+                $("#dtPayPeriodstartdate").val(strstrtdtvalue1);
+                $("#dtPayPeriodEndDate").val(strenddtvalue1);
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    var fromDate = $("#dtPayPeriodStartDate").val();
+    var toDate = $("#dtPayPeriodEndDate").val();
+    if (Date.parse(fromDate) > Date.parse(toDate)) {
+        alert("Invalid Date Range!\nStart Date cannot be after End Date!")
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+       
+        $("#inputtest").formatCurrency({ format: 'hu', symbol: '$' });
+    });
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#dtFirstPayDate").mask("99/99/9999");
+      
+        $("#dtEffectiveDate").mask("99/99/9999");
+    });
+</script>
+

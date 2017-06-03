@@ -1,0 +1,120 @@
+﻿@using HRSystem.Services.Models
+@model MainEmployee
+@{
+    ViewBag.Title = "Index1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-4 col-md-3 col-lg-2">
+        <div class="profile-left mb20">
+            <div class="profile-left-heading">
+                @{
+                    if (Model.Image != null)
+                    {
+                        string groupLogo = Convert.ToBase64String(Model.Image);
+                        string imageSrc = string.Format("data:image/jpeg;base64,{0}", groupLogo);
+                        <img src="@imageSrc" class="media-object img-circle" id="imgGroupLogo" style="height: 123px; width: 123px;" />
+                    }
+                    else
+                    {
+                        <a class="profile-photo" href="">
+                            <img alt="" src="~/Content/Assets/images/photos/profilepic.png" class="img-circle img-responsive">
+                        </a>
+                    }
+                }
+                <h2 class="profile-name">Resource Navigations</h2>
+                <h4 class="profile-designation" style="color:#464f63">@Model.RoleName</h4>
+            </div>
+            <div class="profile-left-body">
+                <ul class="list-inline profile-social" style="text-align: center;">
+                    <li><a href=""><i class="fa fa-facebook-official"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                    <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 col-lg-10">
+        <div class="row blog-entry mb20">
+            <div class="col-sm-5">
+                <h6 class="blog-category">INTRODUCING</h6>
+                <h3 class="blog-title"><a href="">TRAINING FOR ACA Reporting</a></h3>
+                <p class="blog-meta mb20">By: <a href="">Grant Friedman</a> &nbsp; Aug 27, 2013 &nbsp;</p>
+                <p class="blog-summary mb20">Photoshop is clearly our favorite photo editing software. In this article, we have listed 30 photo effect tutorials that will show you how to perform a wide range... <a href="javascript:void(0)" target="_blank">Read more</a></p>
+                <p>
+                    <button type="button" class="btn btn-success"><i class="fa fa-share"></i> LEARN MORE</button>
+                </p>
+            </div>
+            <div class="col-sm-7">
+                <img class="img-responsive" src="~/Content/Assets/images/photos/photo2.jpg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-primary">
+                <ul class="panel-options">
+                    <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="panel-heading">
+                    <h4 class="panel-title">Activity Stream</h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list user-list">
+                        <li class="media">
+                            <div class="media-left" style="border:0; padding:0;margin-top:8px;">
+                                <a href="#">
+                                    <img alt="" src="~/Content/Assets/images/photos/profilepic.png" class="media-object img-circle">
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="panel panel-primary">
+                <ul class="panel-options">
+                    <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="panel-heading">
+                    <span class="panel-title">Weather</span>
+                </div>
+                <div class="panel-body buttons-with-margins">
+                    <div>
+                        <a href="http://www.accuweather.com/en/us/new-york-ny/10007/weather-forecast/349727" class="aw-widget-legal" style="height:10px; width:10px">
+                        </a><div id="awcc1462183585855" style="height:300px;" class="aw-widget-current" data-locationkey="349727" data-unit="f" data-language="en-us" data-useip="false" data-uid="awcc1462183585855"></div>
+                        <script type="text/javascript" src="http://oap.accuweather.com/launch.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img width="100%" src="~/Content/Images/LeaveCalendar.PNG" style="display:none;" />
+        <div class="col-sm-6 col-xs-12">
+            <div class="panel panel-primary">
+                <ul class="panel-options">
+                    <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="panel-heading">
+                    <span class="panel-title">Blogs</span>
+                </div>
+                <div class="panel-body buttons-with-margins">
+                    <div>
+                        @foreach (var item in Session["BlogList"] as List<BlogModelView>)
+                        {
+                            if (item.SetAsHomepage == true)
+                            {
+                                <h2>@item.Title</h2>
+                                <div>@item.Description</div>
+                                <div>@Html.Raw(item.Body)</div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

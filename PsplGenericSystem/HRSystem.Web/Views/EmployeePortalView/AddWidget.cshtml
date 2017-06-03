@@ -1,0 +1,154 @@
+﻿@model HRSystem.Services.Models.WidgetLayerViewModel
+
+@{
+    ViewBag.Title = "AddWidget";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<script src="~/Scripts/angular.min.js"></script>
+
+<style>
+    .form-control {
+        height: 36px;
+    }
+
+    fieldset {
+        display: block;
+        -webkit-margin-start: 2px;
+        -webkit-margin-end: 2px;
+        -webkit-padding-before: 0.35em;
+        -webkit-padding-start: 0.75em;
+        -webkit-padding-end: 0.75em;
+        -webkit-padding-after: 0.625em;
+        min-width: -webkit-min-content;
+        border-width: 2px;
+        border-style: groove;
+        border-color: threedface;
+        border-image: initial;
+    }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Menu Widget</h2>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("AddWidget", "EmployeePortalView", FormMethod.Post))
+        {
+        @Html.AntiForgeryToken()
+        <div class="">
+
+            <input class="text large" id="Id" name="Id" type="text" value="" style="display:none;">
+            <input type="hidden" id="hdnId" value="@ViewBag.Id" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Zone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Zone, new List<SelectListItem> {
+                                 new SelectListItem{Text="Header",Selected= true},
+                                 new SelectListItem{Text="AsideFirst"},
+                                 new SelectListItem{Text="Content"},
+                                 new SelectListItem{Text="AsideSecond"},
+                                 new SelectListItem{Text="Footer"}
+                                 }, new { @class = "form-control col-sm-2" })
+                    <span class="hint">The Zone in the Layout where the Widget will be rendered.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LayerId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.LayerId, new List<SelectListItem> {
+                                 new SelectListItem{Text="Default",Value="3",Selected= true},
+                                 new SelectListItem{Text="Authenticated",Value="4"},
+                                 new SelectListItem{Text="Anonymous",Value="5"},
+                                 new SelectListItem{Text="Disabled",Value="6"},
+                                 new SelectListItem{Text="TheHomepage",Value="7"}
+                                 }, new { @class = "form-control" })
+                    <span class="hint">The Layer where the Widget will be rendered.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Position, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Position, new { htmlAttributes = new { @class = "form-control", @Value = "1" } })
+                    @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
+                    <span class="hint">The position of the Widget inside the Zone.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    <span class="hint">The title of the Widget.</span><br />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RenderTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.RenderTitle, new { @checked = "checked" })
+                    <label class="forcheckbox" for="RenderTitle">Check to render the title on the front-end, uncheck to hide</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    <span class="hint">The technical name of the Widget, used for css class and alternates.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CssClasses, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CssClasses, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CssClasses, "", new { @class = "text-danger" })
+                    <span class="hint">Add custom css classes for the widget separated by spaces.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Owner, new { htmlAttributes = new { @class = "form-control", @Value = Session["ownerName"].ToString(), @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group" style="text-align:center;">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnSave" type="submit" value="Save" class="btn btn-primary" />
+                    <input id="cancel" type="button" onclick="location.href='@Url.Action("Widgets","EmployeePortalView")'" class="btn btn-primary" value="Cancel" />
+                </div>
+            </div>
+        </div>
+        }
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSave").click(function () {
+            if ($("#Title").val() == "") {
+                alert("Please enter Title field!");
+                return false;
+            }
+            if ($("#Name").val() == "") {
+                alert("Please enter Name field!");
+                return false;
+            }
+        });
+    });
+</script>

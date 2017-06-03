@@ -1,0 +1,133 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.RevieewCriteria>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllReviewCriteria";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add", "AddReviewCriteria", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeletereviewCriteria" })
+    @Html.ActionLink("<< Back to Administration", "PerformanceDashboard", "PerformanceReview", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+
+@using (Html.BeginForm("ReviewReviewer", "PerformanceReview", FormMethod.Post))
+{
+    <div id="gridContent" style="padding-top: 10px;">
+        <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="ReviewCriteriaGridContent">
+            <thead>
+                <tr>
+                    <th data-sort-ignore="true" style="padding-left:32px;">
+                        <input type="checkbox"  id="chksa"/>
+                        @Html.DisplayName("Select All")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CriteriaType)
+                    </th>                   
+                    <th data-hide="phone">
+                        @Html.DisplayNameFor(model => model.JobTitleId)                      
+                    </th>                   
+                    <th data-hide="phone,tablet">
+                        @Html.DisplayNameFor(model => model.CategoryId)
+                    </th>
+                    <th data-hide="phone,tablet">
+                        @Html.DisplayNameFor(model => model.Question)
+                    </th>
+                    <th data-hide="all">
+                        @Html.DisplayNameFor(model => model.ResponseTypeId)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" value="" data-val-1="@item.ReviewCriteriaId" id="chkprm" class="btncheckreview" onchange="cbChange(this)" />
+                        </td>
+                        <td>                        
+                            @Html.HiddenFor(modelItem => item.CriteriaTypeId)       
+                            @Html.ActionLink(((string)item.CriteriaType), "UpdateReviewCriteria", new { @ReviewCriteriaId = item.ReviewCriteriaId }, new { id = "ReviewCriteriaId" })                  
+                            @*@Html.DisplayFor(modelItem => item.CriteriaType)*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JobTitleId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryId)
+                        </td>                                                                
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Question)
+                        </td>
+                        <td>
+                            @if (item.ResponseTypeId == 1)
+                            {
+                                @("List");
+
+                            }
+                            else if (item.ResponseTypeId == 2)
+                            {
+                                @("Text");
+                            }
+                            else
+                            {
+                                @("Value")
+                            }
+
+                            @Html.HiddenFor(modelItem => item.ResponseTypeId)
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <div class="pagination pagination-centered hide-if-no-paging"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>      
+    </div>
+    
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>ReviewCriteria<small>Review Criteria</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">ReviewCriteria</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $("#btnDeletereviewCriteria").click(function (e) {
+            alert("Foreign key references cant be deleted");
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#ReviewCriteriaGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "ReviewCriteria/DeleteReviewCriteria",
+                    type: "POST",
+                    cache: "false",
+                    data: { reviewCriteriaIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+    //To Select all/Deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#ReviewCriteriaGridContent input:checkbox').iCheck('check');
+    });
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#ReviewCriteriaGridContent input:checkbox').iCheck('uncheck');
+    });
+
+</script>

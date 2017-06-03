@@ -1,0 +1,110 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.TrainingClassSchedule>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllTraingClassSchedule";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add", "EnrollSchedule", new { @TrainingClassId = ((Model.Count() == 0) ? 0 : Model.First().TrainingClassId) }, new { @class = "btn btn-success", id = "btnAdd" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteTrainingClassSchedule" })
+    @Html.ActionLink("<< Back to Classes", "SelectAllClasses", "TrainingClass", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="trainingclassscheduleGridContent">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="chksa" />
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    Class Name
+                </th>
+                <th>
+                    Enrollment Start Date
+                </th>
+                <th>
+                    Enrollment End Date
+                </th>
+            </tr>
+            </thead>
+        <tbody>
+                 @foreach (var item in Model)
+                 {
+                        <tr>
+                            <td>
+                                <input type="checkbox" value="" data-val-1="@item.TrainingClassScheduleId" class="btncheckTrainingClass" onchange="cbChange(this)" />
+                            </td>
+                            <td>
+                                @Html.HiddenFor(modelItem => item.TrainingClassId, new {@class="clsTrainingClassId",value=item.TrainingClassId})
+                              @Html.ActionLink((item.TrainingClassName), "EnrollSchedule", new { @TrainingClassScheduleId = item.TrainingClassScheduleId,@TrainingClassId=item.TrainingClassId }, new { id = "lnktrainingclass" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EnrollmentStartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EnrollmentEndDate)
+                            </td>
+
+                        </tr>
+    
+                 }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                   
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+        </table>
+    </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>TrainingClassSchedule<small>Training Class Schedule</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">TrainingClassSchedule</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        //$('#btnAdd').click(function () {
+        //    debugger;
+        //    var hfvalue = $('.clsTrainingClassId').attr('value');
+        //    TempData["TrainingClassId"] = hfvalue;
+        //});
+
+       
+
+        $("#btnDeleteTrainingClassSchedule").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#trainingclassscheduleGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "TrainingClassSchedule/DeleteTrainingClassSchedule",
+                    type: "POST",
+                    cache: "false",
+                    data: { trainingClassScheduleIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#trainingclassscheduleGridContent input:checkbox').iCheck('check');
+    });
+
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#trainingclassscheduleGridContent input:checkbox').iCheck('uncheck');
+    });
+    </script>

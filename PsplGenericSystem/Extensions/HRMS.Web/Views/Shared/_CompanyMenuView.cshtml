@@ -1,0 +1,72 @@
+﻿@using HRMS.Common.Enums
+@using HRMS.Service.Models.EDM
+@using HRMS.Web.Helper
+@model HRMS.Web.ViewModels.CompanyMenuFormModel
+
+<li class="active">
+    <a href="../Home/EmployeeDashboard">
+        <i class="fa fa-dashboard"></i><span>Dashboard</span>
+    </a>
+</li>
+@{
+    foreach (var module in Model.Modules)
+    {
+        if (module.IsModuleVisible)
+        {
+            <li id="module-@module.ModuleId" data-val-1="@module.ModuleId" class="treeview">
+                <a href="#">
+                
+                    @{string isUserConnected = "ion-ios7-briefcase";}
+                    @switch(@module.ModuleName)
+                    {
+                        case "Administration":
+                            isUserConnected = "ion-settings";
+                            break;
+                        case "Employee":
+                            isUserConnected = "ion-person";
+                            break;
+                        case "Security":
+                            isUserConnected = "ion-locked";
+                            break;
+                        case "Reports":
+                            isUserConnected = "ion-stats-bars";
+                            break;
+                        case "Communication":
+                            isUserConnected = "ion-android-earth";
+                    break;
+                    }
+                    <i class="fa @isUserConnected"></i>
+                    <span>@module.ModuleName</span>
+                    @*<i class=@isUserConnected></i>*@
+                </a>
+                @*  <a href=""><i class="fa fa-dashboard"></i></a>*@
+
+                <ul class="treeview-menu">
+
+                    @{
+            Module module1 = module;
+                    }
+                    @foreach (var form in Model.Forms.Where(form => form.ModuleId == module1.ModuleId))
+                    {
+                        if (form.IsFormVisible == true)
+                        {
+                            <li data-val-1="@form.FormId"><a href="../@form.ControllerName/@form.ActionName"><i class=" fa fa-angle-double-right"></i>@form.DisplayName</a></li>
+                        }
+                    }
+                </ul>
+            </li>
+        }
+    }
+
+}
+
+
+<script type="text/javascript">
+
+    /* Sidebar tree view */
+    $(".sidebar .treeview").tree();
+
+   
+
+</script>
+

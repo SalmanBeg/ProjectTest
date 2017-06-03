@@ -1,0 +1,127 @@
+﻿@model HRMS.Web.ViewModels.LookupFormModel
+@using HRMS.Web.Models;
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.ActionLink("Add", "AddLookUpPartialView", new { @TableName = @Model.TableName }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeletelookup" })
+    </div>
+
+    <div class="grid-area">       
+        <div id="gridContent" style="padding-top: 10px;">
+            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="lookUpGridContent">
+                <thead>
+                    <tr>
+                        <th data-sort-ignore="true">
+                            <input type="checkbox" id="chksa" class="clssa"/>
+                            @Html.DisplayName("Select All")
+                        </th>
+                        <th data-toggle="true">
+                            @Html.DisplayName("Name")
+                        </th>
+                        <th data-hide="phone">
+                            @Html.DisplayName("Status")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="cchkb">
+                    @foreach (var item in Model.LookUpDataEntitylist)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" value="" id="@item.Id" data-val-1="@item.Id" data-val-2="@Model.TableName" onchange="cbChange(this)" />
+                            </td>
+                            <td>
+                                @Html.ActionLink(((string)item.Name), "UpdateLookUpPartialView", new { @primaryColumnId = item.Id, @TableName = @Model.TableName }, new { id = "TableName" })
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagination pagination-centered hide-if-no-paging"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $("#btnDeletelookup").click(function (e) {
+       
+        e.preventDefault();
+        e.stopPropagation();
+        var companyID="0";
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        var searchIDs = $("#lookUpGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-1");
+        }).get();
+        var tableName = $("#lookUpGridContent input:checkbox:checked").map(function () {
+            return $(this).attr("data-val-2");
+        }).get();
+        if (searchIDs.toString().length > 0) {
+
+            var confirmationmessage = "Do you really want to delete selected item(s)?";
+
+            if (!confirm(confirmationmessage)) {
+
+                // !confirm == the user did not confirm. Therefore stop the form submission.
+
+                event.preventDefault(); // --> This stops the form submit from happening.
+                e.stopPropagation();
+
+            }
+            else {
+                $.ajax({
+                    url: baseurl + "LookUpData/DeleteLookUpDataById",
+                    type: "POST",
+                    cache: "false",
+                    data: { tableName: tableName, recordIds: searchIDs.toString(), companyID: "0" },
+                    success: function (data) {
+                        
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+
+                    }
+                });
+            }
+        }
+        else { alert("Please select item(s) to delete."); }
+    });
+
+    //code to select all/ deselect all checkboxes
+     $('#chksa').on('ifChecked', function (event) {
+           $('#lookUpGridContent input:checkbox').iCheck('check');
+     });
+     $('#chksa').on('ifUnchecked', function (event) {
+         $('#lookUpGridContent input:checkbox').iCheck('uncheck');
+
+     });
+
+
+    // $('.clssa').on('ifUnchecked', function (event) {
+    //     $('#cchkb input:checkbox').iCheck('uncheck');
+    //    //var n = $('#lookUpGridContent input:checkbox:checked');
+    //    //alert(n.length);
+    //});
+    
+    //$('#input:checkbox').on('ifUnChecked', function (event) {
+     //    if ($('#lookUpGridContent input:checkbox :unchecked')) {
+     //        $('#chksa').iCheck('uncheck');
+     //    }
+     //    else if ($('#chksa input:checkbox :unchecked')) {
+     //        $('#lookUpGridContent input:checkbox').iCheck('uncheck');
+     //    }
+     //});
+
+  
+</script>

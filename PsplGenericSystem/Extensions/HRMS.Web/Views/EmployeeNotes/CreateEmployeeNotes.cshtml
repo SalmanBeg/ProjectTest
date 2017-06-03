@@ -1,0 +1,63 @@
+﻿@model HRMS.Service.Models.EDM.EmployeeNote
+
+@{
+    ViewBag.Title = "CreateEmployeeNotes";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm("CreateEmployeeNotes", "EmployeeNotes", FormMethod.Post, new { id = "notesForm", enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="col-sm-10">
+            <div class="form-group">
+                @Html.HiddenFor(m => m.EmployeeNotesId)
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.CompanyId)
+                @Html.LabelFor(m => m.Description, new { @class = "control-label required" })
+                @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.TextAreaFor(m => m.NotesContent, new { @id = "editor", @name = "editor", @rows = "10", @cols = "80" })
+            </div>
+            <fieldset>
+                <legend>Documents</legend>
+            </fieldset>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DocumentName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.DocumentName, new { @class = "form-control", @id = "cbxAcknowledgement" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DocumentId, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.DocumentId, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AttachmentFileId, new { @class = "control-label" })
+                @Html.DisplayFor(m => m.File, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.File, new { type = "file" })
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 control-button">
+                    
+                    @Html.ActionLink("Back", "SelectAllEmployeeNotes", "EmployeeNotes", null, new { @class = "btn btn-success", @style = "margin-left:10px" })
+                    <button type="submit" class="btn btn-success" id="btnSaveNotes">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor');
+
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea").wysihtml5();
+    });
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Employee Notes<small>Create Employee Notes</small></h1><ol class=" + '"breadcrumb"' + "><li class=" + '"active"' + ">Employee Notes</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

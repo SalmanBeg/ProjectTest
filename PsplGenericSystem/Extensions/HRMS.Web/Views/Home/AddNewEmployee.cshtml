@@ -1,0 +1,177 @@
+﻿@model HRMS.Web.ViewModels.EmployeeConfigurationFormModel
+@using HRMS.Common.Helpers
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "AddNewEmployee";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@Html.ValidationSummary(true)
+@using (Html.BeginForm("AddNewEmployee", "Home", FormMethod.Post, new { id = "addnewemployeeview" }))
+{
+    <div class="form-horizontal">
+        <div class="col-sm-8">
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmployeeNo, new { @class = "col-sm-3 control-label required" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.EmployeeNo, new { @class = "form-control", @readonly = "true" })
+                    @if (string.IsNullOrEmpty(Model.EmployeeNo))
+                    {
+                    @Html.ActionLink("Please Configure the Employee No", "CreateEmployeeNoConfiguration", "EmployeeNoConfiguration")
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-3 control-label required" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName, new { @class = "col-sm-3 control-label required" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EMail, new { @class = "col-sm-3 control-label required" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(m => m.EMail, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobProfile, new { @class = "col-sm-3 control-label required" })
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(m => m.JobProfile, new SelectList(Model.JobProfileList, "JobProfileID", "Title"), "--Select--", new { @class = "drplookup form-control", @data_val_1 = LocalizedStrings.JobProfile })
+                </div>
+            </div>
+        </div>  <div class="col-sm-3"></div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Compensation, new { @class = "col-sm-2 control-label required" })
+                <div class="col-sm-8">
+                    <div class="col-sm-4" style="padding-left:0%">
+                        @Html.TextBoxFor(m => m.Compensation, new { @class = "form-control", @id = "txtCompensation" })
+                    </div>
+                    <div class="col-sm-5" style="padding-left:0%">
+                        @Html.LabelFor(m => m.CompensationFrequency, new { @class = "col-sm-2 control-label required" })
+                        <div class="col-sm-8" style="padding-right:3%">
+                            @Html.DropDownListFor(m => m.CompensationFrequency, new SelectList(Model.CompensationFrequencyList, "ID", "Name"), "--Select--",
+                            new { @class = "drplookup form-control", @id = "ddlCompensationFrequeny", @data_val_1 = LocalizedStrings.CompensationFrequency })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group">
+                @Html.LabelFor(m => m.ManagerId, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(m => m.ManagerId, new SelectList(Model.ManagerList, "UserID", "UserName"), "--Select--", new { @class = "form-control " })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmploymentStatusId, new { @class = "col-sm-3 control-label required" })
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(m => m.EmploymentStatusId, new SelectList(Model.EmploymentStatusList, "ID", "Name"), "--Select--", new { @class = "drplookup form-control", @data_val_1 = LocalizedStrings.EmploymentStatus })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.HireDate, new { @class = "col-sm-3 control-label required" })
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.HireDate, (Model.HireDate == null ? "" : ((DateTime)Model.HireDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "datepicker" })
+                        <label for="datepicker" class="input-group-addon btn">
+                            <span class=" glyphicon glyphicon-calendar"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div><div class="col-sm-3"></div>
+        @Html.HiddenFor(m => m.OnBoardingId)
+        <div class="col-sm-3"></div>
+
+        <div class="col-sm-5">
+            <div class="form-group">
+                @Html.ActionLink("Back", "SelectOnBoardingStep", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", @style = "margin-left:10px" })
+                <button type="submit" id="submit" class="btn btn-success" id="btnAddEmployee">Save</button>
+                <img src="~/Content/ajax-loader.gif" id="imgload" style="display:none" />
+            </div>
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Add New Hire<small>Add New Employee</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../Home/SelectOnBoardingStep"' + ">Select On Boarding step</a></li><li class=" + '"active"' + ">Add New Employee</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        // to set the default text to select in dropdowns
+        $("select option").each(function () {
+            if ($(this).val() == "") {
+                if ($(this).text() == '--Select--') {
+                    $(this).attr('selected', 'selected');
+                }
+            }
+
+        });
+
+        $('#btnAddEmployee').click(function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            if ($("#addnewemployeeview").valid()) { //if you use validation
+                $.ajax({
+                    url: baseurl + "Home/AddNewEmployee",
+                    type: 'POST',
+                    data: $("#addnewemployeeview").serialize(),
+                    success: function (data) {
+                        window.location.href = baseurl + "Home/ConfigureEmployee";
+                    }
+                });
+            }
+        });
+    });
+
+    /* Allow only decimals in compensation field */
+    $(function () {
+        $("input[id*='txtCompensation']").keydown(function (event) {
+            if (event.shiftKey == true) {
+                event.preventDefault();
+            }
+            if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46 || event.keyCode == 190) {
+
+            } else {
+                event.preventDefault();
+            }
+
+            if ($(this).val().indexOf('.') !== -1 && event.keyCode == 190)
+                event.preventDefault();
+
+        });
+    });
+
+    //Highlight Today Date.....
+    $(function () {
+        $("#datepicker").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
+        // Focus on your date picker to make it appear
+        $("#datepicker").focus();
+        // Instantly click the current date (using the today class that is already applied)
+        $("#datepicker .today").click();
+        // Lose focus on the date picker
+        $("#datepicker").blur();
+    });
+
+  
+
+
+</script>
+
+
+

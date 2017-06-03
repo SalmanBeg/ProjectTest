@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "CommunicationDashboard";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>
+                    <span>Add</span>
+                </h3>
+                <p>
+                    Alerts
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-ios7-bell"></i>
+            </div>
+            <a href="../Communication/Alert" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>
+                    <span>Add</span>
+                </h3>
+                <p>
+                    Announcements
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-speakerphone"></i>
+            </div>
+            <a href="../CompanyAnnouncement/SelectAllCompanyAnnouncement" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>
+                    <span>Add</span>
+                </h3>
+                <p>
+                    Links
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-navicon-round"></i>
+            </div>
+            <a href="../CompanyLink/SelectAllCompanyLink" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box  bg-blue">
+            <div class="inner">
+                <h3>
+                    <span>Add</span>
+                </h3>
+                <p>
+                    Documents
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-document-text"></i>
+            </div>
+            <a href="../CompanyDocument/SelectAllCompanyDocument" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Dashboard<small>Communication Dashboard</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Communication/CommunicationDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Communication</a></li><li class=" + '"active"' + ">Communication dashboard</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+</script>

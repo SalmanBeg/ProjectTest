@@ -1,0 +1,278 @@
+﻿@model HRMS.Web.ViewModels.CompanyFormModel
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "EditCompany";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div class="header">
+</div>
+@using (Html.BeginForm("EditCompany", "Company", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="form-horizontal">
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.CompanyName, new { @class = "col-sm-4 control-label required" })
+                <div class="col-sm-8">
+                    @Html.HiddenFor(model => model.CompanyInfo.CompanyId, new { @class = "form-control", @id = "hfCompanyId" })
+                    @Html.HiddenFor(model => model.CompanyInfo.CompanyCode, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.CompanyInfo.CompanyName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.Address1, new { @class = "col-sm-4 control-label required" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CompanyInfo.Address1, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.Address2, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CompanyInfo.Address2, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.City, new { @class = "col-sm-4 control-label required" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CompanyInfo.City, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.StateId, new { @class = "col-sm-4 control-label required" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.CompanyInfo.StateId, new SelectList(Model.StateList, "StateProvinceID", "Name", Model.CompanyInfo.StateId), "--Select--", new { @class = "form-control", @id = "drpdwnstate" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.ZIP, new { @class = "col-sm-4 control-label required" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CompanyInfo.ZIP, new { @class = "form-control zipmask" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.CountryId, new { @class = "col-sm-4 control-label required" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.CompanyInfo.CountryId, new SelectList(Model.CountryList, "CountryRegionId", "Name", Model.CompanyInfo.CountryId), "--Select--", new { @class = "form-control", @id = "drpdwncountry" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.Phone, new { @class = "col-sm-4 control-label required" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CompanyInfo.Phone, new { @class = "form-control phonemask" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.CompanyEmail, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CompanyInfo.CompanyEmail, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.Status, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.EnumDropDownListFor(model => model.CompanyInfo.Status, Model.statusList, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyInfo.Website, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.CompanyInfo.Website, new { @class = "form-control" })
+                </div>
+            </div>
+            @* <div class="form-group">
+                                    @Html.LabelFor(model => model.ControlType, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ControlType, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    @Html.LabelFor(model => model.ConnectionString, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ConnectionString, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    @Html.LabelFor(model => model.PrimaryControlId, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PrimaryControlId, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    @Html.LabelFor(model => model.ControlId, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ControlId, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    @Html.LabelFor(model => model.CorporateStructureId, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.CorporateStructureId, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    @Html.LabelFor(model => model.LegalStructureId, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.LegalStructureId, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    @Html.LabelFor(model => model.ParentId, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ParentId, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    @Html.LabelFor(model => model.FEIN, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.FEIN, new { @class = "form-control"})
+                                </div>
+                            </div><div class="form-group">
+                        @Html.LabelFor(model => model.FromDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.ToDate, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.Activity, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Activity, new { @class = "form-control"})
+                    </div>
+                </div>*@
+
+            @* <div class="form-group">
+                        @Html.LabelFor(model => model.FISCYear, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.FISCYear, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.Currency, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Currency, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.Language, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Language, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.TimeZone, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.TimeZone, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.Association, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Association, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.SubscriptionCode, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.SubscriptionCode, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.Type, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Type, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.Database, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.Database, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.ServerName, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.ServerName, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.IsPositionManaged, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.IsPositionManaged, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.TimeProvider, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.TimeProvider, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                        @Html.LabelFor(model => model.PayrollProvider, new { @class = "col-sm-4 control-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(model => model.PayrollProvider, new { @class = "form-control"})
+                    </div>
+                </div>*@
+            <div class="col-sm-5"></div>
+            <div class="form-group">
+                
+                @Html.ActionLink("Cancel", "ConfigureCompany", null, new { @class = "btn btn-success" })
+                <input type="submit" value="Update" class="btn btn-success" id="btnSubmit" />
+
+            </div>
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('#hfCompanyId').val() == 0) {
+            var countryId = $("#drpdwncountry option:selected").attr('value');
+            bindStates(countryId);
+            $('#btnSubmit').attr('value', 'Save');
+        }
+    });
+    $("#drpdwncountry").change(function () {
+        var countryregionId = $(this).val();
+        bindStates(countryregionId);
+    });
+
+    function bindStates(countryregionId) {
+        if (countryregionId != null && countryregionId != "") {
+            var baseurl1 = "../Account/FillStatesByCountryId";
+            $.getJSON(baseurl1, { CountryRegionId: countryregionId }, function (countryData) {
+                var select = $('#drpdwnstate');
+                select.html('');
+                $.each(countryData, function (index, itemData) {
+                    select.append($('<option/>', {
+                        value: itemData.StateProvinceID,
+                        text: itemData.Name,
+                    }));
+
+                });
+            });
+        }
+    }
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Company</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><li><a href=" + '"../Company/ConfigureCompany"' + ">Configure Company</li><li class=" + '"active"' + ">Add Company</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

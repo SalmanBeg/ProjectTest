@@ -1,0 +1,118 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.EmployeeOSHA>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllEmployeeOSHA";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+<div>
+    @Html.ActionLink("Add", "CreateEmployeeOSHA", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteOSHA" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+@{
+    var employeeoshagrid = new WebGrid(@Model, canPage: false, canSort: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+}
+<div id="gridContent" style="padding-top: 10px;">
+
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="OSHAGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa"/>
+                    @Html.DisplayName("Select All")
+                </th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.CaseNumber)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.MedicalCosts)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Advisor)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.IncidentDateTime)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.EmployeeOSHAId" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                         @Html.ActionLink(((int)item.CaseNumber).ToString(), "CreateEmployeeOSHA", new { @EmployeeOSHAId = item.EmployeeOSHAId }, new { id = "EmployeeOSHAId" })
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MedicalCosts)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Advisor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IncidentDateTime)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>OSHA<small>OSHA Case List</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">OSHA</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#btnDeleteOSHA").click(function (e) {
+          
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#OSHAGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "EmployeeOSHA/DeleteOSHA",
+                    type: "POST",
+                    cache: "false",
+                    data: { OSHADetailIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete.");}
+        });
+
+    });
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#OSHAGridContent input:checkbox').iCheck('check');
+    });
+
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#OSHAGridContent input:checkbox').iCheck('uncheck');
+    });
+</script>

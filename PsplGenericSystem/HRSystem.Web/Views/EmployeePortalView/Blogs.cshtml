@@ -1,0 +1,91 @@
+﻿@model HRSystem.Web.Models.BlogModels
+
+@{
+    ViewBag.Title = "Blogs";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Manage Blogs</h2>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <input id="btnAdd" type="button" class="btn btn-primary" style="float:right;" onclick="location.href='@Url.Action("CreateBlog","EmployeePortalView")'" value="New Blog" />
+        </div>
+        <table id="tblblog" width="100%" class="table table-striped table-hover table-menu">
+            <thead>
+                <tr>
+                    <th style="text-align:center;">Title</th>
+                    <th style="text-align:center;">Description</th>
+                    <th style="text-align:center;">Body</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var item in ViewBag.blogList)
+            {
+                <tr>
+                    <td style="display:none;">
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        @item.Description
+                    </td>
+                    <td style="word-wrap:break-word;overflow:hidden;max-width:500px;">
+                        @item.Body
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm editBlog" data-id="@item.Id" onclick="location.href='@Url.Action("EditBlog", "EmployeePortalView", new { Id = item.Id })'">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm deleteBlog" data-id="@item.Id"><i class="fa fa-close"></i></button>
+                    </td>
+                </tr>
+            }
+        </table>
+        </div>
+    </div>
+
+
+
+        
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".deleteBlog").click(function () {
+                    debugger;
+                    var id = $(this).data("id");
+                    var result = confirm("Are you sure you want to delete selected record(s)?");
+                    if (result) {
+                        $.ajax({
+                            url: '/EmployeePortalView/DeleteBlog',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { Id: id },
+                            success: function (result) {
+                                if (result == true) {
+                                    location = location.href;
+                                }
+                                else {
+                                    alert("Could not delete");
+                                }
+                            },
+                            error: function () {
+                                alert("Could not delete");
+                            }
+                        });
+                    }
+                });
+            });
+        </script>

@@ -1,0 +1,9 @@
+﻿@using MvcReportViewer
+@using HRMS.Web.Helper
+@{
+    ViewBag.Title = "EmployeeEmergencyContactReport";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@Html.MvcReportViewer("/" + @System.Configuration.ConfigurationManager.AppSettings["ReportServerName"] +"/EmployeeEmergencyContact",
+    new { CompanyId = GlobalsVariables.CurrentCompanyId },
+    new { Height = 900, Width = "90%", style = "border: none" }) 

@@ -1,0 +1,115 @@
+﻿@model HRMS.Service.Models.EDM.TrainingClassResource
+@{
+    ViewBag.Title = "TrainingClassResources";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+    var TrainingClassId = TempData["TrainingClassId"] as List<HRMS.Service.Models.EDM.TrainingClassResource>;
+}
+
+
+<div id="gridContent" style="padding-top: 10px;">
+    @using (Html.BeginForm("TrainingClassResources", "TrainingClassResources", new {@TrainingClassId=Model.TrainingClassId}, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table id="container">
+            <thead>
+                <tr>
+                    <th>
+                        Attachment
+                    </th>
+                    <th>
+                      
+                    </th>
+                    <th>
+                        URL
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style ="padding-right:90px">
+                        @*@Html.TextBoxFor(k => k.Attachment  type=file, new { @class = "form-control", @maxlength = "50" })*@
+                        <input type='file' id='ResourcesAttachment' name='ResourcesAttachment'/>
+                    </td>
+                    <td style="padding-right:90px">
+                        <span id="btnAdd1" style="text-decoration:underline;">Add</span>
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        @*@Html.TextBoxFor(k =>k.FileName, new { @class = "form-control", @maxlength = "50" })*@
+                        <input type='text' id='ResourcesUrl' name='ResourcesUrl' />
+                    </td>
+                    <td>
+                        <span id="btnAdd2" style="text-decoration:underline;">Add</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class="form-group" style="padding-left:0px">
+            <div class="col-sm-offset-2 control-button">
+                
+                @Html.ActionLink("Cancel", "SelectAllClasses", "TrainingClass", null, new { @class = "btn btn-success" })
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+
+    }
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>TrainingClassResources<small>Training Class Resources</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Training Class Resources Class</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+
+
+            function removeRow1(selector) {
+                if ($('#container tr').length > 1) {
+                    $(selector).closest('tr').remove();
+                }
+            }
+
+            function removeRow2(selector) {
+                if ($('#container tr').length > 1) {
+                    $(selector).closest('tr').remove();
+                }
+            }
+
+
+            $("#btnAdd1").click(function (e) {
+
+                var ind = $("#container tr:last").find("input.iHidden").val();
+                var itemIndex = parseInt(ind);
+                itemIndex++;
+                e.preventDefault();
+                var newItem = $("<tr>" +
+                    "<td><input type='file' id='Resources_" + itemIndex + "__Attachment' name='Resources_[" + itemIndex + "].Attachment'/></td>" +                  
+                    "<td><a onclick='removeRow1(this)'>x</a></td>" +
+                    "</tr>");
+                $("#container").append(newItem);
+            });
+
+
+            $("#btnAdd2").click(function (e) {
+
+                var ind = $("#container tr:last").find("input.iHidden").val();
+                var itemIndex = parseInt(ind);
+                itemIndex++;
+                e.preventDefault();
+                var newItem = $("<tr>" +                   
+                    "<td><input type='text' id='Resources_" + itemIndex + "__Url' name='Resources_[" + itemIndex + "].Url'  onkeypress = 'return IsNumeric(event);'/></td>" +
+                    "<td><a onclick='removeRow2(this)'>x</a></td>" +
+                    "</tr>");
+                $("#container").append(newItem);
+            });
+        });
+
+
+      
+
+    </script>
+
+

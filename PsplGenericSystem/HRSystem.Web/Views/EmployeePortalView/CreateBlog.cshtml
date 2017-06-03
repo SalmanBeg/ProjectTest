@@ -1,0 +1,129 @@
+﻿@model HRSystem.Services.Models.BlogModelView
+
+@{
+    ViewBag.Title = "CreateBlog";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Manage Blogs</h2>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.permalink, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.permalink, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.permalink, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SetAsHomepage, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10" style="padding-top:10px;">
+                        @Html.CheckBoxFor(model => model.SetAsHomepage)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Body, new { htmlAttributes = new { @class = "form-control", @row = 5 } })
+                        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                        @*@(Html.Telerik().Editor().Name("editor"))*@
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FeedProxyUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FeedProxyUrl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FeedProxyUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.postsperPage, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.postsperPage, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.postsperPage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Post, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Post, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Post, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @{var owner = Session["ownerName"].ToString();}
+                        @Html.EditorFor(model => model.Owner, new { htmlAttributes = new { @class = "form-control", @Value = owner, @Readonly = true } })
+                    </div>
+                </div>
+
+                <div class="form-group" style="text-align:center;">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnCreate" type="submit" value="Create" class="btn btn-primary" />
+                        <input id="cancel" type="button" onclick="location.href='@Url.Action("Blogs","EmployeePortalView")'" class="btn btn-primary" value="Cancel" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+@Styles.Render("~/Content/summernote")
+
+
+
+@section scripts{
+    @Scripts.Render("~/bundle/summernote",
+                    "~/Scripts/home-index.js")
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnCreate").click(function () {
+            if ($("#Title").val() == "") {
+                alert("Please enter Title field!");
+                return false;
+            }
+            if($("#postsperPage").val() == ""){
+                alert("Please enter PostsPerPage field!");
+                return false;
+            }
+        });
+    });
+</script>
+
+

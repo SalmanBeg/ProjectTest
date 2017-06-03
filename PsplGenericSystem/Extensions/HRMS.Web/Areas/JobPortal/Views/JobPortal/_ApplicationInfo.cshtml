@@ -1,0 +1,517 @@
+﻿@model HRMS.Web.ViewModels.ApplicationInfoFormModel
+@using HRMS.Common.Helpers;
+@using HRMS.Web.Helper;
+
+@{
+    ViewBag.Title = "AddApplicationInfo";
+    Layout = "~/Areas/JobPortal/Views/Shared/_JobPortalMaster.cshtml";
+}
+
+<script src="~/Scripts/jquery-ui-1.10.3.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+    $(function () {
+        $("#accordion").accordion();
+    });
+</script>
+
+<h3>Applicant Info</h3>
+@using (Html.BeginForm("AddApplicationInfo", "JobPortal", FormMethod.Post))
+{
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @*<div id="accordion">*@
+            <div class="col-sm-6">
+                <div class="form-group">
+
+                    @Html.LabelFor(k => k.JobApplicant.FirstName, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.JobApplicant.FirstName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.JobApplicant.LastName, new { @class = "col-sm-3 control-label " })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(k => k.JobApplicant.LastName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.JobApplicant.Gender, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.DropDownListFor(k => k.JobApplicant.Gender, new SelectList(Model.GenderList, "ID", "Name"), "--Select--", new { @class = " form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.JobApplicant.Address, new { @class = "col-sm-3 control-label required" })
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(k => k.JobApplicant.Address, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-6">
+                      
+                        <div class="form-group">
+                            @Html.LabelFor(k => k.JobApplicant.City, new { @class = "col-sm-3 control-label " })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(k => k.JobApplicant.City, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(k => k.JobApplicant.Email, new { @class = "col-sm-3 control-label " })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(k => k.JobApplicant.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(k => k.JobApplicant.CountryId, new { @class = "col-sm-3 control-label required" })
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(k => k.JobApplicant.CountryId, new SelectList(Model.CountryList, "CountryRegionId", "Name"), "--Select--", new Dictionary<string, Object> { { "class", "form-control" }, { "data-val-1", "CountryRegionCode" }, { "id", "drpdwncountry" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(k => k.JobApplicant.StateId, new { @class = "col-sm-3 control-label required" })
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(k => k.JobApplicant.StateId, new SelectList(Model.StateList, "StateProvinceId", "Name"), "--Select--", new { @class = "form-control", @id = "drpdwnstate" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+            </div>
+            <div class="col-sm-9" style="padding:0px">
+                <h3>Education</h3>
+                @Html.ActionLink("Add  ", "AddEducationInfo", null, new { @class = "btn btn-success" })
+                <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="container">
+                    <thead>
+                        <tr>
+                            <th>
+                                University
+                            </th>
+                            <th>
+                                Degree
+                            </th>
+                            <th>
+                                FromDate
+                            </th>
+                            <th>
+                                ToDate
+                            </th>
+                            <th>
+                                Activities
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.lstApplicantEducation.Count; i++)
+                        {
+                            <tr>
+
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.HiddenFor(k => k.lstApplicantEducation[i].ApplicantEducationId)
+                                        @Html.HiddenFor(k => k.lstApplicantEducation[i].ApplicantId)
+                                        @Html.HiddenFor(k => k.lstApplicantEducation[i].JobId)
+                                        @Html.DisplayFor(k => k.lstApplicantEducation[i].University, new { @class = "form-control", id = "txtUniversity" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstApplicantEducation[i].University, new { @class = "form-control", id = "txtUniversity" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantEducation[i].Degree, new { @class = "form-control", id = "txtDegree" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstApplicantEducation[i].Degree, new { @class = "form-control", id = "txtDegree" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantEducation[i].FromDate, new { @class = "form-control", id = "txtfromDate" })
+                                    </span>
+                                    <div class="input-group">
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstApplicantEducation[i].FromDate, (Model.lstApplicantEducation[i].FromDate == null ? "" : ((DateTime)Model.lstApplicantEducation[i].FromDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtfromdate", @maxlength = 10 })
+                                            <label for="txtfromdate" class="input-group-addon btn" style="float:left">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantEducation[i].ToDate, new { @class = "form-control" })
+                                    </span>
+                                    <div class="input-group">
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstApplicantEducation[i].ToDate, (Model.lstApplicantEducation[i].ToDate == null ? "" : ((DateTime)Model.lstApplicantEducation[i].ToDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txttodate", @maxlength = 10 })
+                                            <label for="txttodate" class="input-group-addon btn" style="float:left">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantEducation[i].Activities, new { @class = "form-control", id = "txtActivities" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstApplicantEducation[i].Activities, new { @class = "form-control", id = "txtActivities" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="edit-user display-mode">Edit</a>
+                                    <a href="javascript:void(0)" class="save-user edit-mode">Save</a>
+                                    <a href="javascript:void(0)" class="cancel-user edit-mode">Cancel</a>
+
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-9" style="padding:0px">
+                <h3>Employment</h3>
+                @Html.ActionLink("Add  ", "AddEmploymentInfo", null, new { @class = "btn btn-success" })
+                <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="container">
+                    <thead>
+                        <tr>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Location
+                            </th>
+                            <th>
+                                EmploymentStartDate
+                            </th>
+                            <th>
+                                EmploymentEndDate
+                            </th>
+                            <th>
+
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.lstApplicantEmploymentHistory.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.HiddenFor(k => k.lstApplicantEmploymentHistory[i].ApplicantId)
+                                        @Html.HiddenFor(k => k.lstApplicantEmploymentHistory[i].JobId)
+                                        @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].Title, new { @class = "form-control" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstApplicantEmploymentHistory[i].Title, new { @class = "form-control" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].Description, new { @class = "form-control" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstApplicantEmploymentHistory[i].Description, new { @class = "form-control" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].Location, new { @class = "form-control" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstApplicantEmploymentHistory[i].Location, new { @class = "form-control" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].EmploymentStartDate, new { @class = "form-control" })
+                                    </span>
+                                    <div class="input-group">
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstApplicantEmploymentHistory[i].EmploymentStartDate, (Model.lstApplicantEmploymentHistory[i].EmploymentStartDate == null ? "" : ((DateTime)Model.lstApplicantEmploymentHistory[i].EmploymentStartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtstartDate" })
+                                            <label for="txtstartDate" class="input-group-addon btn" style="float:left">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantEmploymentHistory[i].EmploymentEndDate, new { @class = "form-control" })
+                                    </span>
+                                    <div class="input-group">
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstApplicantEmploymentHistory[i].EmploymentEndDate, (Model.lstApplicantEmploymentHistory[i].EmploymentEndDate == null ? "" : ((DateTime)Model.lstApplicantEmploymentHistory[i].EmploymentEndDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtendDate" })
+                                            <label for="txtendDate" class="input-group-addon btn" style="float:left">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="edit-user display-mode">Edit</a>
+                                    <a href="javascript:void(0)" class="save-user edit-mode">Save</a>
+                                    <a href="javascript:void(0)" class="cancel-user edit-mode">Cancel</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-9" style="padding:0px">
+                <h3>Skills</h3>
+                @Html.ActionLink("Add  ", "AddSkillInfo", null, new { @class = "btn btn-success" })
+                <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="container">
+                    <thead>
+                        <tr>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.lstApplicantAchievementsAndAssociations.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.HiddenFor(k => k.lstApplicantAchievementsAndAssociations[i].ApplicantAchievementsAndAssociationsId)
+                                        @Html.HiddenFor(k => k.lstApplicantAchievementsAndAssociations[i].ApplicantId)
+                                        @Html.HiddenFor(k => k.lstApplicantAchievementsAndAssociations[i].JobId)
+                                        @Html.DisplayFor(k => k.lstApplicantAchievementsAndAssociations[i].Type, new { @class = "form-control" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstApplicantAchievementsAndAssociations[i].Type, new { @class = "form-control" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstApplicantAchievementsAndAssociations[i].Description, new { @class = "form-control" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstApplicantAchievementsAndAssociations[i].Description, new { @class = "form-control" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="edit-user display-mode">Edit</a>
+                                    <a href="javascript:void(0)" class="save-user edit-mode">Save</a>
+                                    <a href="javascript:void(0)" class="cancel-user edit-mode">Cancel</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-9" style="padding:0px">
+                <h3>Licence</h3>
+                @Html.ActionLink("Add  ", "AddCertificationLicence", null, new { @class = "btn btn-success" })
+                <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="container">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                FileName
+                            </th>
+                            <th>
+                                IssueDate
+                            </th>
+                            <th>
+                                RenewalDate
+                            </th>
+                            <th>
+                                ExpirationDate
+                            </th>
+                            <th>
+
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.lstCertificationandLicense.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstCertificationandLicense[i].Name, new { @class = "form-control" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstCertificationandLicense[i].Name, new { @class = "form-control" })
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstCertificationandLicense[i].FileName, new { @class = "form-control" })
+                                    </span>
+                                    <span class="edit-mode">
+                                        @Html.TextBoxFor(k => k.lstCertificationandLicense[i].FileName, new { @class = "form-control" })
+                                    </span>
+                                </td>
+                                @*<td>
+                                        <span class="display-mode">
+                                            @Html.DisplayFor(k => k.lstCertificationandLicense[i].IssueDate, new { @class = "form-control" })
+                                        </span>
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstCertificationandLicense[i].IssueDate, new { @class = "form-control" })
+                                        </span>
+                                    </td>*@
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstCertificationandLicense[i].IssueDate, new { @class = "form-control" })
+                                    </span>
+                                    <div class="input-group">
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstCertificationandLicense[i].IssueDate, (Model.lstCertificationandLicense[i].IssueDate == null ? "" : ((DateTime)Model.lstCertificationandLicense[i].IssueDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtissueDate" })
+                                            <label for="txtissueDate" class="input-group-addon btn" style="float:left">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </td>
+                                @*<td>
+                                        <span class="display-mode">
+                                            @Html.DisplayFor(k => k.lstCertificationandLicense[i].RenewalDate, new { @class = "form-control" })
+                                        </span>
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstCertificationandLicense[i].RenewalDate, new { @class = "form-control" })
+                                        </span>
+                                    </td>*@
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstCertificationandLicense[i].RenewalDate, new { @class = "form-control" })
+                                    </span>
+                                    <div class="input-group">
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstCertificationandLicense[i].RenewalDate, (Model.lstCertificationandLicense[i].RenewalDate == null ? "" : ((DateTime)Model.lstCertificationandLicense[i].RenewalDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtrenevalDate" })
+                                            <label for="txtrenevalDate" class="input-group-addon btn" style="float:left">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </td>
+                                @*<td>
+                                        <span class="display-mode">
+                                            @Html.DisplayFor(k => k.lstCertificationandLicense[i].ExpirationDate, new { @class = "form-control" })
+                                        </span>
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstCertificationandLicense[i].ExpirationDate, new { @class = "form-control" })
+                                        </span>
+                                    </td>*@
+                                <td>
+                                    <span class="display-mode">
+                                        @Html.DisplayFor(k => k.lstCertificationandLicense[i].ExpirationDate, new { @class = "form-control" })
+                                    </span>
+                                    <div class="input-group">
+                                        <span class="edit-mode">
+                                            @Html.TextBoxFor(k => k.lstCertificationandLicense[i].ExpirationDate, (Model.lstCertificationandLicense[i].ExpirationDate == null ? "" : ((DateTime)Model.lstCertificationandLicense[i].ExpirationDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtexpiryDate" })
+                                            <label for="txtexpiryDate" class="input-group-addon btn" style="float:left">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="edit-user display-mode">Edit</a>
+                                    <a href="javascript:void(0)" class="save-user edit-mode">Save</a>
+                                    <a href="javascript:void(0)" class="cancel-user edit-mode">Cancel</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+            @*</div>*@
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>Application Info<small>Application Info</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Application Info</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+            $('.edit-mode').hide();
+            $('.display-mode').show();
+        });
+        $('.edit-mode').hide();
+        $('.edit-user, .cancel-user').on('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var tr = $(this).parents('tr:first');
+            var moduleId = tr.find("#ApplicantEducation").attr("data-val-1");
+            tr.find('.edit-mode,.display-mode').toggle();
+            var dpModules = $("#ApplicantEducation");
+            tr.find("#ApplicantEducation").val(moduleId).attr("selected", "selected");
+        });
+         $('.save-user').on('click', function () {
+             var tr = $(this).parents('tr:first');
+             var ApplicantEducationId = tr.find("#ApplicantEducation").attr("data-val-1");
+             var ApplicantEducation = $("#ApplicantEducation");
+             var SelectedApplicantEducationId = tr.find("#ApplicantEducation").val();
+            var CompanyId = '@HRMS.Web.Helper.GlobalsVariables.CurrentCompanyId';
+            var University = tr.find("#txtUniversity")[0].value;
+            var Degree = tr.find("#txtDegree")[0].value;
+            var FromDate = tr.find("#txtFromDate")[0].value;
+            var ToDate = tr.find("#txtToDate")[0].value;
+            var Activities = tr.find("#txtActivities")[0].value;
+            $('.edit-mode').hide();
+            $('.display-mode').show();
+            var parms = {
+                ApplicantEducationId: SelectedApplicantEducationId, University: University
+                , Degree: Degree, FromDate: FromDate, ToDate: ToDate, Activities: Activities
+            };
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+             $.ajax({
+                 url: baseurl + "ApplicationInfo/AddApplicationInfo",
+                 type: 'post',
+                 cache: false,
+                 data: parms,
+                 success: function (data) {
+                     if (data) {
+                        window.location.href = window.location.href;
+                     }
+                 },
+                 error: function () {
+                     alert(Error);
+                 }
+             });
+         });
+
+</script>
+

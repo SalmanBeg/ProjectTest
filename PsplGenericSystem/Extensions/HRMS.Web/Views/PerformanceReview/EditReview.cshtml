@@ -1,0 +1,283 @@
+﻿@model HRMS.Service.Models.EDM.PerformanceReview
+
+@using HRMS.Web.Helper;
+@using System.Web.Optimization;
+@using HRMS.Web.Models;
+@{
+    ViewBag.Title = "AddReview";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("EditReview", "PerformanceReview", FormMethod.Post))
+{
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <fieldset>
+                    <legend>Review</legend>
+                    <div class="form-group">
+                        @Html.HiddenFor(k => k.ReviewId)
+                        @Html.LabelFor(k => k.Name, "Name", new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(k => k.Name, new { @class = "form-control" })
+                            @*@section Section1
+                            {
+                                <p>
+                                   @Html.DisplayFor( k => k.Name)
+                                </p>
+                            }*@
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Reviewee, new { @class = "col-sm-3 control-label required" })
+
+                        <div class="col-sm-4">
+
+                            @*@Html.DropDownListFor(m => m.Review.Reviewees, new SelectList(Model.RevieweeList1, "ID", "Name"), "--Select--", new { @class = "form-control", @Style = "", @id = "hdnAddWithHolding" })*@
+                            @Html.DropDownListFor(m => m.RevieweeType, ViewData["drpReviews"] as List<SelectListItem>, new { @class = "form-control", @id = "drpReviews"} )
+                            @Html.DropDownListFor(m => m.DepartmentId, new SelectList(string.Empty, "Value", "Text"), "-select-", new { @class = "form-control", @id = "drpReviewfilter", @Style="margin-top:5px;"})                          
+                        </div>
+                        @*<div class="col-sm-6">
+                                @Html.DropDownListFor(m => m.ReviewId.Reviewees, new SelectList(Model.RevieweeList2, "ID", "Name"), "--Select--", new { @class = "form-control", @id = "hdnAddWithHolding" })                            </div>*@
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ScheduleValue, "Scheduler", new { @class = "col-sm-3 control-label required required" })
+                        <div class="col-sm-8">
+
+                            @Html.TextBoxFor(k => k.ScheduleValue, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IntervalType, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-4">
+
+                            @Html.DropDownListFor(m => m.IntervalType, ViewData["drpIntervalType"] as List<SelectListItem>, new { @class = "form-control" })
+                            @Html.DropDownListFor(m => m.DateType, ViewData["drpDateType"] as List<SelectListItem>, new { @class = "form-control", @id = "drpDateType", @Style="margin-top:5px"})
+
+                            <div class="input-group" id="divCustomDate" style="display:none;">
+                                @Html.TextBoxFor(m => m.CustomDate, (Model.CustomDate == null ? "" : ((DateTime)Model.CustomDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtCustomDate", })
+                                <label for="dtCustomDate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.DaysToComplete, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-8">
+
+                            @Html.TextBoxFor(k => k.DaysToComplete, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset>
+                    <legend>Weightage</legend>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.Question, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-8">
+
+                            @Html.TextBoxFor(k => k.Question, new { @class = "form-control", @id = "txtQuestion", onKeyUp = "return Add();" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.Accountability, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-8">
+
+                            @Html.TextBoxFor(k => k.Accountability, new { @class = "form-control", @id = "txtAccountability", onKeyUp = "return Add();" })
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.Competency, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-8">
+
+                            @Html.TextBoxFor(k => k.Competency, new { @class = "form-control", @id = "txtCompetencies", onKeyUp = "return Add();" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(k => k.Goal, new { @class = "col-sm-3 control-label required" })
+                        <div class="col-sm-8">
+
+                            @Html.TextBoxFor(k => k.Goal, new { @class = "form-control", @id = "txtGoal", onKeyUp = "return Add();" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Must Total 100", new { @class = "col-sm-3 control-label " })
+                        <div class="col-sm-8">
+                            @Html.TextBox("txtMustTotal", 0, new { @class = "col-sm-3 control-label", @readonly = "readonly", @id = "txtTotal" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Use Weighted Average", new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.CheckBoxFor(m => m.WeightedAverage, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            
+            @Html.ActionLink("Cancel", "SelectReviewAll", "PerformanceReview", null, new { @class = "btn btn-success" })
+            <button type="submit" id="submit" class="btn btn-success">Update</button>
+        </div>
+    </div>
+
+}
+
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        //Bind Default Reviews
+        var Id=@(Model.RevieweeType)
+        BindDynamicReviewe(Id);
+
+        var dateId=@(Model.DateType)
+        BindDate(dateId);
+
+        $("#txtTotal").val(100);
+
+        var resultingSiteview = "<h1>Performance Management<small>Add Review</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">PerformanceManagement</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+
+        //Dropdownlist Selectedchange event
+        @*$("#drpReviews").change(function () {
+            $("#drpReviewfilter").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("BindReviewFilter")',
+                dataType: 'json',
+                data: { id: $("#drpReviews").val() },
+                success: function (filters) {
+
+                    $.each(filters, function (i, city) {
+                        $("#drpReviewfilter").append('<option value="'
++ city.Value + '">'
++ city.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve filters.' + ex);
+                }
+            });
+            return false;
+        });*@
+
+        $("#drpReviews").change(function () {
+            BindDynamicReviewe($("#drpReviews").val());
+        });
+    });
+
+
+    $("#drpDateType").change(function () {
+        BindDate($(this).val());
+    });
+
+    $("#submit").click(function () {
+        var total100 = parseInt($("#txtTotal").val());
+        if (isNaN(total100)) {
+            total100 = 0;
+        }
+
+        if (total100 === 100)
+            return true;
+        else {
+            alert('Total Must be 100');
+            return false;
+        }
+
+    });
+
+    function Add() {
+        txtQuestion = 0;
+        txtAccountability = 0;
+        txtCompetencies = 0;
+        txtGoals = 0;
+
+        txtQuestion = parseInt($("#txtQuestion").val());
+        txtAccountability = parseInt($("#txtAccountability").val());
+        txtCompetencies = parseInt($("#txtCompetencies").val());
+        txtGoals = parseInt($("#txtGoal").val());
+        if (isNaN(txtQuestion)) {
+            txtQuestion = 0;
+        }
+        if (isNaN(txtAccountability)) {
+            txtAccountability = 0;
+        }
+        if (isNaN(txtCompetencies)) {
+            txtCompetencies = 0;
+        }
+        if (isNaN(txtGoals)) {
+            txtGoals = 0;
+        }
+        txtAmount = 0;
+        txtAmount = (txtQuestion + txtAccountability + txtCompetencies + txtGoals);
+
+        if (txtAmount === 100) {
+            $("#txtTotal").val(txtAmount);
+            //document.getElementById('<%= txtTotal.ClientID %>').style.color = '#99FF00';
+        }
+        else {
+            $("#txtTotal").val(txtAmount);
+            //document.getElementById('<%= txtTotal.ClientID %>').style.color = '#FF0000';
+        }
+    }
+
+
+    function BindDynamicReviewe(id) {
+        $("#drpReviewfilter").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("BindReviewFilter")',
+            dataType: 'json',
+            data: { id: id },
+            success: function (filters) {
+
+                $.each(filters, function (i, city) {
+                    $("#drpReviewfilter").append('<option value="'
++ city.Value + '">'
++ city.Text + '</option>');
+                });
+            },
+            error: function (ex) {
+                alert('Failed to retrieve filters.' + ex);
+            }
+        });
+    }
+
+    function BindDate(id)
+    {
+        if (id == 2) {
+            $("#divCustomDate").show();
+        }
+
+        if (id == 1 || id == -1) {
+            $("#divCustomDate").hide();
+        }
+    }
+
+</script>
+
+

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.JobProfile>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "ShowAllJobProfile";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add", "AddJobProfile", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeletejobprofile" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="10" data-page-previous-text="prev" data-page-next-text="next" id="JobProfileGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa"/>
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.JobCategory)
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.JobProfileId" class="btncheckjobprofile" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.Title), "UpdateJobProfileById", new { @JobProfileId = item.JobProfileId }, new { id = "JobProfileId" })                      
+                    </td>
+                    <td>
+                        @Html.Label((item.JobCategoryList.Count > 0) ? item.JobCategoryList[0].Name : "")
+                    </td>
+                    <td>
+                        @if (item.Status.Equals(true))
+                        {@Html.Label("True") }
+                        else
+                        {@Html.Label("False") }
+                    </td>                   
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>JobProfile<small>Job Profile List</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">JobProfile</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        $("#btnDeletejobprofile").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#JobProfileGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "JobProfile/DeleteJobprofile",
+                    type: "POST",
+                    cache: "false",
+                    data: { jobprofileIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+    //To Select all/Deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#JobProfileGridContent input:checkbox').iCheck('check');
+    });
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#JobProfileGridContent input:checkbox').iCheck('uncheck');
+    });
+
+</script>
+
+

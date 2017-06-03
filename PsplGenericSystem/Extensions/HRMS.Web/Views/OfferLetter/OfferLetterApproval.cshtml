@@ -1,0 +1,56 @@
+﻿@model HRMS.Service.Models.EDM.CandidateOfferLetter
+@using HRMS.Common.Helpers
+@{
+    ViewBag.Title = "OfferLetterApproval";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<style type="text/css">
+    .horizontal {
+        display: inline;
+        font-size: medium;
+        padding-right: 40px;
+    }
+</style>
+
+@using (Html.BeginForm("OfferLetterApproval", "OfferLetter", FormMethod.Post, new { id = "offerletterapprovalform" }))
+{
+    @Html.HiddenFor(m => m.CandidateId, new { @id = "hdnCandidateId" })
+    @Html.HiddenFor(m => m.JobProfileId, new { @id = "hdnJobProfileId" })
+    @Html.HiddenFor(m => m.CandidateOfferLetterId, new { id = "hdnCandidateOfferLetterId" })
+    <div class="col-md-12">
+        <div class="form-group">
+            @Html.LabelFor(m => m.CandidateOfferLetterContent, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.CandidateOfferLetterContent, new { @id = "editor" })
+        </div>
+    </div>
+    <div class="col-md-10">
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(j => j.Comments, new { @class = "col-sm-2 control-label" })
+            @Html.TextAreaFor(j => j.Comments, new { @class = "form-control" })
+        </div>
+        <br />
+        <div>
+            <button type="submit" id="btnapproveofferletter" name="Command" value="Approve" class=" btn btn-success">APPROVE</button>
+            <button type="submit" id="btnrejectofferletter" name="Command" value="Reject" class="btn btn-reject">REJECT</button>
+                </div>
+            </div>
+}
+<script src="~/Scripts/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor');
+
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea").wysihtml5();
+    });
+
+  
+</script>
+
+
+

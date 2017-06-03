@@ -1,0 +1,122 @@
+﻿@model HRMS.Web.ViewModels.RoundingFormModel
+@{
+    ViewBag.Title = "SelectAllRoundingDetails";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div style="padding-top: 10px;">
+    @Html.ActionLink("Add  ", "AddRoundingDetail", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteRoundingDetail", null, new { @class = "btn btn-danger", @id = "btnDelete" })
+    @Html.ActionLink("<< Back to TimeAttendance Configuration", "TimeAttendanceConfiguration", "Home", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="RoundingGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" />
+                </th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(Model => Model.Rounding.RoundingDescription)
+                </th>
+                <th>
+                    @Html.DisplayName("Work Start Type")
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayName("Work End  Type")
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayName("Lunch Start Type")
+                </th>
+                <th data-hide="phone,tablet">
+                    @Html.DisplayName("Lunch End Type")
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayName("Break Start Type")
+                </th>
+                <th data-hide="all">
+                    @Html.DisplayName("Break End Type")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+           @for (int i = 0; i< Model.RoundingList.Count  ;i++)
+{
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" id="@Model.RoundingList[i].RoundingId" data-val-1="@Model.RoundingList[i].RoundingId" onchange="cbChange(this)" />
+                    </td>
+
+                    <td>
+                        @Html.ActionLink(((string)Model.RoundingList[i].RoundingDescription), "EditRoundingDetail", new { @RoundingId = Model.RoundingList[i].RoundingId }, new { id = "RoundingId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.RoundingList[i].WorkStartTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.RoundingList[i].WorkEndTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.RoundingList[i].LunchStartTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.RoundingList[i].LunchEndTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.RoundingList[i].BreakStartTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.RoundingList[i].BreakEndTypeName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Rounding <small>Rounding List </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Rounding</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnDelete").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#RoundingGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+
+            $.ajax({
+                url: baseurl + "Rounding/DeleteRoundingDetail",
+                type: "POST",
+                cache: "false",
+                data: { RoundingIds: searchIDs.toString() },
+                success: function (data) {
+                    if (data == "True") {
+                        window.location.href = window.location.href;
+                    }
+
+                },
+                error: function (request, status, error) {
+                   alert(request.responseText);
+                }
+            });
+        });
+
+    });
+</script>
+

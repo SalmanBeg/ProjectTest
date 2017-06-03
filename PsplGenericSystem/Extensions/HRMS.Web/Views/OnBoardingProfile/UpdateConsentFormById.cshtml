@@ -1,0 +1,181 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.ConsentForms>
+@{
+    ViewBag.Title = "UpdateConsentFormById";
+    Layout = "~/Areas/JobPortal/Views/Shared/_JobPortalMaster.cshtml";
+}
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ConsentFiles</title>
+</head>
+<div>
+    @using (Html.BeginForm("", "", FormMethod.Post, new { id = "consentformview" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="content">
+            <div>
+            </div>
+            <a href="#" id="adeleteonboarding" class=" btn btn-danger">Delete</a>
+            <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="consentgridContent">
+                <thead>
+                    <tr>
+                        <th data-sort-ignore="true">
+                            <input type="checkbox" />
+                        </th>
+                        <th data-toggle="true">@Html.DisplayNameFor(model => model.DocumentName)</th>
+                        @*<th>@Html.DisplayNameFor(model => model.ConsentType)</th>*@
+                        <th data-toggle="true">@Html.DisplayNameFor(model => model.Description)</th>
+                        <th>@Html.DisplayNameFor(model => model.Active)</th>
+                        <th>@Html.DisplayNameFor(model => model.DisplayDocInConsent)</th>
+                        <th>@Html.DisplayNameFor(model => model.EnableUploadLink)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" value="" data-val-1="@item.ConsentFormId" onchange="cbChange(this)" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DocumentName, new { @class = "display-mode" })
+                            </td>
+                            @* <td>
+                                    @Html.DisplayFor(modelItem => item.ConsentType, new { @class = "display-mode" })
+                                    @Html.DropDownList("ConsentType", new SelectList(new[] { new { ID = "1", Name = "Payroll" }, new { ID = "2", Name = "Jobs" } }, "ID", "Name"), "--Type--", new { Id = "ddlConsentType" })
+                                </td>*@
+                            <td>
+                                <span class="display-mode">
+                                    @Html.DisplayFor(modelItem => item.Description, new { @class = "form-control" })
+                                </span>
+                                <span class="edit-mode">
+                                    @Html.TextBoxFor(modelItem => item.Description)
+                                </span>
+                            </td>
+                            <td>
+                                <span class="display-mode">
+                                    @Html.DisplayFor(modelItem => item.Active)
+                                </span>
+                                <span class="edit-mode">
+                                    @Html.CheckBoxFor(modelItem => item.Active1)
+                                </span>
+                            </td>
+                            <td>
+                                <span class="display-mode">
+                                    @Html.DisplayFor(modelItem => item.DisplayDocInConsent)
+                                </span>
+                                <span class="edit-mode">
+                                    @Html.CheckBoxFor(modelItem => item.DisplayDocInConsent1)
+                                </span>
+                            </td>
+                            <td>
+                                <span class="display-mode">
+                                    @Html.DisplayFor(modelItem => item.EnableUploadLink)
+                                </span>
+                                <span class="edit-mode">
+                                    @Html.CheckBoxFor(modelItem => item.EnableUploadLink1)
+                                </span>
+                            </td>
+                            <td>
+                                <div id="dvActions">
+                                    <a href="javascript:void(0)" class="edit-user display-mode">Edit</a>
+                                    <a href="javascript:void(0)" class="save-user edit-mode">Save</a>
+                                    <a href="javascript:void(0)" class="cancel-user edit-mode">Cancel</a>
+                                    @Html.HiddenFor(modelItem => item.ConsentFormId, new { id = "ConsentFormId" })
+                                    @Html.HiddenFor(modelItem => item.DocumentName, new { id = "DocumentName" })
+                                    @Html.HiddenFor(modelItem => item.Description, new { id = "Description" })
+                                    @Html.HiddenFor(modelItem => item.Active, new { id = "Active" })
+                                    @Html.HiddenFor(modelItem => item.DisplayDocInConsent, new { id = "DisplayDocInConsent" })
+                                    @Html.HiddenFor(modelItem => item.EnableUploadLink, new { id = "EnableUploadLink" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="pagination pagination-centered hide-if-no-paging"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    }
+</div>
+<style>
+</style>
+<script type="text/javascript">
+    function cbChange(e) {
+        if (e.checked == true)
+            e.value = e.id;
+    }
+    $(document).ready(function () {
+        $('.edit-mode').hide();
+        $('.display-mode').show();
+    });
+
+    $('.edit-mode').hide();
+    $('.edit-user, .cancel-user').on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var tr = $(this).parents('tr:first');
+        var ConsentFormId = tr.find("#ConsentFormId").val();
+        var parms = {
+            ConsentFormId: ConsentFormId
+        };
+        tr.find('.edit-mode,.display-mode').toggle();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        //$.ajax({
+        //    url: baseurl + "OnBoardingProfile/UpdateConsentFormById",
+        //    type: 'GET',
+        //    cache: false,
+        //    data: {"ConsentFormId": ConsentFormId},
+        //   // dataType: "json",
+        //    success: function (data) {
+        //        if(data)
+        //            window.location.href = window.location.href;
+
+        //    },
+        //    error: function () {
+        //        alert(Error);
+        //    }
+        //});
+    });
+
+    $('.save-user').on('click', function (e) {
+
+        e.preventDefault();
+        var tr = $(this).parents('tr:first');
+        var ConsentFormId = tr.find("#ConsentFormId").val();
+        var DocumentName = tr.find("#DocumentName").val();
+        var Description = tr.find("#item_Description")[0].value;
+        var Active = tr.find("#item_Active1")[0].checked;//tr.find("#item_Active1")[0].value;
+        var DisplayDocInConsent = tr.find("#item_DisplayDocInConsent1")[0].checked;//tr.find("#item_DisplayDocInConsent1")[0].value;
+        var EnableUploadLink = tr.find("#item_EnableUploadLink1")[0].checked;//tr.find("#item_EnableUploadLink1")[0].value;
+        var CompanyId = '@HRMS.Web.Helper.GlobalsVariables.CurrentCompanyId';
+        var parms = { ConsentFormId: ConsentFormId, DocumentName: DocumentName, Description: Description, Active: Active, DisplayDocInConsent: DisplayDocInConsent, EnableUploadLink: EnableUploadLink, CompanyId: CompanyId };
+        var consentformview = $("#consentformview").serialize();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        $.ajax({
+            url: baseurl + "OnBoardingProfile/UpdateConsentFormById",
+            type: 'POST',
+            cache: false,
+            data: parms,
+            success: function (data) {
+                if (data)
+                    window.location.href = window.location.href;
+            },
+            error: function () {
+                alert(Error);
+            }
+        });
+    });
+</script>
+
+
+
+

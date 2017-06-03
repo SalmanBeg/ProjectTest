@@ -1,0 +1,106 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.ReviewScore>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllRatingScale";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div>
+    @Html.ActionLink("Add  ", "AddRatingScale", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteScale" })
+    @Html.ActionLink("<< Back to DashbBoard", "PerformanceDashboard", "PerformanceReview", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+@{
+    var addRatingScalegrid = new WebGrid(@Model, canPage: false, canSort: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+}
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="ratingscaleGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa"/>
+                    @Html.DisplayName("Select All")
+                </th>
+                <th>
+                    Name
+                </th>
+                <th data-hide="phone">
+                    List Content
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.ReviewScoreId" class="btncheckdependent" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink((item.Description).ToString(), "EditRatingScale", new { @ReviewScoreId = item.ReviewScoreId }, new { id = "lnkReviewScoreId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>RatingScale<small>Rating Scale</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">RatingScale</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#btnDeleteScale").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#ratingscaleGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "RatingScale/DeleteRatingScale",
+                    type: "POST",
+                    cache: "false",
+                    data: { ScoreIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+
+    //To Select all/Deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#ratingscaleGridContent input:checkbox').iCheck('check');
+    });
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#ratingscaleGridContent input:checkbox').iCheck('uncheck');
+    });
+    $('#ratingscaleGridContent input:checkbox').on('ifUnchecked', function (event) {
+        //counts the number of selected check-boxes
+        // if count=0 hide div
+        if ($('#ratingscaleGridContent input:checkbox').size() > 0)
+            $('#chksa').hide();
+    });
+
+</script>

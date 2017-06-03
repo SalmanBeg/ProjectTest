@@ -1,0 +1,1066 @@
+﻿@model HRMS.Service.Models.EDM.EmployeeW4Form
+
+<div style="overflow: auto; background-color: White; height: 450px; padding-bottom: 10px"
+                        id="dvW4form">
+                        <div Id="pnlW4Tax">
+                            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-bottom: 4px solid #000000; padding: 5px; border-top: 2px solid #000000;">
+                                            <tr>
+                                                <td align="left" valign="top" style="padding-right: 30px; width: 333px;">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td align="left" valign="middle" style="border-bottom: 6px solid #000000; height: 45px; font-family: arial; font-size: 30px; font-weight: bold;">Form W-4 (2013)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="top" style="height: auto; font-family: arial; font-size: 13px; text-align: justify; padding-top: 6px;">
+                                                                <strong>Purpose.</strong> Complete Form W-4 so that your employer can withhold the
+                                                            correct federal income tax from your pay. Consider completing a new Form W-4 each
+                                                            year and when your personal or financial situation changes.<br />
+                                                                <br />
+                                                                <strong>Exemption from withholding</strong>. If you are exempt, complete only lines
+                                                            1, 2, 3, 4, and 7 and sign the form to validate it. Your exemption for 2013 expires
+                                                            February 17, 2013. See Pub. 505, Tax Withholding and Estimated Tax.<br />
+                                                                <br />
+                                                                <strong>Note.</strong> If another person can claim you as a dependent on his or
+                                                            her tax return, you cannot claim exemption from withholding if your income exceeds
+                                                            $950 and includes more than $300 of unearned income (for example, interest and dividends).<br />
+                                                                <br />
+                                                                <strong>Basic instructions.</strong> If you are not exempt, complete the <strong>Personal
+                                                                Allowances Worksheet below. </strong>The worksheets on page 2 further adjust
+                                                            your withholding allowances based on itemized deductions, certain credits, adjustments
+                                                            to income, or two-earners/multiple jobs situations. <span style="height: auto; font-family: arial; font-size: 13px; text-align: justify; padding-right: 30px; padding-top: 6px;">Complete all worksheets that apply.</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td width="333" align="left" valign="top" style="height: auto; width: 333px; font-family: arial; font-size: 13px; text-align: justify; padding-right: 25px; padding-top: 6px;">However, you may claim fewer (or zero) allowances. For regular wages, withholding
+                                                must be based on allowances you claimed and may not be a flat amount or percentage
+                                                of wages.<br />
+                                                    <br />
+                                                    <strong>Head of household.</strong> Generally, you can claim head of household filing
+                                                status on your tax return only if you are unmarried and pay more than 50% of the
+                                                costs of keeping up a home for yourself and your dependent(s) or other qualifying
+                                                individuals. See Pub. 501, Exemptions, Standard Deduction, and Filing Information,
+                                                for information.<br />
+                                                    <br />
+                                                    <strong>Tax credits.</strong> You can take projected tax credits into account in
+                                                figuring your allowable number of withholding allowances. Credits for child or dependent
+                                                care expenses and the child tax credit may be claimed using the<strong> Personal Allowances
+                                                    Worksheet</strong> below. See Pub. 505 for information on converting your other
+                                                credits into withholding allowances.<br />
+                                                    <br />
+                                                    <strong>Nonwage income.</strong> If you have a large amount of nonwage income, such
+                                                as interest or dividends, consider making estimated tax payments using Form 1040-ES,
+                                                Estimated Tax for Individuals. Otherwise, you may owe additional tax. If you have
+                                                pension or annuity <span style="height: auto; font-family: arial; font-size: 13px; text-align: justify; padding-top: 6px;">income, see Pub. 505 to find out </span>
+                                                </td>
+                                                <td width="330" align="left" valign="top" style="height: auto; font-family: arial; font-size: 13px; text-align: justify; padding-top: 6px;">if you should adjust your withholding on Form W-4 or W-4P.<br />
+                                                    <br />
+                                                    <strong>Two earners or multiple jobs.</strong> If you have a working spouse or more
+                                                than one job, figure the total number of allowances you are entitled to claim on
+                                                all jobs using worksheets from only one Form W-4. Your withholding usually will
+                                                be most accurate when all allowances are claimed on the Form W-4 for the highest
+                                                paying job and zero allowances are claimed on the others. See Pub. 505 for details.<br />
+                                                    <br />
+                                                    <strong>Nonresident alien.</strong> If you are a nonresident alien, see Notice 1392,
+                                                Supplemental Form W-4 Instructions for Nonresident Aliens, before completing this
+                                                form.<br />
+                                                    <br />
+                                                    <strong>Check your withholding.</strong> After your Form W-4 takes effect, use Pub.
+                                                505 to see how the amount you are having withheld compares to your projected total
+                                                tax for 2013. See Pub. 505, especially if your earnings exceed $130,000 (Single)
+                                                or $180,000 (Married).<br />
+                                                    Future developments. The IRS has created a page on IRS.gov for information about
+                                                Form W-4, at www.irs.gov/w4. Information about any future developments affecting
+                                                Form W-4 (such as legislation enacted after we release it) will be posted on that
+                                                page.
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="35" align="center" valign="middle" style="font-family: arial; font-size: 20px; border-bottom: 1px solid #000000; padding: 5px;">
+                                        <strong>Personal Allowances Worksheet</strong> (Keep for your records.)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top" style="border-bottom: 2px solid #000000; padding: 5px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size: 14px;">
+                                            <tr>
+                                                <td width="34" height="30" align="left" valign="middle">
+                                                    <strong>A</strong>
+                                                </td>
+                                                <td width="859" align="left" valign="middle">Enter &quot;1&quot; for<strong> yourself</strong> if no one else can claim you as
+                                                a dependent . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                . . . . . . . . . . . . . . . . . . . .
+                                                </td>
+                                                <td width="17" align="left" valign="middle">
+                                                    <strong>A</strong>
+                                                </td>
+                                                <td width="90" align="left" valign="middle">
+                                                    @Html.TextBoxFor(m=>m.PersonalAllowancesA)
+                                                    @*<asp:TextBox runat="server" ID="txtPersonalAllowancesA" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="70" align="left" valign="middle">
+                                                    <strong>B</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="10%" align="left" valign="middle">Enter &quot;1&quot; if:
+                                                            </td>
+                                                            <td width="90%" align="left" valign="middle">
+                                                                <ul>
+                                                                    <li>You are single and have only one job; or</li>
+                                                                    <li>You are married, have only one job, and your spouse does not work; or</li>
+                                                                    <li>Your wages from a second job or your spouse's wages (or the total of both) are $1,500
+                                                                    or less.</li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <strong>B</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                     @Html.TextBoxFor(m=>m.PersonalAllowancesB)
+                                                    @*<asp:TextBox runat="server" ID="txtPersonalAllowancesB" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="50" align="left" valign="middle">
+                                                    <strong>C</strong>
+                                                </td>
+                                                <td align="left" valign="middle">Enter &quot;1&quot; for your <strong>spouse. But,</strong> you may choose to enter
+                                                &quot;-0-&quot; if you are married and have either a working spouse or more<br />
+                                                    than one job. (Entering &quot;-0-&quot; may help you avoid having too little tax
+                                                withheld.) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                . . . . . . . . . . .
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <strong>C</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                      @Html.TextBoxFor(m=>m.PersonalAllowancesC)
+                                                    @*<asp:TextBox runat="server" ID="txtPersonalAllowancesC" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="left" valign="middle">
+                                                    <strong>D</strong>
+                                                </td>
+                                                <td align="left" valign="middle">Enter number of <strong>dependents</strong> (other than your spouse or yourself)
+                                                you will claim on your tax return . . . . . . . . . . . . . . . . . . . . . . .
+                                                . . . . . .
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <strong>D</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                      @Html.TextBoxFor(m=>m.PersonalAllowancesD)
+                                                    @*<asp:TextBox runat="server" ID="txtPersonalAllowancesD" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="left" valign="middle">
+                                                    <strong>E</strong>
+                                                </td>
+                                                <td align="left" valign="middle">Enter &quot;1&quot; if you will file as <strong>head of household</strong> on your
+                                                tax return (see conditions under <strong>Head of household</strong> above) . . .
+                                                . . . . . . . . . . . .
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <strong>E</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                      @Html.TextBoxFor(m=>m.PersonalAllowancesE)
+                                                    @*<asp:TextBox runat="server" ID="txtPersonalAllowancesE" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="60" align="left" valign="middle">
+                                                    <strong>F</strong>
+                                                </td>
+                                                <td align="left" valign="middle">Enter &quot;1&quot; if you have at least $1,900 of <strong>child or dependent care expenses</strong>
+                                                    for which you plan to claim a credit . . . . . . . . . . . . . . . . . .<br />
+                                                    (<strong>Note</strong>. Do <strong>not</strong> include child support payments.
+                                                See Pub. 503, Child and Dependent Care Expenses, for details.)
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <strong>F</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                      @Html.TextBoxFor(m=>m.PersonalAllowancesF)
+                                                    @*<asp:TextBox runat="server" ID="txtPersonalAllowancesF" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="middle">
+                                                    <strong>G</strong>
+                                                </td>
+                                                <td height="80" align="left" valign="middle">
+                                                    <strong>Child Tax Credit</strong> (including additional child tax credit). See Pub.
+                                                972, Child Tax Credit, for more information.<br />
+                                                    • If your total income will be less than $65,000 ($95,000 if married), enter &quot;2&quot;
+                                                for each eligible child; then less &quot;1&quot; if you have three to seven eligible
+                                                children or <strong>less</strong> &quot;2&quot; if you have eight or more eligible
+                                                children.<br />
+                                                    • If your total income will be between $65,000 and $84,000 ($95,000 and $119,000
+                                                if married), enter &quot;1&quot; for each eligible child . . . . . . . .
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <strong>G</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                      @Html.TextBoxFor(m=>m.PersonalAllowancesG)
+                                                    @*<asp:TextBox runat="server" ID="txtPersonalAllowancesG" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="middle">
+                                                    <strong>H</strong>
+                                                </td>
+                                                <td align="left" valign="middle">Add lines A through G and enter total here. (<strong>Note.</strong> This may be
+                                                different from the number of exemptions you claim on your tax return.)
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <strong>H</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                      @Html.TextBoxFor(m=>m.PersonalAllowancesH)
+                                                    @*<asp:TextBox runat="server" ID="txtPersonalAllowancesH" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="middle">&nbsp;
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="11%" align="left" valign="middle">For accuracy,<br />
+                                                                <strong>complete all<br />
+                                                                    worksheets<br />
+                                                                    that apply.</strong>
+                                                            </td>
+                                                            <td width="89%" align="left" valign="middle">
+                                                                <ul>
+                                                                    <li>If you plan to<strong> itemize</strong> or<strong> claim adjustments to income</strong>
+                                                                        and want to reduce your withholding, see the <strong>Deductions and Adjustments Worksheet</strong>
+                                                                        on page 2.</li>
+                                                                    <li>If you are <strong>single and have more than one job</strong> or are <strong>married
+                                                                    and you and your spouse both work</strong> and the combined earnings from all jobs
+                                                                    exceed $40,000 ($10,000 if married), see the <strong>Two-Earners/Multiple Jobs Worksheet</strong>
+                                                                        on page 2 to avoid having too little tax withheld.</li>
+                                                                    <li>If <strong>neither</strong> of the above situations applies, <strong>stop here</strong>
+                                                                        and enter the number from line H on line 5 of Form W-4 below.</li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td align="left" valign="middle">&nbsp;
+                                                </td>
+                                                <td align="left" valign="middle">&nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="40" align="center" valign="middle" style="padding: 5px;">-------------------------------------- Separate here and give Form W-4 to your employer.
+                                    Keep the top part for your records. ----------------------------------------
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding: 5px;">
+                                            <tr>
+                                                <td width="170" align="left" style="border-bottom: 2px solid #000000; border-right: 2px solid #000000; font-size: 13px;">Form <span style="font-size: 40px; font-weight: bold;">W-4</span><br />
+                                                    Department of the Treasury Internal Revenue Service
+                                                </td>
+                                                <td align="center" valign="top" style="border-bottom: 2px solid #000000; border-right: 2px solid #000000; font-size: 26px; font-weight: bold;">Employee's Withholding Allowance Certificate<br />
+                                                    <span style="font-size: 13px; font-weight: normal;">Whether you are entitled to claim
+                                                    a certain number of allowances or exemption from withholding is subject to review
+                                                    by the IRS. Your employer may be required to send a copy of this form to the IRS.</span>
+                                                </td>
+                                                <td width="170" align="center" style="border-bottom: 2px solid #000000;">OMB No. 1545-0074
+                                                <br />
+                                                    <span style="font-size: 40px; font-weight: bold;">2013</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top" style="padding: 5px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-bottom: 1px solid #000000;">
+                                            <tr>
+                                                <td width="333" height="50" style="border-right: 1px solid #000000; padding-left: 5px;">
+                                                    <strong>1</strong> Your first name and middle initial
+                                                      @Html.TextBoxFor(m=>m.FirstName)
+                                                @*<asp:TextBox runat="server" ID="txtFirst" ReadOnly="true" Style="width: 200px;" />*@
+                                                </td>
+                                                <td width="333" style="border-right: 1px solid #000000; padding-left: 5px;">Last Name
+                                                      @Html.TextBoxFor(m=>m.LastName)
+                                                @*<asp:TextBox runat="server" ID="txtLastName" ReadOnly="true" Style="width: 200px;" />*@
+                                                </td>
+                                                <td width="333" style="padding-left: 5px;">
+                                                    <strong>2</strong> Your social security number
+                                                      @Html.TextBoxFor(m=>m.SSNNO)
+                                                @*<asp:TextBox runat="server" ID="txtSSN" ReadOnly="true" Style="width: 200px;" />*@
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top" style="padding: 5px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size: 12px">
+                                            <tr>
+                                                <td width="50%" height="45" valign="top" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000; padding-left: 50px;">Home address (number and street or rural route)<br />
+                                                    @*<asp:TextBox runat="server" ID="txtHomeAddress" ReadOnly="true" Style="width: 350px;" />*@
+                                                      @Html.TextBoxFor(m=>m.HomeAddress)
+                                                </td>
+                                                <td width="50%" align="left" valign="top" style="border-bottom: 1px solid #000000; padding-left: 5px;">
+                                                    <strong style="font-size: 16px;">3</strong>
+                                                      @Html.CheckBoxFor(m=>m.Single)
+                                                    @*<asp:RadioButton ID="rbtnSingle" runat="server" Enabled="false" GroupName="A" />*@
+                                                    Single
+                                                    @Html.CheckBoxFor(m=>m.Married)
+                                                @*<asp:RadioButton ID="rbtnMarried" runat="server" Enabled="false" GroupName="A" />*@
+                                                    Married
+                                                    @Html.CheckBoxFor(m=>m.MarriedWithHolding)
+                                                @*<input type="checkbox" name="checkbox3" id="checkbox3" />*@
+                                                    Married, but withhold at higher Single rate.<br />
+                                                    <span style="font-size: 11px;"><strong>Note.</strong> If married, but legally separated,
+                                                    or spouse is a nonresident alien, check the &quot;Single&quot; box.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="45" valign="top" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000; padding-left: 50px;">City or town
+                                                @*<asp:Label ID="lblCity" runat="server"></asp:Label>, state/Province:<asp:Label ID="lblState"
+                                                    runat="server"></asp:Label>, and ZIP/Postal code:<asp:Label ID="lblZip" runat="server"></asp:Label>*@<br />
+                                                   @* <input type="text" name="textfield29" readonly="readonly" id="txtAddress" runat="server"
+                                                        style="width: 350px;" />*@
+                                                     @Html.TextBoxFor(m=>m.HomeAddress)
+                                                </td>
+                                                <td style="border-bottom: 1px solid #000000; padding-left: 5px;">
+                                                    <strong style="font-size: 16px;">4</strong> If your last name differs from that
+                                                shown on your social security card,<br />
+                                                    check here. You must call 1-800-772-1213 for a replacement card. ▶
+                                                    @Html.CheckBoxFor(m=>m.IsSSNLastNameDiffers)
+                                                @*<input type="checkbox" name="checkbox4" id="chkIsSSNLastNameDiffers" runat="server" />*@
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top" style="padding: 5px;">
+                                        <table width="1000" border="0" cellspacing="0" cellpadding="0" style="font-size: 14px;">
+                                            <tr>
+                                                <td width="34" height="30" align="left" valign="middle">
+                                                    <strong>5</strong>
+                                                </td>
+                                                <td width="859" align="left" valign="middle">Total number of allowances you are claiming (from line H above or from the applicable
+                                                worksheet on page 2)
+                                                </td>
+                                                <td width="17" align="left" valign="middle">
+                                                    <strong>5</strong>
+                                                </td>
+                                                <td width="90" align="left" valign="middle">
+                                                    @Html.TextBoxFor(m=>m.EmployeesWithHolding5)
+                                                    @*<asp:TextBox runat="server" ID="txtNumOfExemption" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="left" valign="middle">
+                                                    <strong>6</strong>
+                                                </td>
+                                                <td align="left" valign="middle">Additional amount, if any, you want withheld from each paycheck . . . . . . . .
+                                                . . . . . .
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                    <strong>6</strong>
+                                                </td>
+                                                <td align="left" valign="middle">
+                                                     @Html.TextBoxFor(m=>m.EmployeesWithHolding6)
+                                                    @*<asp:TextBox runat="server" ID="txtAdditionalWithld" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="left" valign="top">
+                                                    <strong>7</strong>
+                                                </td>
+                                                <td align="left" valign="top">I claim exemption from withholding for 2013, and I certify that I meet both of the
+                                                following conditions for exemption.<br />
+                                                    • Last year I had a right to a refund of all federal income tax withheld because
+                                                I had no tax liability, and<br />
+                                                    • This year I expect a refund of all federal income tax withheld because I expect
+                                                to have no tax liability.<br />
+                                                    If you meet both conditions, write &quot;Exempt&quot; here . . . . . . . . . . .
+                                                . . . .
+                                                </td>
+                                                <td align="left" valign="top">
+                                                    <strong>7</strong>
+                                                </td>
+                                                <td align="left" valign="top">
+                                                     @Html.TextBoxFor(m=>m.EmployeesWithHolding7)
+                                                    @*<asp:TextBox runat="server" ID="txtWithHoldings3" Style="width: 75px;" />*@
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top" style="padding: 5px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000;">
+                                            <tr>
+                                                <td height="40" colspan="2" style="font-size: 14px;">Under penalties of perjury, I declare that I have examined this certificate and,
+                                                to the best of my knowledge and belief, it is true, correct, and complete.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="25%" height="30" valign="bottom" style="font-size: 14px; font-weight: bold;">Employee's signature
+                                                </td>
+                                                <td valign="bottom">&nbsp;
+                                                @*<asp:Label ID="EmployeeSign" Style="font-family: 'Edwardian Script ITC'; font-size: 30px; font-weight: bold;"
+                                                    runat="server"></asp:Label>*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="40">(This form is not valid unless you sign it.) :
+                                                </td>
+                                                <td>
+                                                    <strong>Date :</strong>@*<asp:Label ID="lblEmployeeDate" runat="server"></asp:Label>*@
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left">
+                                                    <strong>TransactionID :</strong>
+                                                </td>
+                                                <td align="left">
+                                                    @*<asp:Label ID="lblSignedTransaction" runat="server"></asp:Label>*@
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top" style="padding: 5px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-bottom: 1px solid #000000;">
+                                            <tr>
+                                                <td width="59%" height="40" style="border-right: 1px solid #000000;">
+                                                    <strong style="font-size: 14px;">8</strong> Employer's name and address (Employer:
+                                                Complete lines 8 and 10 only if sending to the IRS.)
+                                                </td>
+                                                <td width="15%" style="border-right: 1px solid #000000;">
+                                                    <strong style="font-size: 14px;">9</strong> Office code (optional)
+                                                </td>
+                                                <td width="26%">
+                                                    <strong style="font-size: 14px;">10 </strong>Employer identification number EIN)
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top" style="padding: 5px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 2px solid #000000;">
+                                            <tr>
+                                                <td height="35" align="center" valign="middle" style="border-bottom: 2px solid #000000; font-size: 20px; font-weight: bold;">Deductions and Adjustments Worksheet
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="left" valign="middle" style="padding-left: 10px;">
+                                                    <strong>Note. </strong>Use this worksheet only if you plan to itemize deductions
+                                                or claim certain credits or adjustments to income.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="top">
+                                                    <table width="1000" border="0" cellspacing="0" cellpadding="5" style="font-size: 14px;">
+                                                        <tr>
+                                                            <td width="34" height="40" align="left" valign="middle">
+                                                                <strong>1</strong>
+                                                            </td>
+                                                            <td width="859" align="left" valign="middle">Enter an estimate of your 2013 itemized deductions. These include qualifying home mortgage interest, charitable contributions, state 
+                                                        and local taxes, medical expenses in excess of 10% (7.5% if either you or your spouse was born before January 2, 1949) of 
+                                                        your income, and miscellaneous deductions. For 2013, you may have to reduce your itemized deductions if your income is over $300,000 
+                                                        and you are married filing jointly or are a qualifying widow(er); $275,000 if you are head of household; $250,000 if you are single and 
+                                                        not head of household or a qualifying widow(er); or $150,000 if you are married filing separately. See Pub. 505 for details. . . . . . . . .
+                                                            . . . . . . . . . . . . . . . .
+                                                            </td>
+                                                            <td width="17" align="left" valign="middle">
+                                                                <strong>1</strong>$
+                                                            </td>
+                                                            <td width="90" align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions1)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments1" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="70" align="left" valign="middle">
+                                                                <strong>2</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                    <tr>
+                                                                        <td width="10%" align="left" valign="middle">Enter
+                                                                        </td>
+                                                                        <td width="90%" align="left" valign="middle">
+                                                                            <ul>
+                                                                                {
+                                                                    <li>$12,200 if married filing jointly or qualifying widow(er)</li>
+                                                                                <li>$8,950 if head of household ...........</li>
+                                                                                <li>$6,100 if single or married filing separately</li>
+                                                                                }
+                                                                          
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>2</strong>$
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions2)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments2" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>3</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Subtract line 2 from line 1. If zero or less, enter &quot;-0-&quot; . . . . . .
+                                                            . . . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>3</strong>$
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions3)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments3" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>4</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Enter an estimate of your 2013 adjustments to income and any additional standard
+                                                            deduction (see Pub. 505)
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>4</strong>$
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions4)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments4" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>5</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Add lines 3 and 4 and enter the total. (Include any amount for credits from the
+                                                            Converting Credits to Withholding Allowances for 2013 Form W-4 worksheet in Pub.
+                                                            505.) . . . . . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>5</strong>$
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions5)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments5" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>6</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Enter an estimate of your 2013 nonwage income (such as dividends or interest) .
+                                                            . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>6</strong>$
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions6)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments6" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="middle">
+                                                                <strong>7</strong>
+                                                            </td>
+                                                            <td height="40" align="left" valign="middle">Subtract line 6 from line 5. If zero or less, enter &quot;-0-&quot; . . . . . .
+                                                            . . . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>7</strong>$
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions7)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments7" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>8</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Divide the amount on line 7 by $3,900 and enter the result here. Drop any fraction
+                                                            . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>8</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions8)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments8" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>9</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Enter the number from the Personal Allowances Worksheet, line H, page 1 . . . .
+                                                            . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>9</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions9)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments9" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>10</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Add lines 8 and 9 and enter the total here. If you plan to use the Two-Earners/Multiple
+                                                            Jobs Worksheet,<br />
+                                                                also enter this total on line 1 below. Otherwise, stop here and enter this total
+                                                            on Form W-4, line 5, page 1
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>10</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Deductions10)
+                                                                @*<asp:TextBox runat="server" ID="txtDeductionsAdjustments10" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top">&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top" style="padding: 5px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 2px solid #000000;">
+                                            <tr>
+                                                <td height="35" align="center" valign="middle" style="border-bottom: 2px solid #000000; font-size: 20px; font-weight: bold;">Two-Earners/Multiple Jobs Worksheet <span style="font-weight: normal;">(See <em>Two
+                                                    earners or multiple jobs</em> on page 1.)</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="left" valign="middle" style="padding-left: 10px;">
+                                                    <strong>Note.</strong> Use this worksheet only if the instructions under line H
+                                                on page 1 direct you here.
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="top">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="5" style="font-size: 14px;">
+                                                        <tr>
+                                                            <td width="19" height="40" align="left" valign="middle">
+                                                                <strong>1</strong>
+                                                            </td>
+                                                            <td width="835" align="left" valign="middle">Enter the number from line H, page 1 (or from line 10 above if you used the Deductions
+                                                            and Adjustments Worksheet)
+                                                            </td>
+                                                            <td width="9" align="left" valign="middle">
+                                                                <strong>1</strong>
+                                                            </td>
+                                                            <td width="97" align="left" valign="middle">
+                                                                 @Html.TextBoxFor(m=>m.Earnings1)
+                                                                @*<asp:TextBox runat="server" ID="txtMultipleJobs1" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="70" align="left" valign="middle">
+                                                                <strong>2</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Find the number in Table 1 below that applies to the LOWEST paying job and enter
+                                                            it here. However, if you are married filing jointly and wages from the highest paying
+                                                            job are $65,000 or less, do not enter more than &quot;3&quot; . . . . . . . . .
+                                                            . . . . . . . . . . . . . . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>2</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                @Html.TextBoxFor(m=>m.Earnings2)
+                                                                @*<asp:TextBox runat="server" ID="txtMultipleJobs2" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>3</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">If line 1 is more than or equal to line 2, subtract line 2 from line 1. Enter the
+                                                            result here (if zero, enter &quot;-0-&quot;) and on Form W-4, line 5, page 1. Do
+                                                            not use the rest of this worksheet . . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>3</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                @Html.TextBoxFor(m=>m.Earnings3)
+                                                                @*<asp:TextBox runat="server" ID="txtMultipleJobs3" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" colspan="2" align="left" valign="middle">Note. If line 1 is less than line 2, enter &quot;-0-&quot; on Form W-4, line 5,
+                                                            page 1. Complete lines 4 through 9 below to figure the additional withholding amount
+                                                            necessary to avoid a year-end tax bill.
+                                                            </td>
+                                                            <td align="left" valign="middle">&nbsp;
+                                                            </td>
+                                                            <td align="left" valign="middle">&nbsp;
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>4</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Enter the number from line 2 of this worksheet . . . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>4</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                @Html.TextBoxFor(m=>m.Earnings4)
+                                                                @*<asp:TextBox runat="server" ID="txtMultipleJobs4" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>5</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Enter the number from line 1 of this worksheet . . . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>5</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                @Html.TextBoxFor(m=>m.Earnings5)
+                                                                @*<asp:TextBox runat="server" ID="txtMultipleJobs5" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="middle">
+                                                                <strong>6</strong>
+                                                            </td>
+                                                            <td height="40" align="left" valign="middle">Subtract line 5 from line 4 . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>6</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                @Html.TextBoxFor(m=>m.Earnings6)
+                                                                @*<asp:TextBox runat="server" ID="txtMultipleJobs6" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>7</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Find the amount in Table 2 below that applies to the HIGHEST paying job and enter
+                                                            it here . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>7</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">$
+                                                                @Html.TextBoxFor(m=>m.Earnings7)
+                                                            @*<asp:TextBox runat="server" ID="txtMultipleJobs7" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>8</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Multiply line 7 by line 6 and enter the result here. This is the additional annual
+                                                            withholding needed . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>8</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">$
+                                                                @Html.TextBoxFor(m=>m.Earnings8)
+                                                            @*<asp:TextBox runat="server" ID="txtMultipleJobs8" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="40" align="left" valign="middle">
+                                                                <strong>9</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">Divide line 8 by the number of pay periods remaining in 2013. For example, divide
+                                                            by 26 if you are paid every two weeks and you complete this form in December 2011.
+                                                            Enter the result here and on Form W-4, line 6, page 1. This is the additional amount
+                                                            to be withheld from each paycheck . . . . . . . .
+                                                            </td>
+                                                            <td align="left" valign="middle">
+                                                                <strong>9</strong>
+                                                            </td>
+                                                            <td align="left" valign="middle">$
+                                                                @Html.TextBoxFor(m=>m.Earnings9)
+                                                            @*<asp:TextBox runat="server" ID="txtMultipleJobs9" Style="width: 75px;" />*@
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="top">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td align="left" valign="top" style="border-right: 2px solid #000000;">
+                                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                    <tr>
+                                                                        <td height="40" colspan="4" align="center" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; font-size: 20px; font-weight: bold;">Table 1
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="left" valign="top" style="border-right: 2px solid #000000;">
+                                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                <tr>
+                                                                                    <td height="30" colspan="2" align="center" valign="middle" style="border-bottom: 1px solid #000000;">
+                                                                                        <strong style="font-size: 14px">Married Failing Jointly</strong>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td width="32%" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000;">If wages from <strong>LOWEST</strong> paying job are
+                                                                                    </td>
+                                                                                    <td width="18%" style="border-bottom: 1px solid #000000;">Enter on line 2 above
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td height="290" align="right" valign="top" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000; padding-top: 10px; padding-right: 10px;">$0 - $5,000<br />
+                                                                                        $5,001 - $12,000<br />
+                                                                                        $12,001 - $22,000<br />
+                                                                                        $22,001 - $25,000<br />
+                                                                                        $25,001 - $30,000<br />
+                                                                                        $30,001 - $40,000<br />
+                                                                                        $40,001 - $48,000<br />
+                                                                                        $48,001 - $55,000<br />
+                                                                                        $55,001 - $65,000<br />
+                                                                                        $65,001 - $72,000<br />
+                                                                                        $72,001 - $85,000<br />
+                                                                                        $85,001 - $97,000<br />
+                                                                                        $97,001 - $110,000<br />
+                                                                                        $110,001 - $120,000<br />
+                                                                                        $120,001 - $135,000<br />
+                                                                                        $135,001 - and over<br />
+                                                                                    </td>
+                                                                                    <td align="center" valign="top" style="border-bottom: 1px solid #000000; padding-right: 10px; padding-top: 10px;">0<br />
+                                                                                        1<br />
+                                                                                        2<br />
+                                                                                        3<br />
+                                                                                        4<br />
+                                                                                        5<br />
+                                                                                        6<br />
+                                                                                        7<br />
+                                                                                        8<br />
+                                                                                        9<br />
+                                                                                        10<br />
+                                                                                        11<br />
+                                                                                        12<br />
+                                                                                        13<br />
+                                                                                        14<br />
+                                                                                        15<br />
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td align="left" valign="top">
+                                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                <tr>
+                                                                                    <td height="30" colspan="2" align="center" valign="middle" style="border-bottom: 1px solid #000000;">
+                                                                                        <strong style="font-size: 14px;">All Others</strong>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td width="32%" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000;">If wages from <strong>LOWEST</strong> paying job are
+                                                                                    </td>
+                                                                                    <td width="18%" style="border-bottom: 1px solid #000000;">Enter on line 2 above
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td height="290" align="right" valign="top" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000; padding-right: 10px; padding-top: 10px;">$0 - $8,000<br />
+                                                                                        8,001 - 16,000<br />
+                                                                                        16,001 - 25,000<br />
+                                                                                        25,001 - 30,000<br />
+                                                                                        30,001 - 40,000<br />
+                                                                                        40,001 - 50,000<br />
+                                                                                        50,001 - 70,000<br />
+                                                                                        70,001 - 80,000<br />
+                                                                                        80,001 - 95,000<br />
+                                                                                        95,001 - 120,000<br />
+                                                                                        120,001 and over<br />
+                                                                                    </td>
+                                                                                    <td align="center" valign="top" style="border-bottom: 1px solid #000000; padding-right: 10px; padding-top: 10px;">0<br />
+                                                                                        1<br />
+                                                                                        2<br />
+                                                                                        3<br />
+                                                                                        4<br />
+                                                                                        5<br />
+                                                                                        6<br />
+                                                                                        7<br />
+                                                                                        8<br />
+                                                                                        9<br />
+                                                                                        10<br />
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td width="500" align="left" valign="top">
+                                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                    <tr>
+                                                                        <td height="40" colspan="4" align="center" style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; font-size: 20px; font-weight: bold;">Table 2
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="left" valign="top" style="border-right: 2px solid #000000;">
+                                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                <tr>
+                                                                                    <td height="30" colspan="2" align="center" valign="middle" style="border-bottom: 1px solid #000000;">
+                                                                                        <strong style="font-size: 14px;">Married Failing Jointly</strong>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td width="32%" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000;">If wages from <strong>HIGHEST</strong> paying job are
+                                                                                    </td>
+                                                                                    <td width="18%" style="border-bottom: 1px solid #000000;">Enter on line 2 above
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td height="290" align="right" valign="top" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000; padding-top: 10px; padding-right: 10px;">$0 - $72,000<br />
+                                                                                        72,001 - 130,000<br />
+                                                                                        130,001 - 200,000<br />
+                                                                                        200,001 - 345,000<br />
+                                                                                        345,000 -385,000<br />
+                                                                                        385,001 and over
+                                                                                    </td>
+                                                                                    <td align="right" valign="top" style="border-bottom: 1px solid #000000; padding-right: 10px; padding-top: 10px;">$590<br />
+                                                                                        980<br />
+                                                                                        1,090<br />
+                                                                                        1,290<br />
+                                                                                        1,370<br />
+                                                                                        1,540
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td align="left" valign="top">
+                                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                <tr>
+                                                                                    <td height="30" colspan="2" align="center" valign="middle" style="border-bottom: 1px solid #000000;">
+                                                                                        <strong style="font-size: 14px;">All Others</strong>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td width="32%" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000;">If wages from <strong>HIGHEST</strong> paying job are
+                                                                                    </td>
+                                                                                    <td width="18%" style="border-bottom: 1px solid #000000;">Enter on line 2 above
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td height="290" align="right" valign="top" style="border-bottom: 1px solid #000000; border-right: 1px solid #000000; padding-right: 10px; padding-top: 10px;">$0 - $37,000<br />
+                                                                                        37,001 - 80,000<br />
+                                                                                        80,001 - 175,000<br />
+                                                                                        175,001 - 385,000<br />
+                                                                                        385,001 and over
+                                                                                    </td>
+                                                                                    <td align="right" valign="top" style="border-bottom: 1px solid #000000; padding-top: 10px; padding-right: 10px;">$590<br />
+                                                                                        980<br />
+                                                                                        1,090<br />
+                                                                                        1,290<br />
+                                                                                        1,540
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="top" style="padding: 10px;">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="500" align="left" valign="top" style="padding-right: 20px;">
+                                                                <div align="justify">
+                                                                    Privacy Act and Paperwork Reduction Act Notice. We ask for the information on this
+                                                                form to carry out the Internal Revenue laws of the United States. Internal Revenue
+                                                                Code sections 3402(f)(2) and 6109 and their regulations require you to provide this
+                                                                formation; your employer uses it to determine your federal income tax withholding.
+                                                                Failure to provide a properly completed form will result in your being treated as
+                                                                a single person who claims no withholding allowances; providing fraudulent information
+                                                                may subject you to penalties. Routine uses of this information include giving it
+                                                                to the Department of Justice for civil and criminal litigation; to cities, states,
+                                                                the District of Columbia, and U.S. commonwealths and possessions for use in administering
+                                                                their tax laws; and to the Department of Health and Human Services for use in the
+                                                                National Directory of New Hires. We may also disclose this information to other
+                                                                countries under a tax treaty, to federal and state agencies to enforce federal nontax
+                                                                criminal laws, or to federal law enforcement and intelligence agencies to combat
+                                                                terrorism.
+                                                                </div>
+                                                            </td>
+                                                            <td align="left" valign="top">
+                                                                <div align="justify">
+                                                                    You are not required to provide the information requested on a form that is subject
+                                                                to the Paperwork Reduction Act unless the form displays a valid OMB control number.
+                                                                Books or records relating to a form or its instructions must be retained as long
+                                                                as their contents may become material in the administration of any Internal Revenue
+                                                                law. Generally, tax returns and return information are confidential, as required
+                                                                by Code section 6103.
+                                                                <br />
+                                                                    The average time and expenses required to complete and file this form will vary
+                                                                depending on individual circumstances. For estimated averages, see the instructions
+                                                                for your income tax return.<br />
+                                                                    If you have suggestions for making this form simpler, we would be happy to hear
+                                                                from you. See the instructions for your income tax return.
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>

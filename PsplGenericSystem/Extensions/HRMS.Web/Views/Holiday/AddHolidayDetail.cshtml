@@ -1,0 +1,62 @@
+﻿@model @HRMS.Service.Models.EDM.Holiday
+@using System.Web.Optimization;
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "AddHolidayDetail";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<html>
+<body>
+
+    @using (Html.BeginForm("AddHolidayDetail", "Holiday", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.HolidayName, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.HolidayName, new { @class = "form-control", placeholder = "Holiday Name" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.HolidayDate, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.HolidayDate, new { @class = "form-control dateControl", @maxlength = "10", @id = "HolidayDate" })
+                                <label for="dtholidaydate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 control-button">
+                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                @Html.ActionLink("Cancel", "SelectAllHolidayDetails", "Holiday", new { @CompanyId = GlobalsVariables.CurrentCompanyId }, new { @class = "btn btn-success" })
+            </div>
+        </div>
+
+    }
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var resultingSiteview = "<h1>Holiday <small>Add Holiday </small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Holiday</li></ol>";
+            $("#header-section").empty();
+            $("#header-section").html(resultingSiteview);
+        });
+    </script>
+
+</body>
+</html>
+

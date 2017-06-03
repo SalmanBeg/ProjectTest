@@ -1,0 +1,155 @@
+﻿@model HRMS.Web.ViewModels.InterviewFormModel
+@using HRMS.Web.Helper
+@using HRMS.Common.Helpers
+@{
+    ViewBag.Title = "_AddInterview";
+    //Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm("_AddInterview", "Interview", FormMethod.Post, new { id = "addinterview" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-10">
+                <fieldset>
+                    <div class="form-group">
+                        @Html.LabelFor(j => j.Interview.Type, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(j => j.Interview.Type, new SelectList(Model.InterviewType, "ID", "Name"), "--select--", new { @class = " drplookup form-control", @data_val_1 = LocalizedStrings.InterviewType })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(j => j.Interview.InterviewDate, new { @class = "col-sm-4 control-label required" })
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Interview.InterviewDate, (Model.Interview.InterviewDate == null ? "" : ((DateTime)Model.Interview.InterviewDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @maxlength = "10", @id = "dtinterviewdate" })
+                                <label for="dtinterviewdate" class="input-group-addon btn">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(j => j.Interview.InterviewRoom, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(j => j.Interview.InterviewRoom, new SelectList(Model.InterviewRoom, "ID", "Name"), "--select--", new { @class = " drplookup form-control", @data_val_1 = LocalizedStrings.InterviewRoom })
+                        </div>
+                    </div>
+                    <div class="bootstrap-timepicker">
+                        <div class="form-group">
+                            @Html.LabelFor(j => j.Interview.InterviewTime, new { @class = "col-sm-4 control-label required" })
+                            <div class="col-sm-6">
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control timepicker" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                </div>
+
+                            </div><!-- /.input group -->
+                        </div><!-- /.form group -->
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(j => j.Interview.CandidateInstructions, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(j => j.Interview.CandidateInstructions, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(j => j.Interview.InterviewerInstructions, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(j => j.Interview.InterviewerInstructions, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(j => j.Interview.Status, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-6">
+                            @Html.DropDownListFor(j => j.Interview.Status, new SelectList(Model.InterviewStatus, "ID", "Name"), "--select--", new { @class = " drplookup form-control", @data_val_1 = LocalizedStrings.InterviewStatus })
+                        </div>
+                    </div>
+
+                </fieldset>
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <label>Interviewers</label>
+                            <div id="selectinterviewers">
+                                <ul style="list-style: none; padding: 0;border:1px" id="interviewerslist">
+
+                                    @foreach (var a in Model.EmployeeList)
+                                    {
+                                        <li>@Html.CheckBoxFor(entity => entity.InterviewerStatus, new { @id = a.UserId }) @a.UserName </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.CheckBoxFor(j => j.Interview.SendInterviewerEmail1, new { @class = "col-sm-2 control-label" })
+                        @Html.LabelFor(j => j.Interview.SendInterviewerEmail, new { @class = "control-label" })
+                    </div>
+                    <div class="form-group">
+                        @Html.CheckBoxFor(j => j.Interview.SendCandidateEmail1, new { @class = "col-sm-2 control-label" })
+                        @Html.LabelFor(j => j.Interview.SendCandidateEmail, new { @class = "control-label" })
+                    </div>
+                    @Html.HiddenFor(j => j.Interview.InterviewId)
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-6 control-button">
+            
+            @Html.ActionLink("Cancel", "", "", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", @id = "btnCancel" })
+            <button type="submit" id="btninterviewsubmit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //for datepicker using bootstrap
+        $(".dateControl").datepicker();
+        $(".datepicker-trigger").on("click", function () {
+            $(".dateControl").datepicker("show");
+        });
+
+        //Timepicker
+        $(".timepicker").timepicker({
+            showInputs: false
+        });
+
+
+        $('#btninterviewsubmit').click(function (e) {
+         
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            if ($("#addinterview").valid()) { //if you use validation
+                $.ajax({
+                    url: baseurl + "Interview/_AddInterview",
+                    type: $("#addinterview").attr('method'),
+                    data: $("#addinterview").serialize(),
+                    success: function (data) {
+                        if (data == "True") {
+                            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                            var url;
+                            url = baseurl + "Interview/_InterviewSelectAll";
+                            LoadInterviewPartial(url, "");
+                        };
+
+                    }
+                });
+            }
+        });
+
+
+
+    });
+
+
+</script>

@@ -1,0 +1,521 @@
+﻿@using HRSystem.Services.Models
+@model MainEmployee
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-4 col-md-3 col-lg-2">
+        <div class="profile-left mb20">
+            <div class="profile-left-heading">
+                @{
+                    if (Model.Image != null)
+                    {
+                        string groupLogo = Convert.ToBase64String(Model.Image);
+                        string imageSrc = string.Format("data:image/jpeg;base64,{0}", groupLogo);
+                <img src="@imageSrc" class="media-object img-circle" id="imgGroupLogo" style="height: 123px; width: 123px;" />
+                    }
+                    else
+                    {
+                <a class="profile-photo" href="">
+                    <img alt="" src="~/Content/Assets/images/photos/profilepic.png" class="img-circle img-responsive">
+                </a>
+                    }
+                }
+                <h2 class="profile-name">Resource Navigations</h2>
+                <h4 class="profile-designation" style="color:#464f63">@Model.RoleName</h4>
+            </div>
+            <div class="profile-left-body">
+                <ul class="list-inline profile-social" style="text-align: center;">
+                    <li><a href=""><i class="fa fa-facebook-official"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                    <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 col-lg-10">
+        <div class="row blog-entry mb20">
+            <div class="col-sm-5">
+                <h6 class="blog-category">INTRODUCING</h6>
+                <h3 class="blog-title"><a href="">TRAINING FOR ACA Reporting</a></h3>
+                <p class="blog-meta mb20">By: <a href="">Grant Friedman</a> &nbsp; Aug 27, 2013 &nbsp;</p>
+                <p class="blog-summary mb20">Photoshop is clearly our favorite photo editing software. In this article, we have listed 30 photo effect tutorials that will show you how to perform a wide range... <a href="javascript:void(0)" target="_blank">Read more</a></p>
+                <p>
+                    <button type="button" class="btn btn-success"><i class="fa fa-share"></i> LEARN MORE</button>
+                </p>
+            </div>
+            <div class="col-sm-7">
+                <img class="img-responsive" src="~/Content/Assets/images/photos/photo2.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @if (Model.DOB_List != null)
+    {
+        <div class="col-sm-4">
+            <div class="panel panel-primary">
+                <ul class="panel-options">
+                    <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="panel-heading">
+                    <h4 class="panel-title">Date Of Birth</h4>
+                </div>
+
+                <div class="panel-body">
+                    @foreach (var item in Model.DOB_List)
+                {
+                    <ul class="media-list user-list">
+                        <li class="media">
+                            <div class="media-left" style="border:0; padding:0;">
+                                <a href="#">
+                                    @if (item.Photo != null)
+                                        {
+                                            string groupLogo = Convert.ToBase64String(@item.Photo);
+                                            string imageSrc = string.Format("data:image/jpeg;base64,{0}", groupLogo);
+                                        <img class="media-object img-circle" src="@imageSrc" alt="">
+                                        }
+                                        else
+                                        {
+                                        <img alt="" src="~/Content/Assets/images/photos/profilepic.png" class="media-object img-circle">
+                                        }
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="javascript:void(0);" data-toggle="modal" data-target="#myModal1">@item.FName @item.LName</a></h4>
+                                @Html.HiddenFor(m => m.Email, new { Value = @item.Email, @id = "hdnEmail" })
+                            </div>
+                        </li>
+                    </ul>
+                    }
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <ul class="panel-options">
+                <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+            </ul>
+            <div class="panel-heading">
+                <h4 class="panel-title">EMPLOYEE STATUS</h4>
+            </div>
+            <div class="panel-body">
+                <ul class="media-list user-list">
+                    <li class="media">
+                        <div class="media-left">
+                            <a href="javascript:void(0)">
+                                <span>@Model.RecentHire</span>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            @if (Model.RecentHire == 0)
+                            {
+                                <h4 class="media-heading">
+                                    <span>Recent hires in last 30 days</span>
+                                </h4>
+                            }
+                            else
+                            {
+                                <h4 class="media-heading">@Html.ActionLink("Recent hires in last 30 days", "RecentHireNew", "Dashboard")</h4>
+                            }
+                        </div>
+                    </li>
+                    <li class="media">
+                        <div class="media-left">
+                            <a href="javascript:void(0)">
+                                <span>@Model.Termination</span>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            @if (Model.Termination == 0)
+                            {
+                                <span>Terminations in the past 30 days</span>
+                                <br />
+                                <span>None</span>
+                            }
+                            else
+                            {
+                                <h4 class="media-heading">@Html.ActionLink("Terminations in the past 30 days", "Termination", "Dashboard", new { @class = "media-heading" })</h4>
+                            }
+                        </div>
+                    </li>
+                    <li class="media">
+                        <div class="media-left">
+                            <a href="javascript:void(0)">
+                                <span>@Model.OpenEnrollments</span>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            @if (Model.OpenEnrollments == 0)
+                            {
+                                <span>Open Enrollments</span>
+                                <br />
+                                <span>None</span>
+                            }
+                            else
+                            {
+                                <h4 class="media-heading">@Html.ActionLink("Open Enrollments", "OpenEnrollments", "Dashboard")</h4>
+                            }
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <ul class="panel-options">
+                <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+            </ul>
+            <div class="panel-heading">
+                <h4 class="panel-title">Activity Stream</h4>
+            </div>
+
+            <div class="panel-body">
+                @foreach (var item in Model.RecentActivity_List)
+{
+                <ul class="media-list user-list">
+                    <li class="media">
+                        <div class="media-left" style="border:0; padding:0;margin-top:8px;">
+                            <a href="#">
+                                @if (item.Photo != null)
+                                    {
+                                        string groupLogo = Convert.ToBase64String(@item.Photo);
+                                        string imageSrc = string.Format("data:image/jpeg;base64,{0}", groupLogo);
+                                <img class="media-object img-circle" src="@imageSrc" alt="">
+                                    }
+                                    else
+                                    {
+                                <img alt="" src="~/Content/Assets/images/photos/profilepic.png" class="media-object img-circle">
+                                    }
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5>
+                                <a href=javascript:void(0)>@Html.Raw(@item.FLName)</a>
+                                <br />@item.DisplayName
+                                <br /><span style="font-size:13px;">@item.TimeinAgo</span>
+                            </h5>
+
+                        </div>
+                    </li>
+                </ul>
+}
+            </div>
+
+        </div>
+    </div>
+
+    <div id="myModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Birthday Wishes</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.TextArea("birthDetails", "Happy Birthday!", new { @class = "form-control", @id = "birthdayWish" })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnSave" class="btn btn-success" style="width:100px;"> Send </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <div class="panel panel-primary">
+                <ul class="panel-options">
+                    <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="panel-heading">
+                    <span class="panel-title">Open Enrollment Status</span>
+                </div>
+                <div class="panel-body buttons-with-margins" style="height:408px;">
+                    @Html.DropDownListFor(m => m.Plan_List, new SelectList(Model.Plan_List, "PlanType", "PlanType"), "-- Select Plan Type --", new { @class = "form-control input-sm", @id = "ddlPlanTypes" })
+                    <div id="chartContainer1" style="width:100%;height:300px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xs-12">
+            <div class="panel panel-primary">
+                <ul class="panel-options">
+                    <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="panel-heading">
+                    <span class="panel-title">Enrollment By Type</span>
+                </div>
+                <div class="panel-body buttons-with-margins">
+                    @Html.DropDownListFor(m => m.Enrollment_List, new SelectList(Model.Enrollment_List, "Type", "Type"), "-- Select Enrollment Type --", new { @class = "form-control input-sm", @id = "ddlEnrollmentTypes" })
+                    <div id="chartContainer2" style="width:100%;height:300px;"></div>
+                    <div style="text-align:center">
+                        @if (Model.OECount > 0)
+                        {
+                        <a href="@Url.Action("GetOpenEnrollEmpInfo", "Dashboard")" style="color:black">
+                            <span class="fa fa-square" style="color:green" aria-hidden="true"></span>
+                            OpenEnrollments
+                            @Model.OECount
+                        </a>
+                        }
+                        else
+                        {
+                        <a href="@Url.Action("GetOpenEnrollEmpInfo", "Dashboard")" class="btn btn-default disabled" style="border-style:none">
+                            <span class="fa fa-square disabled" style="color:green" aria-hidden="true"></span>
+                            OpenEnrollments
+                            @Model.OECount
+                        </a>
+                        }
+                        @if (Model.NHCount > 0)
+                        {
+                        <a href="@Url.Action("GetNewHireEmpInfo", "Dashboard")">
+                            <span class="fa fa-square" style="color:pink" aria-hidden="true"></span>
+                            New Hire
+                            @Model.NHCount
+                        </a>
+                        }
+                        else
+                        {
+                        <a href="@Url.Action("GetNewHireEmpInfo", "Dashboard")" class="btn btn-default disabled" style="border-style:none">
+                            <span class="fa fa-square disabled" style="color:pink" aria-hidden="true"></span>
+                            New Hire
+                            @Model.NHCount
+                        </a>
+                        }
+                        @if (Model.LECount > 0)
+                        {
+                        <a href="@Url.Action("GetLifeEventEmpInfo", "Dashboard")">
+                            <span class="fa fa-square" style="color:blue" aria-hidden="true"></span>
+                            Life Event
+                            @Model.LECount
+                        </a>
+                        }
+                        else
+                        {
+                        <a href="@Url.Action("GetLifeEventEmpInfo", "Dashboard")" class="btn btn-default disabled" style="border-style:none">
+                            <span class="fa fa-square disabled" style="color:blue" aria-hidden="true"></span>
+                            Life Event
+                            @Model.LECount
+                        </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <div class="panel panel-primary">
+                <ul class="panel-options">
+                    <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="panel-heading">
+                    <span class="panel-title">EE Benefit Enrollment - Country By Location / Benefit Type</span>
+                </div>
+                <div class="panel-body buttons-with-margins">
+                    <div id="chartContainer3" style="width:100%;height:300px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xs-12">
+            <div class="panel panel-primary">
+                <ul class="panel-options">
+                    <li><a class="panel-minimize"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="panel-heading">
+                    <span class="panel-title">Weather</span>
+                </div>
+                <div class="panel-body buttons-with-margins">
+                    <div>
+                        <a href="http://www.accuweather.com/en/us/new-york-ny/10007/weather-forecast/349727" class="aw-widget-legal" style="height:10px; width:10px">
+                        </a><div id="awcc1462183585855" style="height:300px;" class="aw-widget-current" data-locationkey="349727" data-unit="f" data-language="en-us" data-useip="false" data-uid="awcc1462183585855"></div>
+                        <script type="text/javascript" src="http://oap.accuweather.com/launch.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="~/Content/Assets/lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load('visualization', '1', { packages: ['corechart'] });
+    $(document).ready(function () {
+        $("#ddlPlanTypes").change(function () {
+            var PlanType = this.value;
+            if (PlanType == "") {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/OpenEnrollmentStatuses',
+                    success:
+                        function (response) {
+                            drawEnrollmentStatuses(response);
+                        }
+                });
+            }
+            else {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/OpenEnrollmentStatusesByPlanType?Type=' + PlanType,
+                    success:
+                        function (response) {
+                            drawEnrollmentStatuses(response);
+                        }
+                });
+            }
+        });
+
+        $("#ddlEnrollmentTypes").change(function () {
+            var EnrollType = this.value;
+            if (EnrollType == "") {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/GetEnrollmentByType',
+                    success:
+                        function (response) {
+                            drawEnrollmentByType(response);
+                        }
+                });
+            }
+            else {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '/Dashboard/GetEnrollmentByTypeByEnrollmentType?Type=' + EnrollType,
+                    success:
+                        function (response) {
+                            drawEnrollmentByType(response);
+                        }
+                });
+            }
+        });
+
+        $("#btnSave").click(function () {
+            var emailId = $("#hdnEmail").val();
+            var birthdayWish = $("#birthdayWish").val();
+            var data = JSON.stringify({ emailId: emailId, birthdayWish: birthdayWish });
+            $.ajax({
+                url: "/Dashboard/SendBirthDayEmail?email=" + data,
+                datatype: "application/json",
+                type: "GET",
+                success: function (data) {
+                    alert("Mail Sent Successfully!!.");
+                    $('#myModal1').modal('hide');
+                },
+                error: function (e) {
+                    alert("Mail Sending Failed!!.");
+                    $('#myModal1').modal('hide');
+                }
+            });
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '/Dashboard/OpenEnrollmentStatuses',
+            success:
+                function (response) {
+                    drawEnrollmentStatuses(response);
+                }
+        });
+        function drawEnrollmentStatuses(dataValues) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Column Name');
+            data.addColumn('number', 'Column Value');
+            data.addColumn({ type: 'string', role: 'style' });
+            for (var i = 0; i < dataValues.length; i++) {
+                if (i == 0) {
+                    data.addRow([dataValues[i].label, dataValues[i].Count, 'color: green']);
+                }
+                else if (i == 1) {
+                    data.addRow([dataValues[i].label, dataValues[i].Count, 'color: red']);
+                }
+                else if (i == 2) {
+                    data.addRow([dataValues[i].label, dataValues[i].Count, 'color: blue']);
+                }
+                else if (i == 3) {
+                    data.addRow([dataValues[i].label, dataValues[i].Count, 'color: pink']);
+                }
+            }
+            var options = {
+                legend: 'none',
+                vAxis: { viewWindowMode: "explicit", viewWindow: { min: 0 } }
+            };
+            new google.visualization.ColumnChart(document.getElementById('chartContainer1')).draw(data, options);
+        }
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '/Dashboard/GetEnrollmentByType',
+            success:
+                function (response) {
+                    drawEnrollmentByType(response);
+                }
+        });
+        function drawEnrollmentByType(dataValues) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Column Name');
+            data.addColumn('number', 'Column Value');
+            data.addColumn({ type: 'string', role: 'style' });
+            for (var i = 0; i < dataValues.length; i++) {
+                if (i == 0) {
+                    data.addRow([dataValues[i].label, dataValues[i].Count, 'color: green']);
+                }
+                else if (i == 1) {
+                    data.addRow([dataValues[i].label, dataValues[i].Count, 'color: red']);
+                }
+                else if (i == 2) {
+                    data.addRow([dataValues[i].label, dataValues[i].Count, 'color: blue']);
+                }
+            }
+            var options = {
+                legend: 'none',
+                vAxis: { viewWindowMode: "explicit", viewWindow: { min: 0 } }
+            };
+            new google.visualization.ColumnChart(document.getElementById('chartContainer2')).draw(data, options);
+        }
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '/Dashboard/GetBenefitEnrollmentByLoc',
+            success:
+                function (response) {
+                    drawBenefitEnrollmentByLoc(response);
+                }
+        });
+        function drawBenefitEnrollmentByLoc(dataValues) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Column Name');
+            data.addColumn('number', 'Column Value');
+            for (var i = 0; i < dataValues.length; i++) {
+                data.addRow([dataValues[i].StateName, dataValues[i].PlanType]);
+            }
+            var options = {
+                is3D: true
+            };
+            new google.visualization.PieChart(document.getElementById('chartContainer3')).draw(data, options);
+        }
+    });
+</script>

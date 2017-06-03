@@ -1,0 +1,73 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.Review>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllPerformanceManagement";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add", "AddReview", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteReview" })
+    @Html.ActionLink("<< Back to employee info", "ViewEmployee", "Home", new { @selectedUserId = GlobalsVariables.SelectedUserId }, new { @class = "btn btn-success", style = "float:right" })
+</div>
+@{
+    var Reviewid = new WebGrid(@Model, canPage: false, canSort: false, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+}
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="ReviewGridContent">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th data-hide="phone">
+                    @Html.DisplayNameFor(model => model.HRStatus)
+                </th>
+                <th data-hide="phone,tablet">
+                    Open Reviews
+                </th>
+                <th data-hide="phone,tablet">
+                    Closed Reviews
+                </th>
+                <th data-hide="all">
+                    Action
+                </th>
+            </tr>
+            </thead>
+        <tbody>
+            @*@foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" data-val-1="@item.ReviewId" class="btncheckdependent" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HRStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.)
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            }*@
+            </tbody>
+</table>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>PerformanceManagement<small>Performance Management</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">PerformanceManagement</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+</script>

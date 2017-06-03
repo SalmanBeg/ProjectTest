@@ -1,0 +1,47 @@
+﻿@model HRMS.Service.Models.EDM.TrainingClass
+@{
+    ViewBag.Title = "AddNewClass";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddNewClass", "TrainingClass", FormMethod.Post, new { id = "trainingClassForm", enctype = "multipart/form-data" }))
+    {
+<div class="form-horizontal">
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.HiddenFor(m => m.TrainingClassId)
+            @Html.LabelFor(m => m.TrainingClassName, new { @class = "control-label required" })
+            @Html.TextBoxFor(m => m.TrainingClassName, new { @class = "form-control" ,@maxlength="50"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TrainingClassDescription, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.TrainingClassDescription, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TrainingClassCost, new { @class = "control-label required" })
+            @Html.TextBoxFor(m => m.TrainingClassCost, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TrainingClassHours, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.TrainingClassHours, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TrainingClassImage, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.File, new { type = "file" })
+        </div>
+        <div class="form-group">
+            <div class="control-button">
+                
+                @Html.ActionLink("Back", "SelectAllClasses", "TrainingClass", null, new { @class = "btn btn-success", @style = "margin-left:10px" })
+                <button type="submit" class="btn btn-success" id="btnSaveTrainingClass">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script type="text/javascript">
+
+    var resultingSiteview = "<h1>Training<small>Training Class</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../TrainingClass/SelectAllClasses"' + "><i class=" + '"fa fa-dashboard"' + "></i>Training</a></li><li class=" + '"active"' + ">TrainingClass</li></ol>";
+    $("#header-section").empty();
+    $("#header-section").html(resultingSiteview);
+</script>

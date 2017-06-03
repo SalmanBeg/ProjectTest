@@ -1,0 +1,181 @@
+﻿@model HRMS.Web.ViewModels.TrainingClassFormModel
+@{
+    ViewBag.Title = "EnrollSchedule";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@using (Html.BeginForm("EnrollSchedule", "TrainingClassSchedule", FormMethod.Post))
+{
+    <h3 style="color:blue">Enroll Schedule</h3>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.HiddenFor(k=>k.TrainingClassSchedule.TrainingClassId)
+                    @Html.LabelFor(k => k.TrainingClassSchedule.EnrollmentStartDate, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        <div class="input-group">    
+                            @Html.TextBoxFor(m => m.TrainingClassSchedule.EnrollmentStartDate, (Model.TrainingClassSchedule.EnrollmentStartDate == null ? "" : ((DateTime)Model.TrainingClassSchedule.EnrollmentStartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtbirthdate", @maxlength = 10, @value = DateTime.Now.ToString("dd-MMM-yyyy") })                      
+                            @*@Html.TextBoxFor(k => k.TrainingClassSchedule.EnrollmentStartDate, (Model.TrainingClassSchedule.EnrollmentStartDate == null ? "" : ((DateTime)Model.TrainingClassSchedule.EnrollmentStartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtenrollstartdate", @maxlength = 10, @value = DateTime.Now.ToString("dd-MMM-yyyy") })*@
+                            <label for="txtbirthdate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(k => k.TrainingClassSchedule.EnrollmentEndDate, new { @class = "col-sm-4 control-label required" })
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            @Html.TextBoxFor(k => k.TrainingClassSchedule.EnrollmentEndDate, (Model.TrainingClassSchedule.EnrollmentEndDate == null ? "" : ((DateTime)Model.TrainingClassSchedule.EnrollmentEndDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtenrollenddate", @maxlength = 10 })
+                            <label for="txtenrollenddate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+                <h3 style="color:blue">Schedule Date</h3>
+
+    <table id="container">
+        <thead>
+            <tr>
+                <th>
+                    Schedule Start Date
+                </th>
+                <th>
+                    Schedule End Date
+                </th>
+                <th>
+                    Location
+                </th>
+                <th>
+                    Maximum Class Size
+                </th>
+                <th>
+                    <span id="btnAdd" style="text-decoration:underline;">Add</span>
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div>
+                        <div class="input-group" style="padding-right:5%">
+                            @Html.TextBoxFor(k => k.TrainingClassScheduleDate.StartDate, (Model.TrainingClassScheduleDate.StartDate == null ? "" : ((DateTime)Model.TrainingClassScheduleDate.StartDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtschedulestartdate", @maxlength = 10 })
+                            <label for="txtschedulestartdate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div class="input-group" style="padding-right:5%" >
+                            @Html.TextBoxFor(k => k.TrainingClassScheduleDate.EndDate, (Model.TrainingClassScheduleDate.EndDate == null ? "" : ((DateTime)Model.TrainingClassScheduleDate.EndDate).ToString("MM/dd/yyyy")), new { @class = "form-control dateControl", @id = "txtscheduleenddate", @maxlength = 10 })
+                            <label for="txtscheduleenddate" class="input-group-addon btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </label>
+
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div style="padding-right:5%">
+                        @Html.TextBoxFor(k => k.TrainingClassScheduleDate.Location, new { @class = "form-control", @maxlength = 10 })
+                    </div>
+
+                </td>
+                <td>
+                    <div style="padding-right:5%">
+                        @Html.TextBoxFor(k => k.TrainingClassScheduleDate.MaximumClassSize, new { @class = "form-control", onkeypress = "return IsNumeric(event);" })
+                      
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-group">
+        <div class="col-sm-offset-2 control-button">
+            
+            @Html.ActionLink("Cancel", "SelectAllTraingClassSchedule", new { @TrainingClassId = Model.TrainingClassSchedule.TrainingClassId }, new { @class = "btn btn-success" })
+            <button type="submit" class="btn btn-success">Save</button>
+         </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>TrainingClass</h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Training Class</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        //$('#txtschedulestartdate').datepicker({
+        //    format: 'mm-dd-yyyy',
+        //    endDate: '+0d',
+        //    autoclose: true
+        //});
+
+   
+        function removeRow(selector) {
+            if ($('#container tr').length > 1) {
+                $(selector).closest('tr').remove();
+            }
+        }
+
+
+        $("#btnAdd").click(function (e) {
+
+            var ind = $("#container tr:last").find("input.iHidden").val();
+            var itemIndex = 0;
+            itemIndex++;
+            e.preventDefault();
+            var newItem = $("<tr>" +
+                "<td><div class='input-group input-append date' style='padding-right:5%' >" +
+                "<input class='form-control dateControl' data-val='true' type='text' value='' data-val-date='The field Schedule Start Date must be a date.' id='txtschedulestartdate_StartDate' name='Scores[" + itemIndex + "].StartDate'  />" +
+                "<label for='txtschedulestartdate" + itemIndex + "__StartDate' class='input-group-addon btn'><span class='glyphicon glyphicon-calendar'></span></label></div> </td>" +
+               // "<td><div class='input-group'><input type='txtscheduleenddate' id='TrainingClass_" + itemIndex + "__EndDate' name='Scores[" + itemIndex + "].EndDate' class='form-control dateControl' /></td>" +
+                "<td><div class='input-group input-append date' >" +
+                "<input class='form-control dateControl' data-val='true' type='text' value='' id='txtscheduleenddate_EndDate' name='Scores[" + itemIndex + "].EndDate'  />" +
+                "<label for='txtscheduleenddate" + itemIndex + "__EndDate' class='input-group-addon btn'><span class='glyphicon glyphicon-calendar'></span></label></div> </td>" +
+                "<td><input class='form-control' maxlength='8' type='text' id='TrainingClass_" + itemIndex + "__Location' name='Scores[" + itemIndex + "].Location' /></td>" +
+                "<td><input class='form-control' maxlength='8' type='text' id='TrainingClass_" + itemIndex + "__MaximumClassSize' name='Scores[" + itemIndex + "].MaximumClassSize' onkeypress = 'return IsNumeric(event);'/></td>" +
+                "<td><a onclick='removeRow(this)'>x</a></td>" +
+                "</tr>");
+         
+            $("#container").append(newItem);
+            $('#txtschedulestartdate__StartDate').datepicker();
+            $('#txtscheduleenddate_EndDate').datepicker();
+          
+         
+
+
+        });
+    });
+
+    var specialKeys = new Array();
+    specialKeys.push(8); //Backspace
+    function IsNumeric(e) {
+        var keyCode = e.which ? e.which : e.keyCode
+        var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+        document.getElementById(e.currentTarget.id).style.borderColor = ret ? "transparent" : "Red";
+        return ret;
+    }
+</script>
+
+
+@*<div class="input-group" style="padding-right:5%">
+    <input class="form-control dateControl" data-val="true" data-val-date="The field Schedule Start Date must be a date." id="txtschedulestartdate" maxlength="10" name="TrainingClassScheduleDate.StartDate" type="text" value="">
+    <label for="txtschedulestartdate" class="input-group-addon btn">
+        <span class="glyphicon glyphicon-calendar"></span>
+    </label>
+
+</div>*@
+
+

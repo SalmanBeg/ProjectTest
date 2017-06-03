@@ -1,0 +1,98 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.CompanyDocument>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllCompanyDocument";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div>
+    @Html.ActionLink("Add", "AddCompanyDocument", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", null, null, new { @class = "btn btn-danger", @id = "btnDeleteCompanyDocument" })
+    @Html.ActionLink("<< Back to Communication", "CommunicationDashboard", "Communication", null, new { @class = "btn btn-success", style = "float:right" })
+</div>
+
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="companDocumentGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa"/>
+                    @Html.DisplayName("Select All")
+                </th>
+                <th >
+                    @Html.DisplayNameFor(model => model.CompanyDocumentTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" value="" id="@item.CompanyDocumentId" data-val-1="@item.CompanyDocumentId" class="btncheckcompanydocument" onchange="cbChange(this)" />
+                    </td>
+                    <td>
+                        @Html.ActionLink(((string)item.CompanyDocumentTitle), "AddCompanyDocument", new { @CompanyDocumentId = item.CompanyDocumentId }, new { id = "CompanyDocumentId" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Communication<small>Documents List</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Communication</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        $("#btnDeleteCompanyDocument").click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#companDocumentGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "CompanyDocument/DeleteCompanyDocument",
+                    type: "POST",
+                    cache: "false",
+                    data: { companyDocumentIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                       
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+    });
+
+    //code to select all/ deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#companDocumentGridContent input:checkbox').iCheck('check');
+    });
+
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#companDocumentGridContent input:checkbox').iCheck('uncheck');
+    });
+</script>
+

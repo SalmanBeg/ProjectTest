@@ -1,0 +1,134 @@
+﻿@model IEnumerable<HRMS.Service.Models.EDM.EmployeeSign>
+@using HRMS.Web.Helper;
+@{
+    ViewBag.Title = "SelectAllEmployeeSign";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+<div>
+    @Html.ActionLink("Add  ", "CreateNewSign", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteEmployeeSign", null, new { @class = "btn btn-danger", @id = "btnDeleteESign" })
+</div>
+<div id="gridContent" style="padding-top: 10px;">  
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="SignGridContent">
+        <thead>
+            <tr>
+                <th data-sort-ignore="true">
+                    <input type="checkbox" id="chksa"/>
+                    @Html.DisplayName("Select All")
+                </th>
+                <th data-toggle="true">
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th data-hide="phone">Signature</th>
+                <th data-hide="phone">Default Sign</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox"  data-val-1="@item.EmployeeSignId" class="btncheckdependent"/>
+                    </td>
+                    <td>
+                        @*@Html.ActionLink(((string)item.Name), "UpdateEmployeeSign", new { @EmployeeSignId = item.EmployeeSignId }, new { id = "EmployeeSignId" })*@
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @{var filebytes="data:image/png;base64," + Convert.ToBase64String( item.SignFileBytes);
+                        <img src=@filebytes id="esign" />}
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(modelItem => item.IsDefault1, new { })
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="pagination pagination-centered hide-if-no-paging"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //if ($('#data input:checkbox :checked').length < 1)
+        //    alert('Select atleast one sign as default.');
+        if ($('#data input:checkbox :checked').length < 1 && $('#data input:checkbox').length > 1)
+        {
+          //  alert('employee has one sign');
+        }
+        var resultingSiteview = "<h1>My Sign<small>Employee Signatures</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">My Sign</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+        var currentcontrol;
+        var checkedCount;
+        $('input:checkbox').on('ifClicked', function (event) {
+            if ($(this).hasClass('btncheckdependent')) { }
+            else { 
+            var length = $('#data input:checkbox:checked').length;
+            if (length+1 > 1)
+                {
+                $('#data input:checkbox').iCheck('uncheck');
+                currentcontrol = this;
+            }
+            }
+        });
+        $(currentcontrol).iCheck('check');
+     
+        $('input:checkbox').on('ifChecked', function (event) {
+            if (currentcontrol != null)
+            {
+                var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+                var paramsignId= $(currentcontrol).closest('tr').children().find('div').find('input').attr('data-val-1');
+                $.ajax({
+                    url: baseurl + "EmployeeSign/UpdateDefaultSignature",
+                    type: "POST",
+                    cache: "false",
+                    data: { signId: paramsignId },
+                    success: function (data) { },
+                    error: function (request, status, error) { }
+                });
+            }
+        });
+
+        $("#btnDeleteESign").click(function (e) {
+           
+            e.preventDefault();
+            e.stopPropagation();
+            var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+            var searchIDs = $("#SignGridContent input:checkbox:checked").map(function () {
+                return $(this).attr("data-val-1");
+            }).get();
+            if (searchIDs.toString().length > 0) {
+                $.ajax({
+                    url: baseurl + "EmployeeSign/DeleteEmployeeSign",
+                    type: "POST",
+                    cache: "false",
+                    data: { deletesignIds: searchIDs.toString() },
+                    success: function (data) {
+                        if (data == "True") {
+                            window.location.href = window.location.href;
+                        }
+                    },
+                    error: function (request, status, error) {
+                       
+                    }
+                });
+            }
+            else { alert("Please select item(s) to delete."); }
+        });
+
+    });
+    //To Select all/Deselect all checkboxes
+    $('#chksa').on('ifChecked', function (event) {
+        $('#SignGridContent input:checkbox').iCheck('check');
+    });
+    $('#chksa').on('ifUnchecked', function (event) {
+        $('#SignGridContent input:checkbox').iCheck('uncheck');
+    });
+</script>

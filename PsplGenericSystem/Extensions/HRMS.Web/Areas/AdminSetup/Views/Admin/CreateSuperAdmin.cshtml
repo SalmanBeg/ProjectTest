@@ -1,0 +1,82 @@
+﻿@model HRMS.Web.ViewModels.RegisterFormModel
+@{
+    ViewBag.Title = "CreateSuperAdmin";
+    Layout = "~/Areas/AdminSetup/Views/Shared/_AdminMasterLayout.cshtml";
+}
+@using (Html.BeginForm("CreateSuperAdmin", "Admin", FormMethod.Post, new { id = "addsuperadmin" }))
+{ <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2">
+                </div>
+                <div class="col-sm-6">
+                    <div class="col-sm-12" style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding: 0px;">
+                        <h3 style="margin-top: 20px; color: #f58500;">Account Details</h3>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">First Name <span class="red-star">*</span> </label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Last Name <span class="red-star">*</span> </label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email <span class="red-star">*</span> </label>
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Password  <span class="red-star">*</span></label>
+                        <div class="col-sm-9">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Confirm Password  <span class="red-star">*</span></label>
+                        <div class="controls col-sm-9">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <label id="lblMessage" class="label-danger" style="display: none;">Account cannot be created, Please try again.</label>
+                                <button type="submit" id="btnCreateSuperAdmin" class="btn btn-success">Save</button>
+                                @Html.ActionLink("Cancel", "SelectAllSuperAdmins", null, new { @class = "btn btn-success", @id = "btnDeletelookup" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>    
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var resultingSiteview = "<h3>Super Admin <small> Create Super Admin</small></h3>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+    $('#btnCreateSuperAdmin').click(function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        if ($("#addsuperadmin").valid()) { //if you use validation
+         
+            $.ajax({
+                url: baseurl + "Admin/CreateSuperAdmin",
+                type: $("#addsuperadmin").attr('method'),
+                data: $("#addsuperadmin").serialize(),
+                success: function (data) {
+                    window.location.href = baseurl + "AdminSetup/Admin/SelectAllSuperAdmins";
+                }
+            });
+        }
+    });
+</script>

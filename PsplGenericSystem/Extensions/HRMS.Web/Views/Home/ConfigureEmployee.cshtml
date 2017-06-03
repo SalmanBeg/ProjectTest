@@ -1,0 +1,31 @@
+﻿@model HRMS.Web.ViewModels.EmployeeConfigurationFormModel
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "ConfigureEmployee";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@Html.ActionLink("<< Back to hire selection", "SelectOnBoardingStep", "Home", new { @class = "btn btn-success", style = "float:right" })
+@using (Html.BeginForm("ConfigureEmployee", "Home", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <div class="form-horizontal">
+        <div class="col-md-2"></div>
+        <div>
+            @Html.ValidationSummary(true)
+            @Html.Partial("ConfigureEmployeePartial")
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    (function ($) {
+        $.validator.unobtrusive.adapters.addBool("BooleanMustBeTrue", "required");
+    }(jQuery));
+
+    $(document).ready(function() {
+        var resultingSiteview = "<h1>Select OnBoarding<small>Configure OnBoarding</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li><a href=" + '"../Home/SelectOnBoardingStep"' + ">Select On Boarding step</a></li><li class=" + '"active"' + ">Configure OnBoarding</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+    });
+
+</script>

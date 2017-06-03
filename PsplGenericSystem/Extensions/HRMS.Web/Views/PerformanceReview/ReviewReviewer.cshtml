@@ -1,0 +1,363 @@
+﻿@model  HRMS.Web.ViewModels.ReviewReviewerFormModel
+@using HRMS.Web.Helper;
+@{
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td align="left" valign="middle" height="30" class="subheader-b15px" style="border-bottom: 1px solid #a0a0a0; font-size: 20px; color: blue;">
+            Reviewer
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td height="30" align="left" valign="middle" class="subheader-b15px" style="color:blue;font-size:20px">
+            Select Reviewer 1
+        </td>
+    </tr>
+</table>
+<td height="30" style="width: 330px;font:bold" class="txtlable-b13px">
+    Select Criteria to be evaluated by this Reviewer:
+</td>
+<td>
+    @Html.ActionLink("Add Criteria", "SelectReviewerCriteria", "ReviewCriteria", new { @ReviewId = ViewData["ReviewId"], @ReviewMasterId = 1 }, new { @class = "btn btn-info" })
+</td>
+
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="ReviewReviewerContent1">
+        <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    JobTitle
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Response
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.lstReviewer1)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobTitleId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResponseTypeId)
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-remove" onclick="deleteCriteria(@item.ReviewReviewerId,@item.ReviewCriteriaId);">
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<table>
+    <tr>
+        <td height="30" align="left" valign="middle" class="subheader-b15px" style="color:blue;font-size:20px">
+            Select Reviewer 2
+        </td>
+    </tr>
+</table>
+
+<tr>
+    <td height="30" style="width: 330px; font: bold" class="txtlable-b13px">
+        Select Criteria to be evaluated by this Reviewer:
+    </td>
+</tr>
+<td>
+    <table>
+        <tr>
+            @Html.ActionLink("Add Criteria", "SelectReviewerCriteria", "ReviewCriteria", new { @ReviewId = ViewData["ReviewId"], @ReviewMasterId = 2 }, new { @class = "btn btn-info" })
+        </tr>
+    </table>
+</td>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="ReviewReviewerContent2">
+        <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    JobTitle
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Response
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.lstReviewer2)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobTitleId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResponseTypeId)
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-remove" onclick="deleteCriteria(@item.ReviewReviewerId,@item.ReviewCriteriaId);">
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<table>
+    <tr>
+        <td height="30" align="left" valign="middle" class="subheader-b15px" style="color:blue;font-size:20px">
+            Select Reviewer 3
+        </td>
+    </tr>
+</table>
+<div id="gridContent" style="padding-top: 10px;">
+    <table>
+        <tr>
+            <td>
+                @Html.CheckBox("chkReview", new { @id = "chkReviews" })
+            </td>
+            <td>
+                <select style="width: 370px;" class="cmbBox1" id="drplistboxfilter"
+                        multiple="multiple" name="ServicesList" size="8"></select>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="submit" id="btnleft" name="Save" value="Move To Right" />
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="submit" id="btnright" name="Publish" value="Move  To   Left" style:width="200" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <select style="width: 370px;" class="cmbBox1" id="drplistboxfilter1"
+                        multiple="multiple" name="ServicesList" size="8"></select>
+            </td>
+        </tr>
+    </table>
+</div>
+<br />
+<td height="30" style="width: 330px;font:bold" class="txtlable-b13px">
+    Select Criteria to be evaluated by this Reviewer:
+</td>
+<td>
+    <table>
+        <tr>
+            @*<button type="submit" id="btnsubmit" class="btn btn-success" onclick="UpdateHR" >Save</button>*@
+            @Html.ActionLink("Add Criteria", "SelectReviewerCriteria", "ReviewCriteria", new { @ReviewId = ViewData["ReviewId"], @ReviewMasterId = 3 }, new { @class = "btn btn-info" })
+        </tr>
+    </table>
+</td>
+<div id="gridContent" style="padding-top: 10px;">
+    <table class="footable table" data-filter="#filter" data-page-size="5" data-page-previous-text="prev" data-page-next-text="next" id="ReviewReviewerContent3">
+        <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    JobTitle
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Response
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.lstReviewer2)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobTitleId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResponseTypeId)
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-remove" onclick="deleteCriteria(@item.ReviewReviewerId,@item.ReviewCriteriaId);">
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@using (Html.BeginForm("UpdateReviewHR", "PerformanceReview", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td>
+                Select HR
+        </td>
+            <td>
+                <div class="col-sm-9">
+                    @Html.HiddenFor(m => ViewData["ReviewId"])
+                    @Html.DropDownListFor(k => k.Review.HRManagerId, new SelectList(Model.ManagerList, "UserId", "UserName"), "--Select--", new { @class = "form-control " })
+            </div>
+            </td>
+        </tr>
+    </table>
+    <br />
+<div class="form-group">
+    <div class="col-sm-offset-2 control-button">
+            
+        @Html.ActionLink("Cancel", "SelectReviewAll", "PerformanceReview", null, new { @class = "btn btn-success" })
+        <button type="submit" class="btn btn-success" id="UpdateHR">Save</button>
+    </div>
+</div>
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var resultingSiteview = "<h1>Reviewer<small>Reviewer</small></h1><ol class=" + '"breadcrumb"' + "><li><a href=" + '"../Home/EmployeeDashboard"' + "><i class=" + '"fa fa-dashboard"' + "></i>Home</a></li><li class=" + '"active"' + ">Reviewer</li></ol>";
+        $("#header-section").empty();
+        $("#header-section").html(resultingSiteview);
+
+        //checkbox Selectedchange event
+    //    $(".iCheck-helper").click(function () {
+            $("#drplistboxfilter").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("BindReviewReviewerFilter")',
+                dataType: 'json',
+                success: function (filters) {
+
+                    $.each(filters, function (i, employee) {
+                        $("#drplistboxfilter").append('<option value="'
++ employee.Value + '">'
++ employee.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve filters.' + ex);
+                }
+            });
+            return false;
+       // });
+    });
+
+</script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery("#btnleft").click(function () {
+            jQuery("#drplistboxfilter option:selected").each(function () {
+                jQuery("#drplistboxfilter1").append(jQuery(this).clone());
+                jQuery(this).remove();
+            });
+        });
+        jQuery("#btnright").click(function () {
+            jQuery("#drplistboxfilter1 option:selected").each(function () {
+                jQuery("#drplistboxfilter").append(jQuery(this).clone());
+                jQuery(this).remove();
+            });
+        });
+    });
+
+    $('#btnAdd').click(function () {
+        $('#ReviewReviewerContent1 tr').click(function (event) {
+            if (event.target.type !== 'checkbox') {
+                $(':checkbox', this).trigger('click');
+            }
+        });
+    });
+
+
+    function deleteCriteria(ReviewReviewerId, ReviewCriteriaId) {
+        var baseurl = '@System.Configuration.ConfigurationManager.AppSettings["BaseURL"]';
+        if (confirm("are u sure  want to delete this row?")) {
+            this.click;
+            $.ajax({
+                url: baseurl + "PerformanceReview/DeleteReviewReviewer",
+                type: "POST",
+                cache: "false",
+                data: { ReviewReviewerId: ReviewReviewerId, ReviewCriteriaId: ReviewCriteriaId },
+                success: function (data) {
+                    if (data === "True") {
+                        window.location.href = window.location.href;
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+        else {
+            window.location.href = window.location.href;
+        }
+    }
+
+ 
+</script>
